@@ -8,7 +8,11 @@ const EnrolledCourses = () => {
       <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
         <div className="content">
           <div className="section-title">
-            <h4 className="rbt-title-style-3">Enrolled Courses</h4>
+            <h4 className="get-4-color rbt-title-style-3">
+              <i className="bi bi-laptop "></i>
+              <span className="style-3-left">My Coursess
+              </span>
+            </h4>
           </div>
           <div className="advance-tab-button mb--30">
             <ul
@@ -27,7 +31,7 @@ const EnrolledCourses = () => {
                   aria-controls="home-4"
                   aria-selected="true"
                 >
-                  <span className="title">Enrolled Courses</span>
+                  <span className="title">Enrolled</span>
                 </Link>
               </li>
               <li role="presentation">

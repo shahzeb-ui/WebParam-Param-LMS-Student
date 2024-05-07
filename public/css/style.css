@@ -15621,6 +15621,11 @@ span.transparent-button:hover i {
   border-bottom: 2px solid var(--color-border-2);
 }
 
+.rbt-title-style-3 i {
+  margin-left: 8px;
+  color: "#34bf49";
+}
+
 .rbt-short-title {
   font-size: 12px;
   padding-bottom: 14px;

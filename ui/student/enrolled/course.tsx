@@ -40,7 +40,7 @@ const CourseWidgets: React.FC<Props> = ({
     data,
     courseStyle,
     isProgress,
-    isCompleted,
+    // isCompleted,
     isEdit,
     showDescription,
     showAuthor,
@@ -168,7 +168,7 @@ const CourseWidgets: React.FC<Props> = ({
                 <h6 className="rbt-title-style-2 mb--10"></h6>
                 <div className="rbt-card-bottom">
                   <Link
-                    className="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                    className="bi bi-play rbt-btn btn-sm bg-primary-opacity w-100 text-center"
                     href="#"
                   >
                     Continue Watching
