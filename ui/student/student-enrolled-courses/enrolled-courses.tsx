@@ -144,6 +144,22 @@ const EnrolledCourses = () => {
               </div>
             </div>
           </div>
+          <div className="pagination-container-1">
+            <div className="rbt-card-bottom">
+              <button className="rbt-btn btn-sm w-100 text-center">
+                <span className="feather-arrow-left"></span>
+                <span>Previous</span>
+              </button>
+            </div>
+
+            <div className="rbt-card-bottom">
+              <button className="rbt-btn btn-sm w-100 text-center">
+                <span>Next</span>
+                <span className="feather-arrow-right"></span>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </>

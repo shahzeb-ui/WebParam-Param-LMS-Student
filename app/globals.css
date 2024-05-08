@@ -98,6 +98,14 @@ body {
   margin-left: 8px;
 }
 
+.pagination-container-1 {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 60px;
+  text-align: center;
+  padding: 0 240px;
+}
+
 .get-4-color {
   color: #34bf49;
 }

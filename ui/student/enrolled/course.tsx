@@ -40,9 +40,7 @@ const CourseWidgets: React.FC<Props> = ({
     data,
     courseStyle,
     isProgress,
-    // isCompleted,
     isEdit,
-    showDescription,
     showAuthor,
 }) => {
     const [discountPercentage, setDiscountPercentage] = useState<string>('');
@@ -121,39 +119,6 @@ const CourseWidgets: React.FC<Props> = ({
                 <div className="rbt-progress-style-1 mb--20 mt--10">
                   <div className="single-progress">
                     <h6 className="rbt-title-style-2 mb--10"></h6>
-                    {/* {isCompleted ? (
-                      <div className="progress">
-                        <div
-                          className="progress-bar wow fadeInLeft bar-color-success"
-                          data-wow-duration="0.5s"
-                          data-wow-delay=".3s"
-                          role="progressbar"
-                          style={{ width: `100%` }}
-                          aria-valuenow={100}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        ></div>
-                        <span className="rbt-title-style-2 progress-number">
-                          100%
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="progress">
-                        <div
-                          className="progress-bar wow fadeInLeft bar-color-success"
-                          data-wow-duration="0.5s"
-                          data-wow-delay=".3s"
-                          role="progressbar"
-                          style={{ width: `${data.progressValue}%` }}
-                          aria-valuenow={data.progressValue}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        ></div>
-                        <span className="rbt-title-style-2 progress-number">
-                          {data.progressValue}%
-                        </span>
-                      </div>
-                    )} */}
                   </div>
                 </div>
 
@@ -183,12 +148,6 @@ const CourseWidgets: React.FC<Props> = ({
               <h4 className="rbt-card-title">
                 <Link href="#">{data.title}</Link>
               </h4>
-            )}
-  
-            {showDescription ? (
-              <p className="rbt-card-text">{data.shortDescription}</p>
-            ) : (
-              ""
             )}
   
             {courseStyle === "two" && showAuthor && (
