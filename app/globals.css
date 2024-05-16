@@ -106,8 +106,38 @@ body {
   padding: 0 240px;
 }
 
+.rbt-card-body-2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 10px 20px;
+}
+
+.rbt-card-top-2 {
+  margin-left: auto;
+}
+
+.video-title {
+  margin-right: auto;
+  margin: initial;
+}
+
+.course-title-2 {
+  font-size: 24px;
+  padding: 20px 0;
+  text-align: left;
+  padding: 10px 20px;
+}
+
 .get-4-color {
   color: #34bf49;
+}
+
+.content-2 {
+  padding: 60px 10px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 a {
