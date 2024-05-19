@@ -33,6 +33,13 @@ const QuestionAndAnswers = () => {
         </div>
       </div>
 
+      <div className="row mt-3">
+        <div className="col-md-10 d-flex justify-content-end">
+          <button className="btn btn-secondary me-2">Cancel</button>
+          <button className="btn btn-success">Post Question</button>
+        </div>
+      </div>
+
       <hr className="custom-line-break-1" />
       <label className="form-label fw-bold underline-2">Q&A</label>
 
@@ -54,7 +61,7 @@ const QuestionAndAnswers = () => {
               <i className="bi bi-chat-dots"></i> Reply
             </a>
           </div>
-          <div>
+          <div className="small">
             <span>John Smith</span> - <span>2024-05-18</span>
           </div>
         </div>
@@ -76,11 +83,11 @@ const QuestionAndAnswers = () => {
               <i className="bi bi-chat-dots"></i> Reply
             </a>
           </div>
-          <div>
+          <div className="small">
             <span>Sam Clock</span> - <span>2024-05-17</span>
           </div>
         </div>
-        <hr />
+        <hr className="mt-4" />
       </div>
     </div>
   );
