@@ -228,7 +228,7 @@ const StudentDiscussions = () => {
       </div>
       <div className="pagination-container-1">
         <div className="rbt-card-bottom">
-          <button className="rbt-btn btn-sm w-100 text-center">
+          <button className="rbt-btn btn-sm w-100 text-center bn-success">
             <span className="feather-arrow-left"></span>
             <span>Previous</span>
           </button>

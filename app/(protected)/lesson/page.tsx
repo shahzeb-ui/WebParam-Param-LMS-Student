@@ -164,11 +164,9 @@ const LessonHomepage = () => {
                 </div>
               </div>
             </div>
-            {/* <LessonPagination /> */}
           </div>
         </div>
       </div>
-      {/* <BackToTop /> */}
     </>
   );
 };
