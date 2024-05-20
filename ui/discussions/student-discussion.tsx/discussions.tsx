@@ -26,8 +26,9 @@ const StudentDiscussions = () => {
           How does the use of hooks improve the development process in React?
         </p>
         <p style={{ marginLeft: "20px" }}>
+          <i className="bi bi-reply-fill"></i>
           Hooks allow for state and lifecycle management in functional
-          components, making code easier to understand and maintain.
+          components.
         </p>
         <div className="small">
           <span>John Smith</span> - <span>2024-05-18</span>
@@ -87,6 +88,7 @@ const StudentDiscussions = () => {
       <div className="mb-4">
         <p>What are the benefits of using TypeScript with React?</p>
         <p style={{ marginLeft: "20px" }}>
+          <i className="bi bi-reply-fill"></i>
           TypeScript provides type safety, making it easier to catch errors
           early and improving overall code quality.
         </p>
@@ -136,8 +138,10 @@ const StudentDiscussions = () => {
           How does the use of hooks improve the development process in React?
         </p>
         <p style={{ marginLeft: "20px" }}>
+          {" "}
+          <i className="bi bi-reply-fill"></i>
           Hooks allow for state and lifecycle management in functional
-          components, making code easier to understand and maintain.
+          components.
         </p>
         <div className="small">
           <span>John Smith</span> - <span>2024-05-18</span>
@@ -179,6 +183,7 @@ const StudentDiscussions = () => {
       <div className="mb-4">
         <p>What are the benefits of using TypeScript with React?</p>
         <p style={{ marginLeft: "20px" }}>
+          <i className="bi bi-reply-fill"></i>
           TypeScript provides type safety, making it easier to catch errors
           early and improving overall code quality.
         </p>

@@ -16,49 +16,39 @@
         "icon": "bi bi-laptop-fill"
       },
       {
-        "link": "#",
-        "text": "Wishlist",
-        "icon": "feather-bookmark"
+        "link": "/discussions",
+        "text": "Discussions",
+        "icon": "bi bi-chat-dots-fill"
       },
       {
         "link": "#",
-        "text": "Reviews",
-        "icon": "feather-star"
+        "text": "My Progress",
+        "icon": "bi bi-graph-up-arrow"
       },
       {
         "link": "#",
-        "text": "My Quiz Attempts",
-        "icon": "feather-help-circle"
+        "text": "Announcements",
+        "icon": "bi bi-volume-up"
       },
       {
         "link": "#",
-        "text": "Order History",
-        "icon": "feather-shopping-bag"
+        "text": "Assessment",
+        "icon": "bi bi-clipboard2-plus-fill"
+      },
+      {
+        "link": "#",
+        "text": "Assignments",
+        "icon": "bi bi-clipboard2-check-fill"
       },
       {
         "link": "#",
         "text": "Settings",
-        "icon": "feather-settings"
+        "icon": "bi bi-gear-fill"
       },
       {
         "link": "/",
         "text": "Logout",
         "icon": "feather-log-out"
-      },
-      {
-        "link": "#",
-        "text": "Announcements",
-        "icon": "feather-volume-2"
-      },
-      {
-        "link": "#",
-        "text": "Assessments",
-        "icon": "feather-message-square"
-      },
-      {
-        "link": "#",
-        "text": "Assignments",
-        "icon": "feather-menu"
       }
     ]
   }
