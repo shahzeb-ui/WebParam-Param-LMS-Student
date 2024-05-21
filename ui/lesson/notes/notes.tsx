@@ -4,10 +4,15 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Notes = () => {
   const [body, setBody] = useState("");
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const handleChange = (value: any) => {
     console.log("handle change: ", value);
     setBody(value);
+  };
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
   return (
@@ -15,6 +20,33 @@ const Notes = () => {
       <div className="row">
         <div className="col-md-5 mb-3">
           <label className="form-label fw-bold underline-2">Notes</label>
+        </div>
+      </div>
+
+      <div className="row mt-3">
+        <div className="col-md-5 mb-3">
+          <button className="bi bi-plus-lg btn btn-success"> Add Note</button>
+        </div>
+      </div>
+
+      <div className="row mt-3">
+        <div className="mb-3">
+          <div className="note-title fw-bold">Basics of Next.js</div>
+          <div className="mt-2">
+            <p>
+              Next.js is a React framework that enables server-side rendering
+              and static site generation, providing a powerful toolset for
+              building fast and SEO-friendly web applications. It offers
+              features like file-based routing, API routes, and automatic code
+              splitting, which enhance development efficiency and application
+              performance. Additionally, Next.js supports CSS and Sass for
+              styling and includes an image optimization component to improve
+              page load times. Getting started with Next.js involves simple
+              setup commands and allows for easy creation of pages and
+              navigation between them, making it a go-to choice for modern web
+              development.
+            </p>
+          </div>
         </div>
       </div>
 
