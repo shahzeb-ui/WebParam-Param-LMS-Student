@@ -79,8 +79,10 @@ const StudentDiscussions = () => {
 
         <div className="row mt-3">
           <div className="col-md-10 d-flex justify-content-end">
-            <button className="btn btn-secondary me-2">Cancel</button>
-            <button className="btn btn-success">Reply</button>
+            <button className="btn btn-secondary me-2 custom-button-4">
+              Cancel
+            </button>
+            <button className="btn btn-success custom-button-4">Reply</button>
           </div>
         </div>
       </div>

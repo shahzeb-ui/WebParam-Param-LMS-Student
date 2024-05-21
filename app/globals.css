@@ -170,6 +170,11 @@ body {
   margin-top: 30px;
 }
 
+.custom-button-4 {
+  padding: 10px 20px;
+  font-size: 1.25rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
