@@ -1,12 +1,13 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import noteData from "@/data/sample/sample.json";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Notes = () => {
-  const [body, setBody] = useState("");
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [body, setBody] = useState<string>("");
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
-  const handleChange = (value: any) => {
+  const handleChange = (value: string) => {
     console.log("handle change: ", value);
     setBody(value);
   };
@@ -14,6 +15,25 @@ const Notes = () => {
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
   };
+
+  const getDisplayContent = (
+    text: string,
+    isCollapsed: boolean,
+    wordLimit = 100
+  ) => {
+    const words = text.split(" ");
+    const isLong = words.length > wordLimit;
+    const displayContent =
+      isCollapsed && isLong
+        ? words.slice(0, wordLimit).join(" ") + "..."
+        : text;
+    return { displayContent, isLong };
+  };
+
+  const { displayContent, isLong } = getDisplayContent(
+    noteData.sampleNote,
+    isCollapsed
+  );
 
   return (
     <div className="container mt-4 pb-5">
@@ -34,17 +54,16 @@ const Notes = () => {
           <div className="note-title fw-bold">Basics of Next.js</div>
           <div className="mt-2">
             <p>
-              Next.js is a React framework that enables server-side rendering
-              and static site generation, providing a powerful toolset for
-              building fast and SEO-friendly web applications. It offers
-              features like file-based routing, API routes, and automatic code
-              splitting, which enhance development efficiency and application
-              performance. Additionally, Next.js supports CSS and Sass for
-              styling and includes an image optimization component to improve
-              page load times. Getting started with Next.js involves simple
-              setup commands and allows for easy creation of pages and
-              navigation between them, making it a go-to choice for modern web
-              development.
+              {displayContent}
+              {isLong && (
+                <a
+                  onClick={toggleCollapse}
+                  className="ms-2"
+                  style={{ cursor: "pointer" }}
+                >
+                  {isCollapsed ? "Read more" : ""}
+                </a>
+              )}
             </p>
           </div>
         </div>
