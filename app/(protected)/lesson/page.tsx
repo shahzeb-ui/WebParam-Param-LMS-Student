@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import LessonSidebar from "@/ui/lesson/Lesson-sidebar";
 import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
+import Notes from "@/ui/lesson/notes/notes";
 // import LessonPagination from "@/ui/lesson/lesson-navbar";
 
 const LessonHomepage = () => {
@@ -160,7 +161,7 @@ const LessonHomepage = () => {
                   role="tabpanel"
                   aria-labelledby="notes-tab-4"
                 >
-                  The Notes Section
+                  <Notes />
                 </div>
               </div>
             </div>
