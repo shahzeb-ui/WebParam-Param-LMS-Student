@@ -11,8 +11,15 @@ const Notes = () => {
   };
 
   return (
-    <div className="container mt-5 pb-5">
+    <div className="container mt-4 pb-5">
+      <div className="row">
+        <div className="col-md-5 mb-3">
+          <label className="form-label fw-bold underline-2">Notes</label>
+        </div>
+      </div>
+
       <hr className="custom-line-break-1" />
+
       <div className="row">
         <div className="col-md-5 mb-3">
           <label className="form-label fw-bold underline-2">Note Title</label>
