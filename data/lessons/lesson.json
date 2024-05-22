@@ -59,7 +59,7 @@
         "isShow": false,
         "listItem": [
           {
-            "lssonLink": "/lesson-quiz",
+            "lssonLink": "/lesson/quiz",
             "lessonName": "Histudy Quiz Start",
             "lable": true,
             "time": 0,

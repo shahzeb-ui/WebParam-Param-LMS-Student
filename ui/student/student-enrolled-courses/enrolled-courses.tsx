@@ -10,8 +10,7 @@ const EnrolledCourses = () => {
           <div className="section-title">
             <h4 className="get-4-color rbt-title-style-3">
               <i className="bi bi-laptop "></i>
-              <span className="style-3-left">My Coursess
-              </span>
+              <span className="style-3-left">My Coursess</span>
             </h4>
           </div>
           <div className="advance-tab-button mb--30">
@@ -125,7 +124,7 @@ const EnrolledCourses = () => {
               aria-labelledby="contact-tab-4"
             >
               <div className="row g-5">
-                {Courses.slice(1, 4)?.map((slide, index) => (
+                {Courses.slice(1, 9)?.map((slide, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={`course-completed-${index}`}
@@ -159,7 +158,6 @@ const EnrolledCourses = () => {
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </>
