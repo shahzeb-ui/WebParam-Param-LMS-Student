@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import quizData from "@/data/quiz/quiz.json";
+import styles from "@/styles/quiz/quiz.module.css";
 
 const LessonQuiz = () => {
   const [next, setNext] = useState(0);
@@ -76,7 +77,7 @@ const LessonQuiz = () => {
               </div>
             ))}
 
-            <div className="rbt-quiz-btn-wrapper mt--30">
+            <div className={styles.buttonWrapper}>
               <button
                 className="rbt-btn bg-primary-opacity btn-sm"
                 id="prev-btn"
