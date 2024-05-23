@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/scss/bootstrap.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-quill/dist/quill.snow.css";
+import "react-responsive-modal/styles.css";
 
 // Custom global styles
 import "@/app/globals.css";
