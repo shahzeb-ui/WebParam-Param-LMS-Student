@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
+import Image from "next/image";
+import User from "@/images/user.png";
 
 const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -88,7 +90,7 @@ const Navbar = () => {
                 </nav>
               </div>
 
-              <div className="rbt-header-sec-col rbt-header-center d-none d-md-block">
+              <div className="rbt-header-sec-col rbt-header-center d-none d-md-block me-3">
                 <div className="rbt-header-content">
                   <div className="header-info">
                     <div className="rbt-search-field">
@@ -106,9 +108,19 @@ const Navbar = () => {
                 </div>
               </div>
 
-              <div className="header-right">
+              <div className="header-right d-flex align-items-center mt">
+                <div className="d-none d-md-block me-3">
+                  <Image
+                    src={User}
+                    alt="User Avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-circle"
+                  />
+                </div>
+
                 <div
-                  className="rbt-offcanvas-trigger"
+                  className="rbt-offcanvas-trigger d-xl-none"
                   id="rbt-offcanvas-activation"
                 >
                   <span className="offcanvas-trigger">

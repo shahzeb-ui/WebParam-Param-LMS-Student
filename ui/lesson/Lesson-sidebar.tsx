@@ -33,7 +33,6 @@ const LessonSidebar = () => {
   return (
     <>
       <div className="rbt-course-feature-inner rbt-search-activation">
-        <hr className="mt--10" />
         <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
           <div className="accordion" id="accordionExampleb2">
             {(LessonData as LessonDataStructure).lesson.map((data, index) => (
