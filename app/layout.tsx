@@ -17,6 +17,7 @@ import "@/public/css/plugins/animation.css";
 import "@/public/css/plugins/feather.css";
 import "@/public/css/plugins/euclid-circulara.css";
 import "@/public/scss/styles.scss";
+import Navbar from "@/ui/navbar/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Navbar />
         {children}
         <BootstrapClient />
       </body>
