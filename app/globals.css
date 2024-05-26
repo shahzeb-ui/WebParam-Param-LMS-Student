@@ -90,8 +90,11 @@ body {
   background:"#FDFDFD"
 }
 
+.margin-right-3 {
+  margin-right: 3rem !important;
+}
 .mt-1-mr {
-  margin-top: 20.25rem !important;
+  margin-top: 8.25rem !important;
 }
 
 .style-3-left {

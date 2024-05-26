@@ -90,7 +90,7 @@ const Navbar = () => {
                 </nav>
               </div>
 
-              <div className="rbt-header-sec-col rbt-header-center d-none d-md-block me-3">
+              <div className="rbt-header-sec-col rbt-header-center d-none d-md-block margin-right-3">
                 <div className="rbt-header-content">
                   <div className="header-info">
                     <div className="rbt-search-field">
