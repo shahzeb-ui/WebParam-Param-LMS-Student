@@ -30556,6 +30556,17 @@ Course Sidebar
   margin: 0 auto;
 }
 
+.dropdown-menu-1 {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  z-index: 1000;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .rbt-lesson-rightsidebar .content {
     padding: 40px 30px;

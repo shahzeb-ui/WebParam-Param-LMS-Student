@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
 import User from "@/images/user.png";
+import UserStudent from "@/ui/user/user-dropdown";
 
 const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [currentSection, setCurrentSection] = useState("home");
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const sections = [
     { id: "dashboard", label: "Dashboard" },
@@ -53,6 +56,10 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleAvatarClick = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
 
   return (
     <>
@@ -110,13 +117,20 @@ const Navbar = () => {
 
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
-                  <Image
-                    src={User}
-                    alt="User Avatar"
-                    width={40}
-                    height={40}
-                    className="rounded-circle"
-                  />
+                  <Link href="#" onClick={handleAvatarClick}>
+                    <Image
+                      src={User}
+                      alt="User Avatar"
+                      width={40}
+                      height={40}
+                      className="rounded-circle"
+                    />
+                  </Link>
+                  {isDropdownVisible && (
+                    <div className="dropdown-menu-1">
+                      <UserStudent />
+                    </div>
+                  )}
                 </div>
 
                 <div
