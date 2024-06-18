@@ -11,7 +11,7 @@
         "icon": "feather-user"
       },
       {
-        "link": "/student/student-enrolled-courses",
+        "link": "/student/enrolled-courses",
         "text": "My Courses",
         "icon": "bi bi-laptop-fill"
       },

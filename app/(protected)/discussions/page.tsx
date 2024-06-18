@@ -1,3 +1,5 @@
+"use client";
+
 import StudentDiscussions from "@/ui/discussions/student-discussion.tsx/discussions";
 import DiscussionDashboardSidebar from "./dustent-discussion/page";
 

@@ -1,11 +1,13 @@
+"use client";
+
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import noteData from "@/data/sample/sample.json";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Notes = () => {
-  const [body, setBody] = useState<string>("");
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
+  const [body, setBody] = useState("");
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const handleChange = (value: string) => {
     console.log("handle change: ", value);

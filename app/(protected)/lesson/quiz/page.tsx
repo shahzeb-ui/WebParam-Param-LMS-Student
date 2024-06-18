@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Modal } from "react-responsive-modal";
 import quizData from "@/data/quiz/quiz.json";
 import styles from "@/styles/quiz/quiz.module.css";
@@ -137,7 +137,7 @@ const LessonQuiz = () => {
               Cancel
             </button>
             <button className="rbt-btn bg-sucess-opacity btn-sm ms-2">
-              Yes, I'm sure
+              Yes, I&apos;m sure
             </button>
           </div>
         </div>

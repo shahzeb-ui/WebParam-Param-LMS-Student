@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
-import User from "@/images/user.png";
+import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
+import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
 
 const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const sections = [
     { id: "dashboard", label: "Dashboard" },
@@ -59,6 +61,10 @@ const Navbar = () => {
 
   const handleAvatarClick = () => {
     setIsDropdownVisible(!isDropdownVisible);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
@@ -136,6 +142,7 @@ const Navbar = () => {
                 <div
                   className="rbt-offcanvas-trigger d-xl-none"
                   id="rbt-offcanvas-activation"
+                  onClick={toggleSidebar}
                 >
                   <span className="offcanvas-trigger">
                     <span className="offcanvas-bars">
@@ -150,6 +157,10 @@ const Navbar = () => {
           </div>
         </div>
       </header>
+      <StudentMobileSideBar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+      />
     </>
   );
 };
