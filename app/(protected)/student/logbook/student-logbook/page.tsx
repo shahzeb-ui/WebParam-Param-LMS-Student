@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface LogbookEntry {
@@ -11,7 +11,7 @@ interface LogbookEntry {
   timeRemaining?: string;
 }
 
-const logbookEntries: LogbookEntry[] = [
+const initialEntries: LogbookEntry[] = [
   {
     date: "12 May 2023",
     title: "Functions",
@@ -34,13 +34,59 @@ const logbookEntries: LogbookEntry[] = [
 ];
 
 const StudentLogbook = () => {
-  const [entries, setEntries] = useState<LogbookEntry[]>(logbookEntries);
+  const [entries, setEntries] = useState<LogbookEntry[]>(initialEntries);
+  const [timers, setTimers] = useState<{ [key: number]: number }>({});
+
+  const handleCheckin = (index: number) => {
+    const newEntries = [...entries];
+    newEntries[index].status = "Checked In";
+    setEntries(newEntries);
+
+    // Start the timer
+    setTimers((prevTimers) => ({
+      ...prevTimers,
+      [index]: 24 * 60 * 60,
+    }));
+  };
 
   const handleCheckout = (index: number) => {
     const newEntries = [...entries];
     newEntries[index].status = "Checked Out";
     setEntries(newEntries);
+
+    // Stop the timer
+    setTimers((prevTimers) => {
+      const newTimers = { ...prevTimers };
+      delete newTimers[index];
+      return newTimers;
+    });
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimers((prevTimers) => {
+        const newTimers = { ...prevTimers };
+        Object.keys(newTimers).forEach((key) => {
+          const index = parseInt(key);
+          if (newTimers[index] > 0) {
+            newTimers[index] -= 1;
+            const hours = Math.floor(newTimers[index] / 3600);
+            const minutes = Math.floor((newTimers[index] % 3600) / 60);
+            const seconds = newTimers[index] % 60;
+            const timeString = `${hours}h ${minutes}m ${seconds}s remaining`;
+            const newEntries = [...entries];
+            newEntries[index].timeRemaining = timeString;
+            setEntries(newEntries);
+          } else {
+            handleCheckout(index);
+          }
+        });
+        return newTimers;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [entries]);
 
   return (
     <div className="logbook-container d-flex justify-content-center align-items-start vh-100 bg-light pt-5">
@@ -73,32 +119,54 @@ const StudentLogbook = () => {
                 rows={2}
                 placeholder="What did you learn from today's lessons?"
                 value={entry.description}
+                onChange={(e) => {
+                  const newEntries = [...entries];
+                  newEntries[index].description = e.target.value;
+                  setEntries(newEntries);
+                }}
                 readOnly={entry.status === "Checked Out"}
               />
             </div>
             <div className="d-flex justify-content-between align-items-center mt-3">
               <div>
-                <button className="btn btn-outline-success me-2">
+                <button
+                  className="btn btn-outline-success me-2"
+                  disabled={entry.status === "Checked Out"}
+                >
                   <i className="bi bi-emoji-smile"></i> Good
                 </button>
-                <button className="btn btn-outline-secondary me-2">
+                <button
+                  className="btn btn-outline-secondary me-2"
+                  disabled={entry.status === "Checked Out"}
+                >
                   <i className="bi bi-emoji-neutral"></i> Okay
                 </button>
-                <button className="btn btn-outline-danger">
+                <button
+                  className="btn btn-outline-danger"
+                  disabled={entry.status === "Checked Out"}
+                >
                   <i className="bi bi-emoji-frown"></i> Bad
                 </button>
               </div>
-              <button
-                className={`btn ${
-                  entry.status === "Checked Out"
-                    ? "btn-secondary"
-                    : "btn-success"
-                }`}
-                onClick={() => handleCheckout(index)}
-                disabled={entry.status === "Checked Out"}
-              >
-                {entry.status}
-              </button>
+              {entry.status === "Checked Out" ? (
+                <button className="btn btn-secondary" disabled>
+                  {entry.status}
+                </button>
+              ) : entry.status === "Checked In" ? (
+                <button
+                  className="btn btn-success"
+                  onClick={() => handleCheckout(index)}
+                >
+                  Checkout
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleCheckin(index)}
+                >
+                  Checkin
+                </button>
+              )}
             </div>
           </div>
         ))}

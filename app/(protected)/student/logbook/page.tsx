@@ -1,21 +1,26 @@
+// components/LogbookLogin.tsx
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
+import styles from "@/styles/logbook/logbook-login.module.css";
 
 const LogbookLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [activeTab, setActiveTab] = useState("school");
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
 
-  return (
-    <div className="logbook-container d-flex justify-content-center align-items-center vh-100 bg-light">
-      <div className="logbook-card p-4 shadow rounded bg-white">
-        <h3 className="mb-4">Log in to your Logbook</h3>
+  const renderForm = () => {
+    return (
+      <>
+        <h3 className="mb-4">
+          Log in to your {activeTab === "school" ? "School" : "Work"} Logbook
+        </h3>
         <p>Welcome back! Please enter your details.</p>
         <form>
           <div className="mb-3">
@@ -57,26 +62,64 @@ const LogbookLogin = () => {
               </button>
             </div>
           </div>
-          <div className="form-check mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="rememberMe"
-            />
-            <label className="form-check-label" htmlFor="rememberMe">
-              Remember me
-            </label>
-          </div>
-          <div className="d-flex justify-content-between align-items-center mb-3">
+          <div className={`${styles.rememberForgot} mb-3`}>
+            <div className="form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="rememberMe"
+              />
+              <label className="form-check-label" htmlFor="rememberMe">
+                Remember me
+              </label>
+            </div>
             <Link href="#" className="text-decoration-none">
               Forgot password?
             </Link>
           </div>
-          <button type="submit" className="btn btn-logbook w-100">
-            Log In
+          <button type="submit" className={`btn ${styles.btnLogbook} w-100`}>
+            <Link href="/student/logbook/student-logbook">
+              Log In <i className="bi bi-arrow-right ms-2"></i>
+            </Link>
           </button>
         </form>
+      </>
+    );
+  };
+
+  return (
+    <div className={`${styles.logbookContainer}`}>
+      <div className={styles.icon}>
+        <i className="bi bi-journal-bookmark"></i>
+        <span className="get-4-color style-3-left logText">Logbook</span>
+        <div className="section-title">
+          <h4 className="get-4-color">
+            <span className={`logText ${styles.activeTabLabel}`}>
+              {activeTab === "school" ? "Student" : "Work"}
+            </span>
+          </h4>
+        </div>
       </div>
+
+      <div className={styles.navbar}>
+        <button
+          className={`btn ${styles.navButton} ${
+            activeTab === "school" ? styles.navButtonActive : ""
+          }`}
+          onClick={() => setActiveTab("school")}
+        >
+          School
+        </button>
+        <button
+          className={`btn ${styles.navButton} ${
+            activeTab === "work" ? styles.navButtonActive : ""
+          }`}
+          onClick={() => setActiveTab("work")}
+        >
+          Work
+        </button>
+      </div>
+      <div className={`${styles.logbookCard}`}>{renderForm()}</div>
     </div>
   );
 };
