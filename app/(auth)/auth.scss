@@ -76,7 +76,7 @@
             align-items: center;
             color: darkgray;
 
-            & span {
+            & a {
                 text-decoration: underline;
                 color: blue;
                 cursor: pointer;
@@ -93,11 +93,14 @@
 
 
     & h1 {
-        font-size: 34px;
+        font-size: 28px;
     }
 
     & > p {
         font-weight: 400;
+        font-size: 14px;
+        margin-top: 10px;
+        color: darkgray;
     }
 
 
@@ -153,11 +156,27 @@
             gap: 5px;
             align-items: center;
             color: darkgray;
+            justify-content: space-between;
 
-            & span {
+            & > label,
+            & > a {
+                font-size: 12px;
+            }
+
+            & > a {
                 text-decoration: underline;
                 color: blue;
                 cursor: pointer;
+            }
+
+            & > div {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+
+            & p {
+                font-size: 12px;
             }
         }
     }

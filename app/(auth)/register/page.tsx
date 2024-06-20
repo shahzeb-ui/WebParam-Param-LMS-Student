@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Register() {
     return (
         <div className="register">
@@ -23,11 +25,11 @@ export default function Register() {
                 <button type="submit">Register</button>
                 <div className="terms">
                 <input type="checkbox" name="checkbox" /> <label htmlFor="checkbox">I hereby agree to the  
-                <span> Terms & Conditions</span></label>
+                <Link href={'/terms-and-conditions'}> Terms & Conditions</Link></label>
                 </div>
                 <div className="terms">
                     <p>Already have an account?
-                    <span> Log in</span></p>
+                    <Link href={'/login'}> Log in</Link></p>
                 </div>
             </form>
         </div>
