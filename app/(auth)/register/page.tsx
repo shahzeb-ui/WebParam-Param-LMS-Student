@@ -1,24 +1,61 @@
+'use client'
+import { registerUser } from "@/app/api/auth/auth";
+import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import Cookies from 'universal-cookie';
+
+
 export default function Register() {
+    const [username, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setpassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [agreeToTerms, setAgreeToTerms] = useState(false);
+    
+    const cookies = new Cookies();
+    const router = useRouter()
+
+    async function handleRegister(e:any) {
+        e.preventDefault();
+
+        const payload = {
+            email,
+            username,
+            password,
+            confirmPassword
+        }
+
+        const res = await registerUser(payload);
+
+        if (res?.data.message != "User exists") {
+         cookies.set('userEmail', payload.email);
+            router.push('/verify-account');
+        } else {
+            alert('user already exists, please log in')
+        }
+    }
+
+
     return (
         <div className="register">
             <h1>Create an account</h1>
             <p>Start your journey!</p>
-            <form action="/">
+            <form onSubmit={handleRegister}>
                 <div className="inputContainer">
                     <label htmlFor="username">Username <span className="required">*</span></label>
-                    <input type="text" placeholder="Enter Username" name="username" />
+                    <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username" name="username" required />
                 </div>
                 <div className="inputContainer">
                     <label htmlFor="email">Email <span className="required">*</span></label>
-                    <input type="email" placeholder="Enter Email" name="email" />
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email" name="email" required />
                 </div>
                 <div className="inputContainer">
                     <label htmlFor="password">Password <span className="required">*</span></label>
-                    <input type="password" placeholder="Enter Password" name="password" />
+                    <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password" name="password" required />
                 </div>
                 <div className="inputContainer">
                     <label htmlFor="confirmPassword">Confirm Password <span className="required">*</span></label>
-                    <input type="password" placeholder="Enter Password" name="confirmPassword" />
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Enter Password" name="confirmPassword" required />
                 </div>
                 <button type="submit">Register</button>
                 <div className="terms">

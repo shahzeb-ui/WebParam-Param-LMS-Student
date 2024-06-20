@@ -1,18 +1,46 @@
+'use client'
+import { LoginUser } from "@/app/api/auth/auth";
 import Link from "next/link";
+import { useState } from "react";
+import Cookies from 'universal-cookie';
+import { useRouter } from 'next/navigation';
 
-export default function Register() {
+export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const cookies = new Cookies();
+    const router = useRouter();
+
+    async function handleLogIn(e:any) {
+        e.preventDefault();
+
+        const payload = {
+            email,
+            password
+        }
+        const res = await LoginUser(payload);
+        
+        if (res?.data) {
+            cookies.set("loggedInUser", res.data);
+            router.push('/student')
+        } else {
+            alert('please check your details')
+        }
+      }
+  
+    
     return (
         <div className="login">
             <h1>Log in to your account</h1>
             <p>Welcome back! Please enter your details</p>
-            <form action="/">
+            <form onSubmit={handleLogIn}>
                 <div className="inputContainer">
                     <label htmlFor="email">Email <span className="required">*</span></label>
-                    <input type="email" placeholder="Enter Email" name="email" />
+                    <input type="email"  value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email" name="email" />
                 </div>
                 <div className="inputContainer">
                     <label htmlFor="password">Password <span className="required">*</span></label>
-                    <input type="password" placeholder="Enter Password" name="password" />
+                    <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password" name="password" />
                 </div>
                 <div className="rememberme">
                     <div>
