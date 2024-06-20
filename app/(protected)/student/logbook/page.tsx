@@ -1,127 +1,178 @@
-// components/LogbookLogin.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import styles from "@/styles/logbook/logbook-login.module.css";
 
-const LogbookLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [activeTab, setActiveTab] = useState("school");
+interface LogbookEntry {
+  date: string;
+  title: string;
+  description: string;
+  status: string;
+  timeRemaining?: string;
+}
 
-  const handlePasswordToggle = () => {
-    setShowPassword(!showPassword);
+const initialEntries: LogbookEntry[] = [
+  {
+    date: "12 May 2023",
+    title: "Functions",
+    description: "We learnt about functions and loops, we also did quizzes.",
+    status: "Checked Out",
+  },
+  {
+    date: "11 May 2023",
+    title: "Introduction to Python",
+    description: "",
+    status: "Checkout",
+    timeRemaining: "3 Hours Remaining To Checkout",
+  },
+  {
+    date: "12 May 2023",
+    title: "Continuation Of Python Introduction",
+    description: "",
+    status: "Checkout",
+  },
+];
+
+const StudentLogbook = () => {
+  const [entries, setEntries] = useState<LogbookEntry[]>(initialEntries);
+  const [timers, setTimers] = useState<{ [key: number]: number }>({});
+
+  const handleCheckin = (index: number) => {
+    const newEntries = [...entries];
+    newEntries[index].status = "Checked In";
+    setEntries(newEntries);
+
+    // Start the timer
+    setTimers((prevTimers) => ({
+      ...prevTimers,
+      [index]: 24 * 60 * 60,
+    }));
   };
 
-  const renderForm = () => {
-    return (
-      <>
-        <h3 className="mb-4">
-          Log in to your {activeTab === "school" ? "School" : "Work"} Logbook
-        </h3>
-        <p>Welcome back! Please enter your details.</p>
-        <form>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <div className="input-group">
-              <input
-                type={showPassword ? "text" : "password"}
-                className="form-control"
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={handlePasswordToggle}
-              >
-                {showPassword ? (
-                  <i className="bi bi-eye"></i>
-                ) : (
-                  <i className="bi bi-eye-slash"></i>
-                )}
-              </button>
-            </div>
-          </div>
-          <div className={`${styles.rememberForgot} mb-3`}>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="rememberMe"
-              />
-              <label className="form-check-label" htmlFor="rememberMe">
-                Remember me
-              </label>
-            </div>
-            <Link href="#" className="text-decoration-none">
-              Forgot password?
-            </Link>
-          </div>
-          <button type="submit" className={`btn ${styles.btnLogbook} w-100`}>
-            <Link href="/student/logbook/student-logbook">
-              Log In <i className="bi bi-arrow-right ms-2"></i>
-            </Link>
-          </button>
-        </form>
-      </>
-    );
+  const handleCheckout = (index: number) => {
+    const newEntries = [...entries];
+    newEntries[index].status = "Checked Out";
+    setEntries(newEntries);
+
+    // Stop the timer
+    setTimers((prevTimers) => {
+      const newTimers = { ...prevTimers };
+      delete newTimers[index];
+      return newTimers;
+    });
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimers((prevTimers) => {
+        const newTimers = { ...prevTimers };
+        Object.keys(newTimers).forEach((key) => {
+          const index = parseInt(key);
+          if (newTimers[index] > 0) {
+            newTimers[index] -= 1;
+            const hours = Math.floor(newTimers[index] / 3600);
+            const minutes = Math.floor((newTimers[index] % 3600) / 60);
+            const seconds = newTimers[index] % 60;
+            const timeString = `${hours}h ${minutes}m ${seconds}s remaining`;
+            const newEntries = [...entries];
+            newEntries[index].timeRemaining = timeString;
+            setEntries(newEntries);
+          } else {
+            handleCheckout(index);
+          }
+        });
+        return newTimers;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [entries]);
 
   return (
-    <div className={`${styles.logbookContainer}`}>
-      <div className={styles.icon}>
-        <i className="bi bi-journal-bookmark"></i>
-        <span className="get-4-color style-3-left logText">Logbook</span>
-        <div className="section-title">
-          <h4 className="get-4-color">
-            <span className={`logText ${styles.activeTabLabel}`}>
-              {activeTab === "school" ? "Student" : "Work"}
-            </span>
-          </h4>
+    <div className="logbook-container d-flex justify-content-center align-items-start vh-100 bg-light pt-5">
+      <div className="logbook-content w-100" style={{ maxWidth: "800px" }}>
+        <h3 className="mb-4">Logbook</h3>
+        <div className="mb-4">
+          <Link href="#" className="text-decoration-none">
+            Recent
+          </Link>
         </div>
+        {entries.map((entry, index) => (
+          <div
+            key={index}
+            className={`logbook-entry p-4 mb-4 rounded border ${
+              entry.status === "Checked Out" ? "bg-light" : "border-success"
+            }`}
+          >
+            <div className="d-flex justify-content-between align-items-center">
+              <h5>
+                {entry.date} - {entry.title}
+              </h5>
+              {entry.timeRemaining && (
+                <span className="text-muted">{entry.timeRemaining}</span>
+              )}
+              <span className="text-muted">12:00AM</span>
+            </div>
+            <div className="mt-3">
+              <textarea
+                className="form-control"
+                rows={2}
+                placeholder="What did you learn from today's lessons?"
+                value={entry.description}
+                onChange={(e) => {
+                  const newEntries = [...entries];
+                  newEntries[index].description = e.target.value;
+                  setEntries(newEntries);
+                }}
+                readOnly={entry.status === "Checked Out"}
+              />
+            </div>
+            <div className="d-flex justify-content-between align-items-center mt-3">
+              <div>
+                <button
+                  className="btn btn-outline-success me-2"
+                  disabled={entry.status === "Checked Out"}
+                >
+                  <i className="bi bi-emoji-smile"></i> Good
+                </button>
+                <button
+                  className="btn btn-outline-secondary me-2"
+                  disabled={entry.status === "Checked Out"}
+                >
+                  <i className="bi bi-emoji-neutral"></i> Okay
+                </button>
+                <button
+                  className="btn btn-outline-danger"
+                  disabled={entry.status === "Checked Out"}
+                >
+                  <i className="bi bi-emoji-frown"></i> Bad
+                </button>
+              </div>
+              {entry.status === "Checked Out" ? (
+                <button className="btn btn-secondary" disabled>
+                  {entry.status}
+                </button>
+              ) : entry.status === "Checked In" ? (
+                <button
+                  className="btn btn-success"
+                  onClick={() => handleCheckout(index)}
+                >
+                  Checkout
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleCheckin(index)}
+                >
+                  Checkin
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
-
-      <div className={styles.navbar}>
-        <button
-          className={`btn ${styles.navButton} ${
-            activeTab === "school" ? styles.navButtonActive : ""
-          }`}
-          onClick={() => setActiveTab("school")}
-        >
-          School
-        </button>
-        <button
-          className={`btn ${styles.navButton} ${
-            activeTab === "work" ? styles.navButtonActive : ""
-          }`}
-          onClick={() => setActiveTab("work")}
-        >
-          Work
-        </button>
-      </div>
-      <div className={`${styles.logbookCard}`}>{renderForm()}</div>
     </div>
   );
 };
 
-export default LogbookLogin;
+export default StudentLogbook;
