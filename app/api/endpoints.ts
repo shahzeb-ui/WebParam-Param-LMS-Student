@@ -1,0 +1,1 @@
+export const deployedUrl = 'https://khumla-development-user-write.azurewebsites.net/';
