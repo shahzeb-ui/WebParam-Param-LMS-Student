@@ -17,7 +17,7 @@ export default function LessonLayout({
       setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize(); // Set the initial value
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {
