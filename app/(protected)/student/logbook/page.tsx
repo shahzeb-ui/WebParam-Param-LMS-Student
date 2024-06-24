@@ -14,20 +14,20 @@ interface LogbookEntry {
 const initialStudentEntries: LogbookEntry[] = [
   {
     date: "12 May 2023",
-    title: "Functions",
-    description: "We learnt about functions and loops, we also did quizzes.",
+    title: "",
+    description: "",
     status: "Checked Out",
   },
   {
     date: "11 May 2023",
-    title: "Introduction to Python",
+    title: "",
     description: "",
     status: "Checkout",
     timeRemaining: "3 Hours Remaining To Checkout",
   },
   {
     date: "12 May 2023",
-    title: "Continuation Of Python Introduction",
+    title: "",
     description: "",
     status: "Checkout",
   },
@@ -36,8 +36,8 @@ const initialStudentEntries: LogbookEntry[] = [
 const initialWorkEntries: LogbookEntry[] = [
   {
     date: "12 May 2023",
-    title: "Meeting with Client",
-    description: "Discussed project requirements and deliverables.",
+    title: "",
+    description: "",
     status: "Checked Out",
   },
   {
@@ -45,11 +45,11 @@ const initialWorkEntries: LogbookEntry[] = [
     title: "Code Review",
     description: "",
     status: "Checkout",
-    timeRemaining: "2 Hours Remaining To Checkout",
+    timeRemaining: "",
   },
   {
     date: "10 May 2023",
-    title: "Sprint Planning",
+    title: "",
     description: "",
     status: "Checkout",
   },
@@ -127,7 +127,7 @@ const StudentLogbook = () => {
       >
         <div className="d-flex justify-content-between align-items-center">
           <h5>
-            {entry.date} - {entry.title}
+            {entry.date} {entry.title}
           </h5>
           {entry.timeRemaining && (
             <span className="text-muted">{entry.timeRemaining}</span>
