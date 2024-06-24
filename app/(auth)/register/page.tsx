@@ -1,7 +1,8 @@
 'use client'
 import { registerUser } from "@/app/api/auth/auth";
+import { Span } from "next/dist/trace";
 import { useRouter } from 'next/navigation'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 
 
@@ -11,12 +12,16 @@ export default function Register() {
     const [password, setpassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [agreeToTerms, setAgreeToTerms] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false);
+    const [isPasswordNotMatch, setPasswordNotMatch] = useState(false);
     
     const cookies = new Cookies();
     const router = useRouter()
 
     async function handleRegister(e:any) {
         e.preventDefault();
+        setIsSubmitted(true);
 
         const payload = {
             email,
@@ -26,14 +31,27 @@ export default function Register() {
         }
 
         const res = await registerUser(payload);
-
+        setIsSubmitted(false);
         if (res?.data.message != "User exists") {
          cookies.set('userEmail', payload.email);
             router.push('/verify-account');
         } else {
-            alert('user already exists, please log in')
+            setErrorMessage(true)
         }
     }
+
+    useEffect(() => {
+        setErrorMessage(false)
+    }, [username, email, password, confirmPassword])
+
+    
+    useEffect(() => {
+        if (confirmPassword.length >= password.length && password != confirmPassword) {
+            setPasswordNotMatch(true);
+        } else {
+            setPasswordNotMatch(false)
+        }
+    }, [password, confirmPassword])
 
 
     return (
@@ -57,9 +75,19 @@ export default function Register() {
                     <label htmlFor="confirmPassword">Confirm Password <span className="required">*</span></label>
                     <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Enter Password" name="confirmPassword" required />
                 </div>
-                <button type="submit">Register</button>
+                {isPasswordNotMatch && <span className={`errorMessage`}>Password do not match</span>}
+                
+                {errorMessage && <span className={`errorMessage`}>user email already exists, please log in</span>}
+                <button type="submit" disabled={isSubmitted}>
+                    {
+                        isSubmitted ? 
+                        <div className="spinner-border" role="status"/>
+                        :
+                        'Register'
+                    }
+                </button>
                 <div className="terms">
-                <input type="checkbox" name="checkbox" /> <label htmlFor="checkbox">I hereby agree to the  
+                <input type="checkbox" name="checkbox" id="checkbox" checked={agreeToTerms} onChange={() => setAgreeToTerms(!agreeToTerms)} required /> <label htmlFor="checkbox">I hereby agree to the  
                 <span> Terms & Conditions</span></label>
                 </div>
                 <div className="terms">

@@ -1,30 +1,21 @@
-"use client";
+import BootstrapClient from "@/ui/bootstrapclient/bootstrap-client";
+import { Inter } from "next/font/google";
+import { Navbar } from "react-bootstrap";
 
-import StudentDashboardSidebar from "@/ui/student/student-enrolled-courses/student-sidebar";
-import styles from "@/styles/side-bar/side-bar-hide.module.css";
+const inter = Inter({ subsets: ["latin"] });
 
-export default function StudentLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <>
-      <div className="mt-1-mr">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-16">
-              <div className="row g-5">
-                <div className={`col-lg-3 ${styles.sidebarHiddenOnMobile}`}>
-                  <StudentDashboardSidebar />
-                </div>
-
-                <div className="col-lg-9">{children}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
+export default function Layout({
+    children,
+  }: Readonly<{
+    children: React.ReactNode;
+  }>) {
+    return (
+      <html lang="en">
+        <body className={inter.className}>
+        <Navbar />
+          {children}
+          <BootstrapClient />
+        </body>
+      </html>
+    );
+  }

@@ -1,32 +1,39 @@
 'use client'
 import { LoginUser } from "@/app/api/auth/auth";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
 
 export default function Login() {
     const [email, setEmail] = useState('');
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false);
     const [password, setPassword] = useState('');
     const cookies = new Cookies();
     const router = useRouter();
 
     async function handleLogIn(e:any) {
         e.preventDefault();
+        setIsSubmitted(true);
 
         const payload = {
             email,
             password
         }
         const res = await LoginUser(payload);
-        
+        setIsSubmitted(false);
         if (res?.data) {
             cookies.set("loggedInUser", res.data);
             router.push('/student')
         } else {
-            alert('please check your details')
+            setErrorMessage(true)
         }
       }
+
+      useEffect(() => {
+        setErrorMessage(false);
+      }, [email, password])
   
     
     return (
@@ -51,7 +58,15 @@ export default function Login() {
 
                     <Link href={'reset-password'}>Forgot Password</Link>
                 </div>
-                <button type="submit">Log in</button>
+                {errorMessage && <span className={`errorMessage`}>Incorrect User details</span>}
+                <button type="submit" disabled={isSubmitted}>
+                    {
+                        isSubmitted ? 
+                        <div className="spinner-border" role="status"/>
+                        :
+                        'Log in'
+                    }
+                </button>
                 <div className="account">
                     <p>Don&apos;t have an account?
                     <Link href={'/register'}>Register</Link></p>

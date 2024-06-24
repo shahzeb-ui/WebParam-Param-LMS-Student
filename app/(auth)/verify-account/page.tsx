@@ -8,6 +8,8 @@ import Cookies from 'universal-cookie';
 
 export default function VerifyAccount() {
     const [otpValues, setOtpValues] = useState(['', '', '', '', '']);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(false);
     const[otp, setOtp] = useState<Number>(0);
     const inputRefs = [
         useRef<HTMLInputElement>(null),
@@ -22,6 +24,7 @@ export default function VerifyAccount() {
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, index: number) => {
         const value = e.target.value;
+        setErrorMessage(false);
       
         if (/^[0-9]$/.test(value)) {
           const newOtpValues = [...otpValues];
@@ -54,12 +57,10 @@ export default function VerifyAccount() {
         }
       };
 
-      useEffect(() => {
-        console.log('opt: ', otp)
-      }, [otp])
 
       async function handleVerify(e:any) {
         e.preventDefault();
+        setIsSubmitted(true);
         const email = cookies.get('userEmail');
         const payload = {
             email,
@@ -68,11 +69,14 @@ export default function VerifyAccount() {
 
         const res = await verifyUserAccount(payload);
 
-        if (res?.data) {
-            cookies.set("loggedInUser", res.data);
-            router.push('/student')
+        if (res?.data.message != `Otp don't match`) {
+            console.log(res);
+            setIsSubmitted(false);
+            cookies.set("loggedInUser", res?.data);
+            router.push('/student-profile')
         } else {
-            alert('couldnt confirm otp')
+            setIsSubmitted(false);
+            setErrorMessage(true)
         }
       }
   
@@ -80,7 +84,7 @@ export default function VerifyAccount() {
         <div className="verify">
             <h1>Confirm  your email address</h1>
             <p>We’ve sent an email to the address you provided.
-            Check your inbox and enter the 4 digit code.</p>
+            Check your inbox and enter the 5 digit code.</p>
             <form onSubmit={handleVerify}>
                 <div className="otpContainer">
                     {inputRefs.map((ref, index) => (
@@ -96,7 +100,15 @@ export default function VerifyAccount() {
                     />
                   ))}
                 </div>
-                <button type="submit">Confirm</button>
+                {errorMessage && <span className={`errorMessage`} style={{marginBottom:'3px'}}>Incorrect OTP, please check and try again</span>}
+                <button type="submit" disabled={isSubmitted}>
+                    {
+                        isSubmitted ? 
+                        <div className="spinner-border" role="status"/>
+                        :
+                        'Confirm'
+                    }
+                </button>
                 <div className="account">
                     <p>Already have an account?
                     <Link href='/login'> Log in</Link></p>
