@@ -1,0 +1,100 @@
+/* components/uploadDocs.scss */
+.requiredDocs {
+    display: flex;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.docContainer {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    min-width: 40%;
+    margin: 10px;
+    position: relative;
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+}
+
+.docContainer h3 {
+    margin: 10px 0;
+}
+
+.docContainer i {
+    font-size: 24px;
+    color: #007bff;
+}
+
+.docContainer h5 {
+    margin: 10px 0;
+}
+
+.docContainer input[type="file"] {
+    display: none;
+}
+
+.docContainer label {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.docContainer .fileName {
+    margin: 10px 0;
+    font-style: italic;
+}
+
+.docContainer.dragover {
+    background-color: darkgreen;
+    border-color: darkgreen;
+}
+
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    min-height: 200px;
+    transition: .5s all;
+
+    & p {
+        color: darkcyan;
+    }
+
+    & button {
+        width: 200px;
+        height: 50px;
+        border: none;
+        border-radius: 8px;
+        background-color: #05A602;
+        outline: none;
+    }
+}
+
+.successUpload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    min-height: 200px;
+
+    & > :first-child {
+        transform: scale(4);
+        color: #05A602;
+    }
+
+    & button {
+        width: 200px;
+        height: 50px;
+        border: none;
+        border-radius: 8px;
+        background-color: #05A602;
+        outline: none;
+        margin-top: 40px;
+    }
+}
+

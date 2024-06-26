@@ -2,8 +2,8 @@
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from 'next/navigation';
-import { verifyUserAccount } from "@/app/api/auth/auth";
 import Cookies from 'universal-cookie';
+import { verifyUserAccount } from "@/app/api/auth/auth";
 
 
 export default function VerifyAccount() {
@@ -73,7 +73,7 @@ export default function VerifyAccount() {
             console.log(res);
             setIsSubmitted(false);
             cookies.set("loggedInUser", res?.data);
-            router.push('/student-profile')
+            router.push('/student/student-profile')
         } else {
             setIsSubmitted(false);
             setErrorMessage(true)
