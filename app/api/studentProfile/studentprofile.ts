@@ -16,7 +16,7 @@ export async function StudentProfile(payload:any) {
 
 export async function getStudentProfile(userId:any) {
     try {
-        const register = await axios.get(`${readUserData}/api/v1/Profile/GetProfile/${userId}`);
+        const register = await axios.get(`${readUserData}/api/v1/Profile/GetUserProfile/${userId}`);
         return register;
 
     } catch(error: any) {

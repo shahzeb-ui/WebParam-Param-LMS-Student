@@ -25,7 +25,7 @@ export default function Login() {
         setIsSubmitted(false);
         if (res?.data) {
             cookies.set("loggedInUser", res.data);
-            router.push('/student')
+            router.push('/student/student-profile')
         } else {
             setErrorMessage(true)
         }

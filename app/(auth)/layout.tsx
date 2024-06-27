@@ -19,7 +19,7 @@ export default function layout({children}:any) {
             <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_629_512" result="shape"/>
             </filter>
             <linearGradient id="paint0_linear_629_512" x1="460.408" y1="-46.611" x2="-864.207" y2="871.506" gradientUnits="userSpaceOnUse">
-            <stop offset="0.116066" stop-color="white"/>
+            <stop offset="0.116066" stop-color="#F7F7FF"/>
             <stop offset="0.304697" stop-color="#E0E0E0"/>
             <stop offset="1" stop-color="#05A602"/>
             </linearGradient>
