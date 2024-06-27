@@ -9,7 +9,7 @@ interface LogbookEntry {
   title: string;
   description: string;
   status: string;
-  createdTime?: string; // Add the createdTime property
+  createdTime?: string;
   timeRemaining?: string;
   id?: string;
 }
@@ -21,52 +21,10 @@ const StudentLogbook = () => {
   const [workTimer, setWorkTimer] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<string>("school");
   const [rating, setRating] = useState<string>("");
-
-  const handleCheckin = async (
-    entry: LogbookEntry | null,
-    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
-    setTimer: React.Dispatch<React.SetStateAction<number | null>>
-  ) => {
-    if (entry) {
-      try {
-        const userId = "23764473665632";
-        const classId = "4748596856387765";
-        const response = await CheckIn(userId, classId);
-        const newEntry = {
-          ...entry,
-          status: "Checked In",
-          id: response.data.id,
-        };
-        setEntry(newEntry);
-        setTimer(4 * 60 * 60);
-      } catch (error) {
-        console.error("Check-in failed", error);
-      }
-    }
-  };
-
-  const handleCheckout = async (
-    entry: LogbookEntry | null,
-    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
-    setTimer: React.Dispatch<React.SetStateAction<number | null>>
-  ) => {
-    if (entry) {
-      try {
-        const feedback = entry.description;
-        const response = await CheckOut(
-          entry.id!,
-          feedback,
-          rating,
-          "47485968563874645438"
-        );
-        const newEntry = { ...entry, status: "Checked Out" };
-        setEntry(newEntry);
-        setTimer(null);
-      } catch (error) {
-        console.error("Check-out failed", error);
-      }
-    }
-  };
+  const [disableAddEntry, setDisableAddEntry] = useState<boolean>(false);
+  const [disableAddEntryUntil, setDisableAddEntryUntil] = useState<
+    number | null
+  >(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -111,10 +69,66 @@ const StudentLogbook = () => {
           }
         });
       }
+
+      if (disableAddEntryUntil !== null) {
+        const currentTime = Date.now();
+        if (currentTime >= disableAddEntryUntil) {
+          setDisableAddEntry(false);
+          setDisableAddEntryUntil(null);
+        }
+      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [studentTimer, workTimer, studentEntry, workEntry]);
+  }, [studentTimer, workTimer, studentEntry, workEntry, disableAddEntryUntil]);
+
+  const handleCheckin = async (
+    entry: LogbookEntry | null,
+    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
+    setTimer: React.Dispatch<React.SetStateAction<number | null>>
+  ) => {
+    if (entry) {
+      try {
+        const userId = "23764473665632";
+        const classId = "4748596856387765";
+        const response = await CheckIn(userId, classId);
+        const newEntry = {
+          ...entry,
+          status: "Checked In",
+          id: response.data.id,
+        };
+        setEntry(newEntry);
+        setTimer(4 * 60 * 60);
+      } catch (error) {
+        console.error("Check-in failed", error);
+      }
+    }
+  };
+
+  const handleCheckout = async (
+    entry: LogbookEntry | null,
+    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
+    setTimer: React.Dispatch<React.SetStateAction<number | null>>
+  ) => {
+    if (entry) {
+      try {
+        const feedback = entry.description;
+        const response = await CheckOut(
+          entry.id!,
+          feedback,
+          rating,
+          "47485968563874645438"
+        );
+        const newEntry = { ...entry, status: "Checked Out" };
+        setEntry(newEntry);
+        setTimer(null);
+        setDisableAddEntry(true);
+        setDisableAddEntryUntil(Date.now() + 4 * 60 * 60 * 1000);
+      } catch (error) {
+        console.error("Check-out failed", error);
+      }
+    }
+  };
 
   const addNewEntry = (
     setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
@@ -142,7 +156,7 @@ const StudentLogbook = () => {
     setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
     setTimer: React.Dispatch<React.SetStateAction<number | null>>
   ) => {
-    if (!entry) {
+    if (!entry || entry.status === "Checked Out") {
       return null;
     }
 
@@ -266,6 +280,7 @@ const StudentLogbook = () => {
               activeTab === "school" ? studentEntry : workEntry
             )
           }
+          disabled={disableAddEntry}
         >
           <i className="bi bi-plus"></i> Add Entry
         </button>
