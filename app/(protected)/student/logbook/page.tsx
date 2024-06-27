@@ -115,7 +115,7 @@ const StudentLogbook = () => {
     return () => clearInterval(interval);
   }, [studentTimer, workTimer, studentEntry, workEntry]);
 
-  const addNewEntry = async (
+  const addNewEntry = (
     setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
     entry: LogbookEntry | null
   ) => {
@@ -125,19 +125,9 @@ const StudentLogbook = () => {
         date: today,
         title: "",
         description: "",
-        status: "Checkout",
+        status: "Not Checked In",
       };
       setEntry(newEntry);
-
-      try {
-        const userId = "23764473665632";
-        const classId = "4748596856387765";
-        const response = await CheckIn(userId, classId);
-        newEntry.id = response.data.id;
-        setEntry(newEntry);
-      } catch (error) {
-        console.error("Failed to add new entry", error);
-      }
     }
   };
 
@@ -149,6 +139,8 @@ const StudentLogbook = () => {
     if (!entry) {
       return null;
     }
+
+    const isDisabled = entry.status !== "Checked In";
 
     return (
       <div
@@ -175,28 +167,28 @@ const StudentLogbook = () => {
               const newEntry = { ...entry, description: e.target.value };
               setEntry(newEntry);
             }}
-            readOnly={entry.status === "Checked Out"}
+            readOnly={entry.status !== "Checked In"}
           />
         </div>
         <div className="d-flex justify-content-between align-items-center mt-3">
           <div>
             <button
               className="btn btn-outline-success me-2"
-              disabled={entry.status === "Checked Out" || rating !== ""}
+              disabled={isDisabled || rating !== ""}
               onClick={() => setRating("good")}
             >
               <i className="bi bi-emoji-smile"></i> Good
             </button>
             <button
               className="btn btn-outline-secondary me-2"
-              disabled={entry.status === "Checked Out" || rating !== ""}
+              disabled={isDisabled || rating !== ""}
               onClick={() => setRating("okay")}
             >
               <i className="bi bi-emoji-neutral"></i> Okay
             </button>
             <button
               className="btn btn-outline-danger"
-              disabled={entry.status === "Checked Out" || rating !== ""}
+              disabled={isDisabled || rating !== ""}
               onClick={() => setRating("bad")}
             >
               <i className="bi bi-emoji-frown"></i> Bad
