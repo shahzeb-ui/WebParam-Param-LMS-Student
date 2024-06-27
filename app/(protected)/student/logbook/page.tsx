@@ -9,6 +9,7 @@ interface LogbookEntry {
   title: string;
   description: string;
   status: string;
+  createdTime?: string; // Add the createdTime property
   timeRemaining?: string;
   id?: string;
 }
@@ -120,12 +121,17 @@ const StudentLogbook = () => {
     entry: LogbookEntry | null
   ) => {
     const today = new Date().toLocaleDateString();
+    const currentTime = new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }); // Get current time
     if (!entry || entry.date !== today) {
       const newEntry: LogbookEntry = {
         date: today,
         title: "",
         description: "",
         status: "Not Checked In",
+        createdTime: currentTime, // Set createdTime
       };
       setEntry(newEntry);
     }
@@ -155,7 +161,7 @@ const StudentLogbook = () => {
           {entry.timeRemaining && (
             <span className="text-muted">{entry.timeRemaining}</span>
           )}
-          <span className="text-muted">12:00AM</span>
+          <span className="text-muted">{entry.createdTime}</span>
         </div>
         <div className="mt-3">
           <textarea
