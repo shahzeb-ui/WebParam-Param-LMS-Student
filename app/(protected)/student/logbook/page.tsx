@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "@/styles/logbook/logbook-login.module.css";
+import { CheckIn, CheckOut } from "@/actions/logbook-actions/logbook-action";
 
 interface LogbookEntry {
   date: string;
@@ -9,118 +10,148 @@ interface LogbookEntry {
   description: string;
   status: string;
   timeRemaining?: string;
+  id?: string;
 }
 
-const initialStudentEntries: LogbookEntry[] = [
-  {
-    date: "12 May 2023",
-    title: "",
-    description: "",
-    status: "Checked Out",
-  },
-  {
-    date: "11 May 2023",
-    title: "",
-    description: "",
-    status: "Checkout",
-    timeRemaining: "3 Hours Remaining To Checkout",
-  },
-  {
-    date: "12 May 2023",
-    title: "",
-    description: "",
-    status: "Checkout",
-  },
-];
-
-const initialWorkEntries: LogbookEntry[] = [
-  {
-    date: "12 May 2023",
-    title: "",
-    description: "",
-    status: "Checked Out",
-  },
-  {
-    date: "11 May 2023",
-    title: "Code Review",
-    description: "",
-    status: "Checkout",
-    timeRemaining: "",
-  },
-  {
-    date: "10 May 2023",
-    title: "",
-    description: "",
-    status: "Checkout",
-  },
-];
-
 const StudentLogbook = () => {
-  const [entries, setEntries] = useState<LogbookEntry[]>(initialStudentEntries);
-  const [timers, setTimers] = useState<{ [key: number]: number }>({});
+  const [studentEntry, setStudentEntry] = useState<LogbookEntry | null>(null);
+  const [workEntry, setWorkEntry] = useState<LogbookEntry | null>(null);
+  const [studentTimer, setStudentTimer] = useState<number | null>(null);
+  const [workTimer, setWorkTimer] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<string>("school");
+  const [rating, setRating] = useState<string>("");
 
-  useEffect(() => {
-    if (activeTab === "school") {
-      setEntries(initialStudentEntries);
-    } else {
-      setEntries(initialWorkEntries);
+  const handleCheckin = async (
+    entry: LogbookEntry | null,
+    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
+    setTimer: React.Dispatch<React.SetStateAction<number | null>>
+  ) => {
+    if (entry) {
+      try {
+        const userId = "23764473665632";
+        const classId = "4748596856387765";
+        const response = await CheckIn(userId, classId);
+        const newEntry = {
+          ...entry,
+          status: "Checked In",
+          id: response.data.id,
+        };
+        setEntry(newEntry);
+        setTimer(4 * 60 * 60);
+      } catch (error) {
+        console.error("Check-in failed", error);
+      }
     }
-  }, [activeTab]);
-
-  const handleCheckin = (index: number) => {
-    const newEntries = [...entries];
-    newEntries[index].status = "Checked In";
-    setEntries(newEntries);
-
-    setTimers((prevTimers) => ({
-      ...prevTimers,
-      [index]: 4 * 60 * 60,
-    }));
   };
 
-  const handleCheckout = (index: number) => {
-    const newEntries = [...entries];
-    newEntries[index].status = "Checked Out";
-    setEntries(newEntries);
-
-    setTimers((prevTimers) => {
-      const newTimers = { ...prevTimers };
-      delete newTimers[index];
-      return newTimers;
-    });
+  const handleCheckout = async (
+    entry: LogbookEntry | null,
+    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
+    setTimer: React.Dispatch<React.SetStateAction<number | null>>
+  ) => {
+    if (entry) {
+      try {
+        const feedback = entry.description;
+        const response = await CheckOut(
+          entry.id!,
+          feedback,
+          rating,
+          "47485968563874645438"
+        );
+        const newEntry = { ...entry, status: "Checked Out" };
+        setEntry(newEntry);
+        setTimer(null);
+      } catch (error) {
+        console.error("Check-out failed", error);
+      }
+    }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimers((prevTimers) => {
-        const newTimers = { ...prevTimers };
-        Object.keys(newTimers).forEach((key) => {
-          const index = parseInt(key);
-          if (newTimers[index] > 0) {
-            newTimers[index] -= 1;
-            const hours = Math.floor(newTimers[index] / 3600);
-            const minutes = Math.floor((newTimers[index] % 3600) / 60);
-            const seconds = newTimers[index] % 60;
+      if (studentTimer !== null) {
+        setStudentTimer((prevTimer) => {
+          if (prevTimer && prevTimer > 0) {
+            const newTimer = prevTimer - 1;
+            const hours = Math.floor(newTimer / 3600);
+            const minutes = Math.floor((newTimer % 3600) / 60);
+            const seconds = newTimer % 60;
             const timeString = `${hours}h ${minutes}m ${seconds}s remaining`;
-            const newEntries = [...entries];
-            newEntries[index].timeRemaining = timeString;
-            setEntries(newEntries);
+
+            if (studentEntry) {
+              const newEntry = { ...studentEntry, timeRemaining: timeString };
+              setStudentEntry(newEntry);
+            }
+            return newTimer;
           } else {
-            handleCheckout(index);
+            handleCheckout(studentEntry, setStudentEntry, setStudentTimer);
+            return null;
           }
         });
-        return newTimers;
-      });
+      }
+
+      if (workTimer !== null) {
+        setWorkTimer((prevTimer) => {
+          if (prevTimer && prevTimer > 0) {
+            const newTimer = prevTimer - 1;
+            const hours = Math.floor(newTimer / 3600);
+            const minutes = Math.floor((newTimer % 3600) / 60);
+            const seconds = newTimer % 60;
+            const timeString = `${hours}h ${minutes}m ${seconds}s remaining`;
+
+            if (workEntry) {
+              const newEntry = { ...workEntry, timeRemaining: timeString };
+              setWorkEntry(newEntry);
+            }
+            return newTimer;
+          } else {
+            handleCheckout(workEntry, setWorkEntry, setWorkTimer);
+            return null;
+          }
+        });
+      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [entries]);
+  }, [studentTimer, workTimer, studentEntry, workEntry]);
 
-  const renderForm = () => {
-    return entries.map((entry, index) => (
+  const addNewEntry = async (
+    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
+    entry: LogbookEntry | null
+  ) => {
+    const today = new Date().toLocaleDateString();
+    if (!entry || entry.date !== today) {
+      const newEntry: LogbookEntry = {
+        date: today,
+        title: "",
+        description: "",
+        status: "Checkout",
+      };
+      setEntry(newEntry);
+
+      try {
+        const userId = "23764473665632";
+        const classId = "4748596856387765";
+        const response = await CheckIn(userId, classId);
+        newEntry.id = response.data.id;
+        setEntry(newEntry);
+      } catch (error) {
+        console.error("Failed to add new entry", error);
+      }
+    }
+  };
+
+  const renderForm = (
+    entry: LogbookEntry | null,
+    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
+    setTimer: React.Dispatch<React.SetStateAction<number | null>>
+  ) => {
+    if (!entry) {
+      return null;
+    }
+
+    return (
       <div
-        key={index}
         className={`logbook-entry p-4 mb-4 rounded border ${
           entry.status === "Checked Out" ? "bg-light" : "border-success"
         }`}
@@ -141,9 +172,8 @@ const StudentLogbook = () => {
             placeholder="What did you learn from today's lessons?"
             value={entry.description}
             onChange={(e) => {
-              const newEntries = [...entries];
-              newEntries[index].description = e.target.value;
-              setEntries(newEntries);
+              const newEntry = { ...entry, description: e.target.value };
+              setEntry(newEntry);
             }}
             readOnly={entry.status === "Checked Out"}
           />
@@ -152,19 +182,22 @@ const StudentLogbook = () => {
           <div>
             <button
               className="btn btn-outline-success me-2"
-              disabled={entry.status === "Checked Out"}
+              disabled={entry.status === "Checked Out" || rating !== ""}
+              onClick={() => setRating("good")}
             >
               <i className="bi bi-emoji-smile"></i> Good
             </button>
             <button
               className="btn btn-outline-secondary me-2"
-              disabled={entry.status === "Checked Out"}
+              disabled={entry.status === "Checked Out" || rating !== ""}
+              onClick={() => setRating("okay")}
             >
               <i className="bi bi-emoji-neutral"></i> Okay
             </button>
             <button
               className="btn btn-outline-danger"
-              disabled={entry.status === "Checked Out"}
+              disabled={entry.status === "Checked Out" || rating !== ""}
+              onClick={() => setRating("bad")}
             >
               <i className="bi bi-emoji-frown"></i> Bad
             </button>
@@ -176,21 +209,21 @@ const StudentLogbook = () => {
           ) : entry.status === "Checked In" ? (
             <button
               className="btn btn-success"
-              onClick={() => handleCheckout(index)}
+              onClick={() => handleCheckout(entry, setEntry, setTimer)}
             >
               Checkout
             </button>
           ) : (
             <button
               className="btn btn-primary"
-              onClick={() => handleCheckin(index)}
+              onClick={() => handleCheckin(entry, setEntry, setTimer)}
             >
               Checkin
             </button>
           )}
         </div>
       </div>
-    ));
+    );
   };
 
   return (
@@ -225,7 +258,26 @@ const StudentLogbook = () => {
           Work
         </button>
       </div>
-      <div className={`${styles.logbookCard}`}>{renderForm()}</div>
+
+      <div className="text-end my-3">
+        <button
+          className="btn btn-primary"
+          onClick={() =>
+            addNewEntry(
+              activeTab === "school" ? setStudentEntry : setWorkEntry,
+              activeTab === "school" ? studentEntry : workEntry
+            )
+          }
+        >
+          <i className="bi bi-plus"></i> Add Entry
+        </button>
+      </div>
+
+      <div className={`${styles.logbookCard}`}>
+        {activeTab === "school"
+          ? renderForm(studentEntry, setStudentEntry, setStudentTimer)
+          : renderForm(workEntry, setWorkEntry, setWorkTimer)}
+      </div>
     </div>
   );
 };
