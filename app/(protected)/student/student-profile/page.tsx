@@ -17,37 +17,48 @@ export default function UserProfile() {
     const [city, setCity] = useState('');
     const [province, setProvince] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [bio, setBio] = useState('');
+    const [isSubmitting,setIsSubmitting] = useState(false);
     const cookies = new Cookies();
 
     const user = cookies.get('loggedInUser');
     console.log('user:', user);
 
     useEffect(() => {
-        setEmail(user.data.email)
+        setEmail(user?.data?.email)
         getUserProfile();
     }, [getStudentProfile])
+
+    
+    useEffect(() => {
+      console.log('dob:',dateOfBirth)
+  }, [dateOfBirth])
 
     const getUserProfile = async () => {
         const res = await getStudentProfile(user.data.id);
 
         console.log('res', res)
 
+
+        const dob = res?.data.data.dateOfBirth.split('T')[0];
         if (res?.data) {
             setFirstName(res?.data.data.firstName);
             setSurname(res.data.data.surname);
             setIdNumber(res.data.data.idNumber);
             setEmail(res.data.data.email);
             setGender(res.data.data.gender);
-            setDateOfBirth(res.data.data.dateOfBirth);
+            setDateOfBirth(dob);
             setCountry(res.data.data.country);
             setCity(res.data.data.city);
             setProvince(res.data.data.province);
             setPhoneNumber(res.data.data.phoneNumber);
+            setBio(res.data.data.bio);
         }
     }
 
     const handleSubmit = async (e:any) => {
         e.preventDefault();
+        setIsSubmitting(true);
         const payload = {
             userId: user.data.userId,
             firstName,
@@ -59,11 +70,13 @@ export default function UserProfile() {
             country,
             city,
             province,
-            phoneNumber
+            phoneNumber,
+            // bio
         };
 
         const res = await StudentProfile(payload);
         console.log(res);
+        setIsSubmitting(false);
 
     };
 
@@ -278,7 +291,7 @@ export default function UserProfile() {
             <select 
                 id="country"  
                 name="country"
-                value={country}
+                value={province}
                 onChange={(e) => setProvince(e.target.value)} 
                 className="w-100">
                     <option value="">Select Province</option>
@@ -315,26 +328,26 @@ export default function UserProfile() {
             </div>
           </div>
           
-          {/* <div className="col-12">
+          <div className="col-12">
             <div className="rbt-form-group">
               <label htmlFor="bio">Bio</label>
               <textarea
                 id="bio"
                 cols={20}
                 rows={5}
-                defaultValue={
-                  "I'm the Front-End Developer for #Rainbow IT in Bangladesh, OR. I have serious passion for UI effects, animations and creating intuitive, dynamic user experiences."
-                }
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                placeholder='enter a description about yourself'
               />
             </div>
-          </div> */}
+          </div>
           <div className="col-12 mt--20">
             <div className="rbt-form-group">
               <button
                 className="rbt-btn btn-gradient"
                 type='submit'
               >
-                Update Info
+                {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
               </button>
             </div>
           </div>

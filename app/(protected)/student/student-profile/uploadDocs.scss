@@ -18,11 +18,15 @@
 
 .docContainer h3 {
     margin: 10px 0;
+    font-size: 16px;
 }
 
 .docContainer i {
     font-size: 24px;
-    color: #007bff;
+    color: #ffffff;
+    background-color: #703398;
+   padding: 10px 15px;
+   border-radius: 50%;
 }
 
 .docContainer h5 {
@@ -34,7 +38,7 @@
 }
 
 .docContainer label {
-    background-color: #007bff;
+    background-image: linear-gradient(to right, var(--color-secondary), var(--color-secondary), var(--color-primary));
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
@@ -47,8 +51,8 @@
 }
 
 .docContainer.dragover {
-    background-color: darkgreen;
-    border-color: darkgreen;
+    background-color: rgb(72, 52, 133);
+    border-color: rgb(77, 43, 77);
 }
 
 .modalContainer {

@@ -22,5 +22,14 @@ export async function getStudentProfile(userId:any) {
     } catch(error: any) {
         alert(error);
     }
+}
 
+export async function getStudentDocuments(userId:any) {
+    try {
+        const register = await axios.get(`${readUserData}/api/v1/Profile/GetDocuments/${userId}`);
+        return register;
+
+    } catch(error: any) {
+        alert(error);
+    }
 }

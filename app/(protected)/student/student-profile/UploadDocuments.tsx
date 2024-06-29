@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './uploadDocs.scss';
 import Modal from 'react-responsive-modal';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { deployedUrl } from '@/app/api/endpoints';
+import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
+
 
 type DocumentType = 'identity' | 'qualification' | 'cv';
 
@@ -12,11 +14,26 @@ const FileUpload: React.FC = () => {
   const [upLoadingLoader, setUpLoadingLoader] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const [selectedFile, setSelectedFile] = useState<{ type: DocumentType; file: File | null } | null>(null);
+  const [documents, setDocuments] = useState<any[]>([])
   const [files, setFiles] = useState<Record<DocumentType, File | null>>({
     identity: null,
     qualification: null,
     cv: null,
   });
+
+  const cookies = new Cookies();
+
+  const user = cookies.get('loggedInUser');
+
+  async function getDocuments() {
+    const docs = await getStudentDocuments(user.data.id);
+
+    if (docs) {
+      setDocuments(docs?.data.data);
+    }
+  }
+
+
 
   const [dragging, setDragging] = useState<Record<DocumentType, boolean>>({
     identity: false,
@@ -24,9 +41,7 @@ const FileUpload: React.FC = () => {
     cv: false,
   });
 
-  const cookies = new Cookies();
 
-  const user = cookies.get('loggedInUser');
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, type: DocumentType) => {
     if (event.target.files) {
@@ -61,24 +76,16 @@ const FileUpload: React.FC = () => {
     setUpLoadingLoader(true);
     if (selectedFile && selectedFile.file) {
       const formData = new FormData();
-      formData.append('file', selectedFile.file); // Adjusted for correct key
+      formData.append('File', selectedFile.file);
+  formData.append('UserId', user.data.id);
+  formData.append('Type', String(['identity', 'qualification', 'cv'].indexOf(selectedFile.type)));
 
-      const payload = {
-        userId: user.data.userId,
-        Type: ['identity', 'qualification', 'cv'].indexOf(selectedFile.type),
-        File: formData,
-      };
-
-      try {
-        const response = await axios.post(`${deployedUrl}/api/v1/Profile/SubmitDocument`, formData, {
-          params: {
-            userId: payload.userId,
-            Type: payload.Type,
-          },
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+  try {
+    const response = await axios.post(`${deployedUrl}/api/v1/Profile/SubmitDocument`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
         if (response.status === 200) {
           setIsUploaded(true);
@@ -107,6 +114,15 @@ const FileUpload: React.FC = () => {
     },
   };
 
+  useEffect(() => {
+    getDocuments();
+    console.log('documents:',documents)
+  }, [])
+
+  useEffect(() => {
+    console.log('documents:', documents);
+  }, [documents]);
+
   return (
     <>
       <Modal open={isUploading} styles={customModalStyles} onClose={() => setIsUploading(false)} center blockScroll>
@@ -134,8 +150,11 @@ const FileUpload: React.FC = () => {
       </Modal>
 
       <div className="requiredDocs">
-        {(['identity', 'qualification', 'cv'] as DocumentType[]).map((docType, index) => (
-          <div
+        {(['identity', 'qualification', 'cv'] as DocumentType[]).map((docType, index) => {
+           const matchingDoc = documents.find((doc) => doc.type === index);
+           console.log(matchingDoc)
+         
+         return (<div
             className={`docContainer ${dragging[docType] ? 'dragover' : ''}`}
             key={index}
             onDrop={(event) => handleDrop(event, docType)}
@@ -145,7 +164,9 @@ const FileUpload: React.FC = () => {
             <h6>{docType.charAt(0).toUpperCase() + docType.slice(1)}</h6>
             <h3>Drag and drop your file here</h3>
             <div>
-              <i className="bi bi-cloud-arrow-up"></i>
+              {matchingDoc ? <i className="bi bi-eye" style={{background:'green', cursor:'pointer'}}></i>:<i className="bi bi-cloud-arrow-up"></i>}
+             
+             {matchingDoc && <a href={`${matchingDoc?.blobUrl}`} style={{display:'block', fontSize:'12px', marginTop:'10px', textDecoration:'underline', color:'green'}}>View doc</a>}
             </div>
             <h5>OR</h5>
             {files[docType] && <p className="fileName">{files[docType]?.name}</p>}
@@ -157,8 +178,8 @@ const FileUpload: React.FC = () => {
               onChange={(event) => handleFileChange(event, docType)}
             />
                     <label htmlFor={docType}>Browse Files</label>
-                </div>
-            ))}
+                </div>)
+        })}
         </div>
         </>
     );
