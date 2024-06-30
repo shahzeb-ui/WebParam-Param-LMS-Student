@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import CourseWidgets from "@/ui/student/enrolled/course";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
+import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [unitStandards, setUnitStandards] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const itemsPerPage = 3;
   const startIndex = currentPage * itemsPerPage;
@@ -24,6 +28,27 @@ const EnrolledCourses = () => {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  const getUnitStandards = async (courseId: string) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await getAlltUnitStandards(courseId);
+      setUnitStandards(data);
+      setLoading(false);
+    } catch (error: any) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const courseId = "6645bb4ee0138941128b9e97";
+    getUnitStandards(courseId);
+  }, []);
+
+  console.log("The unit standard data: ", unitStandards);
 
   return (
     <>
