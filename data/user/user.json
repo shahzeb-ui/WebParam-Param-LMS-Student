@@ -17,32 +17,32 @@
           {
             "icon": "feather-shopping-bag",
             "text": "Enrolled Courses",
-            "link": "/instructor/instructor-enrolled-course"
+            "link": "/student/enrolled-courses"
           },
           {
             "icon": "feather-heart",
             "text": "Wishlist",
-            "link": "/instructor/instructor-wishlist"
+            "link": "#"
           },
           {
             "icon": "feather-star",
             "text": "Reviews",
-            "link": "/instructor/instructor-reviews"
+            "link": "#"
           },
           {
             "icon": "feather-list",
             "text": "My Quiz Attempts",
-            "link": "/instructor/instructor-my-quiz-attempts"
+            "link": "#"
           },
           {
             "icon": "feather-clock",
             "text": "Order History",
-            "link": "/instructor/instructor-order-history"
+            "link": "#"
           },
           {
             "icon": "feather-message-square",
             "text": "Question & Answer",
-            "link": "/instructor/instructor-quiz-attempts"
+            "link": "#"
           }
         ]
       }

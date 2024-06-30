@@ -68,6 +68,10 @@ const Navbar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const closeDropdown = () => {
+    setIsDropdownVisible(false);
+  };
+
   return (
     <>
       <header className="rbt-header">
@@ -135,7 +139,7 @@ const Navbar = () => {
                   </Link>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
-                      <UserStudent />
+                      <UserStudent closeDropdown={closeDropdown} />
                     </div>
                   )}
                 </div>
