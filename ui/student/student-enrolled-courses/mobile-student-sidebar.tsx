@@ -11,6 +11,11 @@ const StudentMobileSideBar = ({
 }: StudentMobileProps): JSX.Element => {
   const path = usePathname();
 
+  const handleLinkClick = (link: string) => {
+    window.location.href = link;
+    toggleSidebar();
+  };
+
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
       <div className={styles.overlay} onClick={toggleSidebar}></div>
@@ -74,8 +79,9 @@ const StudentMobileSideBar = ({
                       SidebarData.siderbar.slice(7, 10).map((data, index) => (
                         <li key={index}>
                           <a
-                            href={data.link}
                             className={`${path === data.link ? "active" : ""}`}
+                            onClick={() => handleLinkClick(data.link)}
+                            style={{ cursor: "pointer" }}
                           >
                             <i className={data.icon} />
                             <span>{data.text}</span>

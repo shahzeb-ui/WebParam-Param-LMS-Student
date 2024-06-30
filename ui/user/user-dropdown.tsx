@@ -2,7 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import UserData from "@/data/user/user.json";
 
-const UserStudent = () => {
+const UserStudent = ({ closeDropdown }: { closeDropdown: () => void }) => {
+  const handleLinkClick = (link: string) => {
+    window.location.href = link;
+
+    closeDropdown();
+  };
+
   return (
     <div className="rbt-user-menu-list-wrapper">
       {UserData &&
@@ -21,7 +27,8 @@ const UserStudent = () => {
                 <span className="name">{person.name}</span>
                 <Link
                   className="rbt-btn-link color-primary"
-                  href="/instructor/instructor-profile"
+                  href="/student/student-profile"
+                  onClick={() => handleLinkClick("/student/student-profile")}
                 >
                   View Profile
                 </Link>
@@ -30,7 +37,10 @@ const UserStudent = () => {
             <ul className="user-list-wrapper">
               {person.userList.map((list, innerIndex) => (
                 <li key={innerIndex}>
-                  <Link href={list.link}>
+                  <Link
+                    href={list.link}
+                    onClick={() => handleLinkClick(list.link)}
+                  >
                     <i className={list.icon}></i>
                     <span>{list.text}</span>
                   </Link>
@@ -40,7 +50,7 @@ const UserStudent = () => {
             <hr className="mt--10 mb--10" />
             <ul className="user-list-wrapper">
               <li>
-                <Link href="#">
+                <Link href="#" onClick={() => handleLinkClick("#")}>
                   <i className="feather-book-open"></i>
                   <span>Getting Started</span>
                 </Link>
@@ -49,13 +59,13 @@ const UserStudent = () => {
             <hr className="mt--10 mb--10" />
             <ul className="user-list-wrapper">
               <li>
-                <Link href="/instructor/instructor-settings">
+                <Link href="#" onClick={() => handleLinkClick("#")}>
                   <i className="feather-settings"></i>
                   <span>Settings</span>
                 </Link>
               </li>
               <li>
-                <Link href="/">
+                <Link href="/" onClick={() => handleLinkClick("/")}>
                   <i className="feather-log-out"></i>
                   <span>Logout</span>
                 </Link>
