@@ -1,10 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import CourseWidgets from "@/ui/student/enrolled/course";
+import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 
 const EnrolledCourses = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const itemsPerPage = 3;
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const handleNext = () => {
+    if (endIndex < Courses.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <>
       <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -15,16 +35,18 @@ const EnrolledCourses = () => {
               <span className="style-3-left">My Coursess</span>
             </h4>
           </div>
-          <div className="advance-tab-button mb--30">
+          <div
+            className={`advance-tab-button mb--30${styles.advanceTabButton}`}
+          >
             <ul
-              className="nav nav-tabs tab-button-style-2 justify-content-start"
+              className={`nav nav-tabs tab-button-style-2 ${styles.navTabs}`}
               id="myTab-4"
               role="tablist"
             >
               <li role="presentation">
                 <Link
                   href="#"
-                  className="tab-button active"
+                  className={`tab-button active ${styles.tabButton}`}
                   id="home-tab-4"
                   data-bs-toggle="tab"
                   data-bs-target="#home-4"
@@ -38,7 +60,7 @@ const EnrolledCourses = () => {
               <li role="presentation">
                 <Link
                   href="#"
-                  className="tab-button"
+                  className={`tab-button ${styles.tabButton}`}
                   id="profile-tab-4"
                   data-bs-toggle="tab"
                   data-bs-target="#profile-4"
@@ -46,13 +68,13 @@ const EnrolledCourses = () => {
                   aria-controls="profile-4"
                   aria-selected="false"
                 >
-                  <span className="title">Active Courses</span>
+                  <span className="title">Active</span>
                 </Link>
               </li>
               <li role="presentation">
                 <Link
                   href="#"
-                  className="tab-button"
+                  className={`tab-button ${styles.tabButton}`}
                   id="contact-tab-4"
                   data-bs-toggle="tab"
                   data-bs-target="#contact-4"
@@ -60,7 +82,7 @@ const EnrolledCourses = () => {
                   aria-controls="contact-4"
                   aria-selected="false"
                 >
-                  <span className="title">Completed Courses</span>
+                  <span className="title">Completed</span>
                 </Link>
               </li>
             </ul>
@@ -74,7 +96,7 @@ const EnrolledCourses = () => {
               aria-labelledby="home-tab-4"
             >
               <div className="row g-5">
-                {Courses.slice(0, 3)?.map((slide, index) => (
+                {Courses.slice(startIndex, endIndex)?.map((slide, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={`course-enrolled-${index}`}
@@ -100,7 +122,7 @@ const EnrolledCourses = () => {
               aria-labelledby="profile-tab-4"
             >
               <div className="row g-5">
-                {Courses.slice(3, 6)?.map((slide, index) => (
+                {Courses.slice(startIndex, endIndex)?.map((slide, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={`course-active-${index}`}
@@ -126,7 +148,7 @@ const EnrolledCourses = () => {
               aria-labelledby="contact-tab-4"
             >
               <div className="row g-5">
-                {Courses.slice(1, 9)?.map((slide, index) => (
+                {Courses.slice(startIndex, endIndex)?.map((slide, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={`course-completed-${index}`}
@@ -145,16 +167,24 @@ const EnrolledCourses = () => {
               </div>
             </div>
           </div>
-          <div className="pagination-container-1">
+          <div className={styles.paginationContainer}>
             <div className="rbt-card-bottom">
-              <button className="rbt-btn btn-sm w-100 text-center">
+              <button
+                className={`rbt-btn btn-sm ${styles.rbtCardBottom}`}
+                onClick={handlePrevious}
+                disabled={currentPage === 0}
+              >
                 <span className="feather-arrow-left"></span>
                 <span>Previous</span>
               </button>
             </div>
 
             <div className="rbt-card-bottom">
-              <button className="rbt-btn btn-sm w-100 text-center">
+              <button
+                className={`rbt-btn btn-sm ${styles.rbtBtn}`}
+                onClick={handleNext}
+                disabled={endIndex >= Courses.length}
+              >
                 <span>Next</span>
                 <span className="feather-arrow-right"></span>
               </button>

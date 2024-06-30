@@ -1,0 +1,45 @@
+.paginationContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 60px;
+    text-align: center;
+    padding: 0 240px;
+  }
+  
+@media (max-width: 768px) {
+    .paginationContainer {
+      padding: 0 20px;
+}
+  
+.rbtCardBottom {
+      margin: 0 10px;
+}
+  
+.rbtBtn {
+      max-width: 150px;
+    }
+}
+
+.advanceTabButton {
+  margin-bottom: 30px;
+}
+
+.navTabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+}
+
+.navTabs li {
+  margin-right: 10px;
+}
+
+.tabButton {
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .navTabs {
+    justify-content: center;
+  }
+}
