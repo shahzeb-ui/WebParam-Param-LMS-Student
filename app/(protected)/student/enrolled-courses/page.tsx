@@ -2,23 +2,31 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Courses from "@/data/dashboard/instructor/instructor.json";
 import CourseWidgets from "@/ui/student/enrolled/course";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
+import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
+import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [unitStandards, setUnitStandards] = useState<any>(null);
+  const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const [isProgress, setIsProgress] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [showAuthor, setShowAuthor] = useState(false);
+  const [courseStyle, setCourseStyle] = useState("two");
 
   const itemsPerPage = 3;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
   const handleNext = () => {
-    if (endIndex < Courses.length) {
+    if (endIndex < unitStandards.length) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -35,6 +43,7 @@ const EnrolledCourses = () => {
 
     try {
       const data = await getAlltUnitStandards(courseId);
+      console.log("get data: ", data);
       setUnitStandards(data);
       setLoading(false);
     } catch (error: any) {
@@ -121,22 +130,24 @@ const EnrolledCourses = () => {
               aria-labelledby="home-tab-4"
             >
               <div className="row g-5">
-                {Courses.slice(startIndex, endIndex)?.map((slide, index) => (
-                  <div
-                    className="col-lg-4 col-md-6 col-12"
-                    key={`course-enrolled-${index}`}
-                  >
-                    <CourseWidgets
-                      data={slide}
-                      courseStyle="two"
-                      isProgress={true}
-                      isCompleted={false}
-                      isEdit={false}
-                      showDescription={false}
-                      showAuthor={false}
-                    />
-                  </div>
-                ))}
+                {unitStandards
+                  ?.slice(startIndex, endIndex)
+                  ?.map((standard, index) => (
+                    <div
+                      className="col-lg-4 col-md-6 col-12"
+                      key={`unit-standard-completed-${index}`}
+                    >
+                      <UnitStandardWidget
+                        data={standard}
+                        courseStyle={courseStyle}
+                        isProgress={isProgress}
+                        isCompleted={isCompleted}
+                        showDescription={showDescription}
+                        isEdit={isEdit}
+                        showAuthor={showAuthor}
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
 
@@ -147,22 +158,24 @@ const EnrolledCourses = () => {
               aria-labelledby="profile-tab-4"
             >
               <div className="row g-5">
-                {Courses.slice(startIndex, endIndex)?.map((slide, index) => (
-                  <div
-                    className="col-lg-4 col-md-6 col-12"
-                    key={`course-active-${index}`}
-                  >
-                    <CourseWidgets
-                      data={slide}
-                      courseStyle="two"
-                      isCompleted={false}
-                      isProgress={false}
-                      isEdit={false}
-                      showDescription={false}
-                      showAuthor={false}
-                    />
-                  </div>
-                ))}
+                {unitStandards
+                  ?.slice(startIndex, endIndex)
+                  ?.map((standard, index) => (
+                    <div
+                      className="col-lg-4 col-md-6 col-12"
+                      key={`unit-standard-completed-${index}`}
+                    >
+                      <UnitStandardWidget
+                        data={standard}
+                        courseStyle={courseStyle}
+                        isProgress={isProgress}
+                        isCompleted={isCompleted}
+                        showDescription={showDescription}
+                        isEdit={isEdit}
+                        showAuthor={showAuthor}
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
 
@@ -173,22 +186,24 @@ const EnrolledCourses = () => {
               aria-labelledby="contact-tab-4"
             >
               <div className="row g-5">
-                {Courses.slice(startIndex, endIndex)?.map((slide, index) => (
-                  <div
-                    className="col-lg-4 col-md-6 col-12"
-                    key={`course-completed-${index}`}
-                  >
-                    <CourseWidgets
-                      data={slide}
-                      courseStyle="two"
-                      isCompleted={true}
-                      isProgress={true}
-                      showDescription={false}
-                      isEdit={false}
-                      showAuthor={false}
-                    />
-                  </div>
-                ))}
+                {unitStandards
+                  ?.slice(startIndex, endIndex)
+                  ?.map((standard, index) => (
+                    <div
+                      className="col-lg-4 col-md-6 col-12"
+                      key={`unit-standard-completed-${index}`}
+                    >
+                      <UnitStandardWidget
+                        data={standard}
+                        courseStyle={courseStyle}
+                        isProgress={isProgress}
+                        isCompleted={isCompleted}
+                        showDescription={showDescription}
+                        isEdit={isEdit}
+                        showAuthor={showAuthor}
+                      />
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -208,7 +223,7 @@ const EnrolledCourses = () => {
               <button
                 className={`rbt-btn btn-sm ${styles.rbtBtn}`}
                 onClick={handleNext}
-                disabled={endIndex >= Courses.length}
+                disabled={endIndex >= unitStandards.length}
               >
                 <span>Next</span>
                 <span className="feather-arrow-right"></span>
