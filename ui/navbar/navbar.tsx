@@ -6,6 +6,7 @@ import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
 import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
+import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
 
 const Navbar = () => {
@@ -133,7 +134,7 @@ const Navbar = () => {
                     />
                   </Link>
                   {isDropdownVisible && (
-                    <div className="dropdown-menu-1">
+                    <div className={styles.dropdownMenu}>
                       <UserStudent />
                     </div>
                   )}
