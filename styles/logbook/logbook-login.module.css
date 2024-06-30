@@ -1,84 +1,125 @@
-/* styles/LogbookLogin.module.css */
 .logbookContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    position: relative;
-  }
-  
-  .logbookCard {
-    padding: 2rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-    border-radius: 0.5rem;
-    max-width: 545px;
-    width: 100%;
-  }
-  
-  .btnLogbook {
-    background-color: #28a745;
-    color: white;
-    font-size: 1.5rem;
-    padding: 1rem; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .btnLogbook:hover {
-    background-color: #b9e2c2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+  padding: 1rem;
+}
+
+.logbookCard {
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.btnLogbook {
+  background-color: #28a745;
+  color: white;
+  font-size: 1.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnLogbook:hover {
+  background-color: #b9e2c2;
+}
+
+.logText {
+  font-size: medium;
+}
+
+.navButton {
+  width: 210px;
+  height: 52px;
+  font-size: 1.25rem;
+  margin: 0 0.5rem;
+  background-color: #e9ecef;
+  color: #000;
+  border: 1px solid #ced4da;
+  border-radius: 4.25rem;
+}
+
+.navButton:hover {
+  background-color: #dee2e6;
+}
+
+.navButtonActive {
+  background-color: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+}
+
+.icon {
+  position: absolute;
+  top: 10px;
+  font-size: 20px;
+  left: 10px;
+  font-size: 2rem;
+  color: #28a745;
+}
+
+.navbar {
+  position: absolute;
+  top: 120px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.rememberForgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activeTabLabel {
+  font-size: 2.5rem;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .logbookContainer {
+    padding: 0.5rem;
   }
 
-  .logText {
-    font-size: medium;
+  .logbookCard {
+    padding: 1rem;
   }
-  
+
   .navButton {
-    width: 210px;
-    height: 52px;
-    font-size: 1.25rem;
-    margin: 0 0.5rem;
-    background-color: #e9ecef;
-    color: #000;
-    border: 1px solid #ced4da;
-    border-radius: 4.25rem;
-  }
-  
-  .navButton:hover {
-    background-color: #dee2e6;
-  }
-  
-  .navButtonActive {
-    background-color: #28a745;
-    color: white;
-    border: 1px solid #28a745;
-  }
-  
-  .icon {
-    position: absolute;
-    top: 10px;
-    font-size: 20px;
-    left: 10px;
-    font-size: 2rem;
-    color: #28a745;
-  }
-  
-  .navbar {
-    position: absolute;
-    top: 170px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-  
-  .rememberForgot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 100px;
+    height: 40px;
+    font-size: 1rem;
+    margin: 0.25rem;
   }
 
   .activeTabLabel {
-    font-size: 2.5rem;
-    text-decoration: underline;
+    font-size: 1.5rem;
   }
+
+  .navbar {
+    top: 80px;
+  }
+
+  .icon {
+    top: 5px;
+    left: 5px;
+    font-size: 1.5rem;
+  }
+}
+
+.buttonContainer {
+  position: absolute;
+  top: 270px;
+  left: 20px;
+  display: flex;
+  gap: 30px;
+}
+
+.add-entry-btn, .view-logbooks-btn {
+  margin-right: 10px;
+}

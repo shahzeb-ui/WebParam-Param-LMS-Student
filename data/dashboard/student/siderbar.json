@@ -59,6 +59,11 @@
         "link": "#",
         "text": "Assignments",
         "icon": "feather-menu"
+      },
+      {
+        "link": "/student/logbook",
+        "text": "Logbook",
+        "icon": "bi bi-journal-bookmark"
       }
     ]
   }
