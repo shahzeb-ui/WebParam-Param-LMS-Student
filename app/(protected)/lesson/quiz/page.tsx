@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal } from "react-responsive-modal";
 import quizData from "@/data/quiz/quiz.json";
 import styles from "@/styles/quiz/quiz.module.css";
@@ -10,29 +9,96 @@ import modelStyles from "@/styles/modal/modal.module.css";
 const LessonQuiz = () => {
   const [next, setNext] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [score, setScore] = useState<number>(0);
+  const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
+    Array(quizData.length).fill(false)
+  ); // Track answered questions
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>(
+    Array(quizData.length).fill(null)
+  ); // Track selected answers for each question
 
-  const handleNext = () => {
-    if (next < quizData.length - 1) {
-      setNext(next + 1);
-    }
-  };
+  useEffect(() => {
+    // Load state from local storage on mount
+    const storedState = JSON.parse(localStorage.getItem("quizState") || "{}");
+    if (storedState.next !== undefined) setNext(storedState.next);
+    if (storedState.score !== undefined) setScore(storedState.score);
+    if (storedState.answeredQuestions !== undefined)
+      setAnsweredQuestions(storedState.answeredQuestions);
+    if (storedState.selectedAnswers !== undefined)
+      setSelectedAnswers(storedState.selectedAnswers);
+  }, []);
+
+  useEffect(() => {
+    // Update selected answer when changing questions
+    setSelectedAnswer(selectedAnswers[next]);
+  }, [next, selectedAnswers]);
+
+  useEffect(() => {
+    // Save state to local storage on change
+    localStorage.setItem(
+      "quizState",
+      JSON.stringify({
+        next,
+        score,
+        answeredQuestions,
+        selectedAnswers,
+      })
+    );
+  }, [next, score, answeredQuestions, selectedAnswers]);
 
   const handlePrevious = () => {
     if (next > 0) {
       setNext(next - 1);
+      setIsCorrect(null);
+    }
+  };
+
+  const handleOptionChange = (event: any) => {
+    if (!answeredQuestions[next]) {
+      setSelectedAnswer(event.target.value);
+      setSelectedAnswers((prev) => {
+        const newAnswers = [...prev];
+        newAnswers[next] = event.target.value;
+        return newAnswers;
+      });
     }
   };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    if (selectedAnswer === quizData[next].answer) {
+      setIsCorrect(true);
+      setScore(score + 1); // Increment score if answer is correct
+    } else {
+      setIsCorrect(false);
+    }
+    setAnsweredQuestions((prev) => {
+      const newAnswered = [...prev];
+      newAnswered[next] = true; // Mark this question as answered
+      return newAnswered;
+    });
     setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+    if (next < quizData.length - 1) {
+      setNext(next + 1);
+      setIsCorrect(null);
+    }
   };
 
   return (
     <>
       <div className="inner">
         <div className="content">
-          <form id="quiz-form" className="quiz-form-wrapper">
+          <form
+            id="quiz-form"
+            className="quiz-form-wrapper"
+            onSubmit={handleSubmit}
+          >
             {quizData.map((item, index) => (
               <div
                 key={index}
@@ -48,7 +114,7 @@ const LessonQuiz = () => {
                       </strong>
                     </span>
                     <span>
-                      Attempts Allowed: <strong>1</strong>
+                      Points Allocated: <strong>{score}</strong>
                     </span>
                   </div>
                   <div className="quize-top-right">
@@ -69,8 +135,11 @@ const LessonQuiz = () => {
                           <input
                             id={`rbt-checkbox-${index + 1}-${optIndex}`}
                             name={`rbt-checkbox-${index + 1}`}
-                            type="checkbox"
+                            type="radio"
                             value={option}
+                            checked={selectedAnswer === option}
+                            onChange={handleOptionChange}
+                            disabled={answeredQuestions[index]} // Disable if already answered
                           />
                           <label
                             htmlFor={`rbt-checkbox-${index + 1}-${optIndex}`}
@@ -96,25 +165,12 @@ const LessonQuiz = () => {
                 Previous
               </button>
               <button
-                className={`rbt-btn bg-primary-opacity btn-sm ms-2 ${
-                  next === quizData.length - 1 ? "d-none" : ""
-                }`}
-                id="next-btn"
-                type="button"
-                onClick={handleNext}
-              >
-                Next
-              </button>
-              <Link
-                className={`rbt-btn btn-gradient btn-sm ms-2 ${
-                  next !== quizData.length - 1 ? "d-none" : ""
-                }`}
-                href="#"
+                className="rbt-btn btn-gradient btn-sm ms-2"
                 id="submit-btn"
-                onClick={handleSubmit}
+                type="submit"
               >
                 Submit
-              </Link>
+              </button>
             </div>
           </form>
         </div>
@@ -123,21 +179,23 @@ const LessonQuiz = () => {
       <Modal
         classNames={{ modalContainer: modelStyles.mainModalclassNames }}
         open={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={handleModalClose}
         center
       >
         <div className={modelStyles.modalContent}>
           <i
             className={`bi bi-arrow-down-circle ${modelStyles.customIcon}`}
           ></i>
-          <h3 className={modelStyles.modalTitle}>Confirm Submission</h3>
-
+          <h3 className={modelStyles.modalTitle}>Submission Result</h3>
+          {isCorrect !== null && (
+            <p>{isCorrect ? "Correct answer!" : "Wrong answer!"}</p>
+          )}
           <div className={styles.buttonWrapper}>
-            <button className="rbt-btn bg-primary-opacity btn-sm ms-2">
-              Cancel
-            </button>
-            <button className="rbt-btn bg-sucess-opacity btn-sm ms-2">
-              Yes, I&apos;m sure
+            <button
+              className="rbt-btn bg-primary-opacity btn-sm ms-2"
+              onClick={handleModalClose}
+            >
+              {next < quizData.length - 1 ? "Next Question" : "Close"}
             </button>
           </div>
         </div>
