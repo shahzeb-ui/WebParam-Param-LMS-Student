@@ -1,7 +1,9 @@
 "use client";
 
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import InfiniteScroll from "react-infinite-scroll-component";
 import LessonData from "@/data/lessons/lesson.json";
 
 interface LessonItem {
@@ -30,12 +32,47 @@ const LessonSidebar = () => {
   const path = usePathname();
   const isActive = (href: string) => path === href;
 
+  const lessonsPerPage = 5;
+  const [lessons, setLessons] = useState(
+    (LessonData as LessonDataStructure).lesson.slice(0, lessonsPerPage)
+  );
+  const [hasMore, setHasMore] = useState(
+    (LessonData as LessonDataStructure).lesson.length > lessonsPerPage
+  );
+
+  const fetchMoreData = () => {
+    if (lessons.length >= (LessonData as LessonDataStructure).lesson.length) {
+      setHasMore(false);
+      return;
+    }
+    setTimeout(() => {
+      setLessons((prevLessons) =>
+        prevLessons.concat(
+          (LessonData as LessonDataStructure).lesson.slice(
+            prevLessons.length,
+            prevLessons.length + lessonsPerPage
+          )
+        )
+      );
+    }, 500);
+  };
+
   return (
-    <>
-      <div className="rbt-course-feature-inner rbt-search-activation">
-        <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
-          <div className="accordion" id="accordionExampleb2">
-            {(LessonData as LessonDataStructure).lesson.map((data, index) => (
+    <div className="rbt-course-feature-inner rbt-search-activation">
+      <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
+        <div className="accordion" id="accordionExampleb2">
+          <InfiniteScroll
+            dataLength={lessons.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b></b>
+              </p>
+            }
+          >
+            {lessons.map((data, index) => (
               <div className="accordion-item card" key={index}>
                 <h2
                   className="accordion-header card-header"
@@ -120,10 +157,10 @@ const LessonSidebar = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </InfiniteScroll>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

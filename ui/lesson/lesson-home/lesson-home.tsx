@@ -5,6 +5,7 @@ import Plyr from "plyr";
 import { useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+
 const QuestionAndAnswers = dynamic(
   () => import("@/ui/lesson/question-answers/question-answer"),
   { ssr: false }
@@ -26,15 +27,25 @@ const LessonHomepage = () => {
           "volume",
           "fullscreen",
         ],
+        youtube: {
+          noCookie: true,
+          rel: 0,
+          modestbranding: 1,
+          iv_load_policy: 3,
+          showinfo: 0,
+          controls: 0,
+          disablekb: 1,
+        },
       });
     }
   }, []);
+
   return (
     <>
       <div className="inner">
         <div className="plyr__video-embed rbtplayer">
           <iframe
-            src="https://www.youtube.com/embed/qKzhrXqT6oE"
+            src="https://www.youtube-nocookie.com/embed/qKzhrXqT6oE?rel=0&modestbranding=1&iv_load_policy=3&showinfo=0&controls=0&disablekb=1"
             allowFullScreen
             allow="autoplay"
           ></iframe>

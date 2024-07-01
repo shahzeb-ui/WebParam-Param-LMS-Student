@@ -1,0 +1,35 @@
+.logbook-list-container {
+    width: 100%;
+}
+  
+.logbook-card-custom {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 100%;
+}
+  
+.bg-light-custom {
+    background-color: #f8f9fa;
+}
+  
+.border-success-custom {
+    border-color: #28a745;
+}
+  
+.d-flex-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.mt-3-custom {
+    margin-top: 1rem;
+}
+  
+.loading-custom {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #6c757d;
+    margin: 1rem 0;
+}
+  

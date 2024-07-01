@@ -1,34 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import Courses from "@/data/dashboard/instructor/instructor.json";
 
-interface CourseData {
-  id: number;
+interface UnitData {
+  id: string;
   title: string;
-  courseThumbnail: string;
-  coursePrice: number;
-  offerPrice: number;
-  reviews: {
-    oneStar: number;
-    twoStar: number;
-    threeStar: number;
-    fourStar: number;
-    fiveStar: number;
-  };
-  rating: {
-    average: number;
-    total: number;
-  };
-  enrolledStudent: string;
-  lectures: string;
-  progressValue?: number;
 }
 
 interface Props {
-  data: CourseData;
-  unitData?: UnitData;
+  data: UnitData;
   courseStyle: string;
   isProgress: boolean;
   isCompleted: boolean;
@@ -37,20 +20,23 @@ interface Props {
   showAuthor: boolean;
 }
 
-interface UnitData {
-  id: string;
-  title: string;
-  // Add other relevant fields from the server response if needed
-}
-
-const CourseWidgets: React.FC<Props> = ({
+const UnitStandardWidget: React.FC<Props> = ({
   data,
-  unitData,
   courseStyle,
   isProgress,
   isEdit,
   showAuthor,
 }) => {
+  const course = Courses.find((course) => course.id.toString() === data.id) || {
+    courseThumbnail: "images/course/course-02.jpg",
+    coursePrice: 0,
+    offerPrice: 0,
+    reviews: { oneStar: 0, twoStar: 0, threeStar: 0, fourStar: 0, fiveStar: 0 },
+    rating: { average: 0, total: 0 },
+    lectures: "0",
+    enrolledStudent: "0",
+  };
+
   const [discountPercentage, setDiscountPercentage] = useState<string>("");
   const [totalReviews, setTotalReviews] = useState<number>(0);
   const [rating, setRating] = useState<number>(0);
@@ -58,24 +44,24 @@ const CourseWidgets: React.FC<Props> = ({
   useEffect(() => {
     const calculateDiscount = () => {
       const discount =
-        ((data.coursePrice - data.offerPrice) / data.coursePrice) * 100;
+        ((course.coursePrice - course.offerPrice) / course.coursePrice) * 100;
       setDiscountPercentage(discount.toFixed(0));
     };
 
     const calculateTotalReviews = () => {
       const total =
-        data.reviews.oneStar +
-        data.reviews.twoStar +
-        data.reviews.threeStar +
-        data.reviews.fourStar +
-        data.reviews.fiveStar;
+        course.reviews.oneStar +
+        course.reviews.twoStar +
+        course.reviews.threeStar +
+        course.reviews.fourStar +
+        course.reviews.fiveStar;
       setTotalReviews(total);
     };
 
     calculateDiscount();
     calculateTotalReviews();
-    setRating(Math.round(data.rating.average));
-  }, [data]);
+    setRating(Math.round(course.rating.average));
+  }, [course]);
 
   return (
     <>
@@ -85,7 +71,7 @@ const CourseWidgets: React.FC<Props> = ({
             <Image
               width={330}
               height={227}
-              src={data.courseThumbnail}
+              src={course.courseThumbnail}
               alt={data.title}
             />
             <div className="rbt-badge-3 bg-white">
@@ -113,20 +99,18 @@ const CourseWidgets: React.FC<Props> = ({
                 </div>
               </div>
               <h4 className="rbt-card-title">
-                <Link href={`/course-details/${unitData?.id}`}>
-                  {unitData?.title}
-                </Link>
+                <Link href={`/course-details/${data.id}`}>{data.title}</Link>
               </h4>
             </>
           )}
           <ul className="rbt-meta">
             <li>
               <i className="feather-book" />
-              {data.lectures} Lessons
+              {course.lectures} Lessons
             </li>
             <li>
               <i className="feather-users" />
-              {data.enrolledStudent} Students
+              {course.enrolledStudent} Students
             </li>
           </ul>
 
@@ -150,7 +134,7 @@ const CourseWidgets: React.FC<Props> = ({
               <div className="rbt-card-bottom">
                 <Link
                   className="bi bi-play rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                  href="#"
+                  href="/lesson"
                 >
                   Continue Watching
                 </Link>
@@ -199,8 +183,8 @@ const CourseWidgets: React.FC<Props> = ({
           {!isProgress ? (
             <div className="rbt-card-bottom">
               <div className="rbt-price">
-                <span className="current-price">${data.offerPrice}</span>
-                <span className="off-price">${data.coursePrice}</span>
+                <span className="current-price">${course.offerPrice}</span>
+                <span className="off-price">${course.coursePrice}</span>
               </div>
 
               {isEdit ? (
@@ -223,4 +207,4 @@ const CourseWidgets: React.FC<Props> = ({
   );
 };
 
-export default CourseWidgets;
+export default UnitStandardWidget;
