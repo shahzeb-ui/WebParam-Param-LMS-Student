@@ -134,7 +134,7 @@ const UnitStandardWidget: React.FC<Props> = ({
               <div className="rbt-card-bottom">
                 <Link
                   className="bi bi-play rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                  href="#"
+                  href="/lesson"
                 >
                   Continue Watching
                 </Link>
@@ -180,7 +180,7 @@ const UnitStandardWidget: React.FC<Props> = ({
             </div>
           )}
 
-          {isProgress ? (
+          {!isProgress ? (
             <div className="rbt-card-bottom">
               <div className="rbt-price">
                 <span className="current-price">${course.offerPrice}</span>

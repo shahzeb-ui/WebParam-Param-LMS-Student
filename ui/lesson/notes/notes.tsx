@@ -7,10 +7,15 @@ const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Notes = () => {
   const [body, setBody] = useState("");
+  const [notes, setNotes] = useState([
+    {
+      title: "Sample Note",
+      content: noteData.sampleNote,
+    },
+  ]);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const handleChange = (value: string) => {
-    console.log("handle change: ", value);
     setBody(value);
   };
 
@@ -32,10 +37,12 @@ const Notes = () => {
     return { displayContent, isLong };
   };
 
-  const { displayContent, isLong } = getDisplayContent(
-    noteData.sampleNote,
-    isCollapsed
-  );
+  const handlePostQuestion = () => {
+    // Add the new note to the list of notes
+    const newNote = { title: "New Note", content: body };
+    setNotes([...notes, newNote]);
+    setBody(""); // Clear the editor after posting the note
+  };
 
   return (
     <div className="container mt-4 pb-5">
@@ -51,35 +58,6 @@ const Notes = () => {
             {" "}
             Add Note
           </button>
-        </div>
-      </div>
-
-      <div className="row mt-3">
-        <div className="mb-3">
-          <div className="note-title fw-bold">Basics of Next.js</div>
-          <div className="mt-2">
-            <p>
-              {displayContent}
-              {isLong && (
-                <a
-                  onClick={toggleCollapse}
-                  className="ms-2"
-                  style={{ cursor: "pointer" }}
-                >
-                  {isCollapsed ? "Read more" : ""}
-                </a>
-              )}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <hr className="custom-line-break-1" />
-
-      <div className="row">
-        <div className="col-md-5 mb-3">
-          <label className="form-label fw-bold underline-2">Note Title</label>
-          <input type="text" className="form-control mt-3" />
         </div>
       </div>
 
@@ -99,10 +77,41 @@ const Notes = () => {
           <button className="btn btn-secondary me-2 custom-button-4">
             Cancel
           </button>
-          <button className="btn btn-success custom-button-4">
+          <button
+            className="btn btn-success custom-button-4"
+            onClick={handlePostQuestion}
+          >
             Post Question
           </button>
         </div>
+      </div>
+
+      <hr className="custom-line-break-1" />
+
+      <div className="row mt-3">
+        {notes.map((note, index) => {
+          const { displayContent, isLong } = getDisplayContent(
+            note.content,
+            isCollapsed
+          );
+          return (
+            <div className="mb-3" key={index}>
+              <div className="note-title fw-bold">{note.title}</div>
+              <div className="mt-2">
+                <p dangerouslySetInnerHTML={{ __html: displayContent }} />
+                {isLong && (
+                  <a
+                    onClick={toggleCollapse}
+                    className="ms-2"
+                    style={{ cursor: "pointer" }}
+                  >
+                    {isCollapsed ? "Read more" : ""}
+                  </a>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

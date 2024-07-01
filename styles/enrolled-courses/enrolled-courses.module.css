@@ -27,7 +27,7 @@
 .navTabs {
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .navTabs li {

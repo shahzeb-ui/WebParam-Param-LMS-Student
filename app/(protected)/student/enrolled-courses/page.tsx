@@ -14,7 +14,7 @@ const EnrolledCourses = () => {
   const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const [isProgress, setIsProgress] = useState(false);
+  const [isProgress, setIsProgress] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
