@@ -38,40 +38,53 @@ export default function Login() {
     
     return (
         <div className="login">
+            <div className="rbt-contact-form contact-form-style-1 max-width-auto">
             <h1>Log in to your account</h1>
             <p>Welcome back! Please enter your details</p>
-            <form onSubmit={handleLogIn}>
-                <div className="inputContainer">
-                    <label htmlFor="email">Email <span className="required">*</span></label>
-                    <input type="email"  value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email" name="email" />
+            <form className="max-width-auto" onSubmit={handleLogIn}>
+                <div className="form-group">
+                <input type="email"  value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email *" name="email" />
+                <span className="focus-border" />
                 </div>
-                <div className="inputContainer">
-                    <label htmlFor="password">Password <span className="required">*</span></label>
-                    <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password" name="password" />
+                <div className="form-group">
+                <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password *" name="password" />
+                <span className="focus-border" />
                 </div>
-                <div className="rememberme">
-                    <div>
-                        <input type="checkbox" name="checkbox" /> 
-                        <label htmlFor="checkbox">Remember me  
-                        </label>
+                <div className="row mb--30">
+                <div className="col-lg-6">
+                    <div className="rbt-checkbox">
+                    <input type="checkbox" id="rememberme" name="rememberme" />
+                    <label htmlFor="rememberme">Remember me</label>
                     </div>
-
-                    <Link href={'reset-password'}>Forgot Password</Link>
+                </div>
+                <div className="col-lg-6">
+                    <div className="rbt-lost-password text-end">
+                    <Link className="rbt-btn-link" href="/forgot-password">
+                        Lost your password?
+                    </Link>
+                    </div>
+                </div>
                 </div>
                 {errorMessage && <span className={`errorMessage`}>Incorrect User details</span>}
-                <button type="submit" disabled={isSubmitted}>
-                    {
-                        isSubmitted ? 
-                        <div className="spinner-border" role="status"/>
-                        :
-                        'Log in'
-                    }
+                <div className="form-submit-group">
+                <button
+                    type="submit"
+                    className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
+                >
+                    {isSubmitted ? <div className="spinner-border" role="status"/> : <span className="icon-reverse-wrapper">
+                    <span className="btn-text">Log In</span>
+                    <span className="btn-icon">
+                        <i className="feather-arrow-right" />
+                    </span>
+                    <span className="btn-icon">
+                        <i className="feather-arrow-right" />
+                    </span>
+                    </span>}
                 </button>
-                <div className="account">
-                    <p>Don&apos;t have an account?
-                    <Link href={'/register'}>Register</Link></p>
                 </div>
             </form>
+            </div>
+
         </div>
     )
 }

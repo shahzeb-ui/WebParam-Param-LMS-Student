@@ -19,9 +19,9 @@ export default function layout({children}:any) {
             <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_629_512" result="shape"/>
             </filter>
             <linearGradient id="paint0_linear_629_512" x1="460.408" y1="-46.611" x2="-864.207" y2="871.506" gradientUnits="userSpaceOnUse">
-            <stop offset="0.116066" stop-color="#F7F7FF"/>
-            <stop offset="0.304697" stop-color="#E0E0E0"/>
-            <stop offset="1" stop-color="#05A602"/>
+            <stop offset="0.116066" stop-color="#2f57ef"/>
+            <stop offset="0.304697" stop-color="#b966e7"/>
+            <stop offset="1" stop-color="#2f57ef"/>
             </linearGradient>
             </defs>
         </svg>
@@ -42,8 +42,8 @@ export default function layout({children}:any) {
             <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_629_509" result="shape"/>
             </filter>
             <linearGradient id="paint0_linear_629_509" x1="547.279" y1="283.98" x2="-14.2188" y2="287.627" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#05A602"/>
-            <stop offset="0.56933" stop-color="#EEEEEE"/>
+            <stop stop-color="#b966e7"/>
+            <stop offset="0.56933" stop-color="#2f57ef"/>
             </linearGradient>
             </defs>
         </svg>

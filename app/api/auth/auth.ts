@@ -34,3 +34,21 @@ export async function LoginUser(payload:any) {
     }
 
 }
+
+export async function sendOtp(payload:any) {
+    try {
+        const sendOtp = await axios.post(`${deployedUrl}/api/v1/Users/SendResetPasswordOtp`, payload);
+        return sendOtp;
+    } catch(error: any) {
+        alert(error);
+    }
+}
+
+export async function verifyOtp(payload:any) {
+    try {
+        const verifyOtp = await axios.put(`${deployedUrl}/api/v1/Users/ResetPassword`, payload);
+        return verifyOtp;
+    } catch(error: any) {
+        alert(error);
+    }
+}
