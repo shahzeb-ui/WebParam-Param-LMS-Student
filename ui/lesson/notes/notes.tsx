@@ -48,16 +48,15 @@ const Notes = () => {
   };
 
   const handlePostNote = () => {
-    // Generate a new ID for the new note
     const newNote: Note = {
       id: notes.length + 1,
       title: "New Note",
       content: body,
-      studentName: "Anonymous", // Assuming a default student name for new notes
+      studentName: "Anonymous",
       timestamp: new Date().toISOString(),
     };
     setNotes([...notes, newNote]);
-    setBody(""); // Clear the editor after posting the note
+    setBody("");
   };
 
   return (
@@ -72,7 +71,12 @@ const Notes = () => {
         <div className="col-md-5 mb-3">
           <button
             className="bi bi-plus-lg btn btn-success custom-button-4"
-            onClick={() => document.querySelector(".ql-editor")?.focus()}
+            onClick={() => {
+              const editor = document.querySelector(
+                ".ql-editor"
+              ) as HTMLElement;
+              editor?.focus();
+            }}
           >
             Add Note
           </button>
