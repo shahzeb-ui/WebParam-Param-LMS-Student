@@ -67,7 +67,7 @@ const UnitStandardWidget: React.FC<Props> = ({
     <>
       <div className="rbt-card variation-01 rbt-hover">
         <div className="rbt-card-img">
-          <Link href={`/course-details/${data.id}`}>
+          <Link href={`/student/enrolled-courses/${data.id}`}>
             <Image
               width={330}
               height={227}
@@ -99,7 +99,7 @@ const UnitStandardWidget: React.FC<Props> = ({
                 </div>
               </div>
               <h4 className="rbt-card-title">
-                <Link href={`/course-details/${data.id}`}>{data.title}</Link>
+                <Link href={`/student/enrolled-courses/${data.id}`}>{data.title}</Link>
               </h4>
             </>
           )}

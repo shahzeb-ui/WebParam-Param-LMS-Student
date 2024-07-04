@@ -1,19 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import noteData from "@/data/sample/sample.json";
+import notesData from "@/data/sample/sample.json";
+import { format } from "date-fns";
+
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
+interface Note {
+  id: number;
+  title: string;
+  content: string;
+  studentName: string;
+  timestamp: string;
+}
+
 const Notes = () => {
-  const [body, setBody] = useState("");
-  const [notes, setNotes] = useState([
-    {
-      title: "Sample Note",
-      content: noteData.sampleNote,
-    },
-  ]);
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [body, setBody] = useState<string>("");
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
+
+  useEffect(() => {
+    // Load initial notes data from the JSON file
+    setNotes(notesData);
+  }, []);
 
   const handleChange = (value: string) => {
     setBody(value);
@@ -37,11 +47,16 @@ const Notes = () => {
     return { displayContent, isLong };
   };
 
-  const handlePostQuestion = () => {
-    // Add the new note to the list of notes
-    const newNote = { title: "New Note", content: body };
+  const handlePostNote = () => {
+    const newNote: Note = {
+      id: notes.length + 1,
+      title: "New Note",
+      content: body,
+      studentName: "Anonymous",
+      timestamp: new Date().toISOString(),
+    };
     setNotes([...notes, newNote]);
-    setBody(""); // Clear the editor after posting the note
+    setBody("");
   };
 
   return (
@@ -54,8 +69,15 @@ const Notes = () => {
 
       <div className="row mt-3">
         <div className="col-md-5 mb-3">
-          <button className="bi bi-plus-lg btn btn-success custom-button-4">
-            {" "}
+          <button
+            className="bi bi-plus-lg btn btn-success custom-button-4"
+            onClick={() => {
+              const editor = document.querySelector(
+                ".ql-editor"
+              ) as HTMLElement;
+              editor?.focus();
+            }}
+          >
             Add Note
           </button>
         </div>
@@ -74,14 +96,17 @@ const Notes = () => {
 
       <div className="row mt-3">
         <div className="col-md-10 d-flex justify-content-end">
-          <button className="btn btn-secondary me-2 custom-button-4">
+          <button
+            className="btn btn-secondary me-2 custom-button-4"
+            onClick={() => setBody("")}
+          >
             Cancel
           </button>
           <button
             className="btn btn-success custom-button-4"
-            onClick={handlePostQuestion}
+            onClick={handlePostNote}
           >
-            Post Question
+            Post Note
           </button>
         </div>
       </div>
@@ -89,13 +114,13 @@ const Notes = () => {
       <hr className="custom-line-break-1" />
 
       <div className="row mt-3">
-        {notes.map((note, index) => {
+        {notes.map((note) => {
           const { displayContent, isLong } = getDisplayContent(
             note.content,
             isCollapsed
           );
           return (
-            <div className="mb-3" key={index}>
+            <div className="mb-3" key={note.id}>
               <div className="note-title fw-bold">{note.title}</div>
               <div className="mt-2">
                 <p dangerouslySetInnerHTML={{ __html: displayContent }} />
@@ -105,9 +130,18 @@ const Notes = () => {
                     className="ms-2"
                     style={{ cursor: "pointer" }}
                   >
-                    {isCollapsed ? "Read more" : ""}
+                    {isCollapsed ? "Read more" : "Show less"}
                   </a>
                 )}
+              </div>
+              <div className="d-flex justify-content-between mt-2">
+                <div>
+                  <strong>By:</strong> {note.studentName}
+                </div>
+                <div>
+                  <strong>Posted on:</strong>{" "}
+                  {format(new Date(note.timestamp), "PPpp")}
+                </div>
               </div>
             </div>
           );
