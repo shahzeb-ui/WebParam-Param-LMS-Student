@@ -201,29 +201,7 @@ const EnrolledCourses = () => {
               </div>
             </div>
           </div>
-          {/* <div className={styles.paginationContainer}>
-            <div className="rbt-card-bottom">
-              <button
-                className={`rbt-btn btn-sm ${styles.rbtCardBottom}`}
-                onClick={handlePrevious}
-                disabled={currentPage === 0}
-              >
-                <span className="feather-arrow-left"></span>
-                <span>Previous</span>
-              </button>
-            </div>
 
-            <div className="rbt-card-bottom">
-              <button
-                className={`rbt-btn btn-sm ${styles.rbtBtn}`}
-                onClick={handleNext}
-                disabled={endIndex >= unitStandards.length}
-              >
-                <span>Next</span>
-                <span className="feather-arrow-right"></span>
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     </>

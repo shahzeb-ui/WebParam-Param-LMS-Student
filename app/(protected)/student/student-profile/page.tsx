@@ -35,7 +35,7 @@ export default function UserProfile() {
 
 
     const getUserProfile = async () => {
-        const res = await getStudentProfile(user.data.userId);
+        const res = await getStudentProfile(user.data.id);
 
         console.log('res', res)
 
