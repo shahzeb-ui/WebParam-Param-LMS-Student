@@ -1,5 +1,10 @@
+import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
 const StudentHome = () => {
-  return <></>;
+  return (
+    <>
+      <ResponsiveVideoComponent />
+    </>
+  );
 };
 
 export default StudentHome;

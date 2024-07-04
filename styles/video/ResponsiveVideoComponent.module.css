@@ -1,0 +1,366 @@
+.jss8 {
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.jss9 {
+    padding: 24px 24px 32px 24px;
+    border-top: 1px solid rgba(43, 46, 64, 0.1);
+}
+
+.jss10 {
+    border: 1px solid rgba(43, 46, 64, 0.1);
+    margin-top: 24px;
+    border-radius: 8px;
+}
+
+.jss11 {
+    gap: 16px;
+    display: flex;
+    padding-top: 28px;
+    flex-direction: column;
+}
+
+.jss12 {
+    display: flex;
+    padding: 16px 16px 16px 24px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.jss13 {
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.jss14 {
+    max-width: 100%;
+}
+
+.jss14 .MuiButton-label {
+    display: inline-block;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.css10mnzje {
+    margin: 0;
+    font-family: 'Basier Square Medium', sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(5, 5, 6, 0.96);
+  }
+  
+  .css-jn02v8 {
+    padding: 8px;
+  }
+  
+  .css-jn02v8.MuiButton-sizeExtraSmall {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .css-jn02v8.MuiButton-sizeSmall {
+    min-width: 28px;
+    min-height: 28px;
+    width: 28px;
+    height: 28px;
+  }
+  
+  .css-jn02v8.MuiButton-sizeMedium {
+    min-width: 32px;
+    min-height: 32px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .css-jn02v8.MuiButton-sizeLarge {
+    min-width: 36px;
+    min-height: 36px;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .css-jn02v8.MuiButton-sizeLarge .MuiButton-startIcon .MuiSvgIcon-root {
+    font-size: 24px;
+  }
+  
+  .css-jn02v8 .MuiButton-startIcon {
+    margin: 0;
+  }
+  
+  .css-vwx8kh,
+  .css-335hf8,
+  .css-1eujqh3,
+  .css-zxo8lg {
+    font-family: 'Basier Square Regular', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    text-transform: uppercase;
+    min-width: 64px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    color: rgba(43, 46, 64, 0.06);
+    text-transform: none;
+    padding: 8px 16px;
+    font-family: 'Basier Square Medium', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 0;
+    color: rgba(5, 5, 6, 0.96);
+    background-color: rgba(0, 0, 0, 0);
+    height: 32px;
+    font-size: 13px;
+    padding: 8px;
+  }
+  
+  .css-vwx8kh:hover,
+  .css-335hf8:hover,
+  .css-1eujqh3:hover,
+  .css-zxo8lg:hover {
+    text-decoration: none;
+    background-color: rgba(43, 46, 64, 0.04);
+  }
+  
+  @media (hover: none) {
+    .css-vwx8kh:hover,
+    .css-335hf8:hover,
+    .css-1eujqh3:hover,
+    .css-zxo8lg:hover {
+      background-color: transparent;
+    }
+  }
+  
+  .css-vwx8kh.Mui-disabled,
+  .css-335hf8.Mui-disabled,
+  .css-1eujqh3.Mui-disabled,
+  .css-zxo8lg.Mui-disabled {
+    color: rgba(0, 0, 0, 0.26);
+  }
+  
+  .css-vwx8kh .MuiButton-startIcon *:nth-of-type(1),
+  .css-335hf8 .MuiButton-startIcon *:nth-of-type(1),
+  .css-1eujqh3 .MuiButton-startIcon *:nth-of-type(1),
+  .css-zxo8lg .MuiButton-startIcon *:nth-of-type(1) {
+    fill: currentColor;
+  }
+  
+  .css-vwx8kh .MuiButton-endIcon *:nth-of-type(1),
+  .css-335hf8 .MuiButton-endIcon *:nth-of-type(1),
+  .css-1eujqh3 .MuiButton-endIcon *:nth-of-type(1),
+  .css-zxo8lg .MuiButton-endIcon *:nth-of-type(1) {
+    fill: currentColor;
+  }
+  
+  .css-vwx8kh:hover,
+  .css-335hf8:hover,
+  .css-1eujqh3:hover,
+  .css-zxo8lg:hover {
+    background-color: color-mix(in srgb, rgb(43, 46, 64) 6%, rgba(0, 0, 0, 0));
+  }
+  
+  .css-vwx8kh.Mui-disabled .MuiSvgIcon-root,
+  .css-vwx8kh.Mui-disabled .MuiTypography-root,
+  .css-335hf8.Mui-disabled .MuiSvgIcon-root,
+  .css-335hf8.Mui-disabled .MuiTypography-root,
+  .css-1eujqh3.Mui-disabled .MuiSvgIcon-root,
+  .css-1eujqh3.Mui-disabled .MuiTypography-root,
+  .css-zxo8lg.Mui-disabled .MuiSvgIcon-root,
+  .css-zxo8lg.Mui-disabled .MuiTypography-root {
+    color: rgba(43, 46, 64, 0.2);
+  }
+  
+  @media (max-width: 599.95px) {
+    .css-vwx8kh,
+    .css-335hf8,
+    .css-1eujqh3,
+    .css-zxo8lg {
+      height: 44px;
+    }
+  }
+  
+  .css-z1obdb {
+    white-space: pre-line;
+    word-break: break-word;
+  }
+  
+  .css-p5upc0 {
+    margin: 0;
+    font-family: 'Basier Square Regular', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.357px;
+    color: rgba(5, 5, 6, 0.96);
+    white-space: pre-line;
+    word-break: break-word;
+  }
+  
+  .css-1ffsqw7 {
+    display: inherit;
+    margin-right: 8px;
+    margin-left: -4px;
+    font-size: 16px;
+  }
+  
+  .css-1ffsqw7>*:nth-of-type(1),
+  .css-1ffsqw7 *:nth-of-type(1) {
+    font-size: 20px;
+  }
+  
+.css1vl7155 {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    min-width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 0px;
+    visibility: visible;
+    box-shadow: rgba(43, 46, 64, 0.06) 0px 0px 0px 1px;
+    border-radius: 8px;
+}
+  
+  .cssb98nv4 {
+    position: absolute;
+    inset: 0px;
+  }
+  
+  .css1q19oq5 {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%; /* Assuming the canvas is not used */
+  }
+  
+  .cssq6awd8 {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(100px);
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    overflow: hidden; 
+  }
+  
+  .cssl7x8s3 {
+    position: absolute;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+  }
+  
+  .cssjemxbu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .css5f7vge {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .css1k3btty,
+  .css9tskdo,
+  .css1n3scyi,
+  .css9g9i5v,
+  .css859fep,
+  .MuiBoxRoot,
+  .MuiBoxRootTime,
+  .MuiBoxRootDuration,
+  .cssux22lo,
+  .csskuymjs,
+  .css1fxbdpm,
+  .cssy3ngs,
+  .cssg6ppkv,
+  .csskd7unw,
+  .csszxonyc,
+  .cssnejomu,
+  .MuiSliderRoot,
+  .MuiSliderRail,
+  .MuiSliderTrack,
+  .MuiSliderThumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .MuiSvgIconRoot {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+  }
+  
+  .MuiButtonBaseRoot {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .MuiButtonIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .MuiButtonStartIcon {
+    margin-right: 8px;
+  }
+  
+  .MuiTypographyRoot {
+    font-size: 0.875rem;
+  }
+  
+  .MuiTypographyBodyMedium2 {
+    font-weight: 500;
+  }
+  
+  .MuiTouchRippleRoot {
+    display: none;
+  }
+  
+  /* Additional responsive styles */
+  @media (max-width: 768px) {
+    .cssjemxbu {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .css5f7vge {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  

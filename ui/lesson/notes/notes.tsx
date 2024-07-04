@@ -21,7 +21,6 @@ const Notes = () => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
   useEffect(() => {
-    // Load initial notes data from the JSON file
     setNotes(notesData);
   }, []);
 
