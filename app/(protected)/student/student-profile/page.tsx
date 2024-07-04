@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import './userProfile.scss'
 import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
 import Cookies from 'universal-cookie';
+import { useRouter } from 'next/navigation';
 import UploadDocuments from './UploadDocuments';
 import Image from 'next/image';
 
@@ -19,26 +20,24 @@ export default function UserProfile() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [bio, setBio] = useState('');
     const [isSubmitting,setIsSubmitting] = useState(false);
+    const [id, setId] = useState('');
     const cookies = new Cookies();
+    const router = useRouter();
+    
 
     const user = cookies.get('loggedInUser');
     console.log('user:', user);
 
     useEffect(() => {
         setEmail(user?.data?.email)
-        getUserProfile();
+      getUserProfile();
     }, [getStudentProfile])
 
-    
-    useEffect(() => {
-      console.log('dob:',dateOfBirth)
-  }, [dateOfBirth])
 
     const getUserProfile = async () => {
-        const res = await getStudentProfile(user.data.id);
+        const res = await getStudentProfile(user.data.userId);
 
         console.log('res', res)
-
 
         const dob = res?.data.data.dateOfBirth.split('T')[0];
         if (res?.data) {
@@ -53,6 +52,7 @@ export default function UserProfile() {
             setProvince(res.data.data.province);
             setPhoneNumber(res.data.data.phoneNumber);
             setBio(res.data.data.bio);
+            setId(res.data.data.id);
         }
     }
 
@@ -71,7 +71,8 @@ export default function UserProfile() {
             city,
             province,
             phoneNumber,
-            // bio
+            bio,
+            id: id
         };
 
         const res = await StudentProfile(payload);
@@ -81,68 +82,12 @@ export default function UserProfile() {
     };
 
     return (
-<div className="col-lg-9">
-<div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
-  <div className="content">
-    <div className="section-title">
-      <h4 className="rbt-title-style-3">Student Info</h4>
-    </div>
-    <div className="advance-tab-button mb--30">
-      <ul
-        className="nav nav-tabs tab-button-style-2 justify-content-start"
-        id="settinsTab-4"
-        role="tablist"
-      >
-        <li role="presentation">
-          <a
-            className="tab-button active"
-            id="profile-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#profile"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="true"
-            href="/instructor/instructor-settings#"
-          >
-            <span className="title">Profile</span>
-          </a>
-        </li>
-        <li role="presentation">
-          <a
-            className="tab-button"
-            id="social-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#social"
-            role="tab"
-            aria-controls="social"
-            aria-selected="false"
-            href="/instructor/instructor-settings#"
-          >
-            <span className="title">Documents</span>
-          </a>
-        </li>
-        <li role="presentation">
-          <a
-            className="tab-button"
-            id="password-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#password"
-            role="tab"
-            aria-controls="password"
-            aria-selected="false"
-            href="/instructor/instructor-settings#"
-          >
-            <span className="title">Password</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div className="tab-content">
+      <>
       <div
         className="tab-pane fade active show"
         id="profile"
         role="tabpanel"
-        aria-labelledby="profile-tab"
+        aria-labelledby="Personal Information"
       >
         <div className="rbt-dashboard-content-wrapper">
           <div className="tutor-bg-photo height-245" />
@@ -353,71 +298,6 @@ export default function UserProfile() {
           </div>
         </form>
       </div>
-      <div
-        className="tab-pane fade"
-        id="password"
-        role="tabpanel"
-        aria-labelledby="password-tab"
-      >
-        <form
-          action="#"
-          className="rbt-profile-row rbt-default-form row row--15"
-        >
-          <div className="col-12">
-            <div className="rbt-form-group">
-              <label htmlFor="currentpassword">Current Password</label>
-              <input
-                id="currentpassword"
-                type="password"
-                placeholder="Current Password"
-              />
-            </div>
-          </div>
-          <div className="col-12">
-            <div className="rbt-form-group">
-              <label htmlFor="newpassword">New Password</label>
-              <input
-                id="newpassword"
-                type="password"
-                placeholder="New Password"
-              />
-            </div>
-          </div>
-          <div className="col-12">
-            <div className="rbt-form-group">
-              <label htmlFor="retypenewpassword">Re-type New Password</label>
-              <input
-                id="retypenewpassword"
-                type="password"
-                placeholder="Re-type New Password"
-              />
-            </div>
-          </div>
-          <div className="col-12 mt--10">
-            <div className="rbt-form-group">
-              <a
-                className="rbt-btn btn-gradient"
-                href="/instructor/instructor-settings#"
-              >
-                Update Password
-              </a>
-            </div>
-          </div>
-        </form>
-      </div>
-      
-      <div
-        className="tab-pane fade"
-        id="social"
-        role="tabpanel"
-        aria-labelledby="social-tab"
-      >
-        <UploadDocuments />
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-
+      </>
     )
 }
