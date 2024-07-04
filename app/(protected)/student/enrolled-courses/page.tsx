@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import CourseWidgets from "@/ui/student/enrolled/course";
+// import CourseWidgets from "@/ui/student/enrolled/course";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
@@ -25,17 +25,17 @@ const EnrolledCourses = () => {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const handleNext = () => {
-    if (endIndex < unitStandards.length) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  // const handleNext = () => {
+  //   if (endIndex < unitStandards.length) {
+  //     setCurrentPage(currentPage + 1);
+  //   }
+  // };
 
-  const handlePrevious = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  // const handlePrevious = () => {
+  //   if (currentPage > 0) {
+  //     setCurrentPage(currentPage - 1);
+  //   }
+  // };
 
   const getUnitStandards = async (courseId: string) => {
     setLoading(true);
@@ -57,7 +57,7 @@ const EnrolledCourses = () => {
     getUnitStandards(courseId);
   }, []);
 
-  console.log("The unit standard data: ", unitStandards);
+  // console.log("The unit standard data: ", unitStandards);
 
   return (
     <>
@@ -130,24 +130,22 @@ const EnrolledCourses = () => {
               aria-labelledby="home-tab-4"
             >
               <div className="row g-5">
-                {unitStandards
-                  ?.slice(startIndex, endIndex)
-                  ?.map((standard, index) => (
-                    <div
-                      className="col-lg-4 col-md-6 col-12"
-                      key={`unit-standard-completed-${index}`}
-                    >
-                      <UnitStandardWidget
-                        data={standard}
-                        courseStyle={courseStyle}
-                        isProgress={isProgress}
-                        isCompleted={isCompleted}
-                        showDescription={showDescription}
-                        isEdit={isEdit}
-                        showAuthor={showAuthor}
-                      />
-                    </div>
-                  ))}
+                {unitStandards?.map((standard, index) => (
+                  <div
+                    className="col-lg-4 col-md-6 col-12"
+                    key={`unit-standard-completed-${index}`}
+                  >
+                    <UnitStandardWidget
+                      data={standard}
+                      courseStyle={courseStyle}
+                      isProgress={isProgress}
+                      isCompleted={isCompleted}
+                      showDescription={showDescription}
+                      isEdit={isEdit}
+                      showAuthor={showAuthor}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -158,24 +156,22 @@ const EnrolledCourses = () => {
               aria-labelledby="profile-tab-4"
             >
               <div className="row g-5">
-                {unitStandards
-                  ?.slice(startIndex, endIndex)
-                  ?.map((standard, index) => (
-                    <div
-                      className="col-lg-4 col-md-6 col-12"
-                      key={`unit-standard-completed-${index}`}
-                    >
-                      <UnitStandardWidget
-                        data={standard}
-                        courseStyle={courseStyle}
-                        isProgress={isProgress}
-                        isCompleted={isCompleted}
-                        showDescription={showDescription}
-                        isEdit={isEdit}
-                        showAuthor={showAuthor}
-                      />
-                    </div>
-                  ))}
+                {unitStandards?.map((standard, index) => (
+                  <div
+                    className="col-lg-4 col-md-6 col-12"
+                    key={`unit-standard-completed-${index}`}
+                  >
+                    <UnitStandardWidget
+                      data={standard}
+                      courseStyle={courseStyle}
+                      isProgress={isProgress}
+                      isCompleted={isCompleted}
+                      showDescription={showDescription}
+                      isEdit={isEdit}
+                      showAuthor={showAuthor}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -186,28 +182,26 @@ const EnrolledCourses = () => {
               aria-labelledby="contact-tab-4"
             >
               <div className="row g-5">
-                {unitStandards
-                  ?.slice(startIndex, endIndex)
-                  ?.map((standard, index) => (
-                    <div
-                      className="col-lg-4 col-md-6 col-12"
-                      key={`unit-standard-completed-${index}`}
-                    >
-                      <UnitStandardWidget
-                        data={standard}
-                        courseStyle={courseStyle}
-                        isProgress={isProgress}
-                        isCompleted={isCompleted}
-                        showDescription={showDescription}
-                        isEdit={isEdit}
-                        showAuthor={showAuthor}
-                      />
-                    </div>
-                  ))}
+                {unitStandards?.map((standard, index) => (
+                  <div
+                    className="col-lg-4 col-md-6 col-12"
+                    key={`unit-standard-completed-${index}`}
+                  >
+                    <UnitStandardWidget
+                      data={standard}
+                      courseStyle={courseStyle}
+                      isProgress={isProgress}
+                      isCompleted={isCompleted}
+                      showDescription={showDescription}
+                      isEdit={isEdit}
+                      showAuthor={showAuthor}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-          <div className={styles.paginationContainer}>
+          {/* <div className={styles.paginationContainer}>
             <div className="rbt-card-bottom">
               <button
                 className={`rbt-btn btn-sm ${styles.rbtCardBottom}`}
@@ -229,7 +223,7 @@ const EnrolledCourses = () => {
                 <span className="feather-arrow-right"></span>
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

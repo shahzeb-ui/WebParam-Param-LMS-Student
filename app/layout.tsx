@@ -1,6 +1,7 @@
 "use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ToastContainer } from "react-toastify";
 import BootstrapClient from "@/ui/bootstrapclient/bootstrap-client";
 import Navbar from "@/ui/navbar/navbar";
 import { usePathname } from "next/navigation";
@@ -42,6 +43,7 @@ export default function RootLayout({
           pathname != "/verify-account" && <Navbar />}
         {children}
         <BootstrapClient />
+        <ToastContainer />
       </body>
     </html>
   );
