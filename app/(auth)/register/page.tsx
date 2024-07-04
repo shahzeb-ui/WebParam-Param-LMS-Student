@@ -1,5 +1,6 @@
 'use client'
 import { registerUser } from '@/app/api/auth/auth';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
@@ -55,45 +56,51 @@ export default function Register() {
 
     return (
         <div className="register">
-            <h1>Create an account</h1>
-            <p>Start your journey!</p>
-            <form onSubmit={handleRegister}>
-                <div className="inputContainer">
-                    <label htmlFor="username">Username <span className="required">*</span></label>
-                    <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username" name="username" required />
+            <div className="rbt-contact-form contact-form-style-1 max-width-auto">
+            <h1 style={{textAlign: 'center'}}>Create an account</h1>
+            <p style={{textAlign: 'center'}}>Start your journey!</p>
+            <form className="max-width-auto" onSubmit={handleRegister}>
+                <div className="form-group">
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email *" name="register-email" required />
+                <span className="focus-border" />
                 </div>
-                <div className="inputContainer">
-                    <label htmlFor="email">Email <span className="required">*</span></label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email" name="email" required />
+                <div className="form-group">
+                <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username" name="username *" required />
+                    <span className="focus-border" />
                 </div>
-                <div className="inputContainer">
-                    <label htmlFor="password">Password <span className="required">*</span></label>
-                    <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password" name="password" required />
+
+                <div className="form-group">
+                    <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password *" name="register_password" required />
+                    <span className="focus-border" />
                 </div>
-                <div className="inputContainer">
-                    <label htmlFor="confirmPassword">Confirm Password <span className="required">*</span></label>
-                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Enter Password" name="confirmPassword" required />
+                <div className="form-group">
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Re-enter Password *" name="register_conpassword" required />
+                    <span className="focus-border" />
                 </div>
                 {isPasswordNotMatch && <span className={`errorMessage`}>Password do not match</span>}
                 
                 {errorMessage && <span className={`errorMessage`}>user email already exists, please log in</span>}
-                <button type="submit" disabled={isSubmitted}>
-                    {
-                        isSubmitted ? 
-                        <div className="spinner-border" role="status"/>
-                        :
-                        'Register'
-                    }
-                </button>
-                <div className="terms">
-                <input type="checkbox" name="checkbox" id="checkbox" checked={agreeToTerms} onChange={() => setAgreeToTerms(!agreeToTerms)} required /> <label htmlFor="checkbox">I hereby agree to the  
-                <span> Terms & Conditions</span></label>
-                </div>
-                <div className="terms">
-                    <p>Already have an account?
-                    <span> Log in</span></p>
+                <div className="form-submit-group">
+                    <button type="submit" className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100" disabled={isSubmitted}>
+                        {isSubmitted ? <div className="spinner-border" role="status"/> : <span className="icon-reverse-wrapper">
+                            <span className="btn-text">Register</span>
+                            <span className="btn-icon">
+                                <i className="feather-arrow-right" />
+                            </span>
+                            <span className="btn-icon">
+                                <i className="feather-arrow-right" />
+                            </span>
+                        </span>}
+                    </button>
+                    
                 </div>
             </form>
+            <div className="terms">
+                <p>Already have an account?
+                </p>
+                <Link href="/login"> Log in</Link>
+            </div>
+            </div>
         </div>
     )
 }

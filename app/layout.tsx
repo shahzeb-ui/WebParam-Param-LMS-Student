@@ -40,7 +40,9 @@ export default function RootLayout({
       <body className={inter.className}>
         {pathname != "/register" &&
           pathname != "/login" &&
-          pathname != "/verify-account" && <Navbar />}
+          pathname != "/verify-account" && 
+          pathname != "/forgot-password" &&
+          pathname != "/forgot-password/otp" && <Navbar />}
         {children}
         <BootstrapClient />
         <ToastContainer />

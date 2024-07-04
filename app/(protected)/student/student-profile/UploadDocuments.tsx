@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react';
 import './uploadDocs.scss';
 import Modal from 'react-responsive-modal';
@@ -26,10 +27,16 @@ const FileUpload: React.FC = () => {
   const user = cookies.get('loggedInUser');
 
   async function getDocuments() {
-    const docs = await getStudentDocuments(user.data.id);
+    try {
+      if (user?.data) {
+        const docs = await getStudentDocuments(user?.data?.userId);
 
-    if (docs) {
-      setDocuments(docs?.data.data);
+        if (docs) {
+          setDocuments(docs?.data.data);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching documents:', error);
     }
   }
 

@@ -3,12 +3,26 @@
 import StudentDashboardSidebar from "@/ui/student/student-enrolled-courses/student-sidebar";
 import styles from "@/styles/side-bar/side-bar-hide.module.css";
 import InstructorDashboardHeader from "@/ui/dashboard/dashboard-wrapper";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "universal-cookie";
 
 export default function StudentLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const cookies = new Cookies();
+
+  const loggedInUser = cookies.get("loggedInUser");
+  
+  useEffect(() => {
+    if (!loggedInUser) {
+      router.push("/login");
+    }
+  }, [loggedInUser]);
+
   return (
     <>
       <div className="rbt-page-banner-wrapper">
@@ -28,6 +42,7 @@ export default function StudentLayout({
             </div>
           </div>
         </div>
+        
       </div>
     </>
   );

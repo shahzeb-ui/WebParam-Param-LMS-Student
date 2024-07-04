@@ -5,7 +5,35 @@
     height: 100dvh;
     overflow: hidden;
     background-color: white;
+    perspective: 1000px;
+
+    & svg:nth-of-type(1) {
+        transform: rotateY(35deg) translate3d(10px, -20px, 200px);
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+        border-radius: 30px;   
+        opacity: .6;
+        position: relative;
+
+        &::before {
+            content: 'hello';
+            position: absolute;
+            top: 0;
+            left: 26%;
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            z-index: 10;
+        }
+    }
+    & svg:nth-of-type(2) {
+        transform: rotateY(180deg) rotateX(180deg) translate3d(10px, 20px, 100px);
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+        border-radius: 30px;   
+        opacity: .6;
+    }
+
 }
+
 
 .register {
     display: flex;
@@ -22,67 +50,17 @@
         font-weight: 400;
     }
 
-
-    & form {
+    & .terms {
+        margin-top: 10px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-top: 50px;
+        gap: 8px;
 
-        & > div {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 5px;
-
-            & label {
-                font-size: 16px;
-
-                & .required {
-                    color: tomato;
-                }
-            }
-
-            & input {
-                height: 40px;
-                width: 100%;
-                border: 1px solid grey;
-                outline: none;
-                padding-left: 3px;
-                border-radius: 4px;
-            }
-
-            & input[type="checkbox"] {
-                height: 16px;
-                width: 16px;
-            }
-        }
-
-        & button {
-            background-color: #05A602;
-            height: 50px;
-            width: 100%;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            margin-top: 25px;
-        }
-
-        & .terms {
-            flex-direction: row;
-            gap: 5px;
-            align-items: center;
-            color: darkgray;
-
-            & span {
-                text-decoration: underline;
-                color: blue;
-                cursor: pointer;
-            }
+        & a {
+            text-decoration: underline;
+            color: #b966e7;
         }
     }
+
 }
 
 .login {
@@ -103,77 +81,21 @@
         font-size: 16px;
     }
 
-
-    & form {
+    & .auth-footer {
+        margin-top: 20px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-top: 50px;
+        justify-content: space-between;
 
-        & > div {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 5px;
-
-            & label {
-                font-size: 16px;
-
-                & .required {
-                    color: tomato;
-                }
-            }
-
-            & input {
-                height: 40px;
-                width: 100%;
-                border: 1px solid grey;
-                outline: none;
-                padding-left: 3px;
-                border-radius: 4px;
-            }
-
-            & input[type="checkbox"] {
-                height: 16px;
-                width: 16px;
-            }
+        & p {
+            margin: 0;
         }
 
-        & button {
-            background-color: #05A602;
-            height: 50px;
-            width: 100%;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            margin-top: 25px;
-        }
-
-        & .rememberme {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 14px;
-        }
-
-        & .account {
-            flex-direction: row;
-            gap: 5px;
-            align-items: center;
-            color: darkgray;
-
-            & a {
-                text-decoration: underline;
-                color: blue;
-                cursor: pointer;
-                margin-left: 5px;
-            }
+        & a {
+            text-decoration: underline;
+            color: #b966e7;
         }
     }
+
 }
 
 .verify {
@@ -203,7 +125,6 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin: 30px 0;
 
         & .otpContainer {
             display: flex;
@@ -261,4 +182,3 @@
     opacity: .8;
     font-size: 16px;
 }
-
