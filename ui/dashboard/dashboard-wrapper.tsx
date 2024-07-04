@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import "./userProfile.scss";
 
 const InstructorDashboardHeader = () => {
   return (
     <>
       <div className="rbt-dashboard-content-wrapper">
-        <div className="tutor-bg-photo bg_image bg_image--22 height-350" />
+        <div className="tutor-bg-photo bg_imag bg_image--22 height-350" />
         <div className="rbt-tutor-information">
           <div className="rbt-tutor-information-left">
             <div className="thumbnail rbt-avatars size-lg">
