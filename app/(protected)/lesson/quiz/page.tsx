@@ -1,42 +1,38 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Modal } from "react-responsive-modal";
+// import { toast } from "react-toastify";
 import quizData from "@/data/quiz/quiz.json";
 import styles from "@/styles/quiz/quiz.module.css";
-import modelStyles from "@/styles/modal/modal.module.css";
+
+type QuizQuestion = {
+  question: string;
+  options: string[];
+  answer: string;
+};
 
 const LessonQuiz = () => {
   const [next, setNext] = useState<number>(0);
-  const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [score, setScore] = useState<number>(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
     Array(quizData.length).fill(false)
-  ); // Track answered questions
+  );
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>(
     Array(quizData.length).fill(null)
-  ); // Track selected answers for each question
+  );
+  const [currentQuiz, setCurrentQuiz] = useState<QuizQuestion[]>([]);
 
   useEffect(() => {
-    // Load state from local storage on mount
-    const storedState = JSON.parse(localStorage.getItem("quizState") || "{}");
-    if (storedState.next !== undefined) setNext(storedState.next);
-    if (storedState.score !== undefined) setScore(storedState.score);
-    if (storedState.answeredQuestions !== undefined)
-      setAnsweredQuestions(storedState.answeredQuestions);
-    if (storedState.selectedAnswers !== undefined)
-      setSelectedAnswers(storedState.selectedAnswers);
+    initializeQuiz();
   }, []);
 
   useEffect(() => {
-    // Update selected answer when changing questions
     setSelectedAnswer(selectedAnswers[next]);
   }, [next, selectedAnswers]);
 
   useEffect(() => {
-    // Save state to local storage on change
     localStorage.setItem(
       "quizState",
       JSON.stringify({
@@ -48,14 +44,20 @@ const LessonQuiz = () => {
     );
   }, [next, score, answeredQuestions, selectedAnswers]);
 
-  const handlePrevious = () => {
-    if (next > 0) {
-      setNext(next - 1);
-      setIsCorrect(null);
-    }
+  const initializeQuiz = () => {
+    const shuffledQuestions = quizData.sort(() => 0.5 - Math.random());
+    const selectedQuestions = shuffledQuestions.slice(0, 10);
+    setCurrentQuiz(selectedQuestions);
+
+    setNext(0);
+    setScore(0);
+    setAnsweredQuestions(Array(selectedQuestions.length).fill(false));
+    setSelectedAnswers(Array(selectedQuestions.length).fill(null));
+    setSelectedAnswer(null);
+    setIsCorrect(null);
   };
 
-  const handleOptionChange = (event: any) => {
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!answeredQuestions[next]) {
       setSelectedAnswer(event.target.value);
       setSelectedAnswers((prev) => {
@@ -66,28 +68,31 @@ const LessonQuiz = () => {
     }
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (selectedAnswer === quizData[next].answer) {
-      setIsCorrect(true);
-      setScore(score + 1); // Increment score if answer is correct
+    if (answeredQuestions[next]) {
+      setNext((prevNext) => prevNext + 1);
     } else {
-      setIsCorrect(false);
+      if (selectedAnswer === currentQuiz[next].answer) {
+        setIsCorrect(true);
+        setScore(score + 1);
+      } else {
+        setIsCorrect(false);
+      }
+      setAnsweredQuestions((prev) => {
+        const newAnswered = [...prev];
+        newAnswered[next] = true;
+        return newAnswered;
+      });
     }
-    setAnsweredQuestions((prev) => {
-      const newAnswered = [...prev];
-      newAnswered[next] = true; // Mark this question as answered
-      return newAnswered;
-    });
-    setShowModal(true);
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
-    if (next < quizData.length - 1) {
-      setNext(next + 1);
-      setIsCorrect(null);
-    }
+  const handleNext = () => {
+    window.location.href = "/lesson";
+  };
+
+  const handleRetake = () => {
+    initializeQuiz();
   };
 
   return (
@@ -99,7 +104,7 @@ const LessonQuiz = () => {
             className="quiz-form-wrapper"
             onSubmit={handleSubmit}
           >
-            {quizData.map((item, index) => (
+            {currentQuiz.map((item, index) => (
               <div
                 key={index}
                 id={`question-${index + 1}`}
@@ -110,7 +115,7 @@ const LessonQuiz = () => {
                     <span>
                       Questions No:{" "}
                       <strong>
-                        {index + 1}/{quizData.length}
+                        {index + 1}/{currentQuiz.length}
                       </strong>
                     </span>
                     <span>
@@ -139,10 +144,19 @@ const LessonQuiz = () => {
                             value={option}
                             checked={selectedAnswer === option}
                             onChange={handleOptionChange}
-                            disabled={answeredQuestions[index]} // Disable if already answered
+                            disabled={answeredQuestions[index]}
                           />
                           <label
                             htmlFor={`rbt-checkbox-${index + 1}-${optIndex}`}
+                            className={
+                              answeredQuestions[index]
+                                ? option === item.answer
+                                  ? styles.correct
+                                  : selectedAnswers[index] === option
+                                  ? styles.wrong
+                                  : styles.wrong
+                                : ""
+                            }
                           >
                             {option}
                           </label>
@@ -156,50 +170,39 @@ const LessonQuiz = () => {
 
             <div className={styles.buttonWrapper}>
               <button
-                className="rbt-btn bg-primary-opacity btn-sm"
-                id="prev-btn"
+                className="rbt-btn bg-primary-opacity btn-sm ms-2"
+                id="retake-btn"
                 type="button"
-                disabled={next === 0}
-                onClick={handlePrevious}
+                onClick={handleRetake}
+                disabled={!answeredQuestions.some((answered) => answered)}
               >
-                Previous
+                Retake Quiz
               </button>
+
               <button
                 className="rbt-btn btn-gradient btn-sm ms-2"
                 id="submit-btn"
                 type="submit"
+                disabled={
+                  !selectedAnswer ||
+                  answeredQuestions.every((answered) => answered)
+                }
               >
                 Submit
+              </button>
+
+              <button
+                className="rbt-btn btn-gradient btn-sm ms-2"
+                id="next-btn"
+                type="button"
+                onClick={handleNext}
+              >
+                Next
               </button>
             </div>
           </form>
         </div>
       </div>
-
-      <Modal
-        classNames={{ modalContainer: modelStyles.mainModalclassNames }}
-        open={showModal}
-        onClose={handleModalClose}
-        center
-      >
-        <div className={modelStyles.modalContent}>
-          <i
-            className={`bi bi-arrow-down-circle ${modelStyles.customIcon}`}
-          ></i>
-          <h3 className={modelStyles.modalTitle}>Submission Result</h3>
-          {isCorrect !== null && (
-            <p>{isCorrect ? "Correct answer!" : "Wrong answer!"}</p>
-          )}
-          <div className={styles.buttonWrapper}>
-            <button
-              className="rbt-btn bg-primary-opacity btn-sm ms-2"
-              onClick={handleModalClose}
-            >
-              {next < quizData.length - 1 ? "Next Question" : "Close"}
-            </button>
-          </div>
-        </div>
-      </Modal>
     </>
   );
 };
