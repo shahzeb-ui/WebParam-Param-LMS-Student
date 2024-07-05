@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LessonData from "@/data/lessons/lesson.json";
+import { FetchParaphrase } from "@/actions/paraphase/paraphase-action";
 
 interface LessonItem {
   lssonLink: string;
@@ -28,9 +29,22 @@ interface LessonDataStructure {
   lessonQuiz?: any[];
 }
 
+interface ParaphraseResponse {
+  data: {
+    id: string;
+    title: string;
+    videoUrl: string | null;
+  };
+  message: string;
+  error: boolean;
+}
+
 const LessonSidebar = () => {
   const path = usePathname();
   const isActive = (href: string) => path === href;
+  const [paraphraseData, setParaphraseData] = useState<ParaphraseResponse[]>(
+    []
+  );
 
   const lessonsPerPage = 5;
   const [lessons, setLessons] = useState(
@@ -56,6 +70,22 @@ const LessonSidebar = () => {
       );
     }, 500);
   };
+
+  const getAllParaphrase = async () => {
+    try {
+      const data: ParaphraseResponse[] = await FetchParaphrase(
+        "6666b907de3aebf48aa068e7"
+      );
+      console.log("paraphrase data: ", data);
+      setParaphraseData(data);
+    } catch (error) {
+      console.error("Fetching paraphrase error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    getAllParaphrase();
+  }, []);
 
   return (
     <div className="rbt-course-feature-inner rbt-search-activation">
@@ -153,6 +183,24 @@ const LessonSidebar = () => {
                         </li>
                       ))}
                     </ul>
+                    {/* <ul>
+                      {paraphraseData.map((item, index) => (
+                        <li key={index}>
+                          {item.data.videoUrl ? (
+                            <a
+                              style={{ textDecoration: "none" }}
+                              href={item.data.videoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {item.data.title}
+                            </a>
+                          ) : (
+                            <span>{item.data.title}</span>
+                          )}
+                        </li>
+                      ))}
+                    </ul> */}
                   </div>
                 </div>
               </div>

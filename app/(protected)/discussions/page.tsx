@@ -1,7 +1,7 @@
 "use client";
 
 import StudentDiscussions from "@/ui/discussions/student-discussion.tsx/discussions";
-import DiscussionDashboardSidebar from "./dustent-discussion/page";
+// import DiscussionDashboardSidebar from "./dustent-discussion/page";
 
 const StudentCourse = () => {
   return (
@@ -12,7 +12,7 @@ const StudentCourse = () => {
             <div className="col-lg-16">
               <div className="row g-5">
                 <div className="col-lg-3">
-                  <DiscussionDashboardSidebar />
+                  {/* <DiscussionDashboardSidebar /> */}
                 </div>
 
                 <div className="col-lg-9">

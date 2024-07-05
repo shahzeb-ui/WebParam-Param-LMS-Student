@@ -89,9 +89,9 @@ export default function UserProfile() {
         role="tabpanel"
         aria-labelledby="Personal Information"
       >
-        <div className="rbt-dashboard-content-wrapper">
+        <div className="rbt-dashboard-content-wrapper" >
           <div className="tutor-bg-photo height-245" />
-          <div className="rbt-tutor-information">
+          <div className="rbt-tutor-information" >
             <div className="rbt-tutor-information-left">
               <div className="thumbnail rbt-avatars size-lg position-relative">
                 <Image

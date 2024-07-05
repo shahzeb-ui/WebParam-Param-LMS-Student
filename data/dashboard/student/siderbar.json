@@ -1,7 +1,7 @@
 {
     "siderbar": [
       {
-        "link": "#",
+        "link": "/student/dashboard",
         "text": "Dashboard",
         "icon": "bi bi-grid-fill"
       },
@@ -26,7 +26,7 @@
         "icon": "feather-star"
       },
       {
-        "link": "#",
+        "link": "/student/quiz-attempts",
         "text": "My Quiz Attempts",
         "icon": "feather-help-circle"
       },

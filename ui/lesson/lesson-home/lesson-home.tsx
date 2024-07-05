@@ -5,6 +5,9 @@ import Plyr from "plyr";
 import { useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import Transcript from "@/ui/transcript/transcript";
+import Overview from "@/ui/overview/overview";
+import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
 
 const QuestionAndAnswers = dynamic(
   () => import("@/ui/lesson/question-answers/question-answer"),
@@ -44,11 +47,7 @@ const LessonHomepage = () => {
     <>
       <div className="inner">
         <div className="plyr__video-embed rbtplayer">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/qKzhrXqT6oE?rel=0&modestbranding=1&iv_load_policy=3&showinfo=0&controls=0&disablekb=1"
-            allowFullScreen
-            allow="autoplay"
-          ></iframe>
+          <ResponsiveVideoComponent />
         </div>
         <div className="rbt-card-body-2">
           <h6 className="bi bi-easel video-title">Video Title Here</h6>
@@ -140,7 +139,7 @@ const LessonHomepage = () => {
             role="tabpanel"
             aria-labelledby="overview-tab-4"
           >
-            Over view of the course.
+            <Overview />
           </div>
 
           <div
@@ -149,7 +148,7 @@ const LessonHomepage = () => {
             role="tabpanel"
             aria-labelledby="transcript-tab-4"
           >
-            The Transcript section
+            <Transcript />
           </div>
 
           <div

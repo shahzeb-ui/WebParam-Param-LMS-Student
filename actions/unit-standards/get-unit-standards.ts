@@ -15,7 +15,7 @@ export const getAlltUnitStandards = async (courseId:string): Promise<UnitStandar
         }
 
         const data: UnitStandardResponse[] = await response.json();
-        console.log("unit standards data: ", data);
+        // console.log("unit standards data: ", data);
 
         // Extract data from each item in the array
         const unitStandards = data.map(item => item.data);

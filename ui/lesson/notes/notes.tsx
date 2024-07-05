@@ -21,7 +21,6 @@ const Notes = () => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
   useEffect(() => {
-    // Load initial notes data from the JSON file
     setNotes(notesData);
   }, []);
 
@@ -69,7 +68,7 @@ const Notes = () => {
 
       <div className="row mt-3">
         <div className="col-md-5 mb-3">
-          <button
+          {/* <button
             className="bi bi-plus-lg btn btn-success custom-button-4"
             onClick={() => {
               const editor = document.querySelector(
@@ -79,7 +78,7 @@ const Notes = () => {
             }}
           >
             Add Note
-          </button>
+          </button> */}
         </div>
       </div>
 
