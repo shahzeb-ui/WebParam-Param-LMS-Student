@@ -5,6 +5,8 @@ import Plyr from "plyr";
 import { useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import Transcript from "@/ui/transcript/transcript";
+import Overview from "@/ui/overview/overview";
 import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
 
 const QuestionAndAnswers = dynamic(
@@ -137,7 +139,7 @@ const LessonHomepage = () => {
             role="tabpanel"
             aria-labelledby="overview-tab-4"
           >
-            Over view of the course.
+            <Overview />
           </div>
 
           <div
@@ -146,7 +148,7 @@ const LessonHomepage = () => {
             role="tabpanel"
             aria-labelledby="transcript-tab-4"
           >
-            The Transcript section
+            <Transcript />
           </div>
 
           <div

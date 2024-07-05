@@ -283,7 +283,7 @@ const StudentLogbook = () => {
 
       <div className={styles.buttonContainer}>
         <button
-          className="btn btn-primary"
+          className="rbt-btn btn-gradient btn-sm ms-2"
           onClick={() =>
             addNewEntry(
               activeTab === "school" ? setStudentEntry : setWorkEntry,
@@ -295,7 +295,7 @@ const StudentLogbook = () => {
           <i className="bi bi-plus"></i> Add Entry
         </button>
         <button
-          className="btn btn-secondary ms-2"
+          className="rbt-btn btn-gradient btn-sm ms-2"
           onClick={() => setShowLogbookList(!showLogbookList)}
         >
           <i className="bi bi-journal-bookmark-fill"></i> View All Logbooks

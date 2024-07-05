@@ -176,7 +176,7 @@ const LessonQuiz = () => {
                 onClick={handleRetake}
                 disabled={!answeredQuestions.some((answered) => answered)}
               >
-                Retake Quiz
+                Retake
               </button>
 
               <button

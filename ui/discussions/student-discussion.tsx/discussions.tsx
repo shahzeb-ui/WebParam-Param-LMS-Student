@@ -228,7 +228,7 @@ const StudentDiscussions = () => {
         </div>
         <hr className="mt-4" />
       </div>
-      <div className="pagination-container-1">
+      {/* <div className="pagination-container-1">
         <div className="rbt-card-bottom">
           <button className="rbt-btn btn-sm w-100 text-center bn-success">
             <span className="feather-arrow-left"></span>
@@ -242,7 +242,7 @@ const StudentDiscussions = () => {
             <span className="feather-arrow-right"></span>
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
