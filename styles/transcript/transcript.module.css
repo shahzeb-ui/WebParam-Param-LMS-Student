@@ -1,0 +1,27 @@
+.transcriptText {
+    white-space: pre-wrap; 
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .transcriptText::before {
+    content: attr(data-timestamp);
+    margin-right: 1rem;
+    font-weight: bold;
+  }
+  
+  .transcriptLine {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .transcriptTime {
+    flex-shrink: 0;
+    width: 60px; 
+    font-weight: bold;
+  }
+  
+  .transcriptContent {
+    flex-grow: 1;
+  }
+  

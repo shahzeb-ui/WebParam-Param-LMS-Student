@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-// import CourseWidgets from "@/ui/student/enrolled/course";
+import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
@@ -43,7 +43,7 @@ const EnrolledCourses = () => {
 
     try {
       const data = await getAlltUnitStandards(courseId);
-      console.log("get data: ", data);
+      // console.log("get data: ", data);
       setUnitStandards(data);
       setLoading(false);
     } catch (error: any) {
@@ -58,6 +58,10 @@ const EnrolledCourses = () => {
   }, []);
 
   // console.log("The unit standard data: ", unitStandards);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -201,7 +205,6 @@ const EnrolledCourses = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </>
