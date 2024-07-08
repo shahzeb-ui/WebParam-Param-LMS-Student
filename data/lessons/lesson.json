@@ -83,7 +83,7 @@
         "isShow": false,
         "listItem": [
           {
-            "lssonLink": "/lesson-assignments",
+            "lssonLink": "/lesson/assignments",
             "lessonName": "Histudy Assignments",
             "lable": true,
             "time": 0,
@@ -92,7 +92,7 @@
             "iconHelp": true
           },
           {
-            "lssonLink": "/lesson-assignments-submit",
+            "lssonLink": "/lesson/assignments/submit",
             "lessonName": "Histudy Assignments Submit",
             "lable": true,
             "time": 0,

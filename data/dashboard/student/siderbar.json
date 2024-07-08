@@ -56,7 +56,7 @@
         "icon": "feather-message-square"
       },
       {
-        "link": "#",
+        "link": "/student/assignments",
         "text": "Assignments",
         "icon": "feather-menu"
       },
