@@ -1,24 +1,16 @@
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
+import Image from "next/image";
 import Link from "next/link";
 
 export async function generateStaticParams() {
-  const courseIds = await getAlltUnitStandards("6645bb4ee0138941128b9e97"); // Fetch all course IDs
-  return courseIds.map((course) => ({ id: course.id.toString() }));
+  const data = await getAlltUnitStandards("6645bb4ee0138941128b9e97");
+  return data;
 }
+export default async function CourseDetails({ params }: { params: { id: string, } }) {
+  const courses: UnitStandardData[] = await generateStaticParams();
 
-export default async function CourseDetails({ params }: { params: { id: string } }) {
-  const courseId = params.id;
-  let unitStandards: UnitStandardData[] = [];
-  let unitStandard: UnitStandardData | null = null;
-  let error: string | null = null;
-
-  try {
-    unitStandards = await getAlltUnitStandards(courseId);
-    unitStandard = unitStandards.length > 0 ? unitStandards[0] : null;
-  } catch (err: any) {
-    error = err.message;
-  }
+  const course: UnitStandardData|any = courses.find(course => course.id == params.id);
 
   return (
 
@@ -39,23 +31,21 @@ export default async function CourseDetails({ params }: { params: { id: string }
                 </li>
                 <li className="rbt-breadcrumb-item active">Course</li>
               </ul>
-              <h2 className="title">Difficult Things About Education.</h2>
-              <p className="description">
-                Master Python by building 100 projects in 100 days. Learn data
-                science, automation, build websites, games and apps!
-              </p>
+              <h2 className="title">{course.title}</h2>
+              
+              <p className="description" dangerouslySetInnerHTML={{ __html: course.description }}/>
+              
               <div className="d-flex align-items-center mb--20 flex-wrap rbt-course-details-feature">
                 <div className="feature-sin best-seller-badge">
                   <span className="rbt-badge-2">
                     <span className="image">
-                      <img
+                      <Image
                         alt="Best Seller Icon"
                         loading="lazy"
                         width={30}
                         height={30}
                         decoding="async"
-                        data-nimg={1}
-                        srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ficons%2Fcard-icon-1.png&w=32&q=75"
+                        data-nImage={1}
                         src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ficons%2Fcard-icon-1.png&w=32&q=75"
                         style={{ color: "transparent" }}
                       />
@@ -93,14 +83,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
               <div className="rbt-author-meta mb--20">
                 <div className="rbt-avater">
                   <a href="/profile/2">
-                    <img
+                    <Image
                       alt="Fred Guer"
                       loading="lazy"
                       width={40}
                       height={40}
                       decoding="async"
-                      data-nimg={1}
-                      srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=256&q=75 2x"
+                      data-nImage={1}
                       src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=256&q=75"
                       style={{ color: "transparent" }}
                     />
@@ -114,7 +103,7 @@ export default async function CourseDetails({ params }: { params: { id: string }
               <ul className="rbt-meta">
                 <li>
                   <i className="feather-calendar" />
-                  Last updated 12/2024
+                  Last updated {course.createdAt}
                 </li>
                 <li>
                   <i className="feather-globe" />
@@ -135,14 +124,14 @@ export default async function CourseDetails({ params }: { params: { id: string }
           <div className="col-lg-8" style={{ width:'100%', padding: '0 10px'}}>
             <div className="course-details-content">
               <div className="rbt-course-feature-box rbt-shadow-box thuumbnail">
-                <img
+                <Image
                   alt="Card image"
                   width={800}
                   height={550}
                   decoding="async"
-                  data-nimg={1}
+                  data-nImage={1}
                   className="w-100"
-                  srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-01.jpg&w=828&q=75 2x"
+            
                   src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-01.jpg&w=828&q=75"
                   style={{ color: "transparent" }}
                 />
@@ -889,14 +878,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                   <div className="media align-items-center">
                     <div className="thumbnail">
                       <a href="/profile/2">
-                        <img
+                        <Image
                           alt="Author Images"
                           loading="lazy"
                           width={250}
                           height={250}
                           decoding="async"
-                          data-nimg={1}
-                          srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=256&q=75 2x"
+                          data-nImage={1}
                           src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=256&q=75"
                           style={{ color: "transparent" }}
                         />
@@ -1371,14 +1359,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                     <div className="media">
                       <div className="thumbnail">
                         <a href="/course-details/2#">
-                          <img
+                          <Image
                             alt="Author Images"
                             loading="lazy"
                             width={105}
                             height={105}
                             decoding="async"
-                            data-nimg={1}
-                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-3.jpg&w=128&q=75 2x"
+                            data-nImage={1}
                             src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-3.jpg&w=128&q=75"
                             style={{ color: "transparent" }}
                           />
@@ -1438,14 +1425,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                     <div className="media">
                       <div className="thumbnail">
                         <a href="/course-details/2#">
-                          <img
+                          <Image
                             alt="Author Images"
                             loading="lazy"
                             width={105}
                             height={105}
                             decoding="async"
-                            data-nimg={1}
-                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-4.jpg&w=128&q=75 2x"
+                            data-nImage={1}
                             src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-4.jpg&w=128&q=75"
                             style={{ color: "transparent" }}
                           />
@@ -1505,14 +1491,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                     <div className="media">
                       <div className="thumbnail">
                         <a href="/course-details/2#">
-                          <img
+                          <Image
                             alt="Author Images"
                             loading="lazy"
                             width={105}
                             height={105}
                             decoding="async"
-                            data-nimg={1}
-                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-1.jpg&w=128&q=75 2x"
+                            data-nImage={1}
                             src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-1.jpg&w=128&q=75"
                             style={{ color: "transparent" }}
                           />
@@ -1572,14 +1557,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                     <div className="media">
                       <div className="thumbnail">
                         <a href="/course-details/2#">
-                          <img
+                          <Image
                             alt="Author Images"
                             loading="lazy"
                             width={105}
                             height={105}
                             decoding="async"
-                            data-nimg={1}
-                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75 2x"
+                            data-nImage={1}
                             src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75"
                             style={{ color: "transparent" }}
                           />
@@ -1639,14 +1623,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                     <div className="media">
                       <div className="thumbnail">
                         <a href="/course-details/2#">
-                          <img
+                          <Image
                             alt="Author Images"
                             loading="lazy"
                             width={105}
                             height={105}
                             decoding="async"
-                            data-nimg={1}
-                            srcSet="/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-2.jpg&w=128&q=75 1x, /_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-2.jpg&w=256&q=75 2x"
+                            data-nImage={1}
                             src="/_next/image?url=%2Fimages%2Ftestimonial%2Ftestimonial-2.jpg&w=256&q=75"
                             style={{ color: "transparent" }}
                           />
@@ -1736,16 +1719,15 @@ export default async function CourseDetails({ params }: { params: { id: string }
                   data-sal-duration={800}
                 >
                   <div className="rbt-card variation-01 rbt-hover">
-                    <div className="rbt-card-img">
+                    <div className="rbt-card-Image">
                       <a href="/course-details/2">
-                        <img
+                        <Image
                           alt="Card image"
                           loading="lazy"
                           width={355}
                           height={244}
                           decoding="async"
-                          data-nimg={1}
-                          srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75 2x"
+                          data-nImage={1}
                           src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75"
                           style={{ color: "transparent" }}
                         />
@@ -1797,14 +1779,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                       <div className="rbt-author-meta mb--10">
                         <div className="rbt-avater">
                           <a href="/profile/2">
-                            <img
+                            <Image
                               alt="Sophia Jaymes"
                               loading="lazy"
                               width={33}
                               height={33}
                               decoding="async"
-                              data-nimg={1}
-                              srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
+                              data-nImage={1}
                               src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
                               style={{ color: "transparent" }}
                             />
@@ -1835,16 +1816,15 @@ export default async function CourseDetails({ params }: { params: { id: string }
                   data-sal-duration={800}
                 >
                   <div className="rbt-card variation-01 rbt-hover">
-                    <div className="rbt-card-img">
+                    <div className="rbt-card-Image">
                       <a href="/course-details/3">
-                        <img
+                        <Image
                           alt="Card image"
                           loading="lazy"
                           width={355}
                           height={244}
                           decoding="async"
-                          data-nimg={1}
-                          srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
+                          data-nImage={1}
                           src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
                           style={{ color: "transparent" }}
                         />
@@ -1892,14 +1872,14 @@ export default async function CourseDetails({ params }: { params: { id: string }
                       <div className="rbt-author-meta mb--10">
                         <div className="rbt-avater">
                           <a href="/profile/3">
-                            <img
+                            <Image
                               alt="Sophia Jaymes"
                               loading="lazy"
                               width={33}
                               height={33}
                               decoding="async"
-                              data-nimg={1}
-                              srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75 2x"
+                              data-nImage={1}
+                             
                               src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75"
                               style={{ color: "transparent" }}
                             />
@@ -1945,16 +1925,15 @@ export default async function CourseDetails({ params }: { params: { id: string }
         <div className="row g-5">
           <div className="col-lg-4 col-md-6 col-sm-6 col-12">
             <div className="rbt-card variation-01 rbt-hover">
-              <div className="rbt-card-img">
+              <div className="rbt-card-Image">
                 <a href="/course-details">
-                  <img
+                  <Image
                     alt="Card image"
                     loading="lazy"
                     width={355}
                     height={244}
                     decoding="async"
-                    data-nimg={1}
-                    srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75 2x"
+                    data-nImage={1}
                     src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75"
                     style={{ color: "transparent" }}
                   />
@@ -2006,14 +1985,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                 <div className="rbt-author-meta mb--20">
                   <div className="rbt-avater">
                     <a href="/profile/2">
-                      <img
+                      <Image
                         alt="Sophia Jaymes"
                         loading="lazy"
                         width={33}
                         height={33}
                         decoding="async"
-                        data-nimg={1}
-                        srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75 2x"
+                        data-nImage={1}
                         src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75"
                         style={{ color: "transparent" }}
                       />
@@ -2039,16 +2017,15 @@ export default async function CourseDetails({ params }: { params: { id: string }
           </div>
           <div className="col-lg-4 col-md-6 col-sm-6 col-12">
             <div className="rbt-card variation-01 rbt-hover">
-              <div className="rbt-card-img">
+              <div className="rbt-card-Image">
                 <a href="/course-details">
-                  <img
+                  <Image
                     alt="Card image"
                     loading="lazy"
                     width={355}
                     height={244}
                     decoding="async"
-                    data-nimg={1}
-                    srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
+                    data-nImage={1}
                     src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
                     style={{ color: "transparent" }}
                   />
@@ -2096,14 +2073,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                 <div className="rbt-author-meta mb--20">
                   <div className="rbt-avater">
                     <a href="/profile/3">
-                      <img
+                      <Image
                         alt="Sophia Jaymes"
                         loading="lazy"
                         width={33}
                         height={33}
                         decoding="async"
-                        data-nimg={1}
-                        srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-04.png&w=48&q=75 2x"
+                        data-nImage={1}
                         src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-04.png&w=48&q=75"
                         style={{ color: "transparent" }}
                       />
@@ -2129,16 +2105,15 @@ export default async function CourseDetails({ params }: { params: { id: string }
           </div>
           <div className="col-lg-4 col-md-6 col-sm-6 col-12">
             <div className="rbt-card variation-01 rbt-hover">
-              <div className="rbt-card-img">
+              <div className="rbt-card-Image">
                 <a href="/course-details">
-                  <img
+                  <Image
                     alt="Card image"
                     loading="lazy"
                     width={355}
                     height={244}
                     decoding="async"
-                    data-nimg={1}
-                    srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-03.jpg&w=384&q=75 2x"
+                    data-nImage={1}
                     src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-03.jpg&w=384&q=75"
                     style={{ color: "transparent" }}
                   />
@@ -2189,14 +2164,13 @@ export default async function CourseDetails({ params }: { params: { id: string }
                 <div className="rbt-author-meta mb--20">
                   <div className="rbt-avater">
                     <a href="/profile/4">
-                      <img
+                      <Image
                         alt="Sophia Jaymes"
                         loading="lazy"
                         width={33}
                         height={33}
                         decoding="async"
-                        data-nimg={1}
-                        srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-03.png&w=48&q=75 2x"
+                        data-nImage={1}
                         src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-03.png&w=48&q=75"
                         style={{ color: "transparent" }}
                       />

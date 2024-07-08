@@ -1,6 +1,6 @@
 import './auth.scss'
 
-export default function layout({children}:any) {
+export default function layout({children}:{children:React.ReactNode}) {
     return (
         <section className="layoutContainer">
         <svg width="543" height="832" viewBox="0 0 543 832" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,9 +19,9 @@ export default function layout({children}:any) {
             <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_629_512" result="shape"/>
             </filter>
             <linearGradient id="paint0_linear_629_512" x1="460.408" y1="-46.611" x2="-864.207" y2="871.506" gradientUnits="userSpaceOnUse">
-            <stop offset="0.116066" stop-color="#CCCCCC"/>
-            <stop offset="0.304697" stop-color="#CCCCCC"/>
-            <stop offset="1" stop-color="#CCCCCC"/>
+            <stop offset="0.116066" stop-color="#2f57ef"/>
+            <stop offset="0.304697" stop-color="#b966e7"/>
+            <stop offset="1" stop-color="#2f57ef"/>
             </linearGradient>
             </defs>
         </svg>
@@ -48,7 +48,6 @@ export default function layout({children}:any) {
             </linearGradient>
             </defs>
         </svg>
-
         </section>
     )
 }

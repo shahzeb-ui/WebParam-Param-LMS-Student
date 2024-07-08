@@ -10,6 +10,7 @@ export default function Login() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [password, setPassword] = useState('');
+
     const cookies = new Cookies();
     const router = useRouter();
 

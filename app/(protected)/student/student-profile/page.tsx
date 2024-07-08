@@ -24,24 +24,25 @@ export default function UserProfile() {
     const cookies = new Cookies();
     const router = useRouter();
     
-
     const user = cookies.get('loggedInUser');
     console.log('user:', user);
 
     useEffect(() => {
-        setEmail(user?.data?.email)
-      getUserProfile();
-    }, [getStudentProfile])
-
+        if (user?.data) {
+            setEmail(user.data.email);
+            getUserProfile();
+        }
+    }, [getStudentProfile, email]);
 
     const getUserProfile = async () => {
+        if (!user?.data?.id) return;
         const res = await getStudentProfile(user.data.id);
 
-        console.log('res', res)
+        console.log('res', res);
 
         const dob = res?.data.data.dateOfBirth.split('T')[0];
         if (res?.data) {
-            setFirstName(res?.data.data.firstName);
+            setFirstName(res.data.data.firstName);
             setSurname(res.data.data.surname);
             setIdNumber(res.data.data.idNumber);
             setEmail(res.data.data.email);
@@ -60,7 +61,7 @@ export default function UserProfile() {
         e.preventDefault();
         setIsSubmitting(true);
         const payload = {
-            userId: user.data.userId,
+            userId: user?.data?.userId,
             firstName,
             surname,
             email,
@@ -78,7 +79,6 @@ export default function UserProfile() {
         const res = await StudentProfile(payload);
         console.log(res);
         setIsSubmitting(false);
-
     };
 
     return (
