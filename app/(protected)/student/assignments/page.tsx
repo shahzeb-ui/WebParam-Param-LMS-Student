@@ -1,172 +1,70 @@
+'use client'
+import CompletedAssignment from '@/ui/assignments/completed';
 import './assignments.scss';
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import ActiveAssignment from '@/ui/assignments/active';
+import UpcomingAssignment from '@/ui/assignments/upcoming';
+import { useEffect } from 'react';
+import { Suspense } from 'react';
 
-export default async function AssignmentsPage() {
 
-  return (
-  <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
+function Assignments() {
+    const searchParams = useSearchParams();
+    const tab = searchParams.get('tab');
+    const router = useRouter();
+    
+    return (
+        <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
   <div className="content">
     <div className="section-title">
       <h4 className="rbt-title-style-3">Assignments</h4>
     </div>
     <div className="rbt-dashboard-filter-wrapper">
  
-    <div className="col-lg-5 offset-lg-1">
-        
+    <div className="col-lg-10 offset-lg-1" >
+    <ul className="nav nav-tabs tab-button-style-2 justify-content-start nav-assignments" id="myTab-4" role="tablist">
+        <li role="presentation" onClick={() => router.push('/student/assignments?tab=upcoming')}>
+            <a className="tab-button active" id="home-tab-4" data-bs-toggle="tab" data-bs-target="#home-4" role="tab" aria-controls="home-4" aria-selected="true" href="/student/student-enrolled-course#">
+                <span className="title">Upcoming Assignments</span>
+            </a>
+        </li>
+        <li role="presentation" onClick={() => router.push('/student/assignments?tab=active')}>
+            <a className="tab-button" id="profile-tab-4" data-bs-toggle="tab" data-bs-target="#profile-4" role="tab" aria-controls="profile-4" aria-selected="false" href="/student/student-enrolled-course#">
+                <span className="title">Active Assignments</span>
+            </a>
+        </li>
+        <li role="presentation" onClick={() => router.push('/student/assignments?tab=completed')}>
+            <a className="tab-button" id="contact-tab-4" data-bs-toggle="tab" data-bs-target="#contact-4" role="tab" aria-controls="contact-4" aria-selected="false" href="/student/student-enrolled-course#">
+                <span className="title">Completed Assignments</span>
+            </a>
+        </li>
+    </ul>
     </div>
 
     </div>
     <hr className="mt--30" />
     <div className="rbt-dashboard-table table-responsive mobile-table-750 mt--30">
-      <table className="rbt-table table table-borderless">
-        <thead>
-          <tr>
-            <th>Assignment Name</th>
-            <th>Total Marks</th>
-            <th>Total Submit</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>
-              <span className="h6 mb--5">
-                Write Link short essay on yourself using the 5
-              </span>
-              <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">
-                  Fundamentals 101
-                </a>
-              </p>
-            </th>
-            <td>
-              <p className="b3">80</p>
-            </td>
-            <td>
-              <p className="b3">2</p>
-            </td>
-            <td>
-              <div className="rbt-button-group justify-content-end">
-                <a
-                  className="rbt-btn btn-xs bg-primary-opacity radius-round"
-                  title="Edit"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-edit pl--0" /> Edit
-                </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <th>
-              <span className="h6 mb--5">Speaking Korean for Beginners</span>
-              <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">Speaking 101</a>
-              </p>
-            </th>
-            <td>
-              <p className="b3">20</p>
-            </td>
-            <td>
-              <p className="b3">3</p>
-            </td>
-            <td>
-              <div className="rbt-button-group justify-content-end">
-                <a
-                  className="rbt-btn btn-xs bg-primary-opacity radius-round"
-                  title="Edit"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-edit pl--0" /> Edit
-                </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <th>
-              <span className="h6 mb--5">Song Writing Techniques 101</span>
-              <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">Song Writing</a>
-              </p>
-            </th>
-            <td>
-              <p className="b3">60</p>
-            </td>
-            <td>
-              <p className="b3">10</p>
-            </td>
-            <td>
-              <div className="rbt-button-group justify-content-end">
-                <a
-                  className="rbt-btn btn-xs bg-primary-opacity radius-round"
-                  title="Edit"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-edit pl--0" /> Edit
-                </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <th>
-              <span className="h6 mb--5">Arabic For Beginners</span>
-              <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">Arabic Writing</a>
-              </p>
-            </th>
-            <td>
-              <p className="b3">40</p>
-            </td>
-            <td>
-              <p className="b3">15</p>
-            </td>
-            <td>
-              <div className="rbt-button-group justify-content-end">
-                <a
-                  className="rbt-btn btn-xs bg-primary-opacity radius-round"
-                  title="Edit"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-edit pl--0" /> Edit
-                </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {tab === 'completed' && <CompletedAssignment />}
+      {tab === 'active' && <ActiveAssignment />}
+      {tab === 'upcoming' && <UpcomingAssignment />}
     </div>
   </div>
     </div>
+    );
+}
+
+export default async function AssignmentsPage() {
+    const router = useRouter();
+  
+
+    useEffect(() => {
+            router.push('/student/assignments?tab=active');
+    }, []);
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Assignments />
+    </Suspense>
   );
 }
