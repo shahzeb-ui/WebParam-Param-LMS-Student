@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/logbook/logbook-login.module.css";
 import { CheckIn, CheckOut } from "@/actions/logbook-actions/logbook-action";
 import LogbookList from "@/ui/logbook/logbook-display/logbook-display";
+import { useUser } from "@/context/user-context/user-context";
+import { getLogbooks } from "@/actions/logbook-actions/logbook-action";
 
 interface LogbookEntry {
   date: string;
@@ -13,6 +15,16 @@ interface LogbookEntry {
   createdTime?: string;
   timeRemaining?: string;
   id?: string;
+}
+
+interface Logbook {
+  id: string;
+  userId: string;
+  classId: string;
+  checkInTime: string;
+  checkOutTime: string;
+  feedback: string;
+  rating: string;
 }
 
 const StudentLogbook = () => {
@@ -29,6 +41,45 @@ const StudentLogbook = () => {
   const [logbooks, setLogbooks] = useState<LogbookEntry[]>([]);
   const [showLogbookList, setShowLogbookList] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingLogbooks, setLoadingLogbooks] = useState<boolean>(false);
+  const { user } = useUser();
+
+  const userId: string | undefined = user?.data.id;
+
+  const transformLogbook = (logbook: Logbook): LogbookEntry => {
+    return {
+      date: new Date(logbook.checkInTime).toLocaleDateString(),
+      title: "",
+      description: logbook.feedback,
+      status: "Checked Out",
+      createdTime: new Date(logbook.checkInTime).toLocaleTimeString(),
+      timeRemaining: undefined,
+      id: logbook.id,
+    };
+  };
+
+  const getAllLogbooks = async (userId: string) => {
+    if (!userId) {
+      console.error("User ID is required");
+      return;
+    }
+
+    try {
+      const logbooks: Logbook[] = await getLogbooks(userId);
+
+      const transformedLogbooks = logbooks.map(transformLogbook);
+      setLogbooks(transformedLogbooks);
+    } catch (error) {
+      console.error("Error fetching logbooks:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      getAllLogbooks(userId);
+    }
+  }, [userId]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -91,9 +142,10 @@ const StudentLogbook = () => {
     setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
     setTimer: React.Dispatch<React.SetStateAction<number | null>>
   ) => {
-    if (entry) {
+    if (entry && user) {
       try {
-        const userId = "23764473665632";
+        setLoading(true); // Set loading to true
+        const userId = user?.data.id;
         const classId = "4748596856387765";
         const response = await CheckIn(userId, classId);
         const newEntry = {
@@ -105,6 +157,8 @@ const StudentLogbook = () => {
         setTimer(4 * 60 * 60);
       } catch (error) {
         console.error("Check-in failed", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -116,6 +170,7 @@ const StudentLogbook = () => {
   ) => {
     if (entry) {
       try {
+        setLoading(true);
         const feedback = entry.description;
         const response = await CheckOut(
           entry.id!,
@@ -131,6 +186,8 @@ const StudentLogbook = () => {
         setDisableAddEntryUntil(Date.now() + 4 * 60 * 60 * 1000);
       } catch (error) {
         console.error("Check-out failed", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -156,9 +213,17 @@ const StudentLogbook = () => {
     }
   };
 
-  const fetchMoreLogbooks = () => {
-    // Placeholder for actual data fetching logic
-    // Add more logbooks from an API or data source
+  const fetchMoreLogbooks = async () => {
+    if (!userId) return;
+
+    try {
+      setLoadingLogbooks(true);
+      await getAllLogbooks(userId);
+    } catch (error) {
+      console.error("Error fetching more logbooks:", error);
+    } finally {
+      setLoadingLogbooks(false);
+    }
   };
 
   const renderForm = (
@@ -232,15 +297,25 @@ const StudentLogbook = () => {
             <button
               className="btn btn-success"
               onClick={() => handleCheckout(entry, setEntry, setTimer)}
+              disabled={loading}
             >
-              Checkout
+              {loading ? (
+                <div className={styles.loaderButton}></div>
+              ) : (
+                "Checkout"
+              )}
             </button>
           ) : (
             <button
               className="btn btn-primary"
               onClick={() => handleCheckin(entry, setEntry, setTimer)}
+              disabled={loading}
             >
-              Checkin
+              {loading ? (
+                <div className={styles.loaderButton}></div>
+              ) : (
+                "Checkin"
+              )}
             </button>
           )}
         </div>
@@ -296,21 +371,33 @@ const StudentLogbook = () => {
         </button>
         <button
           className="rbt-btn btn-gradient btn-sm ms-2"
-          onClick={() => setShowLogbookList(!showLogbookList)}
+          onClick={() => {
+            setShowLogbookList(!showLogbookList);
+            if (!showLogbookList) fetchMoreLogbooks();
+          }}
         >
-          <i className="bi bi-journal-bookmark-fill"></i> View All Logbooks
+          <i className="bi bi-journal-bookmark-fill"></i>
+          View All Logbooks
         </button>
       </div>
 
       {showLogbookList ? (
-        <LogbookList
-          logbooks={logbooks}
-          fetchMoreLogbooks={fetchMoreLogbooks}
-          hasMore={hasMore}
-        />
+        loadingLogbooks ? (
+          <div className={styles.loaderContainer}>
+            <div className={styles.loader}></div>
+          </div>
+        ) : (
+          <div className={styles.logbookListContainer}>
+            <LogbookList
+              logbooks={logbooks}
+              fetchMoreLogbooks={fetchMoreLogbooks}
+              hasMore={hasMore}
+            />
+          </div>
+        )
       ) : (
         <div className={`${styles.logbookCard}`}>
-          {activeTab === "school"
+          {activeTab === "school" || activeTab === "work"
             ? renderForm(studentEntry, setStudentEntry, setStudentTimer)
             : renderForm(workEntry, setWorkEntry, setWorkTimer)}
         </div>

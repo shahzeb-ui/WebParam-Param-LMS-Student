@@ -20,6 +20,7 @@ import "@/public/css/plugins/animation.css";
 import "@/public/css/plugins/feather.css";
 import "@/public/css/plugins/euclid-circulara.css";
 import "@/public/scss/styles.scss";
+import { UserProvider } from "@/context/user-context/user-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,14 +39,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {pathname != "/register" &&
-          pathname != "/login" &&
-          pathname != "/verify-account" && 
-          pathname != "/forgot-password" &&
-          pathname != "/forgot-password/otp" && <Navbar />}
-        {children}
-        <BootstrapClient />
-        <ToastContainer />
+        <UserProvider>
+          {pathname != "/register" &&
+            pathname != "/login" &&
+            pathname != "/verify-account" &&
+            pathname != "/forgot-password" &&
+            pathname != "/forgot-password/otp" && <Navbar />}
+          {children}
+          <BootstrapClient />
+          <ToastContainer />
+        </UserProvider>
       </body>
     </html>
   );
