@@ -8,7 +8,7 @@ import { deployedUrl } from '@/app/api/endpoints';
 import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
 
 
-type DocumentType = 'identity' | 'qualification' | 'cv';
+type DocumentType = 'identity' | 'qualification' | 'cv' | 'Leaner_Agreement';
 
 const FileUpload: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -20,6 +20,7 @@ const FileUpload: React.FC = () => {
     identity: null,
     qualification: null,
     cv: null,
+    Leaner_Agreement: null,
   });
 
   const cookies = new Cookies();
@@ -29,7 +30,7 @@ const FileUpload: React.FC = () => {
   async function getDocuments() {
     try {
       if (user?.data) {
-        const docs = await getStudentDocuments(user?.data?.userId);
+        const docs = await getStudentDocuments(user?.data.id||user?.data?.userId);
 
         if (docs) {
           setDocuments(docs?.data.data);
@@ -46,6 +47,7 @@ const FileUpload: React.FC = () => {
     identity: false,
     qualification: false,
     cv: false,
+    Leaner_Agreement: false,
   });
 
 
@@ -85,7 +87,7 @@ const FileUpload: React.FC = () => {
       const formData = new FormData();
       formData.append('File', selectedFile.file);
   formData.append('UserId', user.data.id);
-  formData.append('Type', String(['identity', 'qualification', 'cv'].indexOf(selectedFile.type)));
+  formData.append('Type', String(['identity', 'qualification', 'cv', 'Leaner Agreement'].indexOf(selectedFile.type)));
 
   try {
     const response = await axios.post(`${deployedUrl}/api/v1/Profile/SubmitDocument`, formData, {
@@ -157,7 +159,7 @@ const FileUpload: React.FC = () => {
       </Modal>
 
       <div className="requiredDocs">
-        {(['identity', 'qualification', 'cv'] as DocumentType[]).map((docType, index) => {
+        {(['identity', 'qualification', 'cv', 'Leaner Agreement'] as DocumentType[]).map((docType, index) => {
            const matchingDoc = documents.find((doc) => doc.type === index);
            console.log(matchingDoc)
          

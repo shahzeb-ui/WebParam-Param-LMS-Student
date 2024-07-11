@@ -25,6 +25,7 @@ export default function Login() {
         const res = await LoginUser(payload);
         setIsSubmitted(false);
         if (res?.data) {
+            debugger;
             cookies.set("loggedInUser", res.data);
             router.push('/student/student-profile')
         } else {

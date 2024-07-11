@@ -5,7 +5,7 @@ import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/stud
 import Cookies from 'universal-cookie';
 import Image from 'next/image';
 
-export default function Profile() {
+export default function Profile({user}:any) {
     const [firstName, setFirstName] = useState('');
     const [surname, setSurname] = useState('');
     const [idNumber, setIdNumber] = useState('');
@@ -20,16 +20,16 @@ export default function Profile() {
     const [isSubmitting,setIsSubmitting] = useState(false);
     const [id, setId] = useState('');
 
-    const cookies = new Cookies();
-    const user = cookies.get('loggedInUser');
+    console.log('logged in user in profile',user);
 
     useEffect(() => {
+      debugger;
         getUserProfile();
     }, []);
     
     const getUserProfile = async () => {
-        if (!user?.data?.userId) return;
-        const res = await getStudentProfile(user.data.userId);
+        if (!user?.data?.id && !user?.data?.userId) return;
+        const res = await getStudentProfile(user.data.id || user.data.userId);
 
         console.log('res', res);
 
@@ -54,7 +54,7 @@ export default function Profile() {
         e.preventDefault();
         setIsSubmitting(true);
         const payload = {
-            userId: user?.data?.userId,
+            userId: user?.data?.id,
             firstName,
             surname,
             email,
