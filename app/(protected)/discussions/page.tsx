@@ -1,7 +1,7 @@
 "use client";
 
 import StudentDiscussions from "@/ui/discussions/student-discussion.tsx/discussions";
-// import DiscussionDashboardSidebar from "./dustent-discussion/page";
+import styles from "@/styles/discussions/discussions.module.css";
 
 const StudentCourse = () => {
   return (
@@ -11,9 +11,7 @@ const StudentCourse = () => {
           <div className="row">
             <div className="col-lg-16">
               <div className="row g-5">
-                <div className="col-lg-3">
-                  {/* <DiscussionDashboardSidebar /> */}
-                </div>
+                <div className={styles.collg3}></div>
 
                 <div className="col-lg-9">
                   <StudentDiscussions />

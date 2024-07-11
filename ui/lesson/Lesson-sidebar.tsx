@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import styles from "@/ui/lesson/side.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LessonData from "@/data/lessons/lesson.json";
 import { FetchParaphrase } from "@/actions/paraphase/paraphase-action";
-import styles from "@/ui/lesson/side.module.css";
 
 interface LessonItem {
   lssonLink: string;
