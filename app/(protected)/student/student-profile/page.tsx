@@ -1,11 +1,62 @@
 'use client'
-import { useEffect, useState } from 'react';
-import './userProfile.scss'
-import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
+import { useEffect, Suspense, useState } from 'react';
+import Documents from './documents/page';
+import EmploymentInformation from './EmploymentInformation/page';
+import RegionalInformation from './RegionalInformation/page';
+import DemocraticLegal from './democraticLegal/page';
+import ContactInformation from './ContactInformation/page';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
-import UploadDocuments from './UploadDocuments';
-import Image from 'next/image';
+import Profile from './profile/page';
+import { useSearchParams } from 'next/navigation';
+import { getStudentData, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
+
+function UserProfileContent() {
+    const cookies = new Cookies();
+    const searchParams = useSearchParams();
+    const [student, setStudent] = useState<any>();
+    const tab = searchParams.get('tab') || 'profile';
+    const user = cookies.get('loggedInUser');
+    console.log('user:', user);
+    const router = useRouter();
+
+    async function getStudent() {
+        const res = await getStudentData(user.data.id || user.data.userId);
+        console.log('student:', res.data);
+        setStudent(res);
+    }
+
+    useEffect(() => {
+        getStudent();
+    }, []);
+
+    useEffect(() => {
+        if (!tab) {
+            router.push(`/student/student-profile?tab=profile`);
+        }
+    }, [tab, router]);
+
+    const renderComponent = (tab: string | null) => {
+        switch (tab) {
+            case 'profile':
+                return <Profile user={user} />;
+            case 'democraticLegal':
+                return <DemocraticLegal student={student} />;
+            case 'ContactInformation':
+                return <ContactInformation student={student} />;
+            case 'RegionalInformation':
+                return <RegionalInformation student={student} />;
+            case 'EmploymentInformation':
+                return <EmploymentInformation student={student} />;
+            case 'documents':
+                return <Documents />;
+            default:
+                return <Profile user={user} />;
+        }
+    };
+
+    return renderComponent(tab);
+}
 
 export default function UserProfile() {
     const [firstName, setFirstName] = useState('');

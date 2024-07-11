@@ -1,10 +1,13 @@
 'use client'
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
-export default function ContactInformation() {
+export default function ContactInformation({student}:any) {
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
+    event.preventDefault();
+    console.log('submitting')
   }
+
+  console.log('student infomasion:', student);
 
   const [homeAddress1, setHomeAddress1] = useState('');
   const [postalAddress1, setPostalAddress1] = useState('');
@@ -17,6 +20,25 @@ export default function ContactInformation() {
   const [learnerFaxNumber, setLearnerFaxNumber] = useState('');
   const [learnerEmailAddress, setLearnerEmailAddress] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+    function setStudentContactInformation(student: any) {
+      console.log('stu:', student?.data);
+        setHomeAddress1(student?.data?.homeAddress1);
+        setPostalAddress1(student?.data?.postalAddress1);
+        setPostalAddress2(student?.data?.postalAddress2);
+        setPostalAddress3(student?.data?.postalAddress3);
+        setLearnerHomeAddressPostalCode(student?.data?.learnerHomeAddressPostalCode);
+        setLearnerHomeAddressPhysicalCode(student?.data?.learnerHomeAddressPhysicalCode);
+        setLearnerPhoneNumber(student?.data?.learnerPhoneNumber);
+        setLearnerCellPhoneNumber(student?.data?.learnerCellPhoneNumber);
+        setLearnerFaxNumber(student?.data?.learnerFaxNumber);
+        setLearnerEmailAddress(student?.data?.learnerEmailAddress);
+    }
+
+    useEffect(() => {
+        setStudentContactInformation(student);
+    }, [student]);
+
 
   return (
     <div

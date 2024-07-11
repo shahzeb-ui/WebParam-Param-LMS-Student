@@ -28,6 +28,12 @@ export async function getStudentProfile(userId:any) {
     }
 }
 
+export const getStudentData = async (studentId: string) => {
+    const resp = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetStudentInformation/${studentId} `)
+    return resp.data
+  }
+  
+
 export async function getStudentDocuments(userId:any) {
     try {
         const register = await axios.get(`${readUserData}/api/Documents/GetDocuments/${userId}`);

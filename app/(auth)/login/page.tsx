@@ -36,9 +36,20 @@ export default function Login() {
     }
   }
 
-  useEffect(() => {
-    setErrorMessage(false);
-  }, [email, password]);
+        const payload = {
+            email,
+            password
+        }
+        const res = await LoginUser(payload);
+        setIsSubmitted(false);
+        if (res?.data) {
+            debugger;
+            cookies.set("loggedInUser", res.data);
+            router.push('/student/student-profile')
+        } else {
+            setErrorMessage(true)
+        }
+      }
 
   return (
     <div className="login">
