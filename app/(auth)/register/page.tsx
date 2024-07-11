@@ -1,4 +1,5 @@
 'use client'
+import { registerType } from '@/app/Utils/authInterface';
 import { registerUser } from '@/app/api/auth/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
@@ -6,7 +7,7 @@ import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 
 
-export default function Register() {
+export default function Register({searchParams}: {searchParams: {courseId: string}}) {
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setpassword] = useState('');
@@ -23,13 +24,15 @@ export default function Register() {
         e.preventDefault();
         setIsSubmitted(true);
 
-        const payload = {
+        const payload: registerType = {
             email,
             username,
             password,
-            confirmPassword
-        }
+            confirmPassword,
+            courseId: searchParams.courseId
+        };
 
+        debugger;
         const res = await registerUser(payload);
         setIsSubmitted(false);
         if (res?.data.message != "User exists") {
@@ -44,7 +47,11 @@ export default function Register() {
         setErrorMessage(false)
     }, [username, email, password, confirmPassword])
 
-    
+    useEffect(() => {
+        const courseId = '6669f0ff8759b480859c10a7';
+        router.push(`/register?courseId=${courseId}`)
+    }, [])
+
     useEffect(() => {
         if (confirmPassword.length >= password.length && password != confirmPassword) {
             setPasswordNotMatch(true);

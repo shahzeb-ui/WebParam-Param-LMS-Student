@@ -11,7 +11,7 @@ let HEADER = {
 export async function StudentProfile(payload: any) {
     try {
         debugger;
-        const register = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/v1/Profile/UpdateProfile`,HEADER,payload);
+        const register = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/v1/Profile/UpdateProfile`,payload);
         return register;
     } catch (error: any) {
         alert(error);
@@ -19,6 +19,7 @@ export async function StudentProfile(payload: any) {
 }
 
 export async function getStudentProfile(userId:any) {
+    debugger;
     try {
         const register = await axios.get(`${readUserData}/api/v1/Profile/GetUserProfile/${userId}`);
         return register;

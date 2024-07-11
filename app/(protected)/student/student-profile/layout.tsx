@@ -6,7 +6,7 @@ import './layout.scss'
 import { usePathname } from 'next/navigation';
 export default function Layout({children}: {children: React.ReactNode}) {
     const navArray = [
-        { key: '', label: 'Bio' },
+        { key: 'profile', label: 'Bio' },
         { key: 'democraticLegal', label: 'Demographics' },
         { key: 'ContactInformation', label: 'Contacts' },
         { key: 'RegionalInformation', label: 'Regional' },
@@ -42,7 +42,7 @@ return (
                   aria-selected="false"
                   href={`/student/student-profile/${nav.key}`}
                   tabIndex={-1}
-                  onClick={() => router.push(`/student/student-profile/${nav.key}`)}
+                  onClick={() => router.push(`/student/student-profile?tab=${nav.key}`)}
                 >
                   <span className="title">{nav.label}</span>
                 </Link>
