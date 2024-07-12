@@ -1,0 +1,6 @@
+.innerScrollable {
+    height: 100rem !important; 
+    overflow-y: auto !important; 
+    overflow-x: hidden !important;
+    width: 100% !important;
+}

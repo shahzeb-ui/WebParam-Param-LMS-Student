@@ -101,6 +101,30 @@
             "iconHelp": true
           }
         ]
+      },
+      {
+        "title": "Histudy Assessments",
+        "isShow": false,
+        "listItem": [
+          {
+            "lssonLink": "/lesson/assessments",
+            "lessonName": "Histudy Assessments",
+            "lable": true,
+            "time": 0,
+            "unread": true,
+            "isCircle": false,
+            "iconHelp": true
+          },
+          {
+            "lssonLink": "/lesson-assignments-submit",
+            "lessonName": "Histudy Assessments Submit",
+            "lable": true,
+            "time": 0,
+            "unread": true,
+            "isCircle": false,
+            "iconHelp": true
+          }
+        ]
       }
     ],
     "lessonQuiz": [
