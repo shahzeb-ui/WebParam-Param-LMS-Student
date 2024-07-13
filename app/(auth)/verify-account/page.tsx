@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from 'next/navigation';
 import Cookies from 'universal-cookie';
-import { verifyUserAccount } from "@/app/api/auth/auth";
+import { verifyUserAccount } from "@/actions/auth/auth";
 
 
 export default function VerifyAccount() {

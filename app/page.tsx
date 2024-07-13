@@ -1,18 +1,15 @@
-"use client";
+"use client"
+import React from "react";
+import { Routes, Route, MemoryRouter,  } from "react-router-dom";
+import Login from "@/app/(auth)/login/page";
+import RootLayout from "@/app/(auth)/layout";
 
-import styles from "./page.module.css";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
-export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push('/login')
-  }, [])
-
+export default function Page() {
   return (
-  <main className={styles.main}>
-  </main>
+    <MemoryRouter>
+      <Routes>
+        <Route path="/" element={<RootLayout><Login /></RootLayout>} />
+      </Routes>
+    </MemoryRouter>
   );
 }

@@ -1,11 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './userProfile.scss'
-import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
+import { StudentProfile, getStudentProfile } from '@/actions/studentProfile/studentprofile';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
 import UploadDocuments from './UploadDocuments';
 import Image from 'next/image';
+import SessionContext from '@/context/user-context/session-provider';
 
 export default function UserProfile() {
     const [firstName, setFirstName] = useState('');
@@ -23,7 +24,12 @@ export default function UserProfile() {
     const [id, setId] = useState('');
     const cookies = new Cookies();
     const router = useRouter();
-    
+    const sessionContext = useContext(SessionContext);
+    if (!sessionContext) {
+      throw new Error("SessionContext must be used within a SessionProvider");
+    }
+    const { updateUserActivity, sessionTime } = sessionContext;
+  
 
     const user = cookies.get('loggedInUser');
     console.log('user:', user);
@@ -124,6 +130,7 @@ export default function UserProfile() {
             </div>
           </div>
         </div>
+
         <form
            onSubmit={handleSubmit}
           className="rbt-profile-row rbt-default-form row row--15"

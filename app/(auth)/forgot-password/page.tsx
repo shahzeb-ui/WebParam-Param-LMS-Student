@@ -1,5 +1,5 @@
 'use client'
-import { sendOtp } from '@/app/api/auth/auth';
+import { sendOtp } from '@/actions/auth/auth';
 import React, { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'universal-cookie';

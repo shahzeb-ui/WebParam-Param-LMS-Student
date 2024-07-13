@@ -4,8 +4,8 @@ import './uploadDocs.scss';
 import Modal from 'react-responsive-modal';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { deployedUrl } from '@/app/api/endpoints';
-import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
+import { deployedUrl } from '@/actions/endpoints/endpoints';
+import { getStudentDocuments } from '@/actions/studentProfile/studentprofile';
 
 
 type DocumentType = 'identity' | 'qualification' | 'cv';

@@ -1,11 +1,10 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import styles from "@/styles/logbook/logbook-login.module.css";
 import { CheckIn, CheckOut } from "@/actions/logbook-actions/logbook-action";
 import LogbookList from "@/ui/logbook/logbook-display/logbook-display";
-import { useUser } from "@/context/user-context/user-context";
 import { getLogbooks } from "@/actions/logbook-actions/logbook-action";
+import Cookies from "universal-cookie";
 
 interface LogbookEntry {
   date: string;
@@ -43,7 +42,8 @@ const StudentLogbook = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingLogbooks, setLoadingLogbooks] = useState<boolean>(false);
-  const { user } = useUser();
+  const cookies = new Cookies();
+  const user  = cookies.get("loogedInUser");
 
   const userId: string | undefined = user?.data.id;
 

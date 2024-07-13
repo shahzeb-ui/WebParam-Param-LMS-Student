@@ -1,5 +1,6 @@
 import axios from "axios";
-import { deployedUrl } from "../endpoints";
+import { deployedUrl } from "@/actions/endpoints/endpoints";
+import { POST } from "../client-logger/client";
 
 
 export async function registerUser(payload:any) {
@@ -24,9 +25,11 @@ export async function verifyUserAccount(payload:any) {
 
 }
 
-export async function LoginUser(payload:any) {
+
+
+export async function LoginUser(payload:any, updateUserActivity: () => void) {
     try {
-        const register = await axios.post(`${deployedUrl}/api/v1/Users/Login`, payload);
+        const register = await POST(`${deployedUrl}/api/v1/Users/Login`, payload,updateUserActivity);
         return register;
 
     } catch(error: any) {

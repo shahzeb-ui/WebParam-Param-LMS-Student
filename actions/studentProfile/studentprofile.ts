@@ -1,6 +1,6 @@
 import axios from "axios";
-import { deployedUrl } from "../endpoints";
-import { readUserData } from "../endpoints";
+import { deployedUrl } from "@/actions/endpoints/endpoints";
+import { readUserData } from "@/actions/endpoints/endpoints";
 
 let HEADER = {
     "Authorization":"Basic YWRtaW46cmpPdjJhU1omPXxuRDYpJQ==",

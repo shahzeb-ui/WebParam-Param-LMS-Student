@@ -1,5 +1,5 @@
 'use client'
-import { verifyOtp } from '@/app/api/auth/auth';
+import { verifyOtp } from '@/actions/auth/auth';
 import React, { FormEvent, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';

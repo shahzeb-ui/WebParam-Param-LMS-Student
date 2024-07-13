@@ -1,20 +1,24 @@
 "use client";
-import { LoginUser } from "@/app/api/auth/auth";
+import { LoginUser } from "@/actions/auth/auth";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import { User } from "@/interfaces/user/user";
-import { useUser } from "@/context/user-context/user-context";
+import SessionContext from "@/context/user-context/session-provider";
 
 export default function Login() {
+  const sessionContext = useContext(SessionContext);
+  if (!sessionContext) {
+    throw new Error("SessionContext must be used within a SessionProvider");
+  }
+  const { updateUserActivity, resetSessionTime } = sessionContext;
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [password, setPassword] = useState("");
   const cookies = new Cookies();
   const router = useRouter();
-  const { setUser } = useUser();
 
   async function handleLogIn(e: any) {
     e.preventDefault();
@@ -24,12 +28,12 @@ export default function Login() {
       email,
       password,
     };
-    const res = await LoginUser(payload);
+    const res = await LoginUser(payload, updateUserActivity);
     setIsSubmitted(false);
     if (res?.data) {
       const user: User = res.data;
       cookies.set("loggedInUser", user);
-      setUser(user);
+      resetSessionTime(); 
       router.push("/student/student-profile");
     } else {
       setErrorMessage(true);
@@ -43,7 +47,8 @@ export default function Login() {
   return (
     <div className="login">
       <div className="rbt-contact-form contact-form-style-1 max-width-auto">
-        <h1>Log in to your account</h1>
+        <h1>Log in to your account
+        </h1>
         <p>Welcome back! Please enter your details</p>
         <form className="max-width-auto" onSubmit={handleLogIn}>
           <div className="form-group">

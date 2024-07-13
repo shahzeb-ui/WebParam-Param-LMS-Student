@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
@@ -8,11 +8,17 @@ import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
+import SessionContext from "@/context/user-context/session-provider";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sessionContext = useContext(SessionContext);
+  if (!sessionContext) {
+    throw new Error("SessionContext must be used within a SessionProvider");
+  }
+  const { updateUserActivity, sessionTime } = sessionContext;
 
   const sections = [
     { id: "dashboard", label: "Dashboard" },
@@ -63,7 +69,10 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <div className="logo">Khumla</div>
+                <div className="logo d-flex flex-row align-items-center">
+                  Khumla
+                  <span className="text-success p-3" style={{fontSize:"0.8em"}}>(Active: {Math.floor(sessionTime / 60)} min {sessionTime % 60} seconds ago)</span>
+                </div>
               </div>
 
               <div className="rbt-main-navigation d-none d-xl-block">
