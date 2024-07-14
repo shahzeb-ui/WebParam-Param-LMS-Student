@@ -1,0 +1,25 @@
+.navigation-tabs {
+    display: flex;
+    overflow-x: scroll;
+    gap: 20px;
+    list-style: none;
+
+    &::-webkit-scrollbar {
+        height: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #000; /* Adjust this color to match the overall website */
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    & li {
+        padding-left: 0px;
+        min-width: fit-content;
+
+    }
+}

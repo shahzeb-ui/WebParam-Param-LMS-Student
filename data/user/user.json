@@ -1,0 +1,51 @@
+{
+    "user": [
+      {
+        "name": "Mpho Dev",
+        "img": "/images/team/avatar.jpg",
+        "userList": [
+          {
+            "icon": "feather-home",
+            "text": "My Dashboard",
+            "link": "/instructor/instructor-dashboard"
+          },
+          {
+            "icon": "feather-bookmark",
+            "text": "Bookmark",
+            "link": "#"
+          },
+          {
+            "icon": "feather-shopping-bag",
+            "text": "Enrolled Courses",
+            "link": "/student/enrolled-courses"
+          },
+          {
+            "icon": "feather-heart",
+            "text": "Wishlist",
+            "link": "#"
+          },
+          {
+            "icon": "feather-star",
+            "text": "Reviews",
+            "link": "#"
+          },
+          {
+            "icon": "feather-list",
+            "text": "My Quiz Attempts",
+            "link": "#"
+          },
+          {
+            "icon": "feather-clock",
+            "text": "Order History",
+            "link": "#"
+          },
+          {
+            "icon": "feather-message-square",
+            "text": "Question & Answer",
+            "link": "#"
+          }
+        ]
+      }
+    ]
+  }
+  
