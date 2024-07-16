@@ -1,27 +1,14 @@
 'use client'
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
-export default function EmploymentInformation({student}:any) {
-
- 
+export default function EmploymentInformation() {
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    throw new Error("Function not implemented.");
+  }
 
   const [employmentStatus, setEmploymentStatus] = useState('');
   const [dateOfFisa, setDateOfFisa] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  function setStudentContactInformation(student: any) {
-    console.log('stu:', student?.data);
-    setEmploymentStatus(student?.data?.employmentStatus);
-    setDateOfFisa(student?.data?.dateOfFisa);
-  }
-
-  useEffect(() => {
-      setStudentContactInformation(student);
-  }, [student]);
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <div

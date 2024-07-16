@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import notesData from "@/data/sample/sample.json";
+import styles from "@/styles/notes/notes.module.css";
 import { format } from "date-fns";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
@@ -119,8 +120,8 @@ const Notes = () => {
             isCollapsed
           );
           return (
-            <div className="mb-3" key={note.id}>
-              <div className="note-title fw-bold">{note.title}</div>
+            <div className={styles.mb3Custom} key={note.id}>
+              {/* <div className="note-title fw-bold">{note.title}</div> */}
               <div className="mt-2">
                 <p dangerouslySetInnerHTML={{ __html: displayContent }} />
                 {isLong && (

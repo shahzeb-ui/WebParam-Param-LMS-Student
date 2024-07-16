@@ -62,8 +62,15 @@ const QuestionAndAnswers = () => {
               <i className="bi bi-hand-thumbs-up"></i> Like
             </a>{" "}
             |{" "}
-            <a href="/discussions" style={{ textDecoration: "underline" }}>
+            <a href="#" style={{ textDecoration: "underline" }}>
               <i className="bi bi-chat-dots"></i> Reply
+            </a>{" "}
+            <a
+              href="/discussions"
+              className="ms-3"
+              style={{ textDecoration: "underline" }}
+            >
+              <i className="bi bi-flag"></i> more
             </a>
           </div>
           <div className="small">
@@ -85,8 +92,15 @@ const QuestionAndAnswers = () => {
               <i className="bi bi-hand-thumbs-up"></i> Like
             </a>{" "}
             |{" "}
-            <a href="/discussions" style={{ textDecoration: "underline" }}>
+            <a href="#" style={{ textDecoration: "underline" }}>
               <i className="bi bi-chat-dots"></i> Reply
+            </a>{" "}
+            <a
+              href="/discussions"
+              className="ms-3"
+              style={{ textDecoration: "underline" }}
+            >
+              <i className="bi bi-flag"></i> more
             </a>
           </div>
           <div className="small">

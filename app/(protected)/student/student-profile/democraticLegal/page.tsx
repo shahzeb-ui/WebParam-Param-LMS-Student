@@ -1,7 +1,7 @@
 'use client'
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
-export default function DemocraticLegal({student}:any) {
+export default function DemocraticLegal() {
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     throw new Error("Function not implemented.");
   }
@@ -17,25 +17,6 @@ export default function DemocraticLegal({student}:any) {
   const [disabilityCode, setDisabilityCode] = useState('');
   const [disabilityRating, setDisabilityRating] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  function setStudentContactInformation(student: any) {
-    console.log('stu:', student?.data);
-    setEquityCode(student?.data?.equityCode);
-    setNationalityCode(student?.data?.nationalityCode);
-    setHomeLanguageCode(student?.data?.homeLanguageCode);
-    setImmigrantStatus(student?.data?.immigrantStatus);
-    setPopiActAgree(student?.data?.popiActAgree);
-    setPopiActDate(student?.data?.popiActDate);
-    setCitizenStatusCode(student?.data?.citizenStatusCode);
-    setSocioeconomicCode(student?.data?.socioeconomicCode);
-    setDisabilityCode(student?.data?.disabilityCode);
-    setDisabilityRating(student?.data?.disabilityRating);
-  }
-
-  useEffect(() => {
-      setStudentContactInformation(student);
-  }, [student]);
-
 
   return (
     <div

@@ -15,8 +15,6 @@
     .rbt-lesson-leftsidebar {
         flex: 0 0 400px;
         width: 400px;
-        background-color: var(--color-extra2);
-        border-right: 1px solid var(--color-border);
         max-height: 100%;
         overflow-y: auto;
         @media #{$md-layout} {

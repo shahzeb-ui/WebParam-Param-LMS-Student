@@ -10,7 +10,6 @@ import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
 
 const Navbar = () => {
-  const [isSticky, setIsSticky] = useState(false);
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -42,23 +41,6 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [currentSection]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY;
-      if (scrolled > 180) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const handleAvatarClick = () => {
     setIsDropdownVisible(!isDropdownVisible);

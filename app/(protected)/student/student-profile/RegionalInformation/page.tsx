@@ -1,8 +1,7 @@
 'use client'
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
-export default function RegionalInformation({student}:any) {
-
+export default function RegionalInformation() {
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     setIsSubmitting(true);
@@ -14,21 +13,6 @@ export default function RegionalInformation({student}:any) {
   const [skillsProgrammeID, setSkillsProgrammeID] = useState('');
   const [learnerEnrolledDate, setLearnerEnrolledDate] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  
-  function setStudentContactInformation(student: any) {
-    console.log('stu:', student?.data);
-    setProvinceCode(student?.data?.provinceCode);
-    setStatsSAAreaCode(student?.data?.statssAreaCode);
-    setSdpAccreditationNumber(student?.data?.sdpAccreditationNumber);
-    setSkillsProgrammeID(student?.data?.skillsProgrammeId);
-    setLearnerEnrolledDate(student?.data?.learnerEnrolledDate);
-    
-  }
-
-  useEffect(() => {
-      setStudentContactInformation(student);
-  }, [student]);
 
   return (
     <div
