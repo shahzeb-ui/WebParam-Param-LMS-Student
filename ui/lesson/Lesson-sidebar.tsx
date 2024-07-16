@@ -89,7 +89,7 @@ const LessonSidebar = () => {
   }, []);
 
   return (
-    <div className={styles.fixedSidebar}>
+    <div>
       <div className="rbt-course-feature-inner rbt-search-activation">
         <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
           <div className="accordion" id="accordionExampleb2">

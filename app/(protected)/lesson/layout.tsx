@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import LessonSidebar from "@/ui/lesson/Lesson-sidebar";
+import styles from "@/ui/lesson/lesson-home/scroll.module.css";
 
 import "@/public/scss/styles.scss";
 
@@ -32,9 +33,7 @@ export default function LessonLayout({
           <div className={isMobile ? "" : "rbt-lesson-leftsidebar"}>
             <LessonSidebar />
           </div>
-          <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
-            {children}
-          </div>
+          <div className={styles.innerScrollable}>{children}</div>
         </div>
       </div>
     </>
