@@ -1,12 +1,10 @@
 "use client";
-
 import { usePathname } from "next/navigation";
 import SidebarData from "@/data/dashboard/student/siderbar.json";
 import Cookies from "universal-cookie";
 
 const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
-
   const user = cookies.get("loggedInUser");
   const path = usePathname();
   return (
