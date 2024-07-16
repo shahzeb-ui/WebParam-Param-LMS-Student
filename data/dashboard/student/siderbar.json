@@ -16,8 +16,8 @@
         "icon": "bi bi-laptop-fill"
       },
       {
-        "link": "#",
-        "text": "Wishlist",
+        "link": "/student/leaderboard",
+        "text": "Leaderboard",
         "icon": "feather-bookmark"
       },
       {

@@ -5,7 +5,6 @@ import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
 import assessmentData from "@/data/assessment/assessment.json";
 import { submitAssessment } from "@/actions/assessments/assessments-action";
-// import Loader from "@/ui/loader-ui/loader";
 
 type AssessmentQuestion = {
   question: string;
@@ -19,12 +18,8 @@ type AssessmentData = {
 const assessment: AssessmentData = assessmentData as AssessmentData;
 
 const AssessmentComponent = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<string[]>(
     Array(assessment.quizData.length).fill("")
-  );
-  const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
-    Array(assessment.quizData.length).fill(false)
   );
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,22 +29,18 @@ const AssessmentComponent = () => {
       localStorage.getItem("assessmentState") || "{}"
     );
     if (savedState) {
-      setCurrentIndex(savedState.currentIndex || 0);
       setAnswers(
         savedState.answers || Array(assessment.quizData.length).fill("")
-      );
-      setAnsweredQuestions(
-        savedState.answeredQuestions ||
-          Array(assessment.quizData.length).fill(false)
       );
     }
   }, []);
 
   const handleAnswerChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+    index: number
   ) => {
     const newAnswers = [...answers];
-    newAnswers[currentIndex] = event.target.value;
+    newAnswers[index] = event.target.value;
     setAnswers(newAnswers);
   };
 
@@ -57,39 +48,21 @@ const AssessmentComponent = () => {
     setIsInteracted(true);
   };
 
-  const handleNavigation = (direction: string) => {
-    saveStateToLocalStorage();
-    setIsInteracted(false);
-    if (direction === "next" && currentIndex < assessment.quizData.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    } else if (direction === "prev" && currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
   const handleSubmitAssessment = async () => {
     saveStateToLocalStorage();
     setIsInteracted(false);
     setLoading(true);
     const courseId = "65eebefa793e4ee1a7223a63";
-    const title = answers[currentIndex];
 
     try {
-      console.log("Submitting assessment:", { title, courseId });
-      const response = await submitAssessment(title, courseId);
-      console.log("Assessment Submitted:", response);
+      const responses = await Promise.all(
+        answers.map((answer) => submitAssessment(answer, courseId))
+      );
+      console.log("Assessment Submitted:", responses);
 
-      const newAnsweredQuestions = [...answeredQuestions];
-      newAnsweredQuestions[currentIndex] = true;
-      setAnsweredQuestions(newAnsweredQuestions);
-
-      if (currentIndex < assessment.quizData.length - 1) {
-        setCurrentIndex(currentIndex + 1);
-      } else {
-        // Handle assessment completion
-        console.log("All questions answered. Assessment completed.");
-        // Redirect or perform further actions upon successful submission
-      }
+      // Handle assessment completion
+      console.log("All questions answered. Assessment completed.");
+      // Redirect or perform further actions upon successful submission
     } catch (error) {
       console.error("Error submitting assessment:", error);
     } finally {
@@ -101,9 +74,7 @@ const AssessmentComponent = () => {
     localStorage.setItem(
       "assessmentState",
       JSON.stringify({
-        currentIndex,
         answers,
-        answeredQuestions,
       })
     );
   };
@@ -117,7 +88,7 @@ const AssessmentComponent = () => {
               <div
                 key={index}
                 id={`question-${index + 1}`}
-                className={`question ${index === currentIndex ? "" : "d-none"}`}
+                className="question"
               >
                 <div className="quize-top-meta">
                   <div className="quize-top-left">
@@ -128,7 +99,7 @@ const AssessmentComponent = () => {
                       </strong>
                     </span>
                     <span>
-                      Points: <strong>5</strong>
+                      Marks: <strong>5</strong>
                     </span>
                   </div>
                   <div className="quize-top-right">
@@ -146,7 +117,7 @@ const AssessmentComponent = () => {
                     <textarea
                       className={styles.textArea}
                       value={answers[index]}
-                      onChange={handleAnswerChange}
+                      onChange={(e) => handleAnswerChange(e, index)}
                       onClick={handleTextareaClick}
                       disabled={loading}
                     />
@@ -157,19 +128,14 @@ const AssessmentComponent = () => {
 
             <div className={styles.buttonWrapper}>
               <button
-                className="rbt-btn bg-primary-opacity btn-sm"
-                type="button"
-                onClick={() => handleNavigation("prev")}
-                disabled={currentIndex === 0 || loading}
-              >
-                Previous Questions
-              </button>
-
-              <button
                 className="rbt-btn btn-gradient btn-sm"
                 type="button"
                 onClick={handleSubmitAssessment}
-                disabled={!isInteracted || loading || !answers[currentIndex]}
+                disabled={
+                  !isInteracted ||
+                  loading ||
+                  answers.some((answer) => answer === "")
+                }
               >
                 {loading ? (
                   <>
