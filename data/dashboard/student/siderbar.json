@@ -1,140 +1,139 @@
 {
-    "siderbar": [
-      {
-        "link": "#",
-        "text": "Dashboard",
-        "icon": "bi bi-grid-fill"
-      },
-      {
-        "link": "/student/student-profile",
-        "text": "My Profile",
-        "icon": "feather-user"
-      },
-      {
-        "link": "/student/enrolled-courses",
-        "text": "My Courses",
-        "icon": "bi bi-laptop-fill"
-      },
-      {
-        "link": "#",
-        "text": "Wishlist",
-        "icon": "feather-bookmark"
-      },
-      {
-        "link": "#",
-        "text": "Reviews",
-        "icon": "feather-star"
-      },
-      {
-        "link": "#",
-        "text": "My Quiz Attempts",
-        "icon": "feather-help-circle"
-      },
-      {
-        "link": "#",
-        "text": "Order History",
-        "icon": "feather-shopping-bag"
-      },
-      {
-        "link": "#",
-        "text": "Settings",
-        "icon": "feather-settings"
-      },
-      {
-        "link": "/",
-        "text": "Logout",
-        "icon": "feather-log-out"
-      },
-      {
-        "link": "#",
-        "text": "Announcements",
-        "icon": "feather-volume-2"
-      },
-      {
-        "link": "#",
-        "text": "Assessments",
-        "icon": "feather-message-square"
-      },
-      {
-        "link": "#",
-        "text": "Assignments",
-        "icon": "feather-menu"
-      },
-      {
-        "link": "/student/logbook",
-        "text": "Logbook",
-        "icon": "bi bi-journal-bookmark"
-      }
-    ]
-  }
-  
+  "siderbar": [
+    {
+      "link": "#",
+      "text": "Dashboard",
+      "icon": "bi bi-grid-fill"
+    },
+    {
+      "link": "/student/student-profile",
+      "text": "My Profile",
+      "icon": "feather-user"
+    },
+    {
+      "link": "/student/enrolled-courses",
+      "text": "My Courses",
+      "icon": "bi bi-laptop-fill"
+    },
+    {
+      "link": "#",
+      "text": "Wishlist",
+      "icon": "feather-bookmark"
+    },
+    {
+      "link": "#",
+      "text": "Reviews",
+      "icon": "feather-star"
+    },
+    {
+      "link": "#",
+      "text": "My Quiz Attempts",
+      "icon": "feather-help-circle"
+    },
+    {
+      "link": "#",
+      "text": "Order History",
+      "icon": "feather-shopping-bag"
+    },
+    {
+      "link": "#",
+      "text": "Settings",
+      "icon": "feather-settings"
+    },
+    {
+      "link": "/",
+      "text": "Logout",
+      "icon": "feather-log-out"
+    },
+    {
+      "link": "#",
+      "text": "Announcements",
+      "icon": "feather-volume-2"
+    },
+    {
+      "link": "#",
+      "text": "Assessments",
+      "icon": "feather-message-square"
+    },
+    {
+      "link": "#",
+      "text": "Assignments",
+      "icon": "feather-menu"
+    },
+    {
+      "link": "/student/logbook",
+      "text": "Logbook",
+      "icon": "bi bi-journal-bookmark"
+    }
+  ]
+}
 {
-    "siderbar": [
-      {
-        "link": "/student/dashboard",
-        "text": "Dashboard",
-        "icon": "bi bi-grid-fill"
-      },
-      {
-        "link": "/student/student-profile",
-        "text": "My Profile",
-        "icon": "feather-user"
-      },
-      {
-        "link": "/student/enrolled-courses",
-        "text": "My Courses",
-        "icon": "bi bi-laptop-fill"
-      },
-      {
-        "link": "#",
-        "text": "Wishlist",
-        "icon": "feather-bookmark"
-      },
-      {
-        "link": "#",
-        "text": "Reviews",
-        "icon": "feather-star"
-      },
-      {
-        "link": "/student/quiz-attempts",
-        "text": "My Quiz Attempts",
-        "icon": "feather-help-circle"
-      },
-      {
-        "link": "#",
-        "text": "Order History",
-        "icon": "feather-shopping-bag"
-      },
-      {
-        "link": "#",
-        "text": "Settings",
-        "icon": "feather-settings"
-      },
-      {
-        "link": "/",
-        "text": "Logout",
-        "icon": "feather-log-out"
-      },
-      {
-        "link": "#",
-        "text": "Announcements",
-        "icon": "feather-volume-2"
-      },
-      {
-        "link": "#",
-        "text": "Assessments",
-        "icon": "feather-message-square"
-      },
-      {
-        "link": "/student/assignments",
-        "text": "Assignments",
-        "icon": "feather-menu"
-      },
-      {
-        "link": "/student/logbook",
-        "text": "Logbook",
-        "icon": "bi bi-journal-bookmark"
-      }
-    ]
-  }
+  "siderbar": [
+    {
+      "link": "/student/dashboard",
+      "text": "Dashboard",
+      "icon": "bi bi-grid-fill"
+    },
+    {
+      "link": "/student/student-profile",
+      "text": "My Profile",
+      "icon": "feather-user"
+    },
+    {
+      "link": "/student/enrolled-courses",
+      "text": "My Courses",
+      "icon": "bi bi-laptop-fill"
+    },
+    {
+      "link": "#",
+      "text": "Wishlist",
+      "icon": "feather-bookmark"
+    },
+    {
+      "link": "#",
+      "text": "Reviews",
+      "icon": "feather-star"
+    },
+    {
+      "link": "/student/quiz-attempts",
+      "text": "My Quiz Attempts",
+      "icon": "feather-help-circle"
+    },
+    {
+      "link": "#",
+      "text": "Order History",
+      "icon": "feather-shopping-bag"
+    },
+    {
+      "link": "#",
+      "text": "Settings",
+      "icon": "feather-settings"
+    },
+    {
+      "link": "/",
+      "text": "Logout",
+      "icon": "feather-log-out"
+    },
+    {
+      "link": "#",
+      "text": "Announcements",
+      "icon": "feather-volume-2"
+    },
+    {
+      "link": "#",
+      "text": "Assessments",
+      "icon": "feather-message-square"
+    },
+    {
+      "link": "/student/assignments",
+      "text": "Assignments",
+      "icon": "feather-menu"
+    },
+    {
+      "link": "/student/logbook",
+      "text": "Logbook",
+      "icon": "bi bi-journal-bookmark"
+    }
+  ]
+}
   
