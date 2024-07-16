@@ -1,7 +1,24 @@
 import React from "react";
 import styles from "@/styles/video/ResponsiveVideoComponent.module.css";
+import { useVideo } from "@/context/video-context/video-context";
+
+// Function to get the YouTube embed URL
+const getEmbedUrl = (url: string): string => {
+  const videoIdMatch = url.match(
+    /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+  );
+  const videoId = videoIdMatch ? videoIdMatch[1] : null;
+  return videoId
+    ? `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3`
+    : "";
+};
 
 const ResponsiveVideoComponent: React.FC = () => {
+  const { selectedVideoUrl } = useVideo();
+  console.log("selected video: ", selectedVideoUrl);
+
+  const embedUrl = selectedVideoUrl ? getEmbedUrl(selectedVideoUrl) : "";
+
   return (
     <div className={styles.jss8}>
       <figure className={`${styles.css1vl7155} ${styles.e1fj0tsm3}`}>
@@ -12,12 +29,13 @@ const ResponsiveVideoComponent: React.FC = () => {
             className={styles.cssl7x8s3}
             style={{ width: "100%", height: "100%" }}
           >
-            <video
-              preload="auto"
-              src="https://media.istockphoto.com/id/1455749437/video/interior-designer-and-clients-discussing-tile-and-color-options-in-her-office.mp4?s=mp4-640x640-is&k=20&c=l1xsk9gCV2Ht-FVnJEEGITcKB6-fzRzs7vkX53orMI4="
+            <iframe
+              src={embedUrl}
               style={{ width: "100%", height: "100%" }}
-              controls
-            ></video>
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
         <div

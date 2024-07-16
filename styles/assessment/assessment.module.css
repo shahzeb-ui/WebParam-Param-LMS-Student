@@ -17,3 +17,8 @@
   margin-top: 50px;
   gap: 30px;
 }
+
+.load-more-trigger {
+    height: 1px;
+    margin-bottom: 20px;
+}
