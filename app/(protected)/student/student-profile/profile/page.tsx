@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import './userProfile.scss'
 import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
-import Cookies from 'universal-cookie';
 import Image from 'next/image';
 
 export default function Profile({user}:any) {
@@ -108,7 +107,6 @@ export default function Profile({user}:any) {
         <div className="tutor-btn">
           <a
             className="rbt-btn btn-sm btn-border color-white radius-round-10"
-            href="/instructor/instructor-settings#"
           >
             Edit Cover Photo
           </a>

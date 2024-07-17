@@ -1,13 +1,14 @@
 'use client'
+import { updateContactInformation } from "@/app/api/studentProfile/studentprofile";
 import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
 export default function ContactInformation({student}:any) {
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault();
-    console.log('submitting')
-  }
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
 
-  console.log('student infomasion:', student);
+
+
 
   const [homeAddress1, setHomeAddress1] = useState('');
   const [postalAddress1, setPostalAddress1] = useState('');
@@ -38,6 +39,32 @@ export default function ContactInformation({student}:any) {
     useEffect(() => {
         setStudentContactInformation(student);
     }, [student]);
+
+    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+      event.preventDefault();
+      setIsSubmitting(true);
+  
+        const payload = {
+          userId: user.data.id||user.data.userId,
+          homeAddress1: homeAddress1,
+          postalAddress1: postalAddress1,
+          postalAddress2: postalAddress2,
+          postalAddress3: postalAddress3,
+          learnerHomeAddressPostalCode: learnerHomeAddressPostalCode,
+          learnerHomeAddressPhysicalCode: learnerHomeAddressPhysicalCode,
+          learnerPhoneNumber: learnerPhoneNumber,
+          learnerCellPhoneNumber: learnerCellPhoneNumber,
+          learnerFaxNumber: learnerFaxNumber,
+          learnerEmailAddress: learnerEmailAddress
+        }
+    
+        const res = updateContactInformation(payload);
+  
+        if (res) {
+          console.log('response', res);
+          setIsSubmitting(false);
+        }
+    }
 
 
   return (

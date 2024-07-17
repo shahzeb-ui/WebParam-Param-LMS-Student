@@ -1,11 +1,34 @@
 'use client'
+import { updateRegionalInformation } from "@/app/api/studentProfile/studentprofile";
 import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
 export default function RegionalInformation({student}:any) {
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    event.preventDefault();
     setIsSubmitting(true);
+
+      const payload = {
+        userId: user.data.id||user.data.userId,
+        provinceCode: provinceCode,
+        statsSAAreaCode: statsSAAreaCode,
+        sdpAccreditationNumber: sdpAccreditationNumber,
+        skillsProgrammeId: skillsProgrammeID,
+        learnerEnrolledDate: learnerEnrolledDate
+      }
+  
+      const res = updateRegionalInformation(payload);
+      
+
+      if (res) {
+        console.log('response', res);
+        setIsSubmitting(false);
+      }
+
   }
 
   const [provinceCode, setProvinceCode] = useState('');
