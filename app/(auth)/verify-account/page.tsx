@@ -73,6 +73,7 @@ export default function VerifyAccount() {
             console.log(res);
             setIsSubmitted(false);
             cookies.set("loggedInUser", res?.data);
+            localStorage.setItem("loggedInUser", res?.data)
             router.push('/student/student-profile')
         } else {
             setIsSubmitted(false);

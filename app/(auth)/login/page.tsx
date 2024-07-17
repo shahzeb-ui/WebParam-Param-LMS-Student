@@ -27,6 +27,7 @@ export default function Login() {
         if (res?.data) {
             debugger;
             cookies.set("loggedInUser", res.data);
+            localStorage.setItem("loggedInUser", res.data);
             router.push('/student/student-profile')
         } else {
             setErrorMessage(true)
