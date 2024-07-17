@@ -1,4 +1,4 @@
-export const GET_UNIT_STANDARDS_URL = (courseId: string) => `https://khumla-development-newcourse-read.azurewebsites.net/api/v1/Modules/${courseId}`
+export const GET_UNIT_STANDARDS_URL = (courseId: string) => `https://khumla-dev-newcourse-read.azurewebsites.net/api/v1/Modules/${courseId}`
 export interface UnitStandardData {
     id: string;
     title: string;
