@@ -16,7 +16,7 @@ function UserProfileContent() {
     const searchParams = useSearchParams();
     const [student, setStudent] = useState<any>();
     const tab = searchParams.get('tab') || 'profile';
-    const user = cookies.get('loggedInUser')||localStorage.getItem("loggedInUser");
+    const user = cookies.get('loggedInUser');
     console.log('user:', user);
     const router = useRouter();
 

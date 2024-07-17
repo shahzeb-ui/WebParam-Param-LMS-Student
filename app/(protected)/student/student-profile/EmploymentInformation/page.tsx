@@ -1,8 +1,11 @@
 'use client'
+import { updateEmployeeInformation } from "@/app/api/studentProfile/studentprofile";
 import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
 export default function EmploymentInformation({student}:any) {
-
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
  
 
   const [employmentStatus, setEmploymentStatus] = useState('');
@@ -20,7 +23,22 @@ export default function EmploymentInformation({student}:any) {
   }, [student]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
+    event.preventDefault();
+    setIsSubmitting(true);
+
+      const payload = {
+        userId: user.data.id||user.data.userId,
+        employmentStatus: employmentStatus,
+        dateOfFisa: dateOfFisa
+      }
+  
+      const res = updateEmployeeInformation(payload);
+
+      if (res) {
+        console.log('response', res);
+        setIsSubmitting(false);
+      }
+      
   }
 
   return (
