@@ -7,6 +7,7 @@ import styles from "@/ui/lesson/side.module.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LessonData from "@/data/lessons/lesson.json";
 import { FetchParaphrase } from "@/actions/paraphase/paraphase-action";
+import { useVideo } from "@/context/video-context/video-context";
 
 interface LessonItem {
   lssonLink: string;
@@ -46,6 +47,7 @@ const LessonSidebar = () => {
   const [paraphraseData, setParaphraseData] = useState<ParaphraseResponse[]>(
     []
   );
+  const { setSelectedVideoUrl } = useVideo();
 
   const lessonsPerPage = 5;
   const [lessons, setLessons] = useState(
@@ -77,7 +79,7 @@ const LessonSidebar = () => {
       const data: ParaphraseResponse[] = await FetchParaphrase(
         "6666b907de3aebf48aa068e7"
       );
-      console.log("paraphrase data: ", data);
+      // console.log("paraphrase data: ", data);
       setParaphraseData(data);
     } catch (error) {
       console.error("Fetching paraphrase error: ", error);
@@ -187,24 +189,26 @@ const LessonSidebar = () => {
                           </li>
                         ))}
                       </ul>
-                      {/* <ul>
-                      {paraphraseData.map((item, index) => (
-                        <li key={index}>
-                          {item.data.videoUrl ? (
-                            <a
-                              style={{ textDecoration: "none" }}
-                              href={item.data.videoUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {item.data.title}
-                            </a>
-                          ) : (
-                            <span>{item.data.title}</span>
-                          )}
-                        </li>
-                      ))}
-                    </ul> */}
+                      <ul>
+                        {paraphraseData.map((item, index) => (
+                          <li key={index}>
+                            {item?.data?.videoUrl ? (
+                              <a
+                                style={{ textDecoration: "none" }}
+                                href="#"
+                                rel="noopener noreferrer"
+                                onClick={() =>
+                                  setSelectedVideoUrl(item.data.videoUrl)
+                                }
+                              >
+                                {item.data.title}
+                              </a>
+                            ) : (
+                              <span>{item.data.title}</span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 </div>

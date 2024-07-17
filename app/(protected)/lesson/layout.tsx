@@ -5,6 +5,7 @@ import LessonSidebar from "@/ui/lesson/Lesson-sidebar";
 import styles from "@/ui/lesson/lesson-home/scroll.module.css";
 
 import "@/public/scss/styles.scss";
+import { VideoProvider } from "@/context/video-context/video-context";
 
 export default function LessonLayout({
   children,
@@ -28,14 +29,16 @@ export default function LessonLayout({
 
   return (
     <>
-      <div className="rbt-lesson-area bg-color-white">
-        <div className="rbt-lesson-content-wrapper">
-          <div className={isMobile ? "" : "rbt-lesson-leftsidebar"}>
-            <LessonSidebar />
+      <VideoProvider>
+        <div className="rbt-lesson-area bg-color-white">
+          <div className="rbt-lesson-content-wrapper">
+            <div className={isMobile ? "" : "rbt-lesson-leftsidebar"}>
+              <LessonSidebar />
+            </div>
+            <div className={styles.innerScrollable}>{children}</div>
           </div>
-          <div className={styles.innerScrollable}>{children}</div>
         </div>
-      </div>
+      </VideoProvider>
     </>
   );
 }

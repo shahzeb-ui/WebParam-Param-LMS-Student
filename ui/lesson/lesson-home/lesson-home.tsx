@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import Transcript from "@/ui/transcript/transcript";
 import Overview from "@/ui/overview/overview";
 import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
+import YoutubeVideoComponent from "@/ui/youtube/custom-youtube-iframe";
 
 const QuestionAndAnswers = dynamic(
   () => import("@/ui/lesson/question-answers/question-answer"),
@@ -48,6 +49,7 @@ const LessonHomepage = () => {
       <div className="inner">
         <div className="plyr__video-embed rbtplayer">
           <ResponsiveVideoComponent />
+          {/* <YoutubeVideoComponent/> */}
         </div>
         <div className="rbt-card-body-2">
           <h6 className="bi bi-easel video-title">Video Title Here</h6>
