@@ -1,4 +1,4 @@
-export const PARAPHRASE_URL = 'https://khumla-development-newcourse-read.azurewebsites.net/api/v1/Paraphrase';
+export const PARAPHRASE_URL = 'https://khumla-dev-newcourse-read.azurewebsites.net/api/v1/Paraphrase';
 
 export interface ParaphraseData {
     id: string;
