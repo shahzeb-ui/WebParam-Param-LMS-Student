@@ -2,22 +2,16 @@ import React from "react";
 import styles from "@/styles/video/ResponsiveVideoComponent.module.css";
 import { useVideo } from "@/context/video-context/video-context";
 
-// Function to get the YouTube embed URL
-const getEmbedUrl = (url: string): string => {
-  const videoIdMatch = url.match(
-    /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
-  );
-  const videoId = videoIdMatch ? videoIdMatch[1] : null;
-  return videoId
-    ? `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&showinfo=0&modestbranding=1&rel=0&iv_load_policy=3`
-    : "";
+const getDirectVideoUrl = (url: string): string => {
+  // Assuming you have a way to convert the Synthesia URL to a direct video file URL
+  return url; // Modify this to return the direct video file URL
 };
 
 const ResponsiveVideoComponent: React.FC = () => {
   const { selectedVideoUrl } = useVideo();
   console.log("selected video: ", selectedVideoUrl);
 
-  const embedUrl = selectedVideoUrl ? getEmbedUrl(selectedVideoUrl) : "";
+  const videoUrl = selectedVideoUrl ? getDirectVideoUrl(selectedVideoUrl) : "";
 
   return (
     <div className={styles.jss8}>
@@ -29,20 +23,24 @@ const ResponsiveVideoComponent: React.FC = () => {
             className={styles.cssl7x8s3}
             style={{ width: "100%", height: "100%" }}
           >
-            {embedUrl ? (
-              <iframe
-                src={embedUrl}
-                style={{ width: "100%", height: "100%" }}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            ) : (
-              <div className={styles.videoPlaceholder}>
-                <i className="bi bi-play-fill"></i>
-                <span></span>
-              </div>
-            )}
+            <iframe
+              src={videoUrl}
+              loading="lazy"
+              title="Synthesia video player - KM01-KT0101 Project Management Overview"
+              allowFullScreen
+              allow="encrypted-media; fullscreen;"
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                top: 0,
+                left: 0,
+                border: "none",
+                padding: 0,
+                margin: 0,
+                overflow: "hidden",
+              }}
+            ></iframe>
           </div>
         </div>
         <div

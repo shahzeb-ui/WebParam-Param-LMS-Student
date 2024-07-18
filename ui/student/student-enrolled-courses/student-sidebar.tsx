@@ -42,7 +42,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.siderbar.slice(9, 14).map((data, index) => (
+                    SidebarData.siderbar.slice(9, 13).map((data, index) => (
                       <li key={index}>
                         <a
                           href={data.link}
