@@ -1,0 +1,84 @@
+.uploadAssignment {
+    border: 1px dotted #ccc;
+    padding: 20px;
+    margin-top: 80px;
+    height: 200px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+.docContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.docContainer.dragover {
+    background-color: #e6f7ff;
+    border-color: #1e90ff;
+}
+
+h3, h5 {
+    margin: 10px 0;
+    color: #333;
+    font-family: Arial, sans-serif;
+    font-size: smaller;
+}
+
+.fileName {
+    margin: 10px 0;
+    color: #555;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+label[for="file"] {
+    cursor: pointer;
+    color: #1e90ff;
+    text-decoration: underline;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+label[for="file"] {
+    color: #0d6efd;
+    background-color: #1e90ff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+label[for="file"]:hover {
+    background-color: #0d6efd;
+}
+
+.container-ev {
+    
+
+    & > :last-child {
+        margin-left: auto;
+        margin-bottom: 20px;
+        height:50px;
+        width:200px; 
+        font-size: 16px; 
+        gap:5px
+    }
+}

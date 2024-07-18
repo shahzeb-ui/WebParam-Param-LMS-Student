@@ -1,14 +1,45 @@
 'use client'
-import { FormEvent, useState } from "react";
+import { updateEmployeeInformation } from "@/app/api/studentProfile/studentprofile";
+import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
-export default function EmploymentInformation() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
-  }
+export default function EmploymentInformation({student}:any) {
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
+ 
 
   const [employmentStatus, setEmploymentStatus] = useState('');
   const [dateOfFisa, setDateOfFisa] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  function setStudentContactInformation(student: any) {
+    console.log('stu:', student?.data);
+    setEmploymentStatus(student?.data?.employmentStatus);
+    setDateOfFisa(student?.data?.dateOfFisa);
+  }
+
+  useEffect(() => {
+      setStudentContactInformation(student);
+  }, [student]);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+      const payload = {
+        userId: user.data.id||user.data.userId,
+        employmentStatus: employmentStatus,
+        dateOfFisa: dateOfFisa
+      }
+  
+      const res = updateEmployeeInformation(payload);
+
+      if (res) {
+        console.log('response', res);
+        setIsSubmitting(false);
+      }
+      
+  }
 
   return (
     <div

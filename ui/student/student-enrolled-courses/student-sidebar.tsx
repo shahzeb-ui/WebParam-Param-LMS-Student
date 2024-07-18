@@ -1,12 +1,10 @@
 "use client";
-
 import { usePathname } from "next/navigation";
 import SidebarData from "@/data/dashboard/student/siderbar.json";
 import Cookies from "universal-cookie";
 
 const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
-
   const user = cookies.get("loggedInUser");
   const path = usePathname();
   return (
@@ -21,7 +19,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.siderbar.slice(0, 7).map((data, index) => (
+                    SidebarData?.siderbar?.slice(0, 7).map((data:any, index:any) => (
                       <li className="nav-item" key={index} role="presentation">
                         <a
                           className={`${path === data.link ? "active" : ""}`}
@@ -42,7 +40,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.siderbar.slice(9, 13).map((data, index) => (
+                    SidebarData?.siderbar?.slice(9, 13).map((data:any, index:any) => (
                       <li key={index}>
                         <a
                           href={data.link}
@@ -63,7 +61,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.siderbar.slice(7, 10).map((data, index) => (
+                    SidebarData?.siderbar?.slice(7, 10).map((data:any, index:any) => (
                       <li key={index}>
                         <a
                           href={data.link}

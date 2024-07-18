@@ -1,10 +1,11 @@
 'use client'
-import { FormEvent, useState } from "react";
+import { updateDemographicsInformation } from "@/app/api/studentProfile/studentprofile";
+import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
-export default function DemocraticLegal() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
-  }
+export default function DemocraticLegal({student}:any) {
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
 
   const [equityCode, setEquityCode] = useState('');
   const [nationalityCode, setNationalityCode] = useState('');
@@ -17,6 +18,52 @@ export default function DemocraticLegal() {
   const [disabilityCode, setDisabilityCode] = useState('');
   const [disabilityRating, setDisabilityRating] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  function setStudentContactInformation(student: any) {
+    console.log('stu:', student?.data);
+    setEquityCode(student?.data?.equityCode);
+    setNationalityCode(student?.data?.nationalityCode);
+    setHomeLanguageCode(student?.data?.homeLanguageCode);
+    setImmigrantStatus(student?.data?.immigrantStatus);
+    setPopiActAgree(student?.data?.popiActAgree);
+    setPopiActDate(student?.data?.popiActDate);
+    setCitizenStatusCode(student?.data?.citizenStatusCode);
+    setSocioeconomicCode(student?.data?.socioeconomicCode);
+    setDisabilityCode(student?.data?.disabilityCode);
+    setDisabilityRating(student?.data?.disabilityRating);
+  }
+
+  useEffect(() => {
+      setStudentContactInformation(student);
+  }, [student]);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+      const payload = {
+        userId: user.data.id||user.data.userId,
+        equityCode: equityCode,
+        nationalityCode: nationalityCode,
+        homeLanguageCode: homeLanguageCode,
+        immigrantStatus: immigrantStatus,
+        popiActAgree: popiActAgree,
+        popiActDate: popiActDate,
+        citizenStatusCode: citizenStatusCode,
+        socioeconomicCode: socioeconomicCode,
+        disabilityCode: disabilityCode,
+        disabilityRating: disabilityRating
+      
+      }
+  
+      const res = updateDemographicsInformation(payload);
+
+      if (res) {
+        console.log('response', res);
+        setIsSubmitting(false);
+      }
+  }
+
 
   return (
     <div
