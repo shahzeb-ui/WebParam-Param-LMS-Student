@@ -1,23 +1,18 @@
-export const PARAPHRASE_URL = 'https://khumla-development-newcourse-read.azurewebsites.net/api/v1/Paraphrase';
+export const GET_TOPIC_ELEMENTS_URL = (topicId: string) =>
+  `https://khumla-dev-newcourse-read.azurewebsites.net/api/v1/TopicElements/GetTopicElements/${topicId}`;
 
-export interface ParaphraseData {
-    id: string;
-    title: string;
-    description: string;
-    documentId: string;
-    audioBlobUrl: string;
-    audioStatus: number;
-    status: number;
-    videoUrl: string | null;
-    createdAt: string;
-    updatedAt: string;
-    isSystemGenerated: boolean;
-    isQuizGenerated: boolean;
-    isAudioGenerated: boolean;
+export interface TopicElement {
+  id: string;
+  description: string;
+  videoScript: string;
+  videoUrl: string | null;
+  topicId: string;
+  title: string;
+  elementCode: string;
 }
 
-export interface ParaphraseResponse {
-    data: ParaphraseData;
-    message: string;
-    error: boolean;
+export interface TopicElementResponse {
+  data: TopicElement[];
+  message: string | null;
+  error: boolean;
 }
