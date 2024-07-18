@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import './userProfile.scss'
 import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
 import Image from 'next/image';
+import axios from 'axios';
 
 export default function Profile({user}:any) {
     const [firstName, setFirstName] = useState('');
@@ -18,15 +19,22 @@ export default function Profile({user}:any) {
     const [bio, setBio] = useState('');
     const [isSubmitting,setIsSubmitting] = useState(false);
     const [id, setId] = useState('');
+    const [codes, setCodes] = useState<any>()
+
+    async function getInputCodes() {
+    const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
+    console.log('codes:', res.data.data);
+    setCodes(res.data.data)
+  }
 
     console.log('logged in user in profile',user);
 
     useEffect(() => {
-      debugger;
         getUserProfile();
-    }, []);
+        getInputCodes();
+    }, [getUserProfile]);
     
-    const getUserProfile = async () => {
+    async function getUserProfile() {
         if (!user?.data?.id && !user?.data?.userId) return;
         const res = await getStudentProfile(user.data.id || user.data.userId);
 
@@ -181,7 +189,6 @@ export default function Profile({user}:any) {
               <option value="">Select Gender</option>
                <option value="female">Female</option>
                <option value="male">Male</option>
-               <option value="notSay">Rather not say</option>
         </select>
       </div>
     </div>
@@ -195,11 +202,13 @@ export default function Profile({user}:any) {
           value={country}
           onChange={(e) => setCountry(e.target.value)} 
           className="w-100">
-              <option value="">Select Country</option>
-               <option value="southAfrica">South Africa</option>
-               <option value="lesotho">Lesotho</option>
-               <option value="zimbabwe">Zimbabwe</option>
-        </select>
+          <option value="">Select Country</option>
+        {
+         codes && codes[2]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
       </div>
     </div>
 
@@ -212,10 +221,27 @@ export default function Profile({user}:any) {
           onChange={(e) => setCity(e.target.value)}
           className="w-100">
               <option value="">Select City</option>
-               <option value="johannesburg">Johannesburg</option>
-               <option value="durban">Durban</option>
-               <option value="nelspruit">Nelspruit</option>
-               <option value="capeTown">Cape Town</option>
+              <option value="johannesburg">Johannesburg</option>
+              <option value="durban">Durban</option>
+              <option value="nelspruit">Nelspruit</option>
+              <option value="capeTown">Cape Town</option>
+              <option value="portElizabeth">Port Elizabeth</option>
+              <option value="pretoria">Pretoria</option>
+              <option value="bloemfontein">Bloemfontein</option>
+              <option value="eastLondon">East London</option>
+              <option value="kimberley">Kimberley</option>
+              <option value="pietermaritzburg">Pietermaritzburg</option>
+              <option value="polokwane">Polokwane</option>
+              <option value="rustenburg">Rustenburg</option>
+              <option value="mbombela">Mbombela</option>
+              <option value="george">George</option>
+              <option value="upington">Upington</option>
+              <option value="mafikeng">Mafikeng</option>
+              <option value="middelburg">Middelburg</option>
+              <option value="vanderbijlpark">Vanderbijlpark</option>
+              <option value="paarl">Paarl</option>
+              <option value="stellenbosch">Stellenbosch</option>
+              <option value="grahamstown">Grahamstown</option>
         </select>
       </div>
     </div>
@@ -230,9 +256,15 @@ export default function Profile({user}:any) {
           onChange={(e) => setProvince(e.target.value)} 
           className="w-100">
               <option value="">Select Province</option>
-               <option value="gauteng">Gauteng</option>
-               <option value="kzn">KZN</option>
-               <option value="mpumalanga">Mpumalanga</option>
+              <option value="easternCape">Eastern Cape</option>
+              <option value="freeState">Free State</option>
+              <option value="gauteng">Gauteng</option>
+              <option value="kwazuluNatal">KwaZulu-Natal</option>
+              <option value="limpopo">Limpopo</option>
+              <option value="mpumalanga">Mpumalanga</option>
+              <option value="northernCape">Northern Cape</option>
+              <option value="northWest">North West</option>
+              <option value="westernCape">Western Cape</option>
         </select>
       </div>
     </div>
