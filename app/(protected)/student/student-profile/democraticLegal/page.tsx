@@ -52,6 +52,7 @@ export default function DemocraticLegal({student}:any) {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    debugger;
     setIsSubmitting(true);
 
       const payload = {

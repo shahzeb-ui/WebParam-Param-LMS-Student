@@ -32,7 +32,7 @@ export default function Profile({user}:any) {
     useEffect(() => {
         getUserProfile();
         getInputCodes();
-    }, [getUserProfile]);
+    }, []);
     
     async function getUserProfile() {
         if (!user?.data?.id && !user?.data?.userId) return;
@@ -295,7 +295,7 @@ export default function Profile({user}:any) {
       </div>
     </div>
     
-    <div className="col-12">
+    {/* <div className="col-12">
       <div className="rbt-form-group">
         <label htmlFor="bio">Bio</label>
         <textarea
@@ -307,7 +307,7 @@ export default function Profile({user}:any) {
           placeholder='enter a description about yourself'
         />
       </div>
-    </div>
+    </div> */}
     <div className="col-12 mt--20">
       <div className="rbt-form-group">
         <button
