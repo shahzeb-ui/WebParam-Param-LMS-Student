@@ -20,3 +20,4 @@ export interface ApiResponse {
   message: string | null;
   error: boolean;
 }
+

@@ -1,12 +1,12 @@
 'use client'
+import { registerType } from '@/app/Utils/authInterface';
 import { registerUser } from '@/app/api/auth/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 
-
-export default function Register() {
+export default function Register({searchParams}: {searchParams: {courseId: string}}) {
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setpassword] = useState('');
@@ -18,18 +18,18 @@ export default function Register() {
     
     const cookies = new Cookies();
     const router = useRouter()
-
     async function handleRegister(e:any) {
         e.preventDefault();
         setIsSubmitted(true);
-
-        const payload = {
+        const payload: registerType = {
             email,
             username,
             password,
-            confirmPassword
-        }
+            confirmPassword,
+            courseId: searchParams.courseId
+        };
 
+        debugger;
         const res = await registerUser(payload);
         setIsSubmitted(false);
         if (res?.data.message != "User exists") {
@@ -39,12 +39,15 @@ export default function Register() {
             setErrorMessage(true)
         }
     }
-
     useEffect(() => {
         setErrorMessage(false)
     }, [username, email, password, confirmPassword])
 
-    
+    useEffect(() => {
+        const courseId = '6669f0ff8759b480859c10a7';
+        router.push(`/register?courseId=${courseId}`)
+    }, [])
+
     useEffect(() => {
         if (confirmPassword.length >= password.length && password != confirmPassword) {
             setPasswordNotMatch(true);
@@ -53,7 +56,7 @@ export default function Register() {
         }
     }, [password, confirmPassword])
 
-
+    
     return (
         <div className="register">
             <div className="rbt-contact-form contact-form-style-1 max-width-auto">
@@ -68,7 +71,6 @@ export default function Register() {
                 <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username" name="username *" required />
                     <span className="focus-border" />
                 </div>
-
                 <div className="form-group">
                     <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password *" name="register_password" required />
                     <span className="focus-border" />

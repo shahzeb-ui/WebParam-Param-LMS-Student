@@ -1,10 +1,14 @@
 'use client'
-import { FormEvent, useState } from "react";
+import { updateContactInformation } from "@/app/api/studentProfile/studentprofile";
+import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
-export default function ContactInformation() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
-  }
+export default function ContactInformation({student}:any) {
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
+
+
+
 
   const [homeAddress1, setHomeAddress1] = useState('');
   const [postalAddress1, setPostalAddress1] = useState('');
@@ -17,6 +21,51 @@ export default function ContactInformation() {
   const [learnerFaxNumber, setLearnerFaxNumber] = useState('');
   const [learnerEmailAddress, setLearnerEmailAddress] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+    function setStudentContactInformation(student: any) {
+      console.log('stu:', student?.data);
+        setHomeAddress1(student?.data?.homeAddress1);
+        setPostalAddress1(student?.data?.postalAddress1);
+        setPostalAddress2(student?.data?.postalAddress2);
+        setPostalAddress3(student?.data?.postalAddress3);
+        setLearnerHomeAddressPostalCode(student?.data?.learnerHomeAddressPostalCode);
+        setLearnerHomeAddressPhysicalCode(student?.data?.learnerHomeAddressPhysicalCode);
+        setLearnerPhoneNumber(student?.data?.learnerPhoneNumber);
+        setLearnerCellPhoneNumber(student?.data?.learnerCellPhoneNumber);
+        setLearnerFaxNumber(student?.data?.learnerFaxNumber);
+        setLearnerEmailAddress(student?.data?.learnerEmailAddress);
+    }
+
+    useEffect(() => {
+        setStudentContactInformation(student);
+    }, [student]);
+
+    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+      event.preventDefault();
+      setIsSubmitting(true);
+  
+        const payload = {
+          userId: user.data.id||user.data.userId,
+          homeAddress1: homeAddress1,
+          postalAddress1: postalAddress1,
+          postalAddress2: postalAddress2,
+          postalAddress3: postalAddress3,
+          learnerHomeAddressPostalCode: learnerHomeAddressPostalCode,
+          learnerHomeAddressPhysicalCode: learnerHomeAddressPhysicalCode,
+          learnerPhoneNumber: learnerPhoneNumber,
+          learnerCellPhoneNumber: learnerCellPhoneNumber,
+          learnerFaxNumber: learnerFaxNumber,
+          learnerEmailAddress: learnerEmailAddress
+        }
+    
+        const res = updateContactInformation(payload);
+  
+        if (res) {
+          console.log('response', res);
+          setIsSubmitting(false);
+        }
+    }
+
 
   return (
     <div

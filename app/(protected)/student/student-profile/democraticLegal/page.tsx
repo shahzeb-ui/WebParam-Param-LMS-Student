@@ -1,22 +1,83 @@
 'use client'
-import { FormEvent, useState } from "react";
+import { updateDemographicsInformation } from "@/app/api/studentProfile/studentprofile";
+import axios from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
-export default function DemocraticLegal() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
-  }
+export default function DemocraticLegal({student}:any) {
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
 
   const [equityCode, setEquityCode] = useState('');
   const [nationalityCode, setNationalityCode] = useState('');
   const [homeLanguageCode, setHomeLanguageCode] = useState('');
   const [immigrantStatus, setImmigrantStatus] = useState('');
-  const [popiActAgree, setPopiActAgree] = useState(false);
+  const [popiActAgree, setPopiActAgree] = useState('');
   const [popiActDate, setPopiActDate] = useState('');
   const [citizenStatusCode, setCitizenStatusCode] = useState('');
   const [socioeconomicCode, setSocioeconomicCode] = useState('');
   const [disabilityCode, setDisabilityCode] = useState('');
   const [disabilityRating, setDisabilityRating] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [codes, setCodes] = useState<any>()
+
+  async function getInputCodes() {
+    const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
+
+    console.log('codes:', res.data.data);
+    setCodes(res.data.data)
+  }
+
+  function setStudentContactInformation(student: any) {
+    console.log('stu:', student?.data);
+    setEquityCode(student?.data?.equityCode);
+    setNationalityCode(student?.data?.nationalityCode);
+    setHomeLanguageCode(student?.data?.homeLanguageCode);
+    setImmigrantStatus(student?.data?.immigrantStatus);
+    setPopiActAgree(student?.data?.popiActAgree);
+    setPopiActDate(student?.data?.popiActDate);
+    setCitizenStatusCode(student?.data?.citizenStatusCode);
+    setSocioeconomicCode(student?.data?.socioeconomicCode);
+    setDisabilityCode(student?.data?.disabilityCode);
+    setDisabilityRating(student?.data?.disabilityRating);
+  }
+
+  useEffect(() => {
+      setStudentContactInformation(student);
+    }, [student]);
+    
+  useEffect(() => {
+    getInputCodes();
+  }, [])
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    event.preventDefault();
+    debugger;
+    setIsSubmitting(true);
+
+      const payload = {
+        userId: user.data.id||user.data.userId,
+        equityCode: equityCode,
+        nationalityCode: nationalityCode,
+        homeLanguageCode: homeLanguageCode,
+        immigrantStatus: immigrantStatus,
+        popiActAgree: popiActAgree,
+        popiActDate: popiActDate,
+        citizenStatusCode: citizenStatusCode,
+        socioeconomicCode: socioeconomicCode,
+        disabilityCode: disabilityCode,
+        disabilityRating: disabilityRating
+      
+      }
+  
+      const res = updateDemographicsInformation(payload);
+
+      if (res) {
+        console.log('response', res);
+        setIsSubmitting(false);
+      }
+  }
+
 
   return (
     <div
@@ -30,123 +91,170 @@ export default function DemocraticLegal() {
   onSubmit={handleSubmit}
   className="rbt-profile-row rbt-default-form row row--15"
 >
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="equityCode">Equity Code</label>
-      <input
-        type="text"
-        name="equityCode"
-        placeholder="Enter Equity Code"
-        value={equityCode}
-        id="equityCode"
-        onChange={(e) => setEquityCode(e.target.value)}
-      />
+      <select 
+      name="equityCode" 
+      value={equityCode} 
+      id=""
+      onChange={(e) => setEquityCode(e.target.value)}>
+        <option value="">select</option>
+        {
+         codes && codes[1]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
+     
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="nationalityCode">Nationality Code</label>
-      <input
-        type="text"
+      <select
         name="nationalityCode"
-        placeholder="Enter Nationality Code"
         value={nationalityCode}
         id="nationalityCode"
         onChange={(e) => setNationalityCode(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[2]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="homeLanguageCode">Home Language Code</label>
-      <input
-        type="text"
+        <select
         name="homeLanguageCode"
-        placeholder="Enter Home Language Code"
         value={homeLanguageCode}
         id="homeLanguageCode"
         onChange={(e) => setHomeLanguageCode(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[3]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="citizenStatusCode">Citizen Status Code</label>
-      <input
-        type="text"
+        <select
         name="citizenStatusCode"
-        placeholder="Enter Citizen Status Code"
         value={citizenStatusCode}
         id="citizenStatusCode"
         onChange={(e) => setCitizenStatusCode(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[5]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="socioeconomicCode">Socioeconomic Code</label>
-      <input
-        type="text"
+        <select
         name="socioeconomicCode"
-        placeholder="Enter Socioeconomic Code"
         value={socioeconomicCode}
         id="socioeconomicCode"
         onChange={(e) => setSocioeconomicCode(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[6]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="disabilityCode">Disability Code</label>
-      <input
-        type="text"
+        <select
         name="disabilityCode"
-        placeholder="Enter Disability Code"
         value={disabilityCode}
         id="disabilityCode"
         onChange={(e) => setDisabilityCode(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[7]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="disabilityRating">Disability Rating</label>
-      <input
-        type="text"
+        <select
         name="disabilityRating"
-        placeholder="Enter Disability Rating"
         value={disabilityRating}
         id="disabilityRating"
         onChange={(e) => setDisabilityRating(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[8]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="immigrantStatus">Immigrant Status</label>
-      <input
-        type="text"
+        <select
         name="immigrantStatus"
-        placeholder="Enter Immigrant Status"
         value={immigrantStatus}
         id="immigrantStatus"
         onChange={(e) => setImmigrantStatus(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[9]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="popiActAgree">POPI Act Agreement</label>
-      <input
-        type="checkbox"
+        <select
         name="popiActAgree"
-        checked={popiActAgree}
+        value={popiActAgree}
         id="popiActAgree"
-        onChange={(e) => setPopiActAgree(e.target.checked)}
-      />
+        onChange={(e) => setPopiActAgree(e.target.value)}
+      >
+        <option value="">select</option>
+        {
+         codes && codes[12]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="popiActDate">POPI Act Date</label>
       <input

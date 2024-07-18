@@ -1,10 +1,47 @@
 'use client'
-import { FormEvent, useState } from "react";
+import { updateRegionalInformation } from "@/app/api/studentProfile/studentprofile";
+import axios from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
-export default function RegionalInformation() {
+export default function RegionalInformation({student}:any) {
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
+  const [codes, setCodes] = useState<any>()
+
+  async function getInputCodes() {
+    const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
+
+    console.log('codes:', res.data.data);
+    setCodes(res.data.data)
+  }
+
+  useEffect(() => {
+    getInputCodes();
+  },[])
+
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
+    event.preventDefault();
     setIsSubmitting(true);
+
+      const payload = {
+        userId: user.data.id||user.data.userId,
+        provinceCode: provinceCode,
+        statsSAAreaCode: statsSAAreaCode,
+        sdpAccreditationNumber: sdpAccreditationNumber,
+        skillsProgrammeId: skillsProgrammeID,
+        learnerEnrolledDate: learnerEnrolledDate
+      }
+  
+      const res = updateRegionalInformation(payload);
+      
+
+      if (res) {
+        console.log('response', res);
+        setIsSubmitting(false);
+      }
+
   }
 
   const [provinceCode, setProvinceCode] = useState('');
@@ -13,6 +50,21 @@ export default function RegionalInformation() {
   const [skillsProgrammeID, setSkillsProgrammeID] = useState('');
   const [learnerEnrolledDate, setLearnerEnrolledDate] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  
+  function setStudentContactInformation(student: any) {
+    console.log('stu:', student?.data);
+    setProvinceCode(student?.data?.provinceCode);
+    setStatsSAAreaCode(student?.data?.statssAreaCode);
+    setSdpAccreditationNumber(student?.data?.sdpAccreditationNumber);
+    setSkillsProgrammeID(student?.data?.skillsProgrammeId);
+    setLearnerEnrolledDate(student?.data?.learnerEnrolledDate);
+    
+  }
+
+  useEffect(() => {
+      setStudentContactInformation(student);
+  }, [student]);
 
   return (
     <div
@@ -29,17 +81,22 @@ export default function RegionalInformation() {
   <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
       <label htmlFor="provinceCode">Province Code</label>
-      <input
-        type="text"
+       <select 
         name="provinceCode"
-        placeholder="Enter Province Code"
         value={provinceCode}
         id="provinceCode"
         onChange={(e) => setProvinceCode(e.target.value)}
-      />
+        >
+        <option value="">select</option>
+        {
+         codes && codes[11]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   </div>
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="statsSAAreaCode">STATSSA Area Code</label>
       <input
