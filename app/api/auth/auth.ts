@@ -4,7 +4,7 @@ import { deployedUrl } from "../endpoints";
 
 export async function registerUser(payload:any) {
     try {
-        const register = await axios.post(`${deployedUrl}/api/v1/Users/RegisterUser`, payload);
+        const register = await axios.post(`${deployedUrl}/api/v1/Users/RegisterStudent`, payload);
         return register;
 
     } catch(error: any) {

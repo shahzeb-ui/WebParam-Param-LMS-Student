@@ -65,4 +65,3 @@ export const getLogbooks = async (userId: string): Promise<Logbook[]> => {
       throw error;
   }
 };
-
