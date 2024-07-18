@@ -46,8 +46,8 @@
         "icon": "feather-log-out"
       },
       {
-        "link": "#",
-        "text": "Announcements",
+        "link": "/student/notifications",
+        "text": "Notifications",
         "icon": "feather-volume-2"
       },
       {
@@ -56,7 +56,7 @@
         "icon": "feather-message-square"
       },
       {
-        "link": "#",
+        "link": "/student/assignments",
         "text": "Assignments",
         "icon": "feather-menu"
       },
