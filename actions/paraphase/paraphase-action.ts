@@ -1,23 +1,35 @@
-import { ParaphraseResponse, PARAPHRASE_URL } from "@/interfaces/pharaphase/paraphase-d";
+import {
+  GET_TOPIC_ELEMENTS_URL,
+  TopicElement,
+  TopicElementResponse,
+} from "@/interfaces/pharaphase/paraphase-d";
 
-export const FetchParaphrase = async (documentId: string): Promise<ParaphraseResponse[]> => {
-    try {
-        const response = await fetch(`${PARAPHRASE_URL}/${documentId}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'text/plain'
-            }
-        });
+export const fetchTopicElements = async (
+  topicId: string
+): Promise<TopicElement[]> => {
+  try {
+    const response = await fetch(GET_TOPIC_ELEMENTS_URL(topicId), {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch paraphrase data.');
-        }
-
-        const data: ParaphraseResponse[] = await response.json();
-        console.log('Paraphrase data: ', data);
-        return data;
-    } catch (error) {
-        console.error('Fetching paraphrase error: ', error);
-        throw error;
+    if (!response.ok) {
+      throw new Error("Failed to fetch topic elements.");
     }
+
+    const responseData: TopicElementResponse = await response.json();
+
+    if (responseData.error) {
+      throw new Error(
+        responseData.message || "Failed to fetch topic elements."
+      );
+    }
+
+    return responseData.data;
+  } catch (error) {
+    console.error("Error fetching topic elements: ", error);
+    throw error;
+  }
 };

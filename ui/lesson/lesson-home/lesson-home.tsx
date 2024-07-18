@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import Transcript from "@/ui/transcript/transcript";
 import Overview from "@/ui/overview/overview";
 import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
-import YoutubeVideoComponent from "@/ui/youtube/custom-youtube-iframe";
+// import YoutubeVideoComponent from "@/ui/youtube/custom-youtube-iframe";
 
 const QuestionAndAnswers = dynamic(
   () => import("@/ui/lesson/question-answers/question-answer"),

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Courses from "../../../data/dashboard/instructor/instructor.json";
 import CourseWidgets from "../enrolled/course";

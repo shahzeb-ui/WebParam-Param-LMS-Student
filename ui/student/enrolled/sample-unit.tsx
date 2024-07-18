@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Courses from "@/data/dashboard/instructor/instructor.json";
+import { useLessonContext } from "@/context/lesson-context/lesson-context";
 
 interface UnitData {
   id: string;
@@ -27,6 +28,7 @@ const UnitStandardWidget: React.FC<Props> = ({
   isEdit,
   showAuthor,
 }) => {
+  const { setId, navigateToLesson } = useLessonContext();
   const course = Courses.find((course) => course.id.toString() === data.id) || {
     courseThumbnail: "images/course/course-02.jpg",
     coursePrice: 0,
@@ -44,7 +46,10 @@ const UnitStandardWidget: React.FC<Props> = ({
   useEffect(() => {
     const calculateDiscount = () => {
       const discount =
-        ((course.coursePrice - course.offerPrice) / course.coursePrice) * 100;
+        course.coursePrice > 0
+          ? ((course.coursePrice - course.offerPrice) / course.coursePrice) *
+            100
+          : 0;
       setDiscountPercentage(discount.toFixed(0));
     };
 
@@ -58,16 +63,29 @@ const UnitStandardWidget: React.FC<Props> = ({
       setTotalReviews(total);
     };
 
+    const calculateRating = () => {
+      setRating(Math.round(course.rating.average));
+    };
+
     calculateDiscount();
     calculateTotalReviews();
-    setRating(Math.round(course.rating.average));
+    calculateRating();
   }, [course]);
+
+  const handleClick = (id: string) => {
+    setId(id);
+    console.log(id);
+    navigateToLesson();
+  };
 
   return (
     <>
       <div className="rbt-card variation-01 rbt-hover">
         <div className="rbt-card-img">
-          <Link href={`/student/enrolled-courses/${data.id}`}>
+          <Link
+            href={`/student/enrolled-courses/${data.id}`}
+            onClick={() => handleClick(data.id)}
+          >
             <Image
               width={330}
               height={227}
@@ -99,7 +117,12 @@ const UnitStandardWidget: React.FC<Props> = ({
                 </div>
               </div>
               <h4 className="rbt-card-title">
-                <Link href={`/student/enrolled-courses/${data.id}`}>{data.title}</Link>
+                <Link
+                  href={`/student/enrolled-courses/${data.id}`}
+                  onClick={() => handleClick(data.id)}
+                >
+                  {data.title}
+                </Link>
               </h4>
             </>
           )}
@@ -132,11 +155,10 @@ const UnitStandardWidget: React.FC<Props> = ({
               </div>
               <h6 className="rbt-title-style-2 mb--10"></h6>
               <div className="rbt-card-bottom">
-                <Link
-                  className="bi bi-play rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                  href="/lesson"
-                >
-                  Continue Watching
+                <Link href="#" onClick={() => handleClick(data.id)}>
+                  <button className="bi bi-play rbt-btn btn-sm bg-primary-opacity w-100 text-center">
+                    Continue Watching
+                  </button>
                 </Link>
               </div>
             </>

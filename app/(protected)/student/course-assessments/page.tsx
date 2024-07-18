@@ -111,7 +111,7 @@ const AssessmentComponent = () => {
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
       <div className="inner">
-        <div className="content">
+        {/* <div className="content">
           <div className="quiz-form-wrapper">
             {assessment.quizData.map((item, index) => (
               <div
@@ -182,7 +182,7 @@ const AssessmentComponent = () => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
