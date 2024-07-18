@@ -53,7 +53,7 @@ const EnrolledCourses = () => {
   };
 
   useEffect(() => {
-    const courseId = "6645bb4ee0138941128b9e97";
+    const courseId = "6669f0ff8759b480859c10a7";
     getUnitStandards(courseId);
   }, []);
 
@@ -61,6 +61,7 @@ const EnrolledCourses = () => {
 
   if (loading) {
     return <Loader />;
+  } else {
   }
 
   return (

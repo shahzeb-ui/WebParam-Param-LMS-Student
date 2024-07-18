@@ -152,7 +152,7 @@ const CourseWidgets: React.FC<Props> = ({
                   className="bi bi-play rbt-btn btn-sm bg-primary-opacity w-100 text-center"
                   href="#"
                 >
-                  Continue Watching
+                  Watch
                 </Link>
               </div>
             </>

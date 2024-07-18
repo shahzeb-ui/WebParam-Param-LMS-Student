@@ -3,7 +3,7 @@ import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-stan
 import Link from "next/link";
 
 export async function generateStaticParams() {
-  const courseIds = await getAlltUnitStandards("6645bb4ee0138941128b9e97"); // Fetch all course IDs
+  const courseIds = await getAlltUnitStandards("6669f0ff8759b480859c10a7"); // Fetch all course IDs
   return courseIds.map((course) => ({ id: course.id.toString() }));
 }
 
