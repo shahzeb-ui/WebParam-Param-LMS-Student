@@ -238,10 +238,6 @@ export default function DemocraticLegal({student}:any) {
   <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="popiActAgree">POPI Act Agreement</label>
-      <input
-        type="checkbox"
-        
-      />
         <select
         name="popiActAgree"
         value={popiActAgree}
