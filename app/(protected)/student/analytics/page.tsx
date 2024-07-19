@@ -6,11 +6,11 @@ import {
   data as OverallAssessmentBarData,
   barDescriptions as OverallAssessmentBarDescription,
 } from "@/ui/analytics/graphs/OverallAssessment/data";
-// import {
-//   options as QuestionsAskedOptions,
-//   data as QuestionsAskedData,
-//   barDescriptions as QuestionsAskedDescription,
-// } from "@/ui/analytics/graphs/QuestionsAsked/data";
+import {
+  options as QuestionsAskedOptions,
+  data as QuestionsAskedData,
+  barDescriptions as QuestionsAskedDescription,
+} from "@/ui/analytics/graphs/QuestionsAsked/data";
 
 import {
   options as OverallQuizBarOptions,
@@ -18,16 +18,16 @@ import {
   barDescriptions as OverallQuizBarDescription,
 } from "@/ui/analytics/graphs/OverallQuiz/data";
 
-// import {
-//   options as CommentsChartBarOptions,
-//   data as CommentsChartBarData,
-//   barDescriptions as CommentsChartBarDescription,
-// } from "@/ui/analytics/graphs/CommentsChart/data";
+import {
+  options as CommentsChartBarOptions,
+  data as CommentsChartBarData,
+  barDescriptions as CommentsChartBarDescription,
+} from "@/ui/analytics/graphs/CommentsChart/data";
 
-// import { barDescriptions as StudentsProgressStatusDescription } from "@/ui/analytics/graphs/StudentsProgressStatus/data";
+import { barDescriptions as StudentsProgressStatusDescription } from "@/ui/analytics/graphs/StudentsProgressStatus/data";
 
-// import ChartLayout from "@/ui/analytics/graphs/ChartLayout";
-// import { StudentsProgressStatus } from "@/ui/analytics/graphs/StudentsProgressStatus/StudentsProgressStatus";
+import ChartLayout from "@/ui/analytics/graphs/ChartLayout";
+import { StudentsProgressStatus } from "@/ui/analytics/graphs/StudentsProgressStatus/StudentsProgressStatus";
 
 export default function PageAnalytics() {
   return (
@@ -59,6 +59,36 @@ export default function PageAnalytics() {
               data={OverallAssessmentBarData}
               type="bar"
             />
+          </div>
+
+          <div className="col-lg-6 col-md-12 card-group-row__col">
+            <ChartWrapper
+              title="Questions Asked"
+              barDescriptions={QuestionsAskedDescription}
+              options={QuestionsAskedOptions}
+              data={QuestionsAskedData}
+              type="bar"
+            />
+          </div>
+
+          <div className="col-lg-6 col-md-12 card-group-row__col">
+            <ChartWrapper
+              title="Comments"
+              barDescriptions={CommentsChartBarDescription}
+              options={CommentsChartBarOptions}
+              data={CommentsChartBarData}
+              type="bar"
+            />
+          </div>
+
+          <div className="col-lg-6 col-md-12 card-group-row__col">
+            <ChartLayout
+              title="Progress Status"
+              barDescriptions={StudentsProgressStatusDescription}
+              type="pie"
+            >
+              <StudentsProgressStatus />
+            </ChartLayout>
           </div>
         </div>
       </div>
