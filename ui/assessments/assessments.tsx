@@ -23,6 +23,7 @@ const AssessmentComponent = () => {
   );
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
 
   useEffect(() => {
     const savedState = JSON.parse(
@@ -35,6 +36,18 @@ const AssessmentComponent = () => {
     }
   }, []);
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isInteracted && timeRemaining !== null) {
+      timer = setInterval(() => {
+        setTimeRemaining((prevTime) =>
+          prevTime !== null ? prevTime - 1 : null
+        );
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [isInteracted, timeRemaining]);
+
   const handleAnswerChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
     index: number
@@ -42,10 +55,10 @@ const AssessmentComponent = () => {
     const newAnswers = [...answers];
     newAnswers[index] = event.target.value;
     setAnswers(newAnswers);
-  };
-
-  const handleTextareaClick = () => {
-    setIsInteracted(true);
+    if (!isInteracted) {
+      setIsInteracted(true);
+      setTimeRemaining(3600); // Start the timer with 1 hour (3600 seconds)
+    }
   };
 
   const handleSubmitAssessment = async () => {
@@ -62,7 +75,13 @@ const AssessmentComponent = () => {
 
       // Handle assessment completion
       console.log("All questions answered. Assessment completed.");
-      // Redirect or perform further actions upon successful submission
+      // Clear local storage and reset answers
+      localStorage.removeItem("assessmentState");
+      setAnswers(Array(assessment.quizData.length).fill(""));
+      setTimeRemaining(null); // Reset the timer
+
+      // Redirect to /lesson
+      window.location.href = "/lesson";
     } catch (error) {
       console.error("Error submitting assessment:", error);
     } finally {
@@ -79,6 +98,12 @@ const AssessmentComponent = () => {
     );
   };
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+  };
+
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
       <div className="inner">
@@ -91,22 +116,49 @@ const AssessmentComponent = () => {
                 className="question"
               >
                 <div className="quize-top-meta">
-                  <div className="quize-top-left">
-                    <span>
-                      Question No:{" "}
-                      <strong>
-                        {index + 1}/{assessment.quizData.length}
-                      </strong>
-                    </span>
-                    <span>
-                      Marks: <strong>5</strong>
-                    </span>
-                  </div>
-                  <div className="quize-top-right">
-                    <span>
-                      Time remaining: <strong>No Limit</strong>
-                    </span>
-                  </div>
+                  {index === 0 ? (
+                    <>
+                      <div className="quize-top-left">
+                        <span>
+                          Question No:{" "}
+                          <strong>
+                            {index + 1}/{assessment.quizData.length}
+                          </strong>
+                        </span>
+                        <span>
+                          Marks: <strong>5</strong>
+                        </span>
+                      </div>
+                      <div className="quize-top-right">
+                        <span>
+                          Time remaining:{" "}
+                          <strong>
+                            {timeRemaining !== null
+                              ? formatTime(timeRemaining)
+                              : "No Limit"}
+                          </strong>
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="quize-top-left">
+                        <span>
+                          Marks: <strong>5</strong>
+                        </span>
+                      </div>
+                      <div className="quize-top-right">
+                        <span>
+                          Time remaining:{" "}
+                          <strong>
+                            {timeRemaining !== null
+                              ? formatTime(timeRemaining)
+                              : "No Limit"}
+                          </strong>
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
                 <hr />
                 <div className="rbt-single-quiz">
@@ -118,7 +170,6 @@ const AssessmentComponent = () => {
                       className={styles.textArea}
                       value={answers[index]}
                       onChange={(e) => handleAnswerChange(e, index)}
-                      onClick={handleTextareaClick}
                       disabled={loading}
                     />
                   </div>

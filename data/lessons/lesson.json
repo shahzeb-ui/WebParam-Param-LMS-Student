@@ -1,75 +1,12 @@
 {
     "lesson": [
       {
-        "title": "Welcome History",
-        "isShow": true,
-        "listItem": [
-          {
-            "lssonLink": "/lesson",
-            "lssonIntroLink": false,
-            "lessonName": "Course Intro",
-            "lable": true,
-            "time": 30,
-            "unread": false,
-            "isCircle": true
-          },
-          {
-            "lssonLink": "/lesson-intro",
-            "lessonName": "Introduction",
-            "iconFile": true,
-            "lable": false,
-            "time": 30,
-            "unread": false,
-            "isCircle": true
-          }
-        ]
-      },
-      {
-        "title": "Welcome Lessons",
-        "isShow": false,
-        "listItem": [
-          {
-            "lssonLink": "/lesson",
-            "lessonName": "Hello World!",
-            "lable": true,
-            "time": 2,
-            "unread": false,
-            "isCircle": true
-          },
-          {
-            "lssonLink": "#",
-            "lessonName": "Values and Variables",
-            "lable": true,
-            "time": 20,
-            "unread": true,
-            "isCircle": true
-          },
-          {
-            "lssonLink": "#",
-            "lessonName": "Basic Operators",
-            "lable": true,
-            "time": 15,
-            "unread": true,
-            "isCircle": true
-          }
-        ]
-      },
-      {
-        "title": "Histudy Quiz",
+        "title": "Project management quiz",
         "isShow": false,
         "listItem": [
           {
             "lssonLink": "/lesson/quiz",
-            "lessonName": "Histudy Quiz Start",
-            "lable": true,
-            "time": 0,
-            "unread": true,
-            "isCircle": false,
-            "iconHelp": true
-          },
-          {
-            "lssonLink": "/lesson-quiz-result",
-            "lessonName": "Histudy Quiz Result",
+            "lessonName": "Management quiz",
             "lable": true,
             "time": 0,
             "unread": true,
@@ -79,21 +16,12 @@
         ]
       },
       {
-        "title": "Histudy Assignments",
+        "title": "Project management Assignments",
         "isShow": false,
         "listItem": [
           {
             "lssonLink": "/lesson-assignments",
-            "lessonName": "Histudy Assignments",
-            "lable": true,
-            "time": 0,
-            "unread": true,
-            "isCircle": false,
-            "iconHelp": true
-          },
-          {
-            "lssonLink": "/lesson-assignments-submit",
-            "lessonName": "Histudy Assignments Submit",
+            "lessonName": "Management Assignments",
             "lable": true,
             "time": 0,
             "unread": true,
@@ -103,21 +31,12 @@
         ]
       },
       {
-        "title": "Histudy Assessments",
+        "title": "Project management Assessments",
         "isShow": false,
         "listItem": [
           {
             "lssonLink": "/lesson/assessments",
-            "lessonName": "Histudy Assessments",
-            "lable": true,
-            "time": 0,
-            "unread": true,
-            "isCircle": false,
-            "iconHelp": true
-          },
-          {
-            "lssonLink": "/lesson-assignments-submit",
-            "lessonName": "Histudy Assessments Submit",
+            "lessonName": "Management Assessments",
             "lable": true,
             "time": 0,
             "unread": true,

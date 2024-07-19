@@ -1,7 +1,7 @@
 {
     "siderbar": [
       {
-        "link": "#",
+        "link": "/student/analytics",
         "text": "Dashboard",
         "icon": "bi bi-grid-fill"
       },
