@@ -2,13 +2,14 @@
 
 import "plyr/dist/plyr.css";
 import Plyr from "plyr";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import Transcript from "@/ui/transcript/transcript";
 import Overview from "@/ui/overview/overview";
 import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
-// import YoutubeVideoComponent from "@/ui/youtube/custom-youtube-iframe";
+import LessonSidebar from "@/ui/lesson/Lesson-sidebar";
+import LessonQuiz from "@/app/(protected)/lesson/quiz/page";
 
 const QuestionAndAnswers = dynamic(
   () => import("@/ui/lesson/question-answers/question-answer"),
@@ -17,6 +18,27 @@ const QuestionAndAnswers = dynamic(
 const Notes = dynamic(() => import("@/ui/lesson/notes/notes"), { ssr: false });
 
 const LessonHomepage = () => {
+  const sidebarRef = useRef<React.ElementRef<typeof LessonSidebar>>(null);
+  const [showQuiz, setShowQuiz] = useState<boolean>(false);
+
+  const handlePrevious = () => {
+    if (sidebarRef.current) {
+      sidebarRef.current.handlePrevious();
+      setShowQuiz(false);
+    }
+  };
+
+  const handleNext = () => {
+    if (showQuiz) {
+      if (sidebarRef.current) {
+        sidebarRef.current.handleNext();
+      }
+      setShowQuiz(false);
+    } else {
+      setShowQuiz(true);
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       new Plyr(".rbtplayer", {
@@ -48,22 +70,22 @@ const LessonHomepage = () => {
     <>
       <div className="inner">
         <div className="plyr__video-embed rbtplayer">
-          <ResponsiveVideoComponent />
-          {/* <YoutubeVideoComponent/> */}
+          {showQuiz ? <LessonQuiz /> : <ResponsiveVideoComponent />}
         </div>
         <div className="rbt-card-body-2">
-          <h6 className="bi bi-easel video-title">Video Title Here</h6>
+          <button
+            className="rbt-btn btn-gradient btn-sm ms-2"
+            onClick={handlePrevious}
+          >
+            previous
+          </button>
           <div className="rbt-card-top-2">
-            <div className="rbt-review">
-              <div className="rating">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </div>
-              <span className="rating-count">(5 Reviews)</span>
-            </div>
+            <button
+              className="rbt-btn btn-gradient btn-sm ms-2"
+              onClick={handleNext}
+            >
+              next
+            </button>
           </div>
         </div>
         <h5 className="bi bi-play course-title-2">Welcome to the Course</h5>
@@ -172,6 +194,7 @@ const LessonHomepage = () => {
           </div>
         </div>
       </div>
+      <LessonSidebar ref={sidebarRef} />
     </>
   );
 };
