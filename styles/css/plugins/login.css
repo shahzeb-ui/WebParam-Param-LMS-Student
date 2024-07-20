@@ -1,12 +1,12 @@
 .btn-gradient {
-    background: linear-gradient(45deg, #3e838f, #081427);
+    background: linear-gradient(45deg,  #25355d);
     border: none;
     color: white;
     transition: background 0.3s ease;
 }
 
 .btn-gradient:hover {
-    background: linear-gradient(45deg, #3e838f, #081427);
+    background: linear-gradient(45deg,  #25355d);
 }
 
 .btn-text, .btn-icon {
@@ -26,16 +26,6 @@
     /* ... existing styles ... */
   }
 
+
   
-  .rbt-page-banner-wrapper {
-    /* ... existing styles ... */
-    background-color: #1D68AC; /* Updated background color */
-    /* ... existing styles ... */
-  }
   
-  .rbt-banner-image {
-    /* ... existing styles ... */
-    background-color: #1D68AC; /* Updated background color */
-    box-shadow: 0 0 10px #1D68AC; /* Optional: add a shiny effect */
-    /* ... existing styles ... */
-  }

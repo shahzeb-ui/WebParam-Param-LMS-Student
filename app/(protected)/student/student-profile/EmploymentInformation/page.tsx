@@ -83,7 +83,7 @@ export default function EmploymentInformation({student}:any) {
       <button
          className="rbt-btn btn-gradient"
          type='submit'
-         style={{ backgroundColor: '#000080', backgroundImage: 'none' }}
+         style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
       >
         {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
       </button>

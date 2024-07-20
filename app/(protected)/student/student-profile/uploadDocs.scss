@@ -51,8 +51,8 @@
 }
 
 .docContainer.dragover {
-    background-color: #081427;
-    border-color: #081427;
+    background-color: #24345c;
+    border-color: #24345c;
 }
 
 .modalContainer {
@@ -73,7 +73,7 @@
         height: 50px;
         border: none;
         border-radius: 8px;
-        background-color: #05A602;
+        background-color: #24345c;
         outline: none;
     }
 }
@@ -88,7 +88,7 @@
 
     & > :first-child {
         transform: scale(4);
-        color: #05A602;
+        color: #24345c;
     }
 
     & button {
@@ -96,7 +96,7 @@
         height: 50px;
         border: none;
         border-radius: 8px;
-        background-color: #05A602;
+        background-color: #24345c;
         outline: none;
         margin-top: 40px;
     }
