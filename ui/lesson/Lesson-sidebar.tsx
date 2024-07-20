@@ -27,6 +27,7 @@ const LessonSidebar = () => {
   const [expandedAssessments, setExpandedAssessments] = useState<{
     [key: string]: boolean;
   }>({});
+  const [isActiveUrl, setIsActiveUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const getAllKnowledgeTopics = async (id: string) => {
@@ -57,11 +58,17 @@ const LessonSidebar = () => {
         const firstVideoUrl = elements.find((el) => el.videoUrl)?.videoUrl;
         if (firstVideoUrl) {
           setSelectedVideoUrl(firstVideoUrl);
+          setIsActiveUrl(firstVideoUrl);
         }
       } catch (error) {
         console.error("Error fetching topic elements: ", error);
       }
     }
+  };
+
+  const handleActiveVideoUrl = (videoUrl: string) => {
+    setSelectedVideoUrl(videoUrl);
+    setIsActiveUrl(videoUrl);
   };
 
   const handleToggle = (setFunction: any, id: any) => {
@@ -111,20 +118,63 @@ const LessonSidebar = () => {
                       {expandedTopics[topic.id] && (
                         <ul className="rbt-course-main-content liststyle">
                           {expandedTopics[topic.id].map((element) => (
-                            <li key={element.id}>
-                              <p
-                                onClick={() =>
-                                  setSelectedVideoUrl(element.videoUrl)
-                                }
-                                style={{
-                                  cursor: element.videoUrl
-                                    ? "pointer"
-                                    : "default",
-                                  textDecoration: "none",
-                                }}
-                              >
-                                {element.title}
-                              </p>
+                            <li
+                              key={element.id}
+                              className="d-flex justify-content-between align-items mt-2"
+                            >
+                              <div className="course-content-left">
+                                <i
+                                  className="feather-play-circle"
+                                  style={{
+                                    color:
+                                      isActiveUrl == element.videoUrl
+                                        ? "#2f57ef"
+                                        : "#6b7385",
+                                  }}
+                                ></i>
+                                <p
+                                  onClick={() =>
+                                    element.videoUrl &&
+                                    handleActiveVideoUrl(element.videoUrl)
+                                  }
+                                  style={{
+                                    cursor: element.videoUrl
+                                      ? "pointer"
+                                      : "default",
+                                    textDecoration: "none",
+                                    fontWeight:
+                                      isActiveUrl == element.videoUrl
+                                        ? "bold"
+                                        : "normal",
+                                    color:
+                                      isActiveUrl == element.videoUrl
+                                        ? "#2f57ef"
+                                        : "#6b7385",
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    maxWidth: "240px",
+                                  }}
+                                >
+                                  {element.title}
+                                </p>
+                              </div>
+                              <div className="course-content-right">
+                                <span
+                                  className={`rbt-check ${
+                                    isActiveUrl === element.videoUrl
+                                      ? ""
+                                      : "unread"
+                                  }`}
+                                >
+                                  <i
+                                    className={`feather-${
+                                      isActiveUrl === element.videoUrl
+                                        ? "check-circle"
+                                        : "circle"
+                                    }`}
+                                  ></i>
+                                </span>
+                              </div>
                             </li>
                           ))}
                         </ul>
