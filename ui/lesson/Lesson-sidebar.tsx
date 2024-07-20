@@ -35,6 +35,22 @@ const LessonSidebar = () => {
         const topics = await fetchKnowledgeTopics(id);
         console.log("Fetched knowledge topics: ", topics);
         setKnowledgeTopics(topics);
+
+        // Automatically expand the first topic if it exists
+        if (topics.length > 0) {
+          const firstTopicId = topics[0].id;
+          const elements = await fetchTopicElements(firstTopicId);
+          setExpandedTopics((prevState) => ({
+            ...prevState,
+            [firstTopicId]: elements,
+          }));
+
+          const firstVideoUrl = elements.find((el) => el.videoUrl)?.videoUrl;
+          if (firstVideoUrl) {
+            setSelectedVideoUrl(firstVideoUrl);
+            setIsActiveUrl(firstVideoUrl);
+          }
+        }
       } catch (error) {
         console.error("Error fetching knowledge topics: ", error);
       }
