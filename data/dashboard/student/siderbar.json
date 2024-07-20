@@ -1,7 +1,7 @@
 {
     "siderbar": [
       {
-        "link": "#",
+        "link": "/student/analytics",
         "text": "Dashboard",
         "icon": "bi bi-grid-fill"
       },
@@ -63,6 +63,11 @@
       {
         "link": "/student/logbook",
         "text": "Logbook",
+        "icon": "bi bi-journal-bookmark"
+      },
+      {
+        "link": "/student/Statement",
+        "text": "Statement of record",
         "icon": "bi bi-journal-bookmark"
       }
     ]

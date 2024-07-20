@@ -14,7 +14,7 @@ import "react-responsive-modal/styles.css";
 
 import "@/app/globals.css";
 
-// Plugin CSS
+/// Plugin CSS
 import "@/public/css/plugins/fontawesome.min.css";
 import "@/public/css/plugins/animation.css";
 import "@/public/css/plugins/feather.css";

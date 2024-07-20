@@ -28,7 +28,6 @@ function UserProfileContent() {
 
     useEffect(() => {
         getStudent();
-        router.push(`/student/student-profile?tab=profile`);
     }, []);
 
     const renderComponent = (tab: string | null) => {
