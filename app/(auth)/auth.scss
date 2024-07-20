@@ -64,6 +64,7 @@
         text-wrap: nowrap;
     }
 
+   
     & > p {
         font-weight: 400;
         font-size: 16px;
@@ -164,9 +165,14 @@
 
 .errorMessage {
     position: relative;
-    top: 30px;
+    margin: 0 auto;
+    width: 100%;
     transition: .5s;
     color: tomato;
     opacity: .8;
     font-size: 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
 }

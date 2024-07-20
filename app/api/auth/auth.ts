@@ -26,11 +26,11 @@ export async function verifyUserAccount(payload:any) {
 
 export async function LoginUser(payload:any) {
     try {
-        const register = await axios.post(`${deployedUrl}/api/v1/Users/Login`, payload);
+        const register = await axios.post(`${deployedUrl}/api/v1/Users/Login`, payload).then(data => {return data});
         return register;
 
     } catch(error: any) {
-        alert(error);
+        console.log(error);
     }
 
 }

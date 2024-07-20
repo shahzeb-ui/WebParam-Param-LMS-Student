@@ -28,13 +28,8 @@ function UserProfileContent() {
 
     useEffect(() => {
         getStudent();
+        router.push(`/student/student-profile?tab=profile`);
     }, []);
-
-    useEffect(() => {
-        if (!tab) {
-            router.push(`/student/student-profile?tab=profile`);
-        }
-    }, [tab, router]);
 
     const renderComponent = (tab: string | null) => {
         switch (tab) {
