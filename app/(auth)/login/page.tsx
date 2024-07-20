@@ -14,25 +14,38 @@ export default function Login() {
     const cookies = new Cookies();
     const router = useRouter();
 
-    async function handleLogIn(e:any) {
+    async function handleLogIn(e: any) {
         e.preventDefault();
         setIsSubmitted(true);
-
+    
         const payload = {
             email,
             password
-        }
-        const res = await LoginUser(payload);
-        setIsSubmitted(false);
-        if (res?.data) {
+        };
+    
+        try {
             debugger;
-            cookies.set("loggedInUser", res.data);
-            localStorage.setItem("loggedInUser", res.data);
-            router.push('/student/student-profile')
-        } else {
-            setErrorMessage(true)
+            const res = await LoginUser(payload);
+            setIsSubmitted(false);
+            
+            if (res == undefined) {
+                setErrorMessage(true);
+                return;
+            }
+            
+            if (res) {
+                debugger;
+                cookies.set("loggedInUser", res.data);
+                router.push('/student/student-profile');
+            }
+        } catch (error: any) {
+   
+            console.error('Error during login:', error);
+            setIsSubmitted(false);
+
         }
-      }
+    }
+    
 
       useEffect(() => {
         setErrorMessage(false);
@@ -68,7 +81,7 @@ export default function Login() {
                     </div>
                 </div>
                 </div>
-                {errorMessage && <span className={`errorMessage`}>Incorrect User details</span>}
+                {errorMessage && <span className="errorMessage">Incorrect User details</span>}
                 <div className="form-submit-group">
                 <button
                     type="submit"

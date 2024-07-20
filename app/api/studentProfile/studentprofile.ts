@@ -2,18 +2,13 @@ import axios from "axios";
 import { deployedUrl } from "../endpoints";
 import { readUserData } from "../endpoints";
 
-let HEADER = {
-    "Authorization":"Basic YWRtaW46cmpPdjJhU1omPXxuRDYpJQ==",
-    "Access-Control-Allow-Origin": "*",
-  };
-
 
 export async function StudentProfile(payload: any) {
     try {
         const register = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/v1/Profile/UpdateProfile`,payload);
         return register;
     } catch (error: any) {
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -22,7 +17,7 @@ export async function updateDemographicsInformation(payload: any) {
         const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentDemographicsInformation`,payload);
         return res;
     } catch (error: any) {
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -31,7 +26,7 @@ export async function updateContactInformation(payload: any) {
         const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentContactInformation`,payload);
         return res;
     } catch (error: any) {
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -40,7 +35,7 @@ export async function updateEmployeeInformation(payload: any) {
         const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentEmployeeInformation`,payload);
         return res;
     } catch (error: any) {
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -49,7 +44,7 @@ export async function updateRegionalInformation(payload: any) {
         const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentRegionalInformation`,payload);
         return res;
     } catch (error: any) {
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -59,7 +54,7 @@ export async function getStudentProfile(userId:any) {
         return register;
 
     } catch(error: any) {
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -75,6 +70,6 @@ export async function getStudentDocuments(userId:any) {
         return register;
 
     } catch(error: any) {
-        alert(error);
+        console.log(error);
     }
 }
