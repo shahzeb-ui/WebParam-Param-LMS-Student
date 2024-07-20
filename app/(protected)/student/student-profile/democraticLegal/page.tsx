@@ -269,8 +269,9 @@ export default function DemocraticLegal({student}:any) {
   <div className="col-12 mt--20">
     <div className="rbt-form-group">
       <button
-        className="rbt-btn btn-gradient"
-        type='submit'
+         className="rbt-btn btn-gradient"
+         type='submit'
+         style={{ backgroundColor: '#081427', backgroundImage: 'none' }}
       >
         {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
       </button>

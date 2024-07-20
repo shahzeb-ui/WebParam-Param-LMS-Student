@@ -22,12 +22,14 @@ export default function StudentLayout({
       router.push("/login");
     }
   }, [loggedInUser]);
+  
 
   return (
     <>
       <div className="rbt-page-banner-wrapper">
         <div className="rbt-banner-image" />
       </div>
+      
       <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
         <div className="container">
           <div className="row">
