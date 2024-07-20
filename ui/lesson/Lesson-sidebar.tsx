@@ -242,51 +242,6 @@ const LessonSidebar = () => {
           </div>
         </div>
 
-        {/* Assignments Section */}
-        <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
-          {LessonData.lesson
-            .filter((lesson) => lesson.title.includes("Assignments"))
-            .map((assignment, index) => (
-              <div className="accordion-item card" key={`assignment-${index}`}>
-                <h2
-                  className="accordion-header card-header"
-                  id={`assignmentHeading${index}`}
-                >
-                  <button
-                    className="accordion-button"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    aria-expanded={!!expandedAssignments[index]}
-                    data-bs-target={`#assignmentCollapse${index}`}
-                    aria-controls={`assignmentCollapse${index}`}
-                    onClick={() => handleToggle(setExpandedAssignments, index)}
-                  >
-                    {assignment.title}
-                  </button>
-                </h2>
-                <div
-                  id={`assignmentCollapse${index}`}
-                  className={`accordion-collapse collapse ${
-                    expandedAssignments[index] ? "show" : ""
-                  }`}
-                  aria-labelledby={`assignmentHeading${index}`}
-                >
-                  <div className="accordion-body card-body">
-                    <ul className="rbt-course-main-content liststyle">
-                      {assignment.listItem.map((item, idx) => (
-                        <li key={idx}>
-                          <p>
-                            <a href={item.lssonLink}>{item.lessonName}</a>
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
-
         {/* Assessments Section */}
         <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
           {LessonData.lesson
@@ -319,6 +274,51 @@ const LessonSidebar = () => {
                   <div className="accordion-body card-body">
                     <ul className="rbt-course-main-content liststyle">
                       {assessment.listItem.map((item, idx) => (
+                        <li key={idx}>
+                          <p>
+                            <a href={item.lssonLink}>{item.lessonName}</a>
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {/* Assignments Section */}
+        <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
+          {LessonData.lesson
+            .filter((lesson) => lesson.title.includes("Assignments"))
+            .map((assignment, index) => (
+              <div className="accordion-item card" key={`assignment-${index}`}>
+                <h2
+                  className="accordion-header card-header"
+                  id={`assignmentHeading${index}`}
+                >
+                  <button
+                    className="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    aria-expanded={!!expandedAssignments[index]}
+                    data-bs-target={`#assignmentCollapse${index}`}
+                    aria-controls={`assignmentCollapse${index}`}
+                    onClick={() => handleToggle(setExpandedAssignments, index)}
+                  >
+                    {assignment.title}
+                  </button>
+                </h2>
+                <div
+                  id={`assignmentCollapse${index}`}
+                  className={`accordion-collapse collapse ${
+                    expandedAssignments[index] ? "show" : ""
+                  }`}
+                  aria-labelledby={`assignmentHeading${index}`}
+                >
+                  <div className="accordion-body card-body">
+                    <ul className="rbt-course-main-content liststyle">
+                      {assignment.listItem.map((item, idx) => (
                         <li key={idx}>
                           <p>
                             <a href={item.lssonLink}>{item.lessonName}</a>
