@@ -188,3 +188,7 @@ a {
     color-scheme: dark;
   }
 }
+
+a#recieved-tab.tab-button.active::after {
+  background-color: '#081427' !important;
+}
