@@ -1,6 +1,6 @@
 import './auth.scss'
 
-export default function layout({children}:any) {
+export default function layout({children}:{children:React.ReactNode}) {
     return (
         <section className="layoutContainer">
         <svg width="543" height="832" viewBox="0 0 543 832" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,6 @@ export default function layout({children}:any) {
             </linearGradient>
             </defs>
         </svg>
-
         </section>
     )
 }
