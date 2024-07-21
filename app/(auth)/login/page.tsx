@@ -22,19 +22,6 @@ export default function Login() {
         const payload = {
             email,
             password
-<<<<<<< HEAD
-        }
-        const res = await LoginUser(payload);
-        setIsSubmitted(false);
-        if (res?.data) {
-            cookies.set("loggedInUser", res.data);
-            localStorage.setItem("loggedInUser", res.data);
-            router.push('/student/student-profile')
-        } else {
-            setErrorMessage(true)
-        }
-    }
-=======
         };
     
         try {
@@ -60,7 +47,6 @@ export default function Login() {
         }
     }
     
->>>>>>> 273d1d20302db6b4755f30194e1f057297ea3426
 
     useEffect(() => {
         setErrorMessage(false);
@@ -80,7 +66,6 @@ export default function Login() {
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password *" name="password" />
                         <span className="focus-border" />
                     </div>
-<<<<<<< HEAD
                     <div className="row mb--30">
                         <div className="col-lg-6">
                             <div className="rbt-checkbox">
@@ -100,7 +85,7 @@ export default function Login() {
                     <div className="form-submit-group">
                         <button
                             type="submit"
-                            className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
+                            className="rbt-btn  .btn-gradient hover-icon-reverse w-100"
                         >
                             {isSubmitted ? <div className="spinner-border" role="status" /> : <span className="icon-reverse-wrapper">
                                 <span className="btn-text">Log In</span>
@@ -118,32 +103,6 @@ export default function Login() {
                         <Link href="/register">Register</Link>
                     </div>
                 </form>
-=======
-                </div>
-                </div>
-                {errorMessage && <span className="errorMessage">Incorrect User details</span>}
-                <div className="form-submit-group">
-                <button
-                    type="submit"
-                    className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100"
-                >
-                    {isSubmitted ? <div className="spinner-border" role="status"/> : <span className="icon-reverse-wrapper">
-                    <span className="btn-text">Log In</span>
-                    <span className="btn-icon">
-                        <i className="feather-arrow-right" />
-                    </span>
-                    <span className="btn-icon">
-                        <i className="feather-arrow-right" />
-                    </span>
-                    </span>}
-                </button>
-                </div>
-                <div className="auth-footer">
-                    <p>Don&apos;t have an account? </p>
-                    <Link href="/register">Register</Link>
-                </div>
-            </form>
->>>>>>> 273d1d20302db6b4755f30194e1f057297ea3426
             </div>
         </div>
     )

@@ -6,7 +6,7 @@
 }
 
 .btn-gradient:hover {
-    background: linear-gradient(45deg,  #25355d);
+    background: linear-gradient(45deg,  #25355c);
 }
 
 .btn-text, .btn-icon {
@@ -26,6 +26,18 @@
     /* ... existing styles ... */
   }
 
+
+  /* styles.css or a relevant CSS file */
+/* styles.css or a relevant CSS file */
+/* styles.css or a relevant CSS file */
+.custom-gradient {
+    background: linear-gradient(#25355c, #25355c) !important;
+    color: #ffffff !important; /* Change text color to white */
+  }
+  
+  .custom-gradient span {
+    color: #ffffff !important; /* Ensure all spans inside the badge have the correct color */
+  }
 
   
   
