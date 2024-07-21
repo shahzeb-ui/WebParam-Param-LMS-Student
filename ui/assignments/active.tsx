@@ -16,8 +16,8 @@ export default function ActiveAssignment() {
                 Write Link short essay on yourself using the 5
               </span>
               <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">
+                Module:{" "}
+                <a href="#">
                   Fundamentals 101
                 </a>
               </p>
@@ -33,14 +33,14 @@ export default function ActiveAssignment() {
                 <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Edit"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
-                  <i className="feather-edit pl--0" /> Edit
+                  <i className="feather-edit pl--0" /> submit
                 </a>
                 <a
                   className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-success"
                   title="Delete"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                   <i className="bi bi-download pl--0" />
                 </a>

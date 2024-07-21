@@ -7,6 +7,8 @@ const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const path = usePathname();
+
+
   return (
     <>
       <div
@@ -64,7 +66,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(7, 10).map((data: any, index: any) => (
+                    SidebarData?.siderbar?.slice(7, 9).map((data: any, index: any) => (
                       <li key={index}>
                         <a
                           href={data.link}
