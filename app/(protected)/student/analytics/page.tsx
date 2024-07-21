@@ -256,11 +256,12 @@ export default function PageAnalytics() {
             </ChartLayout>
           </div> */}
 
-<div
+{/* <div
                   className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--30"
                   id="review"
                 >
-                  </div>
+                  <p></p>
+                  </div> */}
         </div>
       
       </div>
