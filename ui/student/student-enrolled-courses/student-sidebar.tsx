@@ -9,7 +9,10 @@ const StudentDashboardSidebar = () => {
   const path = usePathname();
   return (
     <>
-      <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
+      <div
+        className="rbt-default-sidebar sticky-top rbt-shadow-box"
+        style={{ border: "4px solid #f1f2f3", boxShadow: "0 0 10px #f1f2f3" }}
+      >
         <div className="inner">
           <div className="content-item-content">
             <div className="rbt-default-sidebar-wrapper">
@@ -19,7 +22,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(0, 7).map((data:any, index:any) => (
+                    SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => (
                       <li className="nav-item" key={index} role="presentation">
                         <a
                           className={`${path === data.link ? "active" : ""}`}
@@ -40,7 +43,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(9, 13).map((data:any, index:any) => (
+                    SidebarData?.siderbar?.slice(9, 13).map((data: any, index: any) => (
                       <li key={index}>
                         <a
                           href={data.link}
@@ -61,7 +64,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(7, 10).map((data:any, index:any) => (
+                    SidebarData?.siderbar?.slice(7, 10).map((data: any, index: any) => (
                       <li key={index}>
                         <a
                           href={data.link}
