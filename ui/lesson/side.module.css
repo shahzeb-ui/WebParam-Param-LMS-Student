@@ -4,3 +4,9 @@
     overflow-x: hidden !important;
     width: 100% !important;
 }
+
+.lessonScrollSidebar {
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    padding-right: 15px !important;
+}
