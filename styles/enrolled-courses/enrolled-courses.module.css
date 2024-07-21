@@ -43,3 +43,8 @@
     justify-content: center;
   }
 }
+
+.scrollableTabContent {
+  max-height: 400px; /* Set the desired max height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}

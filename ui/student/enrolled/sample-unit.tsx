@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import { useLessonContext } from "@/context/lesson-context/lesson-context";
-import "@/styles/css/plugins/mainstyle.css";
+import styles from "@/ui/student/enrolled/course.module.css";
+import "@/styles/css/plugins/mainstyle.css"
 
 interface UnitData {
   id: string;
@@ -154,7 +155,9 @@ const UnitStandardWidget: React.FC<Props> = ({
               <h6 className="rbt-title-style-2 mb--10"></h6>
               <div className="rbt-card-bottom">
                 <Link href="#" onClick={() => handleClick(data.id)}>
-                  <button className="bi bi-play rbt-btn btn-sm bg-primary-opacity w-100 text-center">
+                  <button
+                    className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center ${styles.buttonSmall}`}
+                  >
                     Continue Watching
                   </button>
                 </Link>

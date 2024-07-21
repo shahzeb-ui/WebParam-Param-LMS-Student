@@ -1,17 +1,41 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import styles from "@/styles/video/ResponsiveVideoComponent.module.css";
 import { useVideo } from "@/context/video-context/video-context";
 
 const getDirectVideoUrl = (url: string): string => {
-  // Assuming you have a way to convert the Synthesia URL to a direct video file URL
-  return url; // Modify this to return the direct video file URL
+  return url;
 };
 
 const ResponsiveVideoComponent: React.FC = () => {
   const { selectedVideoUrl } = useVideo();
-  console.log("selected video: ", selectedVideoUrl);
+  // console.log("selected video: ", selectedVideoUrl);
 
   const videoUrl = selectedVideoUrl ? getDirectVideoUrl(selectedVideoUrl) : "";
+
+  useEffect(() => {
+    if (videoUrl) {
+      const iframe = document.querySelector("iframe");
+      if (iframe) {
+        iframe.onload = () => {
+          try {
+            iframe.contentWindow?.addEventListener("ended", () => {
+              const event = new CustomEvent("videoWatched", {
+                detail: videoUrl,
+              });
+              window.dispatchEvent(event);
+            });
+          } catch (error) {
+            console.error(
+              "Failed to add event listener to iframe content window",
+              error
+            );
+          }
+        };
+      }
+    }
+  }, [videoUrl]);
 
   return (
     <div className={styles.jss8}>
