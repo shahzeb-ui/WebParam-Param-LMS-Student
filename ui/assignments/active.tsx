@@ -30,19 +30,19 @@ export default function ActiveAssignment() {
             </td>
             <td>
               <div className="rbt-button-group justify-content-end">
-                <a
+                {/* <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Edit"
                   href="/instructor/instructor-assignments#"
                 >
                   <i className="feather-edit pl--0" /> Edit
-                </a>
+                </a> */}
                 <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-success"
+                     className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Delete"
                   href="/instructor/instructor-assignments#"
                 >
-                  <i className="bi bi-download pl--0" />
+                  <i className="bi bi-upload  pl--0" /> Upload
                 </a>
               </div>
             </td>

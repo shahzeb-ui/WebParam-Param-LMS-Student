@@ -30,14 +30,14 @@ export default function UpcomingAssignment() {
             </td>
             <td>
               <div className="rbt-button-group justify-content-end">
-                <a
-                  className="rbt-btn btn-xs bg-color-primary-opacity radius-round color-primary"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                  style={{display:'flex',gap:'5px',alignItems:'center'}}
-                >dowload 
-                  
-                </a>
+              <a
+                className="rbt-btn btn-xs bg-color-primary-opacity radius-round color-primary"
+                title="Delete"
+                href="/instructor/instructor-assignments#"
+                style={{ display: "flex", gap: "5px", alignItems: "center" }}
+              >
+               <i className="bi bi-download pl--0" /> Dowload
+              </a>
               </div>
             </td>
           </tr>

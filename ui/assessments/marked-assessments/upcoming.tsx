@@ -34,8 +34,9 @@ export default function UpcomingAssessment() {
                 href="/instructor/instructor-assignments#"
                 style={{ display: "flex", gap: "5px", alignItems: "center" }}
               >
-                dowload
+               <i className="bi bi-download pl--0" /> Dowload
               </a>
+              
             </div>
           </td>
         </tr>
