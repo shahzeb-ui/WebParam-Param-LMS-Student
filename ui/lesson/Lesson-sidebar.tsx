@@ -110,24 +110,21 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     if (newElementIndex < 0) {
       newTopicIndex--;
       if (newTopicIndex >= 0) {
-        const prevTopicId = knowledgeTopics[newTopicIndex]?.id;
-        if (prevTopicId) {
-          await handleTopicClick(prevTopicId, newTopicIndex);
-          newElementIndex = expandedTopics[prevTopicId]?.length - 1 || 0;
-        }
+        const prevTopicId = knowledgeTopics[newTopicIndex].id;
+        await handleTopicClick(prevTopicId, newTopicIndex);
+        newElementIndex = expandedTopics[prevTopicId].length - 1;
       } else {
         newElementIndex = 0;
       }
     }
 
     if (
-      knowledgeTopics[newTopicIndex] &&
-      expandedTopics[knowledgeTopics[newTopicIndex]?.id] &&
-      expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex]
+      expandedTopics[knowledgeTopics[newTopicIndex].id] &&
+      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex]
     ) {
       const prevElement =
-        expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex];
-      const prevVideoUrl = prevElement?.videoUrl;
+        expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
+      const prevVideoUrl = prevElement.videoUrl;
       if (prevVideoUrl) {
         setSelectedVideoUrl(prevVideoUrl);
         setIsActiveUrl(prevVideoUrl);
@@ -144,30 +141,25 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
 
     if (
       newElementIndex >=
-      expandedTopics[knowledgeTopics[newTopicIndex]?.id]?.length
+      expandedTopics[knowledgeTopics[newTopicIndex].id]?.length
     ) {
       newTopicIndex++;
       if (newTopicIndex < knowledgeTopics.length) {
-        const nextTopicId = knowledgeTopics[newTopicIndex]?.id;
-        if (nextTopicId) {
-          await handleTopicClick(nextTopicId, newTopicIndex);
-          newElementIndex = 0;
-        } else {
-          newElementIndex--;
-        }
+        const nextTopicId = knowledgeTopics[newTopicIndex].id;
+        await handleTopicClick(nextTopicId, newTopicIndex);
+        newElementIndex = 0;
       } else {
         newElementIndex--;
       }
     }
 
     if (
-      knowledgeTopics[newTopicIndex] &&
-      expandedTopics[knowledgeTopics[newTopicIndex]?.id] &&
-      expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex]
+      expandedTopics[knowledgeTopics[newTopicIndex].id] &&
+      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex]
     ) {
       const nextElement =
-        expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex];
-      const nextVideoUrl = nextElement?.videoUrl;
+        expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
+      const nextVideoUrl = nextElement.videoUrl;
       if (nextVideoUrl) {
         setSelectedVideoUrl(nextVideoUrl);
         setIsActiveUrl(nextVideoUrl);
