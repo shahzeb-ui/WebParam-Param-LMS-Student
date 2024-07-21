@@ -213,6 +213,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
       const customEvent = event as CustomEvent<string>;
       const videoUrl = customEvent.detail;
       markAsWatched(videoUrl);
+      handleNext(); // Move to the next video automatically
     };
 
     window.addEventListener("videoWatched", handleVideoWatched);

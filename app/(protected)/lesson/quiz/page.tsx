@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import quizData from "@/data/quiz/quiz.json";
 import styles from "@/styles/quiz/quiz.module.css";
 
@@ -10,7 +10,11 @@ type QuizQuestion = {
   answer: string;
 };
 
-const LessonQuiz = () => {
+interface LessonQuizProps {
+  onDone: () => void;
+}
+
+const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -21,6 +25,10 @@ const LessonQuiz = () => {
     Array(quizData.length).fill(null)
   );
   const [currentQuiz, setCurrentQuiz] = useState<QuizQuestion[]>([]);
+
+  const handleDoneClick = () => {
+    onDone();
+  };
 
   useEffect(() => {
     initializeQuiz();
@@ -174,7 +182,7 @@ const LessonQuiz = () => {
                   className="rbt-btn btn-gradient btn-sm ms-2"
                   id="next-btn"
                   type="button"
-                  onClick={() => (window.location.href = "/lesson")}
+                  onClick={handleDoneClick}
                 >
                   Done
                 </button>

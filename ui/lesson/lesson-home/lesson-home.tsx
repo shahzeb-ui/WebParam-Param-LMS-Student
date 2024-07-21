@@ -40,6 +40,11 @@ const LessonHomepage = () => {
     }
   };
 
+  const handleDone = () => {
+    setShowQuiz(false);
+    handleNext();
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       new Plyr(".rbtplayer", {
@@ -71,7 +76,11 @@ const LessonHomepage = () => {
     <>
       <div className="inner">
         <div className="plyr__video-embed rbtplayer">
-          {showQuiz ? <LessonQuiz /> : <ResponsiveVideoComponent />}
+          {showQuiz ? (
+            <LessonQuiz onDone={handleDone} />
+          ) : (
+            <ResponsiveVideoComponent />
+          )}
         </div>
         <div className="rbt-card-body-2 d-flex justify-content-between align-items-center">
           <i
