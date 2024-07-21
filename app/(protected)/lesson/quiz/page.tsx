@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import quizData from "@/data/quiz/quiz.json";
 import styles from "@/styles/quiz/quiz.module.css";
 
@@ -10,11 +10,7 @@ type QuizQuestion = {
   answer: string;
 };
 
-interface LessonQuizProps {
-  onDone: () => void;
-}
-
-const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
+const LessonQuiz = () => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -25,10 +21,6 @@ const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
     Array(quizData.length).fill(null)
   );
   const [currentQuiz, setCurrentQuiz] = useState<QuizQuestion[]>([]);
-
-  const handleDoneClick = () => {
-    onDone();
-  };
 
   useEffect(() => {
     initializeQuiz();
@@ -136,7 +128,6 @@ const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
                       {item.options.map((option, optIndex) => (
                         <div className="col-lg-6" key={optIndex}>
                           <p className="rbt-checkbox-wrapper mb--5">
-                          <div className="rbt-checkbox">
                             <input
                               id={`rbt-checkbox-${index + 1}-${optIndex}`}
                               name={`rbt-checkbox-${index + 1}`}
@@ -146,9 +137,7 @@ const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
                               onChange={handleOptionChange}
                               disabled={answeredQuestions[index]}
                             />
-                            </div>
                             <label
-                            style={{padding:"40px"}}
                               htmlFor={`rbt-checkbox-${index + 1}-${optIndex}`}
                               className={
                                 answeredQuestions[index]
@@ -185,7 +174,7 @@ const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
                   className="rbt-btn btn-gradient btn-sm ms-2"
                   id="next-btn"
                   type="button"
-                  onClick={handleDoneClick}
+                  onClick={() => (window.location.href = "/lesson")}
                 >
                   Done
                 </button>

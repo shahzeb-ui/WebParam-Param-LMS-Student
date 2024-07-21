@@ -125,60 +125,6 @@ const ResponsiveVideoComponent: React.FC = () => {
                       </svg>
                     </div>
                     <div className={styles.csskd7unw}>
-                      <button
-                        className={`${styles.MuiButtonBaseRoot} ${styles.MuiButtonRoot} ${styles.MuiButtonText} ${styles.MuiButtonSizeLarge} ${styles.MuiButtonColorInherit} ${styles.e6pn0e12}`}
-                        tabIndex={0}
-                        type="button"
-                      >
-                        <span
-                          className={`${styles.MuiButtonIcon} ${styles.MuiButtonStartIcon}`}
-                        >
-                          <svg
-                            className={styles.MuiSvgIconRoot}
-                            focusable="false"
-                            aria-hidden="true"
-                            width="30"
-                            height="30"
-                            viewBox="0 0 30 30"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M3.79764 3.21057L2.14148 10.5254L9.45634 12.1816"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            ></path>
-                            <path
-                              fill="none"
-                              d="M25.1432 20.868C26.1962 18.6679 26.5057 16.1852 26.0251 13.794C25.5444 11.4028 24.2996 9.2325 22.4783 7.61023C20.6569 5.98795 18.3577 5.00154 15.927 4.79962C13.4963 4.59771 11.0658 5.19122 9.00176 6.49074L2.14146 10.5254"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            ></path>
-                            <path
-                              d="M7.5 18L11 15.5L11 25"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              fill="none"
-                            ></path>
-                            <ellipse
-                              cx="17.5"
-                              cy="20"
-                              rx="3.5"
-                              ry="5"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              fill="none"
-                            ></ellipse>
-                          </svg>
-                        </span>
-                        <span className={styles.MuiTouchRippleRoot}></span>
-                      </button>
                       <div className={styles.csszxonyc}>
                         <div className={styles.cssnejomu}>
                           <span

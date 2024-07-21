@@ -12,9 +12,7 @@ export default function ActiveAssessment() {
       <tbody>
         <tr>
           <th>
-            <span className="h6 mb--5">
-              Write Link short essay on yourself using the 5
-            </span>
+            <span className="h6 mb--5">Introduction to Project Management</span>
             <p className="b3">
               Course:{" "}
               <a href="/instructor/instructor-assignments#">Fundamentals 101</a>
@@ -31,17 +29,17 @@ export default function ActiveAssessment() {
               <a
                 className="rbt-btn btn-xs bg-primary-opacity radius-round"
                 title="Edit"
-                href="/instructor/instructor-assignments#"
+                href="/lesson/assessments"
               >
                 <i className="feather-edit pl--0" /> Edit
               </a>
-              <a
+              {/* <a
                 className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-success"
                 title="Delete"
                 href="/instructor/instructor-assignments#"
               >
                 <i className="bi bi-download pl--0" />
-              </a>
+              </a> */}
             </div>
           </td>
         </tr>
