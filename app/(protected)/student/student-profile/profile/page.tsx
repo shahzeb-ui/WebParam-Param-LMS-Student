@@ -310,11 +310,12 @@ export default function Profile({user}:any) {
     </div> */}
     <div className="col-12 mt--20">
       <div className="rbt-form-group">
-        <button
+      <button
           className="rbt-btn btn-gradient"
           type='submit'
+          style={{ backgroundColor: '#24345c', backgroundImage: 'none' }} // Updated inline styles
         >
-          {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
+          {isSubmitting ? <div className="spinner-border text-light" role="status"/> : 'Update Info'}
         </button>
       </div>
     </div>

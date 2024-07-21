@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import { useLessonContext } from "@/context/lesson-context/lesson-context";
+import "@/styles/css/plugins/mainstyle.css";
 
 interface UnitData {
   id: string;
@@ -92,10 +93,7 @@ const UnitStandardWidget: React.FC<Props> = ({
               src={course.courseThumbnail}
               alt={data.title}
             />
-            <div className="rbt-badge-3 bg-white">
-              <span>{`-${discountPercentage}%`}</span>
-              <span>Off</span>
-            </div>
+           
           </Link>
         </div>
         <div className="rbt-card-body">

@@ -1,6 +1,6 @@
 .layoutContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Changed from space-between to center */
     align-items: center;
     height: 100dvh;
     overflow: hidden;
@@ -45,7 +45,7 @@
 
         & a {
             text-decoration: underline;
-            color: #b966e7;
+            color: #2597ac;
         }
     }
 
@@ -81,7 +81,7 @@
 
         & a {
             text-decoration: underline;
-            color: #b966e7;
+            color: #2597ac;
         }
     }
 
