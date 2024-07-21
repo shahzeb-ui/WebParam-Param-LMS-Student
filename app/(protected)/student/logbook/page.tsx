@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "@/styles/logbook/logbook-login.module.css";
 import { CheckIn, CheckOut } from "@/actions/logbook-actions/logbook-action";
 import LogbookList from "@/ui/logbook/logbook-display/logbook-display";
@@ -59,7 +59,7 @@ const StudentLogbook = () => {
     };
   };
 
-  const getAllLogbooks = async (userId: string) => {
+  const getAllLogbooks = useCallback(async (userId: string) => {
     if (!userId) {
       console.error("User ID is required");
       return;
@@ -73,13 +73,45 @@ const StudentLogbook = () => {
     } catch (error) {
       console.error("Error fetching logbooks:", error);
     }
-  };
+  }, []);
+
+  const handleCheckout = useCallback(
+    async (
+      entry: LogbookEntry | null,
+      setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
+      setTimer: React.Dispatch<React.SetStateAction<number | null>>
+    ) => {
+      if (entry) {
+        try {
+          setLoading(true);
+          const feedback = entry.description;
+          const response = await CheckOut(
+            entry.id!,
+            feedback,
+            rating,
+            "47485968563874645438"
+          );
+          const newEntry = { ...entry, status: "Checked Out" };
+          setEntry(newEntry);
+          setLogbooks((prevLogbooks) => [newEntry, ...prevLogbooks]);
+          setTimer(null);
+          setDisableAddEntry(true);
+          setDisableAddEntryUntil(Date.now() + 4 * 60 * 60 * 1000);
+        } catch (error) {
+          console.error("Check-out failed", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    },
+    [rating]
+  );
 
   useEffect(() => {
     if (userId) {
       getAllLogbooks(userId);
     }
-  }, [userId]);
+  }, [userId, getAllLogbooks]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -135,7 +167,14 @@ const StudentLogbook = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [studentTimer, workTimer, studentEntry, workEntry, disableAddEntryUntil]);
+  }, [
+    studentTimer,
+    workTimer,
+    studentEntry,
+    workEntry,
+    disableAddEntryUntil,
+    handleCheckout,
+  ]);
 
   const handleCheckin = async (
     entry: LogbookEntry | null,
@@ -144,7 +183,7 @@ const StudentLogbook = () => {
   ) => {
     if (entry && user) {
       try {
-        setLoading(true); // Set loading to true
+        setLoading(true);
         const userId = user?.data.id;
         const classId = "4748596856387765";
         const response = await CheckIn(userId, classId);
@@ -157,35 +196,6 @@ const StudentLogbook = () => {
         setTimer(4 * 60 * 60);
       } catch (error) {
         console.error("Check-in failed", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
-  const handleCheckout = async (
-    entry: LogbookEntry | null,
-    setEntry: React.Dispatch<React.SetStateAction<LogbookEntry | null>>,
-    setTimer: React.Dispatch<React.SetStateAction<number | null>>
-  ) => {
-    if (entry) {
-      try {
-        setLoading(true);
-        const feedback = entry.description;
-        const response = await CheckOut(
-          entry.id!,
-          feedback,
-          rating,
-          "47485968563874645438"
-        );
-        const newEntry = { ...entry, status: "Checked Out" };
-        setEntry(newEntry);
-        setLogbooks((prevLogbooks) => [newEntry, ...prevLogbooks]);
-        setTimer(null);
-        setDisableAddEntry(true);
-        setDisableAddEntryUntil(Date.now() + 4 * 60 * 60 * 1000);
-      } catch (error) {
-        console.error("Check-out failed", error);
       } finally {
         setLoading(false);
       }

@@ -16,12 +16,12 @@ export default function StudentLayout({
   const cookies = new Cookies();
 
   const loggedInUser = cookies.get("loggedInUser");
-  
+
   useEffect(() => {
     if (!loggedInUser) {
       router.push("/login");
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, router]);
 
   return (
     <>

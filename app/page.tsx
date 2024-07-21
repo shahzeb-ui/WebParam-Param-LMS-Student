@@ -8,11 +8,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/login')
-  }, [])
+    router.push("/login");
+  }, [router]);
 
-  return (
-  <main className={styles.main}>
-  </main>
-  );
+  return <main className={styles.main}></main>;
 }

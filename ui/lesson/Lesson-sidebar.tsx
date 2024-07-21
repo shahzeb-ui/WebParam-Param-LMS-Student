@@ -110,21 +110,24 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     if (newElementIndex < 0) {
       newTopicIndex--;
       if (newTopicIndex >= 0) {
-        const prevTopicId = knowledgeTopics[newTopicIndex].id;
-        await handleTopicClick(prevTopicId, newTopicIndex);
-        newElementIndex = expandedTopics[prevTopicId].length - 1;
+        const prevTopicId = knowledgeTopics[newTopicIndex]?.id;
+        if (prevTopicId) {
+          await handleTopicClick(prevTopicId, newTopicIndex);
+          newElementIndex = expandedTopics[prevTopicId]?.length - 1 || 0;
+        }
       } else {
         newElementIndex = 0;
       }
     }
 
     if (
-      expandedTopics[knowledgeTopics[newTopicIndex].id] &&
-      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex]
+      knowledgeTopics[newTopicIndex] &&
+      expandedTopics[knowledgeTopics[newTopicIndex]?.id] &&
+      expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex]
     ) {
       const prevElement =
-        expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
-      const prevVideoUrl = prevElement.videoUrl;
+        expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex];
+      const prevVideoUrl = prevElement?.videoUrl;
       if (prevVideoUrl) {
         setSelectedVideoUrl(prevVideoUrl);
         setIsActiveUrl(prevVideoUrl);
@@ -141,25 +144,30 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
 
     if (
       newElementIndex >=
-      expandedTopics[knowledgeTopics[newTopicIndex].id]?.length
+      expandedTopics[knowledgeTopics[newTopicIndex]?.id]?.length
     ) {
       newTopicIndex++;
       if (newTopicIndex < knowledgeTopics.length) {
-        const nextTopicId = knowledgeTopics[newTopicIndex].id;
-        await handleTopicClick(nextTopicId, newTopicIndex);
-        newElementIndex = 0;
+        const nextTopicId = knowledgeTopics[newTopicIndex]?.id;
+        if (nextTopicId) {
+          await handleTopicClick(nextTopicId, newTopicIndex);
+          newElementIndex = 0;
+        } else {
+          newElementIndex--;
+        }
       } else {
         newElementIndex--;
       }
     }
 
     if (
-      expandedTopics[knowledgeTopics[newTopicIndex].id] &&
-      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex]
+      knowledgeTopics[newTopicIndex] &&
+      expandedTopics[knowledgeTopics[newTopicIndex]?.id] &&
+      expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex]
     ) {
       const nextElement =
-        expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
-      const nextVideoUrl = nextElement.videoUrl;
+        expandedTopics[knowledgeTopics[newTopicIndex]?.id][newElementIndex];
+      const nextVideoUrl = nextElement?.videoUrl;
       if (nextVideoUrl) {
         setSelectedVideoUrl(nextVideoUrl);
         setIsActiveUrl(nextVideoUrl);
