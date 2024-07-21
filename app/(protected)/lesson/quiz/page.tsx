@@ -136,6 +136,7 @@ const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
                       {item.options.map((option, optIndex) => (
                         <div className="col-lg-6" key={optIndex}>
                           <p className="rbt-checkbox-wrapper mb--5">
+                          <div className="rbt-checkbox">
                             <input
                               id={`rbt-checkbox-${index + 1}-${optIndex}`}
                               name={`rbt-checkbox-${index + 1}`}
@@ -145,7 +146,9 @@ const LessonQuiz: React.FC<LessonQuizProps> = ({ onDone }) => {
                               onChange={handleOptionChange}
                               disabled={answeredQuestions[index]}
                             />
+                            </div>
                             <label
+                            style={{padding:"40px"}}
                               htmlFor={`rbt-checkbox-${index + 1}-${optIndex}`}
                               className={
                                 answeredQuestions[index]

@@ -11,7 +11,7 @@ export default function CommentChartWrapper({
   type?: string
 }) {
   return (
-    <div className="card card-group-row__card">
+    <div className="card card-group-row__card mt-3">
       <div className="card-header d-flex align-items-center">
         <strong>{title}</strong>
       </div>

@@ -1782,7 +1782,7 @@ export default async function CourseDetails({
                       <div className="rbt-card-body">
                         <div className="rbt-card-top">
                           <div className="rbt-review">
-                            <div className="rating">
+                            {/* <div className="rating">
                               <i className="fas fa-star" />
                               <i className="fas fa-star" />
                               <i className="fas fa-star" />
@@ -1790,7 +1790,7 @@ export default async function CourseDetails({
                               <i className="fas fa-star" />
                             </div>
                             <span className="rating-count">(15 Reviews)</span>
-                          </div>
+                          </div> */}
                           <div className="rbt-bookmark-btn">
                             <a
                               className="rbt-round-btn"
@@ -1876,7 +1876,7 @@ export default async function CourseDetails({
                       </div>
                       <div className="rbt-card-body">
                         <div className="rbt-card-top">
-                          <div className="rbt-review">
+                          {/* <div className="rbt-review">
                             <div className="rating">
                               <i className="fas fa-star" />
                               <i className="fas fa-star" />
@@ -1885,7 +1885,7 @@ export default async function CourseDetails({
                               <i className="fas fa-star" />
                             </div>
                             <span className="rating-count">(15 Reviews)</span>
-                          </div>
+                          </div> */}
                           <div className="rbt-bookmark-btn">
                             <a
                               className="rbt-round-btn"
@@ -1988,7 +1988,7 @@ export default async function CourseDetails({
                 </div>
                 <div className="rbt-card-body">
                   <div className="rbt-card-top">
-                    <div className="rbt-review">
+                    {/* <div className="rbt-review">
                       <div className="rating">
                         <i className="fas fa-star" />
                         <i className="fas fa-star" />
@@ -1997,7 +1997,7 @@ export default async function CourseDetails({
                         <i className="fas fa-star" />
                       </div>
                       <span className="rating-count"> (15 Reviews)</span>
-                    </div>
+                    </div> */}
                     <div className="rbt-bookmark-btn">
                       <a
                         className="rbt-round-btn"
@@ -2078,7 +2078,7 @@ export default async function CourseDetails({
                 </div>
                 <div className="rbt-card-body">
                   <div className="rbt-card-top">
-                    <div className="rbt-review">
+                    {/* <div className="rbt-review">
                       <div className="rating">
                         <i className="fas fa-star" />
                         <i className="fas fa-star" />
@@ -2087,7 +2087,7 @@ export default async function CourseDetails({
                         <i className="fas fa-star" />
                       </div>
                       <span className="rating-count"> (15 Reviews)</span>
-                    </div>
+                    </div> */}
                     <div className="rbt-bookmark-btn">
                       <a
                         className="rbt-round-btn"
