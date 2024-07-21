@@ -155,7 +155,7 @@ const EnrolledCourses = () => {
             </div>
 
             <div
-              className="tab-pane fade"
+              className="tab-pane fade scrollable-tab-content"
               id="profile-4"
               role="tabpanel"
               aria-labelledby="profile-tab-4"
@@ -181,7 +181,7 @@ const EnrolledCourses = () => {
             </div>
 
             <div
-              className="tab-pane fade"
+              className="tab-pane fade scrollable-tab-content"
               id="contact-4"
               role="tabpanel"
               aria-labelledby="contact-tab-4"
