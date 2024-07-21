@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import { useLessonContext } from "@/context/lesson-context/lesson-context";
-import "@/styles/css/plugins/login.css";
+import "@/styles/css/plugins/mainstyle.css";
 
 interface UnitData {
   id: string;

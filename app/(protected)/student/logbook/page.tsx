@@ -359,7 +359,7 @@ const StudentLogbook = () => {
       <div className={styles.buttonContainer}>
         <button
           className="rbt-btn btn-gradient"
-          style={{ backgroundColor: '#081427', backgroundImage: 'none' }}
+          style={{ backgroundColor: '#25355c', backgroundImage: 'none' }}
           onClick={() =>
             addNewEntry(
               activeTab === "school" ? setStudentEntry : setWorkEntry,
@@ -372,7 +372,7 @@ const StudentLogbook = () => {
         </button>
         <button
           className="rbt-btn btn-gradient"
-          style={{ backgroundColor: '#081427', backgroundImage: 'none' }}
+          style={{ backgroundColor: '#25355c', backgroundImage: 'none' }}
           onClick={() => {
             setShowLogbookList(!showLogbookList);
             if (!showLogbookList) fetchMoreLogbooks();

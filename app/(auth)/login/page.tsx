@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
-import "@/styles/css/plugins/login.css";
+import "@/styles/css/plugins/mainstyle.css";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -83,9 +83,10 @@ export default function Login() {
                     </div>
                     {errorMessage && <span className="errorMessage">Incorrect User details</span>}
                     <div className="form-submit-group">
-                        <button
+                    <button
                             type="submit"
-                            className="rbt-btn  .btn-gradient hover-icon-reverse w-100"
+                            className="rbt-btn btn-gradient hover-icon-reverse w-100"
+                            style={{ background: 'linear-gradient(#25355c, #25355c)' }}
                         >
                             {isSubmitted ? <div className="spinner-border" role="status" /> : <span className="icon-reverse-wrapper">
                                 <span className="btn-text">Log In</span>

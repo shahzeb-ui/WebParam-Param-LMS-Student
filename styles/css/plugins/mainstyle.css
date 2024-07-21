@@ -17,6 +17,18 @@
     color: white;
 }
 
+/* styles.css or a relevant CSS file */
+.rbt-banner-image {
+    background: linear-gradient(#25355c, #25355c) !important;
+  }
+
+  /* styles.css or a relevant CSS file */
+/* styles.css or a relevant CSS file */
+.custom-banner {
+    background: #25355c !important;
+    background-image: none !important; /* Ensure no gradient is applied */
+  }
+
  
 /* sidebar*/
 .rbt-default-sidebar {
@@ -38,6 +50,9 @@
   .custom-gradient span {
     color: #ffffff !important; /* Ensure all spans inside the badge have the correct color */
   }
+
+
+  /* import "@/styles/css/plugins/mainstyle.css"; */
 
   
   
