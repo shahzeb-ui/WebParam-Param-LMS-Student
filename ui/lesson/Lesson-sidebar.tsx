@@ -118,14 +118,19 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
       }
     }
 
-    const prevElement =
-      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
-    const prevVideoUrl = prevElement.videoUrl;
-    if (prevVideoUrl) {
-      setSelectedVideoUrl(prevVideoUrl);
-      setIsActiveUrl(prevVideoUrl);
-      setCurrentTopicIndex(newTopicIndex);
-      setCurrentElementIndex(newElementIndex);
+    if (
+      expandedTopics[knowledgeTopics[newTopicIndex].id] &&
+      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex]
+    ) {
+      const prevElement =
+        expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
+      const prevVideoUrl = prevElement.videoUrl;
+      if (prevVideoUrl) {
+        setSelectedVideoUrl(prevVideoUrl);
+        setIsActiveUrl(prevVideoUrl);
+        setCurrentTopicIndex(newTopicIndex);
+        setCurrentElementIndex(newElementIndex);
+      }
     }
   };
 
@@ -136,7 +141,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
 
     if (
       newElementIndex >=
-      expandedTopics[knowledgeTopics[newTopicIndex].id].length
+      expandedTopics[knowledgeTopics[newTopicIndex].id]?.length
     ) {
       newTopicIndex++;
       if (newTopicIndex < knowledgeTopics.length) {
@@ -148,14 +153,19 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
       }
     }
 
-    const nextElement =
-      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
-    const nextVideoUrl = nextElement.videoUrl;
-    if (nextVideoUrl) {
-      setSelectedVideoUrl(nextVideoUrl);
-      setIsActiveUrl(nextVideoUrl);
-      setCurrentTopicIndex(newTopicIndex);
-      setCurrentElementIndex(newElementIndex);
+    if (
+      expandedTopics[knowledgeTopics[newTopicIndex].id] &&
+      expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex]
+    ) {
+      const nextElement =
+        expandedTopics[knowledgeTopics[newTopicIndex].id][newElementIndex];
+      const nextVideoUrl = nextElement.videoUrl;
+      if (nextVideoUrl) {
+        setSelectedVideoUrl(nextVideoUrl);
+        setIsActiveUrl(nextVideoUrl);
+        setCurrentTopicIndex(newTopicIndex);
+        setCurrentElementIndex(newElementIndex);
+      }
     }
   };
 

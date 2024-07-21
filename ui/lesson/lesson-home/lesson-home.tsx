@@ -10,6 +10,7 @@ import Overview from "@/ui/overview/overview";
 import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
 import LessonSidebar from "@/ui/lesson/Lesson-sidebar";
 import LessonQuiz from "@/app/(protected)/lesson/quiz/page";
+import styles from "@/styles/video/youtubevideo.module.css";
 
 const QuestionAndAnswers = dynamic(
   () => import("@/ui/lesson/question-answers/question-answer"),
@@ -72,21 +73,16 @@ const LessonHomepage = () => {
         <div className="plyr__video-embed rbtplayer">
           {showQuiz ? <LessonQuiz /> : <ResponsiveVideoComponent />}
         </div>
-        <div className="rbt-card-body-2">
-          <button
-            className="rbt-btn btn-gradient btn-sm ms-2"
+        <div className="rbt-card-body-2 d-flex justify-content-between align-items-center">
+          <i
+            className={`bi bi-arrow-left-circle fs-3 ${styles["icon-hover-gradient"]}`}
             onClick={handlePrevious}
-          >
-            previous
-          </button>
-          <div className="rbt-card-top-2">
-            <button
-              className="rbt-btn btn-gradient btn-sm ms-2"
-              onClick={handleNext}
-            >
-              next
-            </button>
-          </div>
+          ></i>
+          <h5 className="course-title-2 mb-0"></h5>
+          <i
+            className={`bi bi-arrow-right-circle fs-3 ${styles["icon-hover-gradient"]}`}
+            onClick={handleNext}
+          ></i>
         </div>
         <h5 className="bi bi-play course-title-2">Welcome to the Course</h5>
         <div className="content-2">
