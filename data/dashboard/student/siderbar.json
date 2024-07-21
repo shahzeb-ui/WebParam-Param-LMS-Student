@@ -51,7 +51,7 @@
         "icon": "feather-volume-2"
       },
       {
-        "link": "/student/course-assessments",
+        "link": "/student/assessments",
         "text": "Assessments",
         "icon": "feather-message-square"
       },
