@@ -14,6 +14,10 @@
     position: relative;
     box-sizing: border-box;
     transition: background-color 0.3s;
+
+    & > span {
+        cursor: pointer;
+    }
 }
 
 .docContainer h3 {
@@ -102,3 +106,10 @@
     }
 }
 
+.fileName {
+    font-size: 12px;
+    width: 100%;
+    text-wrap: wrap;
+    max-width: 100%;
+    overflow-x: hidden;
+}

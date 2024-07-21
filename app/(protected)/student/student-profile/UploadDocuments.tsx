@@ -1,21 +1,29 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import './uploadDocs.scss';
-import Modal from 'react-responsive-modal';
+import {Modal} from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { deployedUrl } from '@/app/api/endpoints';
 import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
-
+const pdfVersion = "2.16.105";
+const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
 type DocumentType = 'identity' | 'qualification' | 'cv' | 'Leaner_Agreement';
 
 const FileUpload: React.FC = () => {
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
   const [isUploading, setIsUploading] = useState(false);
   const [upLoadingLoader, setUpLoadingLoader] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
   const [selectedFile, setSelectedFile] = useState<{ type: DocumentType; file: File | null } | null>(null);
   const [documents, setDocuments] = useState<any[]>([])
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
+  const [documentToView, setDocumentToView] = useState('');
   const [files, setFiles] = useState<Record<DocumentType, File | null>>({
     identity: null,
     qualification: null,
@@ -41,7 +49,11 @@ const FileUpload: React.FC = () => {
     }
   }
 
-
+  function viewDocument(docId: string) {
+    console.log(docId)
+    setDocumentToView(docId)
+    setShowDocumentModal(true);
+  }
 
   const [dragging, setDragging] = useState<Record<DocumentType, boolean>>({
     identity: false,
@@ -49,8 +61,6 @@ const FileUpload: React.FC = () => {
     cv: false,
     Leaner_Agreement: false,
   });
-
-
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, type: DocumentType) => {
     if (event.target.files) {
@@ -86,8 +96,8 @@ const FileUpload: React.FC = () => {
     if (selectedFile && selectedFile.file) {
       const formData = new FormData();
       formData.append('File', selectedFile.file);
-  formData.append('UserId', user.data.id);
-  formData.append('Type', String(['identity', 'qualification', 'cv', 'Leaner Agreement'].indexOf(selectedFile.type)));
+      formData.append('UserId', user.data.id);
+      formData.append('Type', String(['identity', 'qualification', 'cv', 'Leaner Agreement'].indexOf(selectedFile.type)));
 
   try {
     const response = await axios.post(`${deployedUrl}/api/v1/Profile/SubmitDocument`, formData, {
@@ -103,7 +113,6 @@ const FileUpload: React.FC = () => {
         }
       } catch (error) {
         console.error('Error uploading file:', error);
-        
         alert('File upload failed');
       } finally {
         setUpLoadingLoader(false);
@@ -157,13 +166,31 @@ const FileUpload: React.FC = () => {
           }
         </div>}
       </Modal>
+      <Modal  
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered show={showDocumentModal} onHide={() => setShowDocumentModal(false)}
+      >
+      <Modal.Header closeButton>
+        <Modal.Title>Document Preview</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Worker workerUrl={pdfWorkerUrl}>
+          <Viewer
+            fileUrl={`https://khumla-development-user-read.azurewebsites.net/api/Documents/PreviewDocument/${documentToView}`}
+            plugins={[defaultLayoutPluginInstance]}
+          />
+        </Worker>
+      </Modal.Body>
+    </Modal>
 
       <div className="requiredDocs">
         {(['identity', 'qualification', 'cv', 'Leaner Agreement'] as DocumentType[]).map((docType, index) => {
            const matchingDoc = documents.find((doc) => doc.type === index);
            console.log(matchingDoc)
          
-         return (<div
+         return (
+         <div
             className={`docContainer ${dragging[docType] ? 'dragover' : ''}`}
             key={index}
             onDrop={(event) => handleDrop(event, docType)}
@@ -173,9 +200,9 @@ const FileUpload: React.FC = () => {
             <h6>{docType.charAt(0).toUpperCase() + docType.slice(1)}</h6>
             <h3>Drag and drop your file here</h3>
             <div>
-              {matchingDoc ? <i className="bi bi-file-check-fill" style={{cursor:'pointer'}}></i>:<i className="bi bi-cloud-arrow-up"></i>}
+              {matchingDoc ? <i className="bi bi-file-check-fill" style={{cursor:'pointer'}} onClick={() => viewDocument(matchingDoc.id)}></i>:<i className="bi bi-cloud-arrow-up"></i>}
              
-             {matchingDoc && <a href={`${matchingDoc?.blobUrl}`} style={{display:'block', fontSize:'12px', marginTop:'10px', textDecoration:'underline', color:'green'}}>View doc</a>}
+             {matchingDoc && <span onClick={() => viewDocument(matchingDoc.id)} style={{display:'block', cursor:'pointer',fontSize:'12px', marginTop:'10px', textDecoration:'underline', color:'green'}}>View doc</span>}
             </div>
             <h5>OR</h5>
             {files[docType] && <p className="fileName">{files[docType]?.name}</p>}
@@ -186,8 +213,8 @@ const FileUpload: React.FC = () => {
               accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
               onChange={(event) => handleFileChange(event, docType)}
             />
-                    <label htmlFor={docType}>{matchingDoc ? 'Change':'Browse Files'}</label>
-                </div>)
+            <label htmlFor={docType}>{matchingDoc ? 'Change':'Browse Files'}</label>
+        </div>)
         })}
         </div>
         </>

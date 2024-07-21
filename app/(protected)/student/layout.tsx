@@ -44,7 +44,6 @@ export default function StudentLayout({
             </div>
           </div>
         </div>
-        
       </div>
     </>
   );
