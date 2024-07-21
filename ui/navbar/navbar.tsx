@@ -63,7 +63,7 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <div className="logo">Khumla</div>
+                <div className="logo">Thooto</div>
               </div>
 
               <div className="rbt-main-navigation d-none d-xl-block">

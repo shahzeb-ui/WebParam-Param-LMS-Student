@@ -15,7 +15,7 @@
 }
 
 .btnLogbook {
-  background-color: #28a745;
+  background-color: #081427;
   color: white;
   font-size: 1.5rem;
   padding: 1rem;
@@ -48,9 +48,9 @@
 }
 
 .navButtonActive {
-  background-color: #28a745;
+  background-color: #25355c;
   color: white;
-  border: 1px solid #28a745;
+  border: 1px solid #25355c;
 }
 
 .icon {

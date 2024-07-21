@@ -105,3 +105,18 @@
     margin-right: 10px;
   }
   
+.icon-hover-gradient {
+    cursor: pointer;
+    transition: color 0.3s ease, background 0.3s ease;
+}
+  
+.icon-hover-gradient:hover {
+    color: #fff;
+    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -ms-background-clip: text;
+    -o-background-clip: text;
+}

@@ -24,7 +24,7 @@ export const notificationsForEveryone:notificationEveryoneType[] = [
     {
         id:1,
         course: "Business Management",
-        message:'we would like to welcome you all and let you know classes will start next week'
+        message:'We would like to welcome you all and let you know classes will start next week'
     },
 
 ]
