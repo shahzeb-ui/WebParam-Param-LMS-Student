@@ -108,6 +108,7 @@ const FileUpload: React.FC = () => {
 
         if (response.status === 200) {
           setIsUploaded(true);
+          window.location.reload();
         } else {
           alert('File upload failed');
         }
@@ -143,7 +144,7 @@ const FileUpload: React.FC = () => {
 
   return (
     <>
-      <Modal open={isUploading} styles={customModalStyles} onClose={() => setIsUploading(false)} center blockScroll>
+      <Modal show={isUploading} styles={customModalStyles} onHide={() => setIsUploading(false)} centered>
        {isUploaded ? 
        <div className='successUpload'>
         <i className="bi bi-check-circle-fill"/>
@@ -166,6 +167,7 @@ const FileUpload: React.FC = () => {
           }
         </div>}
       </Modal>
+      
       <Modal  
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -210,10 +212,15 @@ const FileUpload: React.FC = () => {
               type="file"
               name={docType}
               id={docType}
-              accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              accept="application/pdf"
               onChange={(event) => handleFileChange(event, docType)}
             />
-            <label htmlFor={docType}>{matchingDoc ? 'Change':'Browse Files'}</label>
+            
+            {matchingDoc ? 
+              <label htmlFor={docType}>Change</label>
+              :
+              <label htmlFor={docType}>Browse Files</label>
+            }
         </div>)
         })}
         </div>

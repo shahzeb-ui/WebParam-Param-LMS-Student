@@ -16,8 +16,8 @@ export default function UpcomingAssignment() {
                 Write Link short essay on yourself using the 5
               </span>
               <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">
+                Module:{" "}
+                <a href="#">
                   Fundamentals 101
                 </a>
               </p>
@@ -33,7 +33,7 @@ export default function UpcomingAssignment() {
                 <a
                   className="rbt-btn btn-xs bg-color-primary-opacity radius-round color-primary"
                   title="Delete"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                   style={{display:'flex',gap:'5px',alignItems:'center'}}
                 >dowload 
                   
