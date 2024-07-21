@@ -40,7 +40,172 @@ export default function PageAnalytics() {
           </h4>
         </div>
         <div className="row mb-lg-8pt"></div>
-        <div className="row card-group-row">
+        <div className="row mb-lg-8pt">
+       
+
+
+
+        <div
+                  className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--30"
+                  id="review"
+                >
+                  <div className="course-content">
+                    <div className="section-title">
+                      <h4 className="rbt-title-style-3">Leaderboard</h4>
+                    </div>
+                    <div className="row g-5 align-items-center">
+                      <div className="col-lg-3">
+                        <div className="rating-box">
+                          <div className="rating-number">71</div>
+                          <div className="rating">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width={16}
+                              height={16}
+                              fill="currentColor"
+                              className="bi bi-star-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width={16}
+                              height={16}
+                              fill="currentColor"
+                              className="bi bi-star-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width={16}
+                              height={16}
+                              fill="currentColor"
+                              className="bi bi-star-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width={16}
+                              height={16}
+                              fill="currentColor"
+                              className="bi bi-star-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg>
+                            {/* <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width={16}
+                              height={16}
+                              fill="currentColor"
+                              // className="bi bi-star-half"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                            </svg> */}
+                          </div>
+                          <span className="sub-title">You are currently ranked <b> 8th out of 56 </b> participants</span>
+                        </div>
+                      </div>
+
+
+                      <div className="col-lg-9">
+                        <div className="review-wrapper">
+                          <div className="single-progress-bar">
+                            <div className="rating-text">
+                             <p><small>S.Dzodzo</small></p>
+                            </div>
+                            <div className="progress">
+                              <div
+                                className="progress-bar"
+                                role="progressbar"
+                                aria-valuenow={87}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                                style={{ width: "87%" }}
+                              />
+                            </div>
+                            <span className="value-text">87%</span>
+                          </div>
+                          <div className="single-progress-bar">
+                            <div className="rating-text">
+                             <p><small>J.Dube</small></p>
+                            </div>
+                            <div className="progress">
+                              <div
+                                className="progress-bar"
+                                role="progressbar"
+                                aria-valuenow={87}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                                style={{ width: "87%" }}
+                              />
+                            </div>
+                            <span className="value-text">87%</span>
+                          </div>
+                          <div className="single-progress-bar">
+                            <div className="rating-text">
+                            <p><small>M.van Heerden</small></p>
+                            </div>
+                            <div className="progress">
+                              <div
+                                className="progress-bar"
+                                role="progressbar"
+                                aria-valuenow={86}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                                style={{ width: "86%" }}
+                              />
+                            </div>
+                            <span className="value-text">86%</span>
+                          </div>
+                          <div className="single-progress-bar">
+                            <div className="rating-text">
+                             <p><small>J.Nash</small></p>
+                            </div>
+                            <div className="progress">
+                              <div
+                                className="progress-bar"
+                                role="progressbar"
+                                aria-valuenow={80}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                                style={{ width: "80%" }}
+                              />
+                            </div>
+                            <span className="value-text">80%</span>
+                          </div>
+                          <div className="single-progress-bar">
+                            <div className="rating-text">
+                          <p><small>S.Naidoo</small></p>
+                            </div>
+                            <div className="progress">
+                              <div
+                                className="progress-bar"
+                                role="progressbar"
+                                aria-valuenow={80}
+                                aria-valuemin={0}
+                                aria-valuemax={100}
+                                style={{ width: "80%" }}
+                              />
+                            </div>
+                            <span className="value-text">80%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+        </div>
+        <div className="row card-group-row mt-3">
           <div className="col-lg-6 col-md-12 card-group-row__col">
             <ChartWrapper
               title="Quiz Attempts"
@@ -71,7 +236,7 @@ export default function PageAnalytics() {
             />
           </div>
 
-          <div className="col-lg-6 col-md-12 card-group-row__col">
+          {/* <div className="col-lg-6 col-md-12 card-group-row__col">
             <ChartWrapper
               title="Comments"
               barDescriptions={CommentsChartBarDescription}
@@ -79,8 +244,8 @@ export default function PageAnalytics() {
               data={CommentsChartBarData}
               type="bar"
             />
-          </div>
-
+          </div> */}
+{/* 
           <div className="col-lg-6 col-md-12 card-group-row__col">
             <ChartLayout
               title="Progress Status"
@@ -89,9 +254,18 @@ export default function PageAnalytics() {
             >
               <StudentsProgressStatus />
             </ChartLayout>
-          </div>
+          </div> */}
+
+<div
+                  className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--30"
+                  id="review"
+                >
+                  </div>
         </div>
+      
       </div>
+      
+      <br/>
     </>
   );
 }

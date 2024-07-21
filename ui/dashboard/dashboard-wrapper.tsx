@@ -20,7 +20,7 @@ const InstructorDashboardHeader = () => {
             </div>
             <div className="tutor-content">
               <h5 className="title">John Due</h5>
-              <div className="rbt-review">
+              {/* <div className="rbt-review">
                 <div className="rating">
                   <i className="fas fa-star" />
                   <i className="fas fa-star" />
@@ -29,7 +29,7 @@ const InstructorDashboardHeader = () => {
                   <i className="fas fa-star" />
                 </div>
                 <span className="rating-count"> (15 Reviews)</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

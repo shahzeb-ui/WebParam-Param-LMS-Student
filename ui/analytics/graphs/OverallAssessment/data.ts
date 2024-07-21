@@ -28,7 +28,7 @@ const labels = [
 ];
 
 export const barDescriptions = [
-  { description: "Completed Assessment", color: "rgb(33, 138, 253)" },
+  { description: "", color: "rgb(33, 138, 253)" },
 ];
 
 export const data = {

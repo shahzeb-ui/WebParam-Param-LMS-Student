@@ -30,7 +30,7 @@ const StudentMobileSideBar = ({
                 <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SidebarData &&
-                      SidebarData.siderbar.slice(0, 7).map((data, index) => (
+                      SidebarData.siderbar.slice(0, 8).map((data, index) => (
                         <li
                           className="nav-item"
                           key={index}
@@ -48,7 +48,7 @@ const StudentMobileSideBar = ({
                   </ul>
                 </nav>
 
-                <div className="section-title mt--40 mb--20">
+                {/* <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">Student</h6>
                 </div>
 
@@ -67,7 +67,7 @@ const StudentMobileSideBar = ({
                         </li>
                       ))}
                   </ul>
-                </nav>
+                </nav> */}
 
                 <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">User</h6>
@@ -76,7 +76,7 @@ const StudentMobileSideBar = ({
                 <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SidebarData &&
-                      SidebarData.siderbar.slice(7, 10).map((data, index) => (
+                      SidebarData.siderbar.slice(8, 11).map((data, index) => (
                         <li key={index}>
                           <a
                             className={`${path === data.link ? "active" : ""}`}
