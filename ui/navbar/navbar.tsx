@@ -15,9 +15,8 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const sections = [
-    { id: "dashboard", label: "Dashboard" },
-    { id: "course", label: "My Courses" },
-    { id: "progress", label: "My progress" },
+    { id: "dashboard", label: "Dashboard", link: "/student/analytics" },
+    { id: "course", label: "My Courses", link: "/student/enrolled-courses" },
   ];
 
   useEffect(() => {
@@ -63,7 +62,9 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <div className="logo">Thooto</div>
+                <Link href="/" className="logo">
+                  Thooto
+                </Link>
               </div>
 
               <div className="rbt-main-navigation d-none d-xl-block">
@@ -74,16 +75,7 @@ const Navbar = () => {
                         className={currentSection === sec.id ? "current" : ""}
                         key={i}
                       >
-                        <ScrollLink
-                          to={sec.id}
-                          spy={true}
-                          smooth={true}
-                          duration={500}
-                          offset={-70}
-                          style={{ cursor: "pointer" }}
-                        >
-                          {sec.label}
-                        </ScrollLink>
+                        <Link href={sec.link}>{sec.label}</Link>
                       </li>
                     ))}
                   </ul>

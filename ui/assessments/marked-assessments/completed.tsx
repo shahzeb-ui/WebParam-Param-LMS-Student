@@ -5,7 +5,7 @@ export default function CompletedAssessment() {
         <tr>
           <th>Assessment Name</th>
           <th>Total Marks</th>
-          <th>Total Submit</th>
+          <th># Submissions</th>
           <th />
         </tr>
       </thead>
@@ -28,20 +28,20 @@ export default function CompletedAssessment() {
           </td>
           <td>
             <div className="rbt-button-group justify-content-end">
-              <a
+              {/* <a
                 className="rbt-btn btn-xs bg-primary-opacity radius-round"
                 title="Edit"
                 href="/instructor/instructor-assignments#"
               >
                 <i className="feather-edit pl--0" /> Edit
-              </a>
-              <a
-                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                title="Delete"
-                href="/instructor/instructor-assignments#"
-              >
-                <i className="feather-trash-2 pl--0" />
-              </a>
+              </a> */}
+             <a
+                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
+                  title="Delete"
+                  href="/instructor/instructor-assignments#"
+                >
+                 <i className="bi bi-bell-fill pl--0" />View
+                </a>
             </div>
           </td>
         </tr>
@@ -61,20 +61,20 @@ export default function CompletedAssessment() {
           </td>
           <td>
             <div className="rbt-button-group justify-content-end">
-              <a
+              {/* <a
                 className="rbt-btn btn-xs bg-primary-opacity radius-round"
                 title="Edit"
                 href="/instructor/instructor-assignments#"
               >
                 <i className="feather-edit pl--0" /> Edit
-              </a>
+              </a> */}
               <a
-                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                title="Delete"
-                href="/instructor/instructor-assignments#"
-              >
-                <i className="feather-trash-2 pl--0" />
-              </a>
+                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
+                  title="Delete"
+                  href="/instructor/instructor-assignments#"
+                >
+                 <i className="bi bi-eye pl--0" />View
+                </a>
             </div>
           </td>
         </tr>
@@ -94,20 +94,20 @@ export default function CompletedAssessment() {
           </td>
           <td>
             <div className="rbt-button-group justify-content-end">
-              <a
+              {/* <a
                 className="rbt-btn btn-xs bg-primary-opacity radius-round"
                 title="Edit"
                 href="/instructor/instructor-assignments#"
               >
                 <i className="feather-edit pl--0" /> Edit
-              </a>
+              </a> */}
               <a
-                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                title="Delete"
-                href="/instructor/instructor-assignments#"
-              >
-                <i className="feather-trash-2 pl--0" />
-              </a>
+                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
+                  title="Delete"
+                  href="/instructor/instructor-assignments#"
+                >
+                 <i className="bi bi-eye pl--0" />View
+                </a>
             </div>
           </td>
         </tr>
@@ -127,20 +127,20 @@ export default function CompletedAssessment() {
           </td>
           <td>
             <div className="rbt-button-group justify-content-end">
-              <a
+              {/* <a
                 className="rbt-btn btn-xs bg-primary-opacity radius-round"
                 title="Edit"
                 href="/instructor/instructor-assignments#"
               >
                 <i className="feather-edit pl--0" /> Edit
-              </a>
-              <a
-                className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                title="Delete"
-                href="/instructor/instructor-assignments#"
-              >
-                <i className="feather-trash-2 pl--0" />
-              </a>
+              </a> */}
+               <a
+                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
+                  title="Delete"
+                  href="/instructor/instructor-assignments#"
+                >
+                 <i className="bi bi-eye pl--0" />View
+                </a>
             </div>
           </td>
         </tr>
