@@ -31,6 +31,13 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
   const [currentTopicIndex, setCurrentTopicIndex] = useState<number>(0);
   const [currentElementIndex, setCurrentElementIndex] = useState<number>(0);
   const [isQuizActive, setIsQuizActive] = useState<boolean>(false);
+  const [expandedAssignments, setExpandedAssignments] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [expandedAssessments, setExpandedAssessments] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [activeAssessment, setActiveAssessment] = useState<string | null>(null);
 
   useEffect(() => {
     const getAllKnowledgeTopics = async (id: string) => {
@@ -173,6 +180,13 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     handlePrevious,
     handleNext,
   }));
+
+  const handleToggle = (setFunction: any, id: any) => {
+    setFunction((prevState: any) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
 
   return (
     <div className={styles.lessonScrollSidebar}>
@@ -338,6 +352,87 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Assessments Section */}
+          <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
+            {LessonData.lesson
+              .filter((lesson) => lesson.title.includes("Assessments"))
+              .map((assessment, index) => (
+                <div
+                  className="accordion-item card"
+                  key={`assessment-${index}`}
+                >
+                  <h2
+                    className="accordion-header card-header"
+                    id={`assessmentHeading${index}`}
+                  >
+                    <button
+                      className="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      aria-expanded={!!expandedAssessments[index]}
+                      data-bs-target={`#assessmentCollapse${index}`}
+                      aria-controls={`assessmentCollapse${index}`}
+                      onClick={() =>
+                        handleToggle(setExpandedAssessments, index)
+                      }
+                    >
+                      {assessment.title}
+                    </button>
+                  </h2>
+                  <div
+                    id={`assessmentCollapse${index}`}
+                    className={`accordion-collapse collapse ${
+                      expandedAssessments[index] ? "show" : ""
+                    }`}
+                    aria-labelledby={`assessmentHeading${index}`}
+                  >
+                    <div className="accordion-body card-body">
+                      <ul className="rbt-course-main-content liststyle">
+                        {assessment.listItem.map((item, idx) => (
+                          <li
+                            key={idx}
+                            className="d-flex justify-content-between align-items mt-2"
+                          >
+                            <div className="course-content-left">
+                              <i
+                                className="feather-help-circle"
+                                style={{
+                                  color:
+                                    activeAssessment === item.lssonLink
+                                      ? "#2f57ef"
+                                      : "#6b7385",
+                                }}
+                              ></i>
+                              <p>
+                                <a href={item.lssonLink}>{item.lessonName}</a>
+                              </p>
+                            </div>
+                            <div className="course-content-right">
+                              <span
+                                className={`rbt-check ${
+                                  activeAssessment === item.lssonLink
+                                    ? ""
+                                    : "unread"
+                                }`}
+                              >
+                                <i
+                                  className={`feather-${
+                                    activeAssessment === item.lssonLink
+                                      ? "check"
+                                      : "circle"
+                                  }`}
+                                ></i>
+                              </span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>
