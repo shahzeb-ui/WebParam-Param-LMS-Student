@@ -40,7 +40,7 @@ export default function CompletedAssessment() {
                   title="Delete"
                   href="/instructor/instructor-assignments#"
                 >
-                 <i className="bi bi-eye pl--0" />View
+                 <i className="bi bi-bell-fill pl--0" />View
                 </a>
             </div>
           </td>
