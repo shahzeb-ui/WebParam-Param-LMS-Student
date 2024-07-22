@@ -47,23 +47,16 @@ const UserStudent = ({ closeDropdown }: { closeDropdown: () => void }) => {
                 </li>
               ))}
             </ul>
-            <hr className="mt--10 mb--10" />
-            <ul className="user-list-wrapper">
+            {/* <ul className="user-list-wrapper">
               <li>
                 <Link href="#" onClick={() => handleLinkClick("#")}>
                   <i className="feather-book-open"></i>
                   <span>Getting Started</span>
                 </Link>
               </li>
-            </ul>
+            </ul> */}
             <hr className="mt--10 mb--10" />
             <ul className="user-list-wrapper">
-              <li>
-                <Link href="#" onClick={() => handleLinkClick("#")}>
-                  <i className="feather-settings"></i>
-                  <span>Settings</span>
-                </Link>
-              </li>
               <li>
                 <Link href="/" onClick={() => handleLinkClick("/")}>
                   <i className="feather-log-out"></i>
