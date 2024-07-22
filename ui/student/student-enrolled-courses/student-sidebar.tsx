@@ -7,6 +7,8 @@ const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const path = usePathname();
+
+
   return (
     <>
       <div

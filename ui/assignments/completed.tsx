@@ -16,7 +16,7 @@ export default function CompletedAssignment() {
                 Write Link short essay on yourself using the 5
               </span>
               <p className="b3">
-                Course:{" "}
+                Module:{" "}
                 <a href="/instructor/instructor-assignments#">
                   Fundamentals 101
                 </a>
@@ -33,26 +33,20 @@ export default function CompletedAssignment() {
                 <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Edit"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                   <i className="feather-edit pl--0" /> Edit
                 </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
+               
               </div>
             </td>
           </tr>
           <tr>
             <th>
-              <span className="h6 mb--5">Speaking Korean for Beginners</span>
+              <span className="h6 mb--5">Public Speaking for Beginners</span>
               <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">Speaking 101</a>
+                Module:{" "}
+                <a href="#">Speaking 101</a>
               </p>
             </th>
             <td>
@@ -66,26 +60,20 @@ export default function CompletedAssignment() {
                 <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Edit"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                   <i className="feather-edit pl--0" /> Edit
                 </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
+               
               </div>
             </td>
           </tr>
           <tr>
             <th>
-              <span className="h6 mb--5">Song Writing Techniques 101</span>
+              <span className="h6 mb--5">Project Integration Management 101</span>
               <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">Song Writing</a>
+                Module:{" "}
+                <a href="#">Project Integration Management</a>
               </p>
             </th>
             <td>
@@ -99,26 +87,20 @@ export default function CompletedAssignment() {
                 <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Edit"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                   <i className="feather-edit pl--0" /> Edit
                 </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
+                
               </div>
             </td>
           </tr>
           <tr>
             <th>
-              <span className="h6 mb--5">Arabic For Beginners</span>
+              <span className="h6 mb--5">Fundamentals 101</span>
               <p className="b3">
-                Course:{" "}
-                <a href="/instructor/instructor-assignments#">Arabic Writing</a>
+                Module:{" "}
+                <a href="/#">Project Time Management</a>
               </p>
             </th>
             <td>
@@ -132,17 +114,11 @@ export default function CompletedAssignment() {
                 <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Edit"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                   <i className="feather-edit pl--0" /> Edit
                 </a>
-                <a
-                  className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger"
-                  title="Delete"
-                  href="/instructor/instructor-assignments#"
-                >
-                  <i className="feather-trash-2 pl--0" />
-                </a>
+              
               </div>
             </td>
           </tr>

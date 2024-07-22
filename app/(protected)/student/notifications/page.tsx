@@ -69,12 +69,18 @@ export default function Notifications() {
           {notification?.message}
         </Modal.Body>
         <Modal.Footer>
-          <button type="button" onClick={handleNotificationPrev} className="btn btn-lg btn-dark text-light btn-outline-dark">
+          
+          <div className="d-flex justify-content-between align-center w-100" style={{ width:'100%', alignItems:'center'}}>
+              <p className="p-0 m-0">{currentIndex + 1}/{notifications?.length}</p> 
+              <div className="d-flex justify-content-between align-center gap-2">
+              <button type="button" onClick={handleNotificationPrev} className="btn btn-lg btn-dark text-light btn-outline-dark">
             Prev
           </button>
           <button type="button" onClick={handleNotificationNext} className="btn btn-lg btn-dark text-light btn-outline-dark">
             Next
-          </button>
+          </button>    
+            </div>
+          </div>
         </Modal.Footer>
       </Modal>
 
@@ -95,12 +101,17 @@ export default function Notifications() {
           {notificationE?.message}
         </Modal.Body>
         <Modal.Footer>
-          <button type="button" onClick={handleNotificationPrevE} className="btn btn-lg btn-dark text-light btn-outline-dark">
-            Prev
-          </button>
-          <button type="button" onClick={handleNotificationNextE} className="btn btn-lg btn-dark text-light btn-outline-dark">
-            Next
-          </button>
+          <div className="d-flex justify-content-between align-center w-100" style={{ width:'100%', alignItems:'center'}}>
+              <p className="p-0 m-0">{currentIndexE + 1}/{notificationsForEveryone?.length}</p> 
+              <div className="d-flex justify-content-between align-center gap-2">
+              <button type="button" onClick={handleNotificationPrevE} className="btn btn-lg btn-dark text-light btn-outline-dark">
+                Prev
+              </button>
+              <button type="button" onClick={handleNotificationNextE} className="btn btn-lg btn-dark text-light btn-outline-dark">
+                Next
+              </button>
+            </div>
+          </div>
         </Modal.Footer>
       </Modal>
 
