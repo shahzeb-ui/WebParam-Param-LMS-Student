@@ -31,9 +31,6 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
   const [currentTopicIndex, setCurrentTopicIndex] = useState<number>(0);
   const [currentElementIndex, setCurrentElementIndex] = useState<number>(0);
   const [isQuizActive, setIsQuizActive] = useState<boolean>(false);
-  const [watchedVideos, setWatchedVideos] = useState<Set<string>>(
-    new Set<string>()
-  );
   const [expandedAssignments, setExpandedAssignments] = useState<{
     [key: string]: boolean;
   }>({});
@@ -69,14 +66,9 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     };
 
     const savedId = localStorage.getItem("lessonId");
-    const savedWatchedVideos: string[] = JSON.parse(
-      localStorage.getItem("watchedVideos") || "[]"
-    );
-
     if (savedId) {
       getAllKnowledgeTopics(savedId);
     }
-    setWatchedVideos(new Set(savedWatchedVideos));
   }, []);
 
   const handleTopicClick = async (topicId: string, index: number) => {
@@ -94,7 +86,6 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
           setIsActiveUrl(firstVideoUrl);
           setCurrentTopicIndex(index);
           setCurrentElementIndex(0);
-          markAsWatched(firstVideoUrl);
         }
       } catch (error) {
         console.error("Error fetching topic elements: ", error);
@@ -108,35 +99,14 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
         setIsActiveUrl(firstVideoUrl);
         setCurrentTopicIndex(index);
         setCurrentElementIndex(0);
-        markAsWatched(firstVideoUrl);
       }
     }
   };
 
-  const handleActiveVideoUrl = (
-    videoUrl: string | null,
-    elementIndex: number
-  ) => {
-    if (videoUrl) {
-      setSelectedVideoUrl(videoUrl);
-      setIsActiveUrl(videoUrl);
-      setCurrentElementIndex(elementIndex);
-      markAsWatched(videoUrl);
-    }
-  };
-
-  const markAsWatched = (videoUrl: string) => {
-    setWatchedVideos((prevWatchedVideos) => {
-      const updatedWatchedVideos = new Set([
-        ...Array.from(prevWatchedVideos),
-        videoUrl,
-      ]);
-      localStorage.setItem(
-        "watchedVideos",
-        JSON.stringify(Array.from(updatedWatchedVideos))
-      );
-      return updatedWatchedVideos;
-    });
+  const handleActiveVideoUrl = (videoUrl: string, elementIndex: number) => {
+    setSelectedVideoUrl(videoUrl);
+    setIsActiveUrl(videoUrl);
+    setCurrentElementIndex(elementIndex);
   };
 
   const handlePrevious = async () => {
@@ -167,7 +137,6 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
         setIsActiveUrl(prevVideoUrl);
         setCurrentTopicIndex(newTopicIndex);
         setCurrentElementIndex(newElementIndex);
-        markAsWatched(prevVideoUrl);
       }
     }
   };
@@ -203,24 +172,9 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
         setIsActiveUrl(nextVideoUrl);
         setCurrentTopicIndex(newTopicIndex);
         setCurrentElementIndex(newElementIndex);
-        markAsWatched(nextVideoUrl);
       }
     }
   };
-
-  useEffect(() => {
-    const handleVideoWatched = (event: Event) => {
-      const customEvent = event as CustomEvent<string>;
-      const videoUrl = customEvent.detail;
-      markAsWatched(videoUrl);
-    };
-
-    window.addEventListener("videoWatched", handleVideoWatched);
-
-    return () => {
-      window.removeEventListener("videoWatched", handleVideoWatched);
-    };
-  }, []);
 
   useImperativeHandle(ref, () => ({
     handlePrevious,
@@ -324,14 +278,14 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                               <div className="course-content-right">
                                 <span
                                   className={`rbt-check ${
-                                    watchedVideos.has(element.videoUrl || "")
+                                    isActiveUrl === element.videoUrl
                                       ? ""
                                       : "unread"
                                   }`}
                                 >
                                   <i
                                     className={`feather-${
-                                      watchedVideos.has(element.videoUrl || "")
+                                      isActiveUrl === element.videoUrl
                                         ? "check"
                                         : "circle"
                                     }`}
@@ -372,18 +326,16 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                                   <div className="course-content-right">
                                     <span
                                       className={`rbt-check ${
-                                        watchedVideos.has(
-                                          quiz.listItem[0].lssonLink
-                                        )
+                                        isActiveUrl ===
+                                        quiz.listItem[0].lssonLink
                                           ? ""
                                           : "unread"
                                       }`}
                                     >
                                       <i
                                         className={`feather-${
-                                          watchedVideos.has(
-                                            quiz.listItem[0].lssonLink
-                                          )
+                                          isActiveUrl ===
+                                          quiz.listItem[0].lssonLink
                                             ? "check"
                                             : "circle"
                                         }`}
@@ -474,56 +426,6 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                                 ></i>
                               </span>
                             </div>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-
-          {/* Assignments Section */}
-          <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
-            {LessonData.lesson
-              .filter((lesson) => lesson.title.includes("Assignments"))
-              .map((assignment, index) => (
-                <div
-                  className="accordion-item card"
-                  key={`assignment-${index}`}
-                >
-                  <h2
-                    className="accordion-header card-header"
-                    id={`assignmentHeading${index}`}
-                  >
-                    <button
-                      className="accordion-button"
-                      type="button"
-                      data-bs-toggle="collapse"
-                      aria-expanded={!!expandedAssignments[index]}
-                      data-bs-target={`#assignmentCollapse${index}`}
-                      aria-controls={`assignmentCollapse${index}`}
-                      onClick={() =>
-                        handleToggle(setExpandedAssignments, index)
-                      }
-                    >
-                      {assignment.title}
-                    </button>
-                  </h2>
-                  <div
-                    id={`assignmentCollapse${index}`}
-                    className={`accordion-collapse collapse ${
-                      expandedAssignments[index] ? "show" : ""
-                    }`}
-                    aria-labelledby={`assignmentHeading${index}`}
-                  >
-                    <div className="accordion-body card-body">
-                      <ul className="rbt-course-main-content liststyle">
-                        {assignment.listItem.map((item, idx) => (
-                          <li key={idx}>
-                            <p>
-                              <a href={item.lssonLink}>{item.lessonName}</a>
-                            </p>
                           </li>
                         ))}
                       </ul>

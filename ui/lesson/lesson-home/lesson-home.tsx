@@ -190,7 +190,6 @@ const LessonHomepage = () => {
           </div>
         </div>
       </div>
-      <LessonSidebar ref={sidebarRef} />
     </>
   );
 };

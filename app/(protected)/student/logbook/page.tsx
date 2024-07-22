@@ -325,7 +325,7 @@ const StudentLogbook = () => {
 
   return (
     <div className={`${styles.logbookContainer}`}>
-      <div className={styles.icon}>
+      {/* <div className={styles.icon}>
         <i className="bi bi-journal-bookmark"></i>
         <span className="get-4-color style-3-left logText">Logbook</span>
         <div className="section-title">
@@ -335,9 +335,9 @@ const StudentLogbook = () => {
             </span>
           </h4>
         </div>
-      </div>
+      </div> */}
 
-      <div className={styles.navbar}>
+      {/* <div className={styles.navbar}>
         <button
           className={`btn ${styles.navButton} ${
             activeTab === "school" ? styles.navButtonActive : ""
@@ -354,7 +354,7 @@ const StudentLogbook = () => {
         >
           Work
         </button>
-      </div>
+      </div> */}
 
       <div className={styles.buttonContainer}>
         <button

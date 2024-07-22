@@ -12,7 +12,7 @@ export const options = {
 const labels = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export const barDescriptions = [
-  { description: "Quiz Attempts over time", color: "rgb(145 21 243)" },
+  { description: "", color: "rgb(145 21 243)" },
 ];
 
 export const data = {

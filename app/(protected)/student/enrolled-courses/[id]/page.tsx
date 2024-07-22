@@ -1782,6 +1782,104 @@ export default async function CourseDetails({
                       <div className="rbt-card-body">
                         <div className="rbt-card-top">
                           <div className="rbt-review">
+                            {/* <div className="rating">
+                              <i className="fas fa-star" />
+                              <i className="fas fa-star" />
+                              <i className="fas fa-star" />
+                              <i className="fas fa-star" />
+                              <i className="fas fa-star" />
+                            </div>
+                            <span className="rating-count">(15 Reviews)</span>
+                          </div> */}
+                            <div className="rbt-bookmark-btn">
+                              <a
+                                className="rbt-round-btn"
+                                title="Bookmark"
+                                href="/course-details/2#"
+                              >
+                                <i className="feather-bookmark" />
+                              </a>
+                            </div>
+                          </div>
+                          <h4 className="rbt-card-title">
+                            <a href="/course-details/2">React Front To Back</a>
+                          </h4>
+                          <ul className="rbt-meta">
+                            <li>
+                              <i className="feather-book" />
+                              12 Lessons
+                            </li>
+                            <li>
+                              <i className="feather-users" />
+                              50 Students
+                            </li>
+                          </ul>
+                          <p className="rbt-card-text">
+                            It is a long established fact that a reader will be
+                            distracted.
+                          </p>
+                          <div className="rbt-author-meta mb--10">
+                            <div className="rbt-avater">
+                              <a href="/profile/2">
+                                <img
+                                  alt="Sophia Jaymes"
+                                  loading="lazy"
+                                  width={33}
+                                  height={33}
+                                  decoding="async"
+                                  data-nimg={1}
+                                  srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
+                                  src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
+                                  style={{ color: "transparent" }}
+                                />
+                              </a>
+                            </div>
+                            <div className="rbt-author-info">
+                              By <a href="/profile/2">Fred Guer</a> In{" "}
+                              <a href="/course-details/2#">Math Teacher</a>
+                            </div>
+                          </div>
+                          <div className="rbt-card-bottom">
+                            <div className="rbt-price">
+                              <span className="current-price">$60</span>
+                              <span className="off-price">$20</span>
+                            </div>
+                            <a
+                              className="rbt-btn-link"
+                              href="/course-details/2"
+                            >
+                              Learn More
+                              <i className="feather-arrow-right" />
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="col-lg-6 col-md-6 col-sm-6 col-12 sal-animate"
+                      data-sal-delay={150}
+                      data-sal="slide-up"
+                      data-sal-duration={800}
+                    >
+                      <div className="rbt-card variation-01 rbt-hover">
+                        <div className="rbt-card-img">
+                          <a href="/course-details/3">
+                            <img
+                              alt="Card image"
+                              loading="lazy"
+                              width={355}
+                              height={244}
+                              decoding="async"
+                              data-nimg={1}
+                              srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
+                              src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
+                              style={{ color: "transparent" }}
+                            />
+                          </a>
+                        </div>
+                        <div className="rbt-card-body">
+                          <div className="rbt-card-top">
+                            {/* <div className="rbt-review">
                             <div className="rating">
                               <i className="fas fa-star" />
                               <i className="fas fa-star" />
@@ -1790,205 +1888,203 @@ export default async function CourseDetails({
                               <i className="fas fa-star" />
                             </div>
                             <span className="rating-count">(15 Reviews)</span>
+                          </div> */}
+                            <div className="rbt-bookmark-btn">
+                              <a
+                                className="rbt-round-btn"
+                                title="Bookmark"
+                                href="/course-details/2#"
+                              >
+                                <i className="feather-bookmark" />
+                              </a>
+                            </div>
                           </div>
-                          <div className="rbt-bookmark-btn">
+                          <h4 className="rbt-card-title">
+                            <a href="/course-details/3">
+                              PHP Beginner Advanced
+                            </a>
+                          </h4>
+                          <ul className="rbt-meta">
+                            <li>
+                              <i className="feather-book" />
+                              12 Lessons
+                            </li>
+                            <li>
+                              <i className="feather-users" />
+                              50 Students
+                            </li>
+                          </ul>
+                          <p className="rbt-card-text">
+                            It is a long established fact that a reader will be
+                            distracted.
+                          </p>
+                          <div className="rbt-author-meta mb--10">
+                            <div className="rbt-avater">
+                              <a href="/profile/3">
+                                <img
+                                  alt="Sophia Jaymes"
+                                  loading="lazy"
+                                  width={33}
+                                  height={33}
+                                  decoding="async"
+                                  data-nimg={1}
+                                  srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75 2x"
+                                  src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75"
+                                  style={{ color: "transparent" }}
+                                />
+                              </a>
+                            </div>
+                            <div className="rbt-author-info">
+                              By <a href="/profile/3">Fred Guer</a> In{" "}
+                              <a href="/course-details/2#">Math Teacher</a>
+                            </div>
+                          </div>
+                          <div className="rbt-card-bottom">
+                            <div className="rbt-price">
+                              <span className="current-price">$60</span>
+                              <span className="off-price">$20</span>
+                            </div>
                             <a
-                              className="rbt-round-btn"
-                              title="Bookmark"
-                              href="/course-details/2#"
+                              className="rbt-btn-link left-icon"
+                              href="/course-details/3"
                             >
-                              <i className="feather-bookmark" />
+                              <i className="feather-shopping-cart" /> Add To
+                              Cart
                             </a>
                           </div>
-                        </div>
-                        <h4 className="rbt-card-title">
-                          <a href="/course-details/2">React Front To Back</a>
-                        </h4>
-                        <ul className="rbt-meta">
-                          <li>
-                            <i className="feather-book" />
-                            12 Lessons
-                          </li>
-                          <li>
-                            <i className="feather-users" />
-                            50 Students
-                          </li>
-                        </ul>
-                        <p className="rbt-card-text">
-                          It is a long established fact that a reader will be
-                          distracted.
-                        </p>
-                        <div className="rbt-author-meta mb--10">
-                          <div className="rbt-avater">
-                            <a href="/profile/2">
-                              <img
-                                alt="Sophia Jaymes"
-                                loading="lazy"
-                                width={33}
-                                height={33}
-                                decoding="async"
-                                data-nimg={1}
-                                srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
-                                src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
-                                style={{ color: "transparent" }}
-                              />
-                            </a>
-                          </div>
-                          <div className="rbt-author-info">
-                            By <a href="/profile/2">Fred Guer</a> In{" "}
-                            <a href="/course-details/2#">Math Teacher</a>
-                          </div>
-                        </div>
-                        <div className="rbt-card-bottom">
-                          <div className="rbt-price">
-                            <span className="current-price">$60</span>
-                            <span className="off-price">$20</span>
-                          </div>
-                          <a className="rbt-btn-link" href="/course-details/2">
-                            Learn More
-                            <i className="feather-arrow-right" />
-                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div
-                    className="col-lg-6 col-md-6 col-sm-6 col-12 sal-animate"
-                    data-sal-delay={150}
-                    data-sal="slide-up"
-                    data-sal-duration={800}
-                  >
-                    <div className="rbt-card variation-01 rbt-hover">
-                      <div className="rbt-card-img">
-                        <a href="/course-details/3">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="rbt-course-action-bottom rbt-course-action-active"></div>
+        <div className="rbt-related-course-area bg-color-white pt--60 rbt-section-gapBottom">
+          <div className="container">
+            <div className="section-title mb--30">
+              <span className="subtitle bg-primary-opacity">
+                More Similar Courses
+              </span>
+              <h4 className="title">Related Courses</h4>
+            </div>
+            <div className="row g-5">
+              <div className="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div className="rbt-card variation-01 rbt-hover">
+                  <div className="rbt-card-img">
+                    <a href="/course-details">
+                      <img
+                        alt="Card image"
+                        loading="lazy"
+                        width={355}
+                        height={244}
+                        decoding="async"
+                        data-nimg={1}
+                        srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75 2x"
+                        src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75"
+                        style={{ color: "transparent" }}
+                      />
+                      <div className="rbt-badge-3 bg-white">
+                        <span>-40%</span>
+                        <span>Off</span>
+                      </div>
+                    </a>
+                  </div>
+                  <div className="rbt-card-body">
+                    <div className="rbt-card-top">
+                      {/* <div className="rbt-review">
+                      <div className="rating">
+                        <i className="fas fa-star" />
+                        <i className="fas fa-star" />
+                        <i className="fas fa-star" />
+                        <i className="fas fa-star" />
+                        <i className="fas fa-star" />
+                      </div>
+                      <span className="rating-count"> (15 Reviews)</span>
+                    </div> */}
+                      <div className="rbt-bookmark-btn">
+                        <a
+                          className="rbt-round-btn"
+                          title="Bookmark"
+                          href="/course-details/2#"
+                        >
+                          <i className="feather-bookmark" />
+                        </a>
+                      </div>
+                    </div>
+                    <h4 className="rbt-card-title">
+                      <a href="/course-details">React Front To Back</a>
+                    </h4>
+                    <ul className="rbt-meta">
+                      <li>
+                        <i className="feather-book" />
+                        12 Lessons
+                      </li>
+                      <li>
+                        <i className="feather-users" />
+                        50 Students
+                      </li>
+                    </ul>
+                    <p className="rbt-card-text">
+                      It is a long established fact that a reader will be
+                      distracted.
+                    </p>
+                    <div className="rbt-author-meta mb--20">
+                      <div className="rbt-avater">
+                        <a href="/profile/2">
                           <img
-                            alt="Card image"
+                            alt="Sophia Jaymes"
                             loading="lazy"
-                            width={355}
-                            height={244}
+                            width={33}
+                            height={33}
                             decoding="async"
                             data-nimg={1}
-                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
-                            src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
+                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75 2x"
+                            src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75"
                             style={{ color: "transparent" }}
                           />
                         </a>
                       </div>
-                      <div className="rbt-card-body">
-                        <div className="rbt-card-top">
-                          <div className="rbt-review">
-                            <div className="rating">
-                              <i className="fas fa-star" />
-                              <i className="fas fa-star" />
-                              <i className="fas fa-star" />
-                              <i className="fas fa-star" />
-                              <i className="fas fa-star" />
-                            </div>
-                            <span className="rating-count">(15 Reviews)</span>
-                          </div>
-                          <div className="rbt-bookmark-btn">
-                            <a
-                              className="rbt-round-btn"
-                              title="Bookmark"
-                              href="/course-details/2#"
-                            >
-                              <i className="feather-bookmark" />
-                            </a>
-                          </div>
-                        </div>
-                        <h4 className="rbt-card-title">
-                          <a href="/course-details/3">PHP Beginner Advanced</a>
-                        </h4>
-                        <ul className="rbt-meta">
-                          <li>
-                            <i className="feather-book" />
-                            12 Lessons
-                          </li>
-                          <li>
-                            <i className="feather-users" />
-                            50 Students
-                          </li>
-                        </ul>
-                        <p className="rbt-card-text">
-                          It is a long established fact that a reader will be
-                          distracted.
-                        </p>
-                        <div className="rbt-author-meta mb--10">
-                          <div className="rbt-avater">
-                            <a href="/profile/3">
-                              <img
-                                alt="Sophia Jaymes"
-                                loading="lazy"
-                                width={33}
-                                height={33}
-                                decoding="async"
-                                data-nimg={1}
-                                srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75 2x"
-                                src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75"
-                                style={{ color: "transparent" }}
-                              />
-                            </a>
-                          </div>
-                          <div className="rbt-author-info">
-                            By <a href="/profile/3">Fred Guer</a> In{" "}
-                            <a href="/course-details/2#">Math Teacher</a>
-                          </div>
-                        </div>
-                        <div className="rbt-card-bottom">
-                          <div className="rbt-price">
-                            <span className="current-price">$60</span>
-                            <span className="off-price">$20</span>
-                          </div>
-                          <a
-                            className="rbt-btn-link left-icon"
-                            href="/course-details/3"
-                          >
-                            <i className="feather-shopping-cart" /> Add To Cart
-                          </a>
-                        </div>
+                      <div className="rbt-author-info">
+                        By <a href="/profile/2">Robert</a> In
+                        <a href="/course-details/2#">Development</a>
                       </div>
+                    </div>
+                    <div className="rbt-card-bottom">
+                      <div className="rbt-price">
+                        <span className="current-price">$60</span>
+                        <span className="off-price">$20</span>
+                      </div>
+                      <a className="rbt-btn-link" href="/course-details">
+                        Learn More
+                        <i className="feather-arrow-right" />
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="rbt-course-action-bottom rbt-course-action-active"></div>
-      <div className="rbt-related-course-area bg-color-white pt--60 rbt-section-gapBottom">
-        <div className="container">
-          <div className="section-title mb--30">
-            <span className="subtitle bg-primary-opacity">
-              More Similar Courses
-            </span>
-            <h4 className="title">Related Courses</h4>
-          </div>
-          <div className="row g-5">
-            <div className="col-lg-4 col-md-6 col-sm-6 col-12">
-              <div className="rbt-card variation-01 rbt-hover">
-                <div className="rbt-card-img">
-                  <a href="/course-details">
-                    <img
-                      alt="Card image"
-                      loading="lazy"
-                      width={355}
-                      height={244}
-                      decoding="async"
-                      data-nimg={1}
-                      srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75 2x"
-                      src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-01.jpg&w=384&q=75"
-                      style={{ color: "transparent" }}
-                    />
-                    <div className="rbt-badge-3 bg-white">
-                      <span>-40%</span>
-                      <span>Off</span>
-                    </div>
-                  </a>
-                </div>
-                <div className="rbt-card-body">
-                  <div className="rbt-card-top">
-                    <div className="rbt-review">
+              <div className="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div className="rbt-card variation-01 rbt-hover">
+                  <div className="rbt-card-img">
+                    <a href="/course-details">
+                      <img
+                        alt="Card image"
+                        loading="lazy"
+                        width={355}
+                        height={244}
+                        decoding="async"
+                        data-nimg={1}
+                        srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
+                        src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
+                        style={{ color: "transparent" }}
+                      />
+                    </a>
+                  </div>
+                  <div className="rbt-card-body">
+                    <div className="rbt-card-top">
+                      {/* <div className="rbt-review">
                       <div className="rating">
                         <i className="fas fa-star" />
                         <i className="fas fa-star" />
@@ -1997,274 +2093,185 @@ export default async function CourseDetails({
                         <i className="fas fa-star" />
                       </div>
                       <span className="rating-count"> (15 Reviews)</span>
+                    </div> */}
+                      <div className="rbt-bookmark-btn">
+                        <a
+                          className="rbt-round-btn"
+                          title="Bookmark"
+                          href="/course-details/2#"
+                        >
+                          <i className="feather-bookmark" />
+                        </a>
+                      </div>
                     </div>
-                    <div className="rbt-bookmark-btn">
-                      <a
-                        className="rbt-round-btn"
-                        title="Bookmark"
-                        href="/course-details/2#"
-                      >
-                        <i className="feather-bookmark" />
+                    <h4 className="rbt-card-title">
+                      <a href="/course-details">PHP Beginner Advanced</a>
+                    </h4>
+                    <ul className="rbt-meta">
+                      <li>
+                        <i className="feather-book" />
+                        12 Lessons
+                      </li>
+                      <li>
+                        <i className="feather-users" />
+                        50 Students
+                      </li>
+                    </ul>
+                    <p className="rbt-card-text">
+                      It is a long established fact that a reader will be
+                      distracted.
+                    </p>
+                    <div className="rbt-author-meta mb--20">
+                      <div className="rbt-avater">
+                        <a href="/profile/3">
+                          <img
+                            alt="Sophia Jaymes"
+                            loading="lazy"
+                            width={33}
+                            height={33}
+                            decoding="async"
+                            data-nimg={1}
+                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-04.png&w=48&q=75 2x"
+                            src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-04.png&w=48&q=75"
+                            style={{ color: "transparent" }}
+                          />
+                        </a>
+                      </div>
+                      <div className="rbt-author-info">
+                        By <a href="/profile/3">Angela</a> In
+                        <a href="/course-details/2#">Development</a>
+                      </div>
+                    </div>
+                    <div className="rbt-card-bottom">
+                      <div className="rbt-price">
+                        <span className="current-price">$60</span>
+                        <span className="off-price">$20</span>
+                      </div>
+                      <a className="rbt-btn-link" href="/course-details">
+                        Learn More
+                        <i className="feather-arrow-right" />
                       </a>
                     </div>
-                  </div>
-                  <h4 className="rbt-card-title">
-                    <a href="/course-details">React Front To Back</a>
-                  </h4>
-                  <ul className="rbt-meta">
-                    <li>
-                      <i className="feather-book" />
-                      12 Lessons
-                    </li>
-                    <li>
-                      <i className="feather-users" />
-                      50 Students
-                    </li>
-                  </ul>
-                  <p className="rbt-card-text">
-                    It is a long established fact that a reader will be
-                    distracted.
-                  </p>
-                  <div className="rbt-author-meta mb--20">
-                    <div className="rbt-avater">
-                      <a href="/profile/2">
-                        <img
-                          alt="Sophia Jaymes"
-                          loading="lazy"
-                          width={33}
-                          height={33}
-                          decoding="async"
-                          data-nimg={1}
-                          srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75 2x"
-                          src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-02.png&w=48&q=75"
-                          style={{ color: "transparent" }}
-                        />
-                      </a>
-                    </div>
-                    <div className="rbt-author-info">
-                      By <a href="/profile/2">Robert</a> In
-                      <a href="/course-details/2#">Development</a>
-                    </div>
-                  </div>
-                  <div className="rbt-card-bottom">
-                    <div className="rbt-price">
-                      <span className="current-price">$60</span>
-                      <span className="off-price">$20</span>
-                    </div>
-                    <a className="rbt-btn-link" href="/course-details">
-                      Learn More
-                      <i className="feather-arrow-right" />
-                    </a>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-4 col-md-6 col-sm-6 col-12">
-              <div className="rbt-card variation-01 rbt-hover">
-                <div className="rbt-card-img">
-                  <a href="/course-details">
-                    <img
-                      alt="Card image"
-                      loading="lazy"
-                      width={355}
-                      height={244}
-                      decoding="async"
-                      data-nimg={1}
-                      srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75 2x"
-                      src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-02.jpg&w=750&q=75"
-                      style={{ color: "transparent" }}
-                    />
-                  </a>
-                </div>
-                <div className="rbt-card-body">
-                  <div className="rbt-card-top">
-                    <div className="rbt-review">
-                      <div className="rating">
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
+              <div className="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div className="rbt-card variation-01 rbt-hover">
+                  <div className="rbt-card-img">
+                    <a href="/course-details">
+                      <img
+                        alt="Card image"
+                        loading="lazy"
+                        width={355}
+                        height={244}
+                        decoding="async"
+                        data-nimg={1}
+                        srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-03.jpg&w=384&q=75 2x"
+                        src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-03.jpg&w=384&q=75"
+                        style={{ color: "transparent" }}
+                      />
+                      <div className="rbt-badge-3 bg-white">
+                        <span>-10%</span>
+                        <span>Off</span>
                       </div>
-                      <span className="rating-count"> (15 Reviews)</span>
-                    </div>
-                    <div className="rbt-bookmark-btn">
-                      <a
-                        className="rbt-round-btn"
-                        title="Bookmark"
-                        href="/course-details/2#"
-                      >
-                        <i className="feather-bookmark" />
-                      </a>
-                    </div>
-                  </div>
-                  <h4 className="rbt-card-title">
-                    <a href="/course-details">PHP Beginner Advanced</a>
-                  </h4>
-                  <ul className="rbt-meta">
-                    <li>
-                      <i className="feather-book" />
-                      12 Lessons
-                    </li>
-                    <li>
-                      <i className="feather-users" />
-                      50 Students
-                    </li>
-                  </ul>
-                  <p className="rbt-card-text">
-                    It is a long established fact that a reader will be
-                    distracted.
-                  </p>
-                  <div className="rbt-author-meta mb--20">
-                    <div className="rbt-avater">
-                      <a href="/profile/3">
-                        <img
-                          alt="Sophia Jaymes"
-                          loading="lazy"
-                          width={33}
-                          height={33}
-                          decoding="async"
-                          data-nimg={1}
-                          srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-04.png&w=48&q=75 2x"
-                          src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-04.png&w=48&q=75"
-                          style={{ color: "transparent" }}
-                        />
-                      </a>
-                    </div>
-                    <div className="rbt-author-info">
-                      By <a href="/profile/3">Angela</a> In
-                      <a href="/course-details/2#">Development</a>
-                    </div>
-                  </div>
-                  <div className="rbt-card-bottom">
-                    <div className="rbt-price">
-                      <span className="current-price">$60</span>
-                      <span className="off-price">$20</span>
-                    </div>
-                    <a className="rbt-btn-link" href="/course-details">
-                      Learn More
-                      <i className="feather-arrow-right" />
                     </a>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 col-sm-6 col-12">
-              <div className="rbt-card variation-01 rbt-hover">
-                <div className="rbt-card-img">
-                  <a href="/course-details">
-                    <img
-                      alt="Card image"
-                      loading="lazy"
-                      width={355}
-                      height={244}
-                      decoding="async"
-                      data-nimg={1}
-                      srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-03.jpg&w=384&q=75 2x"
-                      src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fcourse%2Fcourse-online-03.jpg&w=384&q=75"
-                      style={{ color: "transparent" }}
-                    />
-                    <div className="rbt-badge-3 bg-white">
-                      <span>-10%</span>
-                      <span>Off</span>
-                    </div>
-                  </a>
-                </div>
-                <div className="rbt-card-body">
-                  <div className="rbt-card-top">
-                    <div className="rbt-review">
-                      <div className="rating">
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
-                        <i className="fas fa-star" />
+                  <div className="rbt-card-body">
+                    <div className="rbt-card-top">
+                      <div className="rbt-review">
+                        <div className="rating">
+                          <i className="fas fa-star" />
+                          <i className="fas fa-star" />
+                          <i className="fas fa-star" />
+                          <i className="fas fa-star" />
+                          <i className="fas fa-star" />
+                        </div>
+                        <span className="rating-count"> (5 Reviews)</span>
                       </div>
-                      <span className="rating-count"> (5 Reviews)</span>
+                      <div className="rbt-bookmark-btn">
+                        <a
+                          className="rbt-round-btn"
+                          title="Bookmark"
+                          href="/course-details/2#"
+                        >
+                          <i className="feather-bookmark" />
+                        </a>
+                      </div>
                     </div>
-                    <div className="rbt-bookmark-btn">
-                      <a
-                        className="rbt-round-btn"
-                        title="Bookmark"
-                        href="/course-details/2#"
-                      >
-                        <i className="feather-bookmark" />
+                    <h4 className="rbt-card-title">
+                      <a href="/course-details">Angular Zero to Mastery</a>
+                    </h4>
+                    <ul className="rbt-meta">
+                      <li>
+                        <i className="feather-book" />8 Lessons
+                      </li>
+                      <li>
+                        <i className="feather-users" />
+                        30 Students
+                      </li>
+                    </ul>
+                    <p className="rbt-card-text">
+                      Angular Js long fact that a reader will be distracted by
+                      the readable.
+                    </p>
+                    <div className="rbt-author-meta mb--20">
+                      <div className="rbt-avater">
+                        <a href="/profile/4">
+                          <img
+                            alt="Sophia Jaymes"
+                            loading="lazy"
+                            width={33}
+                            height={33}
+                            decoding="async"
+                            data-nimg={1}
+                            srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-03.png&w=48&q=75 2x"
+                            src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-03.png&w=48&q=75"
+                            style={{ color: "transparent" }}
+                          />
+                        </a>
+                      </div>
+                      <div className="rbt-author-info">
+                        By <a href="/profile/4">Slaughter</a> In
+                        <a href="/course-details/2#">Languages</a>
+                      </div>
+                    </div>
+                    <div className="rbt-card-bottom">
+                      <div className="rbt-price">
+                        <span className="current-price">$80</span>
+                        <span className="off-price">$100</span>
+                      </div>
+                      <a className="rbt-btn-link" href="/course-details">
+                        Learn More
+                        <i className="feather-arrow-right" />
                       </a>
                     </div>
-                  </div>
-                  <h4 className="rbt-card-title">
-                    <a href="/course-details">Angular Zero to Mastery</a>
-                  </h4>
-                  <ul className="rbt-meta">
-                    <li>
-                      <i className="feather-book" />8 Lessons
-                    </li>
-                    <li>
-                      <i className="feather-users" />
-                      30 Students
-                    </li>
-                  </ul>
-                  <p className="rbt-card-text">
-                    Angular Js long fact that a reader will be distracted by the
-                    readable.
-                  </p>
-                  <div className="rbt-author-meta mb--20">
-                    <div className="rbt-avater">
-                      <a href="/profile/4">
-                        <img
-                          alt="Sophia Jaymes"
-                          loading="lazy"
-                          width={33}
-                          height={33}
-                          decoding="async"
-                          data-nimg={1}
-                          srcSet="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-03.png&w=48&q=75 2x"
-                          src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fclient%2Favatar-03.png&w=48&q=75"
-                          style={{ color: "transparent" }}
-                        />
-                      </a>
-                    </div>
-                    <div className="rbt-author-info">
-                      By <a href="/profile/4">Slaughter</a> In
-                      <a href="/course-details/2#">Languages</a>
-                    </div>
-                  </div>
-                  <div className="rbt-card-bottom">
-                    <div className="rbt-price">
-                      <span className="current-price">$80</span>
-                      <span className="off-price">$100</span>
-                    </div>
-                    <a className="rbt-btn-link" href="/course-details">
-                      Learn More
-                      <i className="feather-arrow-right" />
-                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="rbt-progress-parent rbt-backto-top-active">
-        <svg
-          className="rbt-back-circle svg-inner"
-          width="100%"
-          height="100%"
-          viewBox="-1 -1 102 102"
-        >
-          <path
-            d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
-            style={{
-              transition: "stroke-dashoffset 10ms linear 0s",
-              strokeDasharray: "307.919, 307.919",
-              strokeDashoffset: "0.010184",
-            }}
-          />
-        </svg>
-      </div>
-      <div className="rbt-separator-mid">
-        <div className="container">
-          <hr className="rbt-separator m-0" />
+        <div className="rbt-progress-parent rbt-backto-top-active">
+          <svg
+            className="rbt-back-circle svg-inner"
+            width="100%"
+            height="100%"
+            viewBox="-1 -1 102 102"
+          >
+            <path
+              d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"
+              style={{
+                transition: "stroke-dashoffset 10ms linear 0s",
+                strokeDasharray: "307.919, 307.919",
+                strokeDashoffset: "0.010184",
+              }}
+            />
+          </svg>
+        </div>
+        <div className="rbt-separator-mid">
+          <div className="container">
+            <hr className="rbt-separator m-0" />
+          </div>
         </div>
       </div>
     </div>
