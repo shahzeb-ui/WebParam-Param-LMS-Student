@@ -101,14 +101,6 @@ const UnitStandardWidget: React.FC<Props> = ({
           {courseStyle === "two" && (
             <>
               <div className="rbt-card-top">
-                <div className="rbt-review">
-                  <div className="rating">
-                    {Array.from({ length: rating }, (_, i) => (
-                      <i className="fas fa-star" key={i} />
-                    ))}
-                  </div>
-                  <span className="rating-count">({totalReviews} Reviews)</span>
-                </div>
                 <div className="rbt-bookmark-btn">
                   <Link className="rbt-round-btn" title="Bookmark" href="#">
                     <i className="feather-bookmark" />

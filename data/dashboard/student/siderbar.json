@@ -1,7 +1,7 @@
 {
     "siderbar": [
       {
-        "link": "/student/analytics",
+        "link": "/student/dashboard",
         "text": "Dashboard",
         "icon": "bi bi-grid-fill"
       },
@@ -11,11 +11,6 @@
         "text": "My Courses",
         "icon": "bi bi-laptop-fill"
       },
- 
-      
- 
-  
-
      
       {
         "link": "/student/assessments",

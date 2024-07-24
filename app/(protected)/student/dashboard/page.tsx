@@ -1,122 +1,81 @@
-export default function Dashboard() {
-  return (
-    <div className="rbt-dashboard-content bg-color-white rbt-shadow-box mb--60">
-  <div className="content">
-    <div className="section-title">
-      <h4 className="rbt-title-style-3">Dashboard</h4>
-    </div>
-    <div className="row g-5">
-      <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-        <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-primary-opacity">
-          <div className="inner">
-            <div className="rbt-round-icon bg-primary-opacity">
-              <i className="feather-book-open" />
-            </div>
-            <div className="content">
-              <h3 className="counter without-icon color-primary">
-                <div className="odometer odometer-auto-theme">
-                  <div className="odometer-inside">
-                    <span className="odometer-digit">
-                      <span className="odometer-digit-spacer">8</span>
-                      <span className="odometer-digit-inner">
-                        <span className="odometer-ribbon">
-                          <span className="odometer-ribbon-inner">
-                            <span className="odometer-value">3</span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                    <span className="odometer-digit">
-                      <span className="odometer-digit-spacer">8</span>
-                      <span className="odometer-digit-inner">
-                        <span className="odometer-ribbon">
-                          <span className="odometer-ribbon-inner">
-                            <span className="odometer-value">0</span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </h3>
-              <span className="rbt-title-style-2 d-block">
-                Enrolled Courses
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-        <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-secondary-opacity">
-          <div className="inner">
-            <div className="rbt-round-icon bg-secondary-opacity">
-              <i className="feather-monitor" />
-            </div>
-            <div className="content">
-              <h3 className="counter without-icon color-secondary">
-                <div className="odometer odometer-auto-theme">
-                  <div className="odometer-inside">
-                    <span className="odometer-digit">
-                      <span className="odometer-digit-spacer">8</span>
-                      <span className="odometer-digit-inner">
-                        <span className="odometer-ribbon">
-                          <span className="odometer-ribbon-inner">
-                            <span className="odometer-value">1</span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                    <span className="odometer-digit">
-                      <span className="odometer-digit-spacer">8</span>
-                      <span className="odometer-digit-inner">
-                        <span className="odometer-ribbon">
-                          <span className="odometer-ribbon-inner">
-                            <span className="odometer-value">0</span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </h3>
-              <span className="rbt-title-style-2 d-block">ACTIVE COURSES</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-        <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
-          <div className="inner">
-            <div className="rbt-round-icon bg-violet-opacity">
-              <i className="feather-award" />
-            </div>
-            <div className="content">
-              <h3 className="counter without-icon color-violet">
-                <div className="odometer odometer-auto-theme">
-                  <div className="odometer-inside">
-                    <span className="odometer-digit">
-                      <span className="odometer-digit-spacer">8</span>
-                      <span className="odometer-digit-inner">
-                        <span className="odometer-ribbon">
-                          <span className="odometer-ribbon-inner">
-                            <span className="odometer-value">7</span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
-                </div>
-              </h3>
-              <span className="rbt-title-style-2 d-block">
-                Completed Courses
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+"use client";
 
+import Link from "next/link";
+import Sor from "./sor/page";
+import Analytics from "./analytics/page";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect } from "react";
+
+function PageContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const tab = searchParams.get("tab") || "analytics";
+
+  useEffect(() => {
+    if (!searchParams.get("tab")) {
+      router.replace("/student/dashboard?tab=analytics");
+    }
+  }, [searchParams, router]);
+
+  return (
+    <div className="content">
+      <div className="section-title">
+        <ul
+          className="nav nav-tabs tab-button-style-2 justify-content-start"
+          id="reviewTab-4"
+          role="tablist"
+        >
+          <li role="presentation">
+            <Link
+              href="/student/dashboard?tab=analytics"
+              onClick={(e) => {
+                e.preventDefault();
+                router.push("/student/dashboard?tab=analytics");
+              }}
+              className={`tab-button ${tab === "analytics" ? "active" : ""}`}
+              id="received-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#received"
+              role="tab"
+              aria-controls="received"
+              aria-selected={tab === "analytics"}
+            >
+              <span className="title">Analytics</span>
+            </Link>
+          </li>
+          <li role="presentation">
+            <Link
+              href="/student/dashboard?tab=sor"
+              onClick={(e) => {
+                e.preventDefault();
+                router.push("/student/dashboard?tab=sor");
+              }}
+              className={`tab-button ${tab === "sor" ? "active" : ""}`}
+              id="given-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#given"
+              role="tab"
+              aria-controls="given"
+              aria-selected={tab === "sor"}
+            >
+              <span className="title">SOR</span>
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        {tab === "analytics" && <Analytics />}
+        {tab === "sor" && <Sor />}
+      </Suspense>
+    </div>
+  );
+}
+
+export default function PageAnalytics() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PageContent />
+    </Suspense>
   );
 }
