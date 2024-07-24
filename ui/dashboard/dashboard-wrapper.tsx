@@ -12,8 +12,8 @@ const InstructorDashboardHeader = () => {
         style={{
           backgroundImage: `url(${thootoHeader.src})`,
           backgroundRepeat:'no-repeat',
-          backgroundPosition:'top',
-          backgroundSize:'cover'
+          backgroundSize:'cover',
+          backgroundPosition:'top'
         }} />
         <div className="rbt-tutor-information">
           <div className="rbt-tutor-information-left">
