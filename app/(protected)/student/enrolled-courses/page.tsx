@@ -57,8 +57,6 @@ const EnrolledCourses = () => {
     getUnitStandards(courseId);
   }, []);
 
-  // console.log("The unit standard data: ", unitStandards);
-
   if (loading) {
     return <Loader />;
   } else {

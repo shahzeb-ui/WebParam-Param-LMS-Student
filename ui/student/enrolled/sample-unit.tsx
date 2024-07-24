@@ -6,6 +6,7 @@ import Image from "next/image";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import { useLessonContext } from "@/context/lesson-context/lesson-context";
 import styles from "@/ui/student/enrolled/course.module.css";
+import courseImage from './courseImage.jpeg'
 import "@/styles/css/plugins/mainstyle.css"
 
 interface UnitData {
@@ -91,7 +92,7 @@ const UnitStandardWidget: React.FC<Props> = ({
             <Image
               width={330}
               height={227}
-              src={course.courseThumbnail}
+              src={courseImage.src}
               alt={data.title}
             />
            
@@ -101,14 +102,6 @@ const UnitStandardWidget: React.FC<Props> = ({
           {courseStyle === "two" && (
             <>
               <div className="rbt-card-top">
-                <div className="rbt-review">
-                  <div className="rating">
-                    {Array.from({ length: rating }, (_, i) => (
-                      <i className="fas fa-star" key={i} />
-                    ))}
-                  </div>
-                  <span className="rating-count">({totalReviews} Reviews)</span>
-                </div>
                 <div className="rbt-bookmark-btn">
                   <Link className="rbt-round-btn" title="Bookmark" href="#">
                     <i className="feather-bookmark" />
