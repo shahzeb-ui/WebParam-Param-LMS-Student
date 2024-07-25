@@ -27,7 +27,7 @@ export default function StudentLayout({
   return (
     <>
       <div className="rbt-page-banner-wrapper">
-      {/* <div className="rbt-banner-image custom-banner" /> */}
+      
       </div>
       
       <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
