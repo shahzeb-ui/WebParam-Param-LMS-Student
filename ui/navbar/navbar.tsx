@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
-import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
@@ -14,10 +13,7 @@ const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const sections = [
-    { id: "dashboard", label: "Dashboard", link: "/student/analytics" },
-    { id: "course", label: "My Courses", link: "/student/enrolled-courses" },
-  ];
+  const sections = [];
 
   useEffect(() => {
     const sectionIds = ["dashboard", "course", "progress"];
@@ -41,16 +37,8 @@ const Navbar = () => {
     };
   }, [currentSection]);
 
-  const handleAvatarClick = () => {
-    setIsDropdownVisible(!isDropdownVisible);
-  };
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const closeDropdown = () => {
-    setIsDropdownVisible(false);
   };
 
   return (
@@ -62,62 +50,29 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo">
-                  Thooto
+                <Link 
+                  href="/" 
+                  className="logo" 
+                  style={{ 
+                    fontFamily: 'League Spartan, sans-serif', 
+                    fontWeight: 'bold', 
+                    color: '#24345c',
+                    fontSize: '40px'
+                  }}
+                >
+                  thooto
                 </Link>
               </div>
 
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
                   <ul className="mainmenu">
-                    {sections.map((sec, i) => (
-                      <li
-                        className={currentSection === sec.id ? "current" : ""}
-                        key={i}
-                      >
-                        <Link href={sec.link}>{sec.label}</Link>
-                      </li>
-                    ))}
+                    {/* Removed sections map */}
                   </ul>
                 </nav>
               </div>
 
-              <div className="rbt-header-sec-col rbt-header-center d-none d-md-block margin-right-3">
-                <div className="rbt-header-content">
-                  <div className="header-info">
-                    <div className="rbt-search-field">
-                      <div className="search-field">
-                        <input type="text" placeholder="Search Course" />
-                        <button
-                          className="rbt-round-btn serach-btn"
-                          type="submit"
-                        >
-                          <i className="feather-search"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div className="header-right d-flex align-items-center mt">
-                <div className="d-none d-md-block me-3">
-                  <Link href="#" onClick={handleAvatarClick}>
-                    <Image
-                      src={User}
-                      alt="User Avatar"
-                      width={40}
-                      height={40}
-                      className="rounded-circle"
-                    />
-                  </Link>
-                  {isDropdownVisible && (
-                    <div className={styles.dropdownMenu}>
-                      <UserStudent closeDropdown={closeDropdown} />
-                    </div>
-                  )}
-                </div>
-
                 <div
                   className="rbt-offcanvas-trigger d-xl-none"
                   id="rbt-offcanvas-activation"
