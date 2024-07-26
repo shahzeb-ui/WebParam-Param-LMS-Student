@@ -137,14 +137,7 @@ const UnitStandardWidget: React.FC<Props> = ({
                 </div>
               </div>
 
-              <div className="rbt-card-bottom">
-                <Link
-                  className="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                  href="#"
-                >
-                  View More
-                </Link>
-              </div>
+             
               <h6 className="rbt-title-style-2 mb--10"></h6>
               <div className="rbt-card-bottom">
                 <Link href="#" onClick={() => handleClick(data.id)}>
