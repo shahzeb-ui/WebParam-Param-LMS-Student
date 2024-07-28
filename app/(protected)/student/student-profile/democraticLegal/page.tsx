@@ -18,6 +18,8 @@ export default function DemocraticLegal({student}:any) {
   const [socioeconomicCode, setSocioeconomicCode] = useState('');
   const [disabilityCode, setDisabilityCode] = useState('');
   const [disabilityRating, setDisabilityRating] = useState('');
+  const [provinceCode, setProvinceCode] = useState('');
+  const [statsSAAreaCode, setStatsSAAreaCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [codes, setCodes] = useState<any>()
 
@@ -263,6 +265,37 @@ export default function DemocraticLegal({student}:any) {
         value={popiActDate}
         id="popiActDate"
         onChange={(e) => setPopiActDate(e.target.value)}
+      />
+    </div>
+  </div>
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+    <div className="rbt-form-group">
+      <label htmlFor="provinceCode">Province Code</label>
+       <select 
+        name="provinceCode"
+        value={provinceCode}
+        id="provinceCode"
+        onChange={(e) => setProvinceCode(e.target.value)}
+        >
+        <option value="">select</option>
+        {
+         codes && codes[11]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
+    </div>
+  </div>
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
+    <div className="rbt-form-group">
+      <label htmlFor="statsSAAreaCode">STATSSA Area Code</label>
+      <input
+        type="text"
+        name="statsSAAreaCode"
+        placeholder="Enter STATSSA Area Code"
+        value={statsSAAreaCode}
+        id="statsSAAreaCode"
+        onChange={(e) => setStatsSAAreaCode(e.target.value)}
       />
     </div>
   </div>

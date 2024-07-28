@@ -94,7 +94,7 @@ const EnrolledCourses = () => {
                   <span className="title">Enrolled</span>
                 </Link>
               </li>
-              <li role="presentation">
+              {/* <li role="presentation">
                 <Link
                   href="#"
                   className={`tab-button ${styles.tabButton}`}
@@ -121,7 +121,7 @@ const EnrolledCourses = () => {
                 >
                   <span className="title">Completed</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -133,7 +133,7 @@ const EnrolledCourses = () => {
               aria-labelledby="home-tab-4"
             >
               <div className="row g-5">
-                {unitStandards?.map((standard, index) => (
+                {unitStandards?.slice(0,1).map((standard, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={`unit-standard-completed-${index}`}

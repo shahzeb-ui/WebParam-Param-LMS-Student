@@ -2,11 +2,17 @@
 import { usePathname } from "next/navigation";
 import SidebarData from "@/data/dashboard/student/siderbar.json";
 import Cookies from "universal-cookie";
+import { useEffect, useState } from "react";
 
 const StudentDashboardSidebar = () => {
+  const [username, setUsername] = useState<string | null>(null);
   const cookies = new Cookies();
-  const user = cookies.get("loggedInUser");
   const path = usePathname();
+
+  useEffect(() => {
+    const storedUsername = cookies.get("username");
+    setUsername(storedUsername);
+  }, []);
 
 
   return (
@@ -19,7 +25,7 @@ const StudentDashboardSidebar = () => {
           <div className="content-item-content">
             <div className="rbt-default-sidebar-wrapper">
               <div className="section-title mb--20">
-                <h6 className="rbt-title-style-2">Welcome, Mpho Moroka</h6>
+                <h6 className="rbt-title-style-2">{username ? `Welcome ${username}` : "name surname"}</h6>
               </div>
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">

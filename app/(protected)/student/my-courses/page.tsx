@@ -117,7 +117,7 @@ const EnrolledCourses = () => {
                   <span className="title">Enrolled</span>
                 </Link>
               </li>
-              <li role="presentation">
+              {/* <li role="presentation">
                 <Link
                   href="#"
                   className={`tab-button ${styles.tabButton}`}
@@ -144,7 +144,7 @@ const EnrolledCourses = () => {
                 >
                   <span className="title">Completed</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -156,20 +156,45 @@ const EnrolledCourses = () => {
               aria-labelledby="home-tab-4"
             >
               <div className="row g-5">
-                {unitStandards?.map((standard, index) => (
+                {unitStandards?.slice(0,1).map((standard, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={`unit-standard-completed-${index}`}
                   >
-                    <UnitStandardWidget
-                      data={standard}
-                      courseStyle={courseStyle}
-                      isProgress={isProgress}
-                      isCompleted={isCompleted}
-                      showDescription={showDescription}
-                      isEdit={isEdit}
-                      showAuthor={showAuthor}
-                    />
+                   <div className="rbt-card variation-01 rbt-hover">
+                    <div className="rbt-card-img">
+                      <a href="/lesson">
+                      <img alt="Introductory studies for Project Managers" loading="lazy" width={330} height={227} decoding="async" data-nimg={1} src="/_next/static/media/courseImage.b0b06990.jpeg" style={{color: 'transparent'}} />
+                      </a>
+                    </div>
+                    <div className="rbt-card-body">
+                      <div className="rbt-card-top">
+                        <div className="rbt-bookmark-btn">
+                          <a className="rbt-round-btn" title="Bookmark" href="#">
+                            <i className="feather-bookmark" />
+                          </a>
+                        </div>
+                      </div>
+                      <h4 className="rbt-card-title">
+                        <a href="/lesson">{standard.title}</a>
+                      </h4>
+                      <ul className="rbt-meta">
+                        <li><i className="feather-book" />0 Lessons</li>
+                        <li><i className="feather-users" />0 Students</li>
+                      </ul>
+                      <div className="rbt-progress-style-1 mb--20 mt--10">
+                        <div className="single-progress">
+                        <h6 className="rbt-title-style-2 mb--10" dangerouslySetInnerHTML={{ __html: standard.description }}></h6>
+                          </div>
+                        </div>
+                        <h6 className="rbt-title-style-2 mb--10" />
+                        <div className="rbt-card-bottom">
+                          <a href="#">
+                            <button className="bi bi-play rbt-btn bg-primary-opacity w-100 text-center course_buttonSmall__T0dga">Start Watching</button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

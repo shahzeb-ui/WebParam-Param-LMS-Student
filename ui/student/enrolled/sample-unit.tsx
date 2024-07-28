@@ -178,7 +178,7 @@ const UnitStandardWidget: React.FC<Props> = ({
             </div>
           )}
 
-          {courseStyle === "one" && (
+          {/* {courseStyle === "one" && (
             <div className="rbt-review">
               <div className="rating">
                 {Array.from({ length: rating }, (_, i) => (
@@ -187,7 +187,7 @@ const UnitStandardWidget: React.FC<Props> = ({
               </div>
               <span className="rating-count"> ({totalReviews} Reviews)</span>
             </div>
-          )}
+          )} */}
 
           {!isProgress ? (
             <div className="rbt-card-bottom">

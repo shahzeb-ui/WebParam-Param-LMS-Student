@@ -66,7 +66,7 @@ export const getStudentData = async (studentId: string) => {
 
 export async function getStudentDocuments(userId:any) {
     try {
-        const register = await axios.get(`${readUserData}/api/Documents/GetDocuments/${userId}`);
+        const register = await axios.get(`https://khumla-testing-user-read.azurewebsites.net/api/Documents/GetDocuments/${userId}`);
         return register;
 
     } catch(error: any) {
