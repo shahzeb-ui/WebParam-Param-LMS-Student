@@ -20,6 +20,9 @@ export default function ContactInformation({student}:any) {
   const [learnerCellPhoneNumber, setLearnerCellPhoneNumber] = useState('');
   const [learnerFaxNumber, setLearnerFaxNumber] = useState('');
   const [learnerEmailAddress, setLearnerEmailAddress] = useState('');
+  const [nextOfKinName, setNextOfKinName] = useState('');
+  const [nextOfKinContactNumber, setNextOfKinContactNumber] = useState('');
+  const [nextOfKinRelationship, setNextOfKinRelationship] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
     function setStudentContactInformation(student: any) {
@@ -34,6 +37,9 @@ export default function ContactInformation({student}:any) {
         setLearnerCellPhoneNumber(student?.data?.learnerCellPhoneNumber);
         setLearnerFaxNumber(student?.data?.learnerFaxNumber);
         setLearnerEmailAddress(student?.data?.learnerEmailAddress);
+        setNextOfKinName(student?.data?.nextOfKinName);
+        setNextOfKinContactNumber(student?.data?.nextOfKinContactNumber);
+        setNextOfKinRelationship(student?.data?.nextOfKinRelationship);
     }
 
     useEffect(() => {
@@ -55,7 +61,10 @@ export default function ContactInformation({student}:any) {
           learnerPhoneNumber: learnerPhoneNumber,
           learnerCellPhoneNumber: learnerCellPhoneNumber,
           learnerFaxNumber: learnerFaxNumber,
-          learnerEmailAddress: learnerEmailAddress
+          learnerEmailAddress: learnerEmailAddress,
+          nextOfKinName: nextOfKinName,
+          nextOfKinContactNumber: nextOfKinContactNumber,
+          nextOfKinRelationship: nextOfKinRelationship
         }
     
         const res = updateContactInformation(payload);
@@ -206,6 +215,46 @@ export default function ContactInformation({student}:any) {
         value={learnerEmailAddress}
         id="learnerEmailAddress"
         onChange={(e) => setLearnerEmailAddress(e.target.value)}
+      />
+    </div>
+  </div>
+  <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+    <h4 className="rbt-form-group">Next of Kin</h4>
+    <div className="rbt-form-group">
+      <label htmlFor="nextOfKinName">Name and Surname</label>
+      <input
+        type="text"
+        name="nextOfKinName"
+        placeholder="Enter Name and Surname"
+        value={nextOfKinName}
+        id="nextOfKinName"
+        onChange={(e) => setNextOfKinName(e.target.value)}
+      />
+    </div>
+    <div className="col-lg-6 col-md-6 col-sm-6 col-12"></div>
+    <div className="rbt-form-group">
+      <label htmlFor="nextOfKinContactNumber">Contact Number</label>
+      <input
+        type="text"
+        name="nextOfKinContactNumber"
+        placeholder="Enter Contact Number"
+        value={nextOfKinContactNumber}
+        id="nextOfKinContactNumber"
+        onChange={(e) => setNextOfKinContactNumber(e.target.value)}
+      />
+    </div>
+
+    
+  
+    <div className="rbt-form-group">
+      <label htmlFor="nextOfKinRelationship">Relationship</label>
+      <input
+        type="text"
+        name="nextOfKinRelationship"
+        placeholder="Enter Relationship"
+        value={nextOfKinRelationship}
+        id="nextOfKinRelationship"
+        onChange={(e) => setNextOfKinRelationship(e.target.value)}
       />
     </div>
   </div>
