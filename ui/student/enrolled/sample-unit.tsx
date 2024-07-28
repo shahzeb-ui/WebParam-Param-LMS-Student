@@ -12,6 +12,7 @@ import "@/styles/css/plugins/mainstyle.css"
 interface UnitData {
   id: string;
   title: string;
+  moduleCode: string;
 }
 
 interface Props {
@@ -32,6 +33,7 @@ const UnitStandardWidget: React.FC<Props> = ({
   showAuthor,
 }) => {
   const { setId, navigateToLesson } = useLessonContext();
+  
   const course = Courses.find((course) => course.id.toString() === data.id) || {
     courseThumbnail: "images/course/course-02.jpg",
     coursePrice: 0,
@@ -113,7 +115,8 @@ const UnitStandardWidget: React.FC<Props> = ({
                   href={`/student/enrolled-courses/${data.id}`}
                   onClick={() => handleClick(data.id)}
                 >
-                  {data.title}
+                  {data.title} - {data.moduleCode}
+                  
                 </Link>
               </h4>
             </>

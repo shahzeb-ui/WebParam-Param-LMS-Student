@@ -10,12 +10,14 @@ export default function EmploymentInformation({student}:any) {
 
   const [employmentStatus, setEmploymentStatus] = useState('');
   const [dateOfFisa, setDateOfFisa] = useState('');
+  const [sarsTaxNumber, setSarsTaxNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   function setStudentContactInformation(student: any) {
     console.log('stu:', student?.data);
     setEmploymentStatus(student?.data?.employmentStatus);
     setDateOfFisa(student?.data?.dateOfFisa);
+    setSarsTaxNumber(student?.data?.sarsTaxNumber);
   }
 
   useEffect(() => {
@@ -29,7 +31,8 @@ export default function EmploymentInformation({student}:any) {
       const payload = {
         userId: user.data.id||user.data.userId,
         employmentStatus: employmentStatus,
-        dateOfFisa: dateOfFisa
+        dateOfFisa: dateOfFisa,
+        sarsTaxNumber: sarsTaxNumber
       }
   
       const res = updateEmployeeInformation(payload);
@@ -65,6 +68,17 @@ export default function EmploymentInformation({student}:any) {
         onChange={(e) => setEmploymentStatus(e.target.value)}
       />
     </div>
+    <div className="rbt-form-group">
+      <label htmlFor="sarsTaxNumber">SARS TAX NUMBER</label>
+      <input
+        type="number"
+        name="sarsTaxNumber"
+        placeholder="Enter SARS Tax Number"
+        value={sarsTaxNumber}
+        id="sarsTaxNumber"
+        onChange={(e) => setSarsTaxNumber(e.target.value)}
+      />
+    </div>
   </div>
   <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
@@ -89,6 +103,8 @@ export default function EmploymentInformation({student}:any) {
       </button>
     </div>
   </div>
+
+  
 </form>
 </div>
 </div>
