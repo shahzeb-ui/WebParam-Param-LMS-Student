@@ -1,20 +1,29 @@
 "use client";
-import { usePathname } from "next/navigation";
-// import SidebarData from "@/data/dashboard/student/siderbar.json";
 import Cookies from "universal-cookie";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
-const StudentDashboardSidebar = () => {
+const StudentDashboardSidebar = ({isEnrolled}:any) => {
   const [username, setUsername] = useState<string | null>(null);
   const cookies = new Cookies();
   const path = usePathname();
+  const router = useRouter();
+  const user = cookies.get("logggedInUser");
 
   useEffect(() => {
     const storedUsername = cookies.get("username");
     setUsername(storedUsername);
   }, []);
 
+
+  function handleLogOut() {
+    cookies.remove("loggedInUser");
+     cookies.remove("username");
+     cookies.remove("userEmail")
+     cookies.remove("resetEmail")
+     router.push('/login')
+  }
 
   return (
     <>
@@ -29,7 +38,7 @@ const StudentDashboardSidebar = () => {
                 <h6 className="rbt-title-style-2">{username ? `Welcome ${username}` : "name surname"}</h6>
               </div>
 
-              {false && 
+              {isEnrolled == 0 && 
               <>
               <div className="section-title mt--40 mb--20">
                 <h6 className="rbt-title-style-2">Student</h6>
@@ -126,13 +135,13 @@ const StudentDashboardSidebar = () => {
                   </li>
 
                   <li>
-                    <Link
-                      href={'#'}
-                      onClick={() => cookies.remove("loggedInUser")}
+                    <div
+                      style={{cursor:'pointer'}}
+                      onClick={handleLogOut}
                     >
                       <i className='feather-log-out' />
                       <span>Logout</span>
-                    </Link>
+                    </div>
                   </li>
                 </ul>
               </nav>
