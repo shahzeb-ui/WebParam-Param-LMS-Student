@@ -13,7 +13,7 @@ export default function StudentLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isEnrolled, setIsEnrolled] = useState(0);
+  const [isEnrolled, setIsEnrolled] = useState<any>();
   const path = usePathname();
   const router = useRouter();
   const cookies = new Cookies();
