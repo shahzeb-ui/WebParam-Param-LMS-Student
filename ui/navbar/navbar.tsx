@@ -62,7 +62,12 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo">
+                <Link href="/" className="logo" 
+                style={{
+                  fontFamily: "League Spartan",
+                  fontWeight: "bolder",
+                  color: "rgb(36, 52, 92)",
+                  fontSize: "40px"}}>
                   Thooto
                 </Link>
               </div>

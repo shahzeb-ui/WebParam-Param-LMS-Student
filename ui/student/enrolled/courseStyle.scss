@@ -1,0 +1,8 @@
+.continue-watching {
+    height: fit-content;
+
+    @media (min-width:990px) and (max-width: 1400px)   {
+        line-height: 20px;
+        padding: 10px;
+    }
+}
