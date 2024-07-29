@@ -9,7 +9,7 @@ export default function Layout({children}: {children: React.ReactNode}) {
         { key: 'profile', label: 'Bio' },
         { key: 'democraticLegal', label: 'Demographics' },
         { key: 'ContactInformation', label: 'Contacts' },
-        { key: 'RegionalInformation', label: 'Regional' },
+        // { key: 'RegionalInformation', label: 'Regional' },
         { key: 'EmploymentInformation', label: 'Employment' },
         { key: 'documents', label: 'Documents' }
     ];

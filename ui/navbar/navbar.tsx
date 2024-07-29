@@ -62,15 +62,24 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo">
-                  Thooto
+                <Link 
+                  href="/" 
+                  className="logo" 
+                  style={{ 
+                    fontFamily: 'League Spartan, sans-serif', 
+                    fontWeight: 'bolder', 
+                    color: '#24345c',
+                    fontSize: '40px'
+                  }}
+                >
+                  thooto
                 </Link>
               </div>
 
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
                   <ul className="mainmenu">
-                    {sections.map((sec, i) => (
+                  {sections.map((sec, i) => (
                       <li
                         className={currentSection === sec.id ? "current" : ""}
                         key={i}
