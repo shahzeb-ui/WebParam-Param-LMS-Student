@@ -2,13 +2,11 @@
 import { updateContactInformation } from "@/app/api/studentProfile/studentprofile";
 import { FormEvent, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
+import { relationshipOptions } from "./data";
 
 export default function ContactInformation({student}:any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
-
-
-
 
   const [homeAddress1, setHomeAddress1] = useState('');
   const [postalAddress1, setPostalAddress1] = useState('');
@@ -21,6 +19,7 @@ export default function ContactInformation({student}:any) {
   const [learnerFaxNumber, setLearnerFaxNumber] = useState('');
   const [learnerEmailAddress, setLearnerEmailAddress] = useState('');
   const [nextOfKinName, setNextOfKinName] = useState('');
+  const [nextOfKinSurname, setNextOfKinSurname] = useState('');
   const [nextOfKinContactNumber, setNextOfKinContactNumber] = useState('');
   const [nextOfKinRelationship, setNextOfKinRelationship] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,6 +37,7 @@ export default function ContactInformation({student}:any) {
         setLearnerFaxNumber(student?.data?.learnerFaxNumber);
         setLearnerEmailAddress(student?.data?.learnerEmailAddress);
         setNextOfKinName(student?.data?.nextOfKinName);
+        setNextOfKinSurname(student?.data?.nextOfKinSurname)
         setNextOfKinContactNumber(student?.data?.nextOfKinContactNumber);
         setNextOfKinRelationship(student?.data?.nextOfKinRelationship);
     }
@@ -50,22 +50,23 @@ export default function ContactInformation({student}:any) {
       event.preventDefault();
       setIsSubmitting(true);
   
-        const payload = {
-          userId: user.data.id||user.data.userId,
-          homeAddress1: homeAddress1,
-          postalAddress1: postalAddress1,
-          postalAddress2: postalAddress2,
-          postalAddress3: postalAddress3,
-          learnerHomeAddressPostalCode: learnerHomeAddressPostalCode,
-          learnerHomeAddressPhysicalCode: learnerHomeAddressPhysicalCode,
-          learnerPhoneNumber: learnerPhoneNumber,
-          learnerCellPhoneNumber: learnerCellPhoneNumber,
-          learnerFaxNumber: learnerFaxNumber,
-          learnerEmailAddress: learnerEmailAddress,
-          nextOfKinName: nextOfKinName,
-          nextOfKinContactNumber: nextOfKinContactNumber,
-          nextOfKinRelationship: nextOfKinRelationship
-        }
+      const payload = {
+        userId: user.data.id || user.data.userId,
+        homeAddress1: homeAddress1,
+        postalAddress1: postalAddress1,
+        postalAddress2: postalAddress2,
+        postalAddress3: postalAddress3,
+        learnerHomeAddressPostalCode: learnerHomeAddressPostalCode,
+        learnerHomeAddressPhysicalCode: learnerHomeAddressPhysicalCode,
+        learnerPhoneNumber: learnerPhoneNumber,
+        learnerCellPhoneNumber: learnerCellPhoneNumber,
+        learnerFaxNumber: learnerFaxNumber,
+        learnerEmailAddress: learnerEmailAddress,
+        nextOfKinName: nextOfKinName,
+        nextOfKinSurname: nextOfKinSurname,
+        nextOfKinContactNumber: nextOfKinContactNumber,
+        nextOfKinRelationship: nextOfKinRelationship
+      };
     
         const res = updateContactInformation(payload);
   
@@ -218,46 +219,70 @@ export default function ContactInformation({student}:any) {
       />
     </div>
   </div>
-  <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-    <h4 className="rbt-form-group">Next of Kin</h4>
+
+  <h5 className="rbt-form-group text-decoration-underline mt-5">Next of Kin</h5>
+
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
-      <label htmlFor="nextOfKinName">Name and Surname</label>
+      <label htmlFor="nextOfKinName">Name</label>
       <input
         type="text"
         name="nextOfKinName"
-        placeholder="Enter Name and Surname"
+        placeholder="Enter Next Of Kin Name"
         value={nextOfKinName}
-        id="nextOfKinName"
+        id="learnerEmailAddress"
         onChange={(e) => setNextOfKinName(e.target.value)}
       />
     </div>
-    <div className="col-lg-6 col-md-6 col-sm-6 col-12"></div>
+  </div>
+
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+    <div className="rbt-form-group">
+      <label htmlFor="learnerEmailAddress">Surname</label>
+      <input
+        type="text"
+        name="learnerEmailAddress"
+        placeholder="Enter Next of Kin Surname"
+        value={nextOfKinSurname}
+        id="learnerEmailAddress"
+        onChange={(e) => setNextOfKinSurname(e.target.value)}
+      />
+    </div>
+  </div>
+
+  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
       <label htmlFor="nextOfKinContactNumber">Contact Number</label>
       <input
         type="text"
         name="nextOfKinContactNumber"
-        placeholder="Enter Contact Number"
+        placeholder="Enter Next of Kin Contact Number"
         value={nextOfKinContactNumber}
-        id="nextOfKinContactNumber"
+        id="learnerEmailAddress"
         onChange={(e) => setNextOfKinContactNumber(e.target.value)}
       />
     </div>
-
-    
-  
-    <div className="rbt-form-group">
-      <label htmlFor="nextOfKinRelationship">Relationship</label>
-      <input
-        type="text"
-        name="nextOfKinRelationship"
-        placeholder="Enter Relationship"
-        value={nextOfKinRelationship}
-        id="nextOfKinRelationship"
-        onChange={(e) => setNextOfKinRelationship(e.target.value)}
-      />
-    </div>
   </div>
+
+    <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+      <div className="rbt-form-group">
+        <label htmlFor="nextOfKinRelationship">Relationship</label>
+        <select
+          name="nextOfKinRelationship"
+          value={nextOfKinRelationship}
+          id="nextOfKinRelationship"
+          onChange={(e) => setNextOfKinRelationship(e.target.value)}
+        >
+          <option value="">Select Relationship</option>
+          {relationshipOptions.map((option, index) => (
+            <option key={index} value={option.title}>
+              {option.title}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  
   <div className="col-12 mt--20">
     <div className="rbt-form-group">
       <button

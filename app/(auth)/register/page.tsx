@@ -22,11 +22,11 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
+            courseId: searchParams.courseId,
             email,
             username,
             password,
             confirmPassword,
-            courseId: searchParams.courseId
         };
 
         debugger;
@@ -45,7 +45,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
 
     useEffect(() => {
         const courseId = '6669f0ff8759b480859c10a7';
-        router.push(`/register?courseId=${courseId}`)
+        router.push(`/register?courseId=${courseId}`);
     }, [])
 
     useEffect(() => {

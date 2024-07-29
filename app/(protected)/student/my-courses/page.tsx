@@ -103,7 +103,7 @@ const EnrolledCourses = () => {
               id="myTab-4"
               role="tablist"
             >
-              <li role="presentation">
+              {/* <li role="presentation">
                 <Link
                   href="#"
                   className={`tab-button active ${styles.tabButton}`}
@@ -116,8 +116,8 @@ const EnrolledCourses = () => {
                 >
                   <span className="title">Enrolled</span>
                 </Link>
-              </li>
-              {/* <li role="presentation">
+              </li> */}
+              <li role="presentation">
                 <Link
                   href="#"
                   className={`tab-button ${styles.tabButton}`}
@@ -144,7 +144,7 @@ const EnrolledCourses = () => {
                 >
                   <span className="title">Completed</span>
                 </Link>
-              </li> */}
+              </li>
             </ul>
           </div>
 

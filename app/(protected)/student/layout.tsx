@@ -32,7 +32,7 @@ export default function StudentLayout({
       
       <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
         <div className="container">
-          <h3>Course:</h3> <span></span>
+          <h3 className="m-4">Course: <span style={{fontWeight:'400'}}>Learning Telecommunication</span></h3> 
           <div className="row">
             <div className="col-lg-12">
               <InstructorDashboardHeader />

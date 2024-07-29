@@ -138,7 +138,7 @@ export default function Notifications() {
                             <p className="b2" style={{fontWeight:`${alert.isRead ? '400':'700'}`}}>{alert.message}</p>
                           </td>
                           <td className="d-flex justify-content-center">
-                          {alert.isRead ? <i className="bi bi-eye-slash-fill" style={{fontSize:'1.2em'}}></i>:<i className="bi bi-eye-fill" style={{fontSize:'1.2em'}}></i>}
+                          {alert.isRead ? <i className="bi bi-envelope-open" style={{fontSize:'1.2em'}}></i>:<i className="bi bi-envelope-fill" style={{fontSize:'1.2em'}}></i>}
                           </td>
                         </tr>
                       ))

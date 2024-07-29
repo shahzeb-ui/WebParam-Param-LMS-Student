@@ -113,7 +113,7 @@ const FileUpload: React.FC = () => {
       formData.append('File', selectedFile.file);
 
       try {
-        const response = await axios.post(`https://khumla-testing-user-write.azurewebsites.net/api/v1/Profile/SubmitDocument`, formData, {
+        const response = await axios.post(`${deployedUrl}/api/v1/Profile/SubmitDocument`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

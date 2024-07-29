@@ -8,7 +8,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-export default function Profile({ user, student }: any) {
+export default function Profile({ student }: any) {
     const [firstName, setFirstName] = useState('');
     const [surname, setSurname] = useState('');
     const [idNumber, setIdNumber] = useState('');
@@ -26,16 +26,18 @@ export default function Profile({ user, student }: any) {
     const [id, setId] = useState('');
     const [codes, setCodes] = useState<any>();
     const cookies = new Cookies();
+    const user = cookies.get("loggedInUser");
 
     async function getInputCodes() {
         const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
         console.log('codes:', res.data.data);
         setCodes(res.data.data);
     }
-
-    console.log('logged in user in profile and student profile', user, student?.data);
     
-    console.log('codes: ', codes)
+    useEffect(() => {
+        console.log('codes: ', codes)
+    },[])
+    
 
     useEffect(() => {
         getUserProfile();
@@ -44,6 +46,7 @@ export default function Profile({ user, student }: any) {
     }, []);
 
     async function getUserProfile() {
+        debugger;
         if (!user?.data?.id && !user?.data?.userId) return;
         const res = await getStudentProfile(user.data.id || user.data.userId);
 
@@ -194,6 +197,7 @@ export default function Profile({ user, student }: any) {
                             placeholder="Enter Full Name"
                             value={firstName}
                             id="firstname"
+                            required
                             onChange={(e) => setFirstName(e.target.value)}
                         />
                     </div>
@@ -207,6 +211,7 @@ export default function Profile({ user, student }: any) {
                             placeholder="Enter Surname"
                             value={surname}
                             id="lastname"
+                            required
                             onChange={(e) => setSurname(e.target.value)}
                         />
                     </div>
@@ -219,6 +224,7 @@ export default function Profile({ user, student }: any) {
                             name="idNumber"
                             placeholder="Enter your Id number or passport"
                             value={idNumber}
+                            required
                             onChange={(e) => setIdNumber(e.target.value)}
                         />
                     </div>
@@ -231,6 +237,7 @@ export default function Profile({ user, student }: any) {
                             name="email"
                             placeholder="Enter your Id number or passport"
                             value={email}
+                            required
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
@@ -245,6 +252,7 @@ export default function Profile({ user, student }: any) {
                             name="date"
                             placeholder="01/05/1990"
                             value={dateOfBirth}
+                            required
                             onChange={(e) => setDateOfBirth(e.target.value)}
                         />
                     </div>
@@ -257,6 +265,7 @@ export default function Profile({ user, student }: any) {
                             name="city"
                             placeholder="Enter city name"
                             value={city}
+                            required
                             onChange={(e) => setCity(e.target.value)}
                         />
                     </div>
@@ -269,6 +278,7 @@ export default function Profile({ user, student }: any) {
                             name="phoneNumber"
                             placeholder="Enter your phone number"
                             value={phoneNumber}
+                            required
                             onChange={(e) => setPhoneNumber(e.target.value)}
                         />
                     </div>
@@ -280,6 +290,7 @@ export default function Profile({ user, student }: any) {
                             id="gender"
                             name="gender"
                             value={gender}
+                            required
                             onChange={(e) => setGender(e.target.value)}
                             className="w-100"
                         >
