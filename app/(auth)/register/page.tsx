@@ -17,8 +17,11 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     const [isPasswordNotMatch, setPasswordNotMatch] = useState(false);
     
     const cookies = new Cookies();
+    // console.log('searchParam CourseId: ', searchParams.courseId);
+
     const router = useRouter()
     async function handleRegister(e:any) {
+        debugger;
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
@@ -43,10 +46,10 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         setErrorMessage(false)
     }, [username, email, password, confirmPassword])
 
-    useEffect(() => {
-        const courseId = '6669f0ff8759b480859c10a7';
-        router.push(`/register?courseId=${courseId}`);
-    }, [])
+    // useEffect(() => {
+    //     const courseId = '6669f0ff8759b480859c10a7';
+    //     router.push(`/register?courseId=${courseId}`);
+    // }, [])
 
     useEffect(() => {
         if (confirmPassword.length >= password.length && password != confirmPassword) {
