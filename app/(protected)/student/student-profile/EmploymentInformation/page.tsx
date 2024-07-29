@@ -3,6 +3,7 @@ import { updateEmployeeInformation } from "@/app/api/studentProfile/studentprofi
 import { FormEvent, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { preferredOccupations, sector } from "./data";
+import axios from "axios";
 
 export default function EmploymentInformation({student}:any) {
   const cookies = new Cookies();
@@ -14,6 +15,14 @@ export default function EmploymentInformation({student}:any) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedSector, setSelectedSector] = useState('');
   const [preferedOccupation, setPreferedOccupation] = useState('');
+  const [codes, setCodes] = useState<any>()
+
+  async function getInputCodes() {
+    const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
+
+    console.log('codes:', res.data.data);
+    setCodes(res.data.data)
+  }
 
 
   function setStudentContactInformation(student: any) {
@@ -49,6 +58,10 @@ export default function EmploymentInformation({student}:any) {
       
   }
 
+  useEffect(() => {
+    getInputCodes();
+  }, [])
+
   return (
     <div
     className="tab-pane fade active show"
@@ -64,14 +77,19 @@ export default function EmploymentInformation({student}:any) {
   <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
       <label htmlFor="employmentStatus">Employment Status</label>
-      <input
-        type="text"
-        name="employmentStatus"
-        placeholder="Enter Employment Status"
-        value={employmentStatus}
+        <select
+        // placeholder="Enter Employment Status"
         id="employmentStatus"
+        value={employmentStatus}
         onChange={(e) => setEmploymentStatus(e.target.value)}
-      />
+      >
+        <option value="">select</option>
+        {
+         codes && codes[6]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
+      </select>
     </div>
   
   </div>
