@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
+import ErrorPage from './404';
+import { useSearchParams } from 'next/navigation'
 
-export default function Register({searchParams}: {searchParams: {courseId: string}}) {
+export default function Register() {
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setpassword] = useState('');
@@ -15,6 +17,13 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [isPasswordNotMatch, setPasswordNotMatch] = useState(false);
+    const [isCourseIdPresent, setIsCourseIdPresent] = useState(false);
+
+    const searchParams = useSearchParams()
+
+    console.log("courseId", searchParams.get("courseId"));
+
+    const courseId = "0";
     
     const cookies = new Cookies();
     // console.log('searchParam CourseId: ', searchParams.courseId);
@@ -23,34 +32,32 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     async function handleRegister(e:any) {
         debugger;
         e.preventDefault();
+        // if (searchParams.courseId) {
         setIsSubmitted(true);
-        const payload: registerType = {
-            courseId: searchParams.courseId,
-            email,
-            username,
-            password,
-            confirmPassword,
-        };
 
-        debugger;
-        const res = await registerUser(payload);
-        setIsSubmitted(false);
-        if (res?.data.message != "User exists") {
-         cookies.set('userEmail', payload.email);
-            router.push('/verify-account');
-        } else {
-            setErrorMessage(true)
-        }
+            const payload: registerType = {
+                courseId: courseId,
+                email,
+                username,
+                password,
+                confirmPassword,
+            };
+    
+            debugger;
+            const res = await registerUser(payload);
+            setIsSubmitted(false);
+            if (res?.data.message != "User exists") {
+             cookies.set('userEmail', payload.email);
+                router.push('/verify-account');
+            } else {
+                setErrorMessage(true)
+            }
+        // } 
     }
     useEffect(() => {
         setErrorMessage(false)
     }, [username, email, password, confirmPassword])
-
-    // useEffect(() => {
-    //     const courseId = '6669f0ff8759b480859c10a7';
-    //     router.push(`/register?courseId=${courseId}`);
-    // }, [])
-
+    
     useEffect(() => {
         if (confirmPassword.length >= password.length && password != confirmPassword) {
             setPasswordNotMatch(true);
@@ -58,6 +65,10 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
             setPasswordNotMatch(false)
         }
     }, [password, confirmPassword])
+
+    if (!courseId) {
+        return <ErrorPage />
+    }
 
     
     return (
