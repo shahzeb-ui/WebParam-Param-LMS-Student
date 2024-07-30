@@ -11,6 +11,7 @@ import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { deployedUrl } from '@/app/api/endpoints';
 import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
 import { documentsRequired } from './data';
+import Loading from './loading';
 
 const pdfVersion = "2.16.105";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
@@ -28,6 +29,7 @@ const FileUpload: React.FC = () => {
   const [showDocumentModal, setShowDocumentModal] = useState(false);
   const [documentToView, setDocumentToView] = useState('');
   const [isChangingDoc, setIsChangingDoc] = useState(false);
+  const [loaded, setLoader] = useState(true);
   const [docToChange, setDocToChange] = useState<any>()
 
   const [files, setFiles] = useState<Record<DocumentType, File | null>>(
@@ -41,6 +43,7 @@ const FileUpload: React.FC = () => {
   const user = cookies.get('loggedInUser');
 
   async function getDocuments() {
+    setLoader(true);
     try {
       if (user?.data) {
         const docs = await getStudentDocuments(user?.data.id || user?.data?.userId);
@@ -51,6 +54,8 @@ const FileUpload: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching documents:', error);
+    } finally {
+      setLoader(false); // Ensure loader is hidden once the fetch is complete
     }
   }
 
@@ -185,6 +190,17 @@ const FileUpload: React.FC = () => {
   useEffect(() => {
     console.log('documents:', documents);
   }, [documents]);
+
+  if (loaded) {
+    debugger;
+    return <Loading />; // Show loading while documents are being fetched
+  }
+
+  
+  // if (!loaded) {
+  //   debugger;
+  //   return <Loading />; // Show loading while documents are being fetched
+  // }
 
   return (
     <>

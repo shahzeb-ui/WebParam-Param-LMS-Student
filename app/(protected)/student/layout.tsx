@@ -59,7 +59,7 @@ export default function StudentLayout({
         <div className="container">
           <div className="mb-5">
             <h3 className="mb-2">Course: <span style={{fontWeight:'400'}}>Learning Telecommunication</span></h3> 
-            <p className="ml-5">Course: Code: <strong>C3498</strong></p>
+            <p className="ml-5">Course: Code: <strong>TEL101</strong></p>
           </div>
           <div className="row">
             <div className="col-lg-12">
