@@ -4,6 +4,7 @@ import './userProfile.scss';
 import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
 import defaultImage from './defaultPic.jpg';
 import coverImageLocal from './cover.png';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -27,9 +28,10 @@ export default function Profile({ student }: any) {
     const [codes, setCodes] = useState<any>();
     const cookies = new Cookies();
     const user = cookies.get("loggedInUser");
+    const router = useRouter();
 
     async function getInputCodes() {
-        const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
+        const res = await axios.get(`https://khumla-dev-user-read.azurewebsites.net/api/Student/GetCodes`);
         console.log('codes:', res.data.data);
         setCodes(res.data.data);
     }
@@ -62,7 +64,6 @@ export default function Profile({ student }: any) {
             setDateOfBirth(dob);
             setCountry(res.data.data.country);
             setCity(res.data.data.city);
-            // setProvince(res.data.data.province);
             setPhoneNumber(res.data.data.phoneNumber);
             setProfilePic(res.data.profilePicture);
             setCoverImage(res.data.coverPicture);
@@ -97,6 +98,10 @@ export default function Profile({ student }: any) {
         };
 
         const res = await StudentProfile(payload);
+
+        if (res) {
+            router.push('/student/student-profile?tab=democraticLegal')
+        }
         console.log(res);
         getUserProfile();
         setIsSubmitting(false);
@@ -105,8 +110,6 @@ export default function Profile({ student }: any) {
     const handleProfilePicChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
-
-            // Preview the selected image
             const reader = new FileReader();
             reader.onload = () => {
                 setProfilePic(reader.result as string);
@@ -115,10 +118,11 @@ export default function Profile({ student }: any) {
 
             // Upload the image to the server
             const formData = new FormData();
-            formData.append('profilePicture', file);
+            formData.append('file', file);
 
             try {
-                const response = await axios.post('https://your-server-url/api/upload-profile-picture', formData, {
+                // const response = await axios.post(`https://khumla-dev-user-write.azurewebsites.net/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
+                    const response = await axios.post(``, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -325,7 +329,7 @@ export default function Profile({ student }: any) {
                         disabled={isSubmitting}
                     >
                         <span className="icon-reverse-wrapper">
-                            <span className="btn-text">Update Profile</span>
+                            <span className="btn-text">Proceed</span>
                             <span className="btn-icon">
                                 <i className="feather-arrow-right" />
                             </span>

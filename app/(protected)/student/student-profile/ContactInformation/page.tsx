@@ -3,10 +3,12 @@ import { updateContactInformation } from "@/app/api/studentProfile/studentprofil
 import { FormEvent, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { relationshipOptions } from "./data";
+import { useRouter } from "next/navigation";
 
 export default function ContactInformation({student}:any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
+  const router = useRouter();
 
   const [homeAddress1, setHomeAddress1] = useState('');
   const [postalAddress1, setPostalAddress1] = useState('');
@@ -73,6 +75,7 @@ export default function ContactInformation({student}:any) {
         if (res) {
           console.log('response', res);
           setIsSubmitting(false);
+          router.push('student//student-profile?tab=EmploymentInformation')
         }
     }
 
@@ -285,12 +288,25 @@ export default function ContactInformation({student}:any) {
   
   <div className="col-12 mt--20">
     <div className="rbt-form-group">
-      <button
+      {/* <button
          className="rbt-btn btn-gradient"
          type='submit'
          style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
       >
         {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
+      </button> */}
+      <button
+          className="btn-sm mr--10 hover-icon-reverse w-100"
+          style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+          type="submit"
+          disabled={isSubmitting}
+      >
+          <span className="icon-reverse-wrapper">
+              <span className="btn-text">Proceed</span>
+              <span className="btn-icon">
+                  <i className="feather-arrow-right" />
+              </span>
+          </span>
       </button>
     </div>
   </div>

@@ -5,7 +5,7 @@ import { readUserData } from "../endpoints";
 
 export async function StudentProfile(payload: any) {
     try {
-        const register = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/v1/Profile/UpdateProfile`,payload);
+        const register = await axios.put(`https://khumla-dev-user-write.azurewebsites.net/api/v1/Profile/UpdateProfile`,payload);
         return register;
     } catch (error: any) {
         console.log(error);
@@ -14,7 +14,7 @@ export async function StudentProfile(payload: any) {
 
 export async function updateDemographicsInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentDemographicsInformation`,payload);
+        const res = await axios.put(`https://khumla-dev-user-write.azurewebsites.net/api/Student/UpdateStudentDemographicsInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -23,7 +23,7 @@ export async function updateDemographicsInformation(payload: any) {
 
 export async function updateContactInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentContactInformation`,payload);
+        const res = await axios.put(`https://khumla-dev-user-write.azurewebsites.net/api/Student/UpdateStudentContactInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -32,7 +32,7 @@ export async function updateContactInformation(payload: any) {
 
 export async function updateEmployeeInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentEmployeeInformation`,payload);
+        const res = await axios.put(`https://khumla-dev-user-write.azurewebsites.net/api/Student/UpdateStudentEmployeeInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -41,7 +41,7 @@ export async function updateEmployeeInformation(payload: any) {
 
 export async function updateRegionalInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentRegionalInformation`,payload);
+        const res = await axios.put(`https://khumla-dev-user-write.azurewebsites.net/api/Student/UpdateStudentRegionalInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -59,7 +59,7 @@ export async function getStudentProfile(userId:any) {
 }
 
 export const getStudentData = async (studentId: string) => {
-    const resp = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetStudentInformation/${studentId} `)
+    const resp = await axios.get(`https://khumla-dev-user-read.azurewebsites.net/api/Student/GetStudentInformation/${studentId} `)
     return resp.data
   }
   
