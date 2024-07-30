@@ -43,10 +43,6 @@ const Navbar = () => {
     };
   }, [currentSection]);
 
-  const handleAvatarClick = () => {
-    setIsDropdownVisible(!isDropdownVisible);
-  };
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -77,9 +73,9 @@ const Navbar = () => {
                           className="logo" 
                           style={{ 
                             fontFamily: 'League Spartan, sans-serif', 
-                            fontWeight: 'bolder', 
+                            fontWeight: '900', 
                             color: '#24345c',
-                            fontSize: '40px'
+                            fontSize: '50px'
                           }}
                         >
                           thooto
@@ -121,7 +117,7 @@ const Navbar = () => {
 
                       <div className="header-right d-flex align-items-center mt">
                         <div className="d-none d-md-block me-3">
-                          <Link href="#" onClick={handleAvatarClick}>
+                          <div>
                             <Image
                               src={User}
                               alt="User Avatar"
@@ -129,36 +125,17 @@ const Navbar = () => {
                               height={40}
                               className="rounded-circle"
                             />
-                          </Link>
-                          {isDropdownVisible && (
-                            <div className={styles.dropdownMenu}>
-                              <UserStudent closeDropdown={closeDropdown} />
-                            </div>
-                          )}
-                        </div>
-
-                        <div
-                          className="rbt-offcanvas-trigger d-xl-none"
-                          id="rbt-offcanvas-activation"
-                          onClick={toggleSidebar}
-                        >
-                          <span className="offcanvas-trigger">
-                            <span className="offcanvas-bars">
-                              <span></span>
-                              <span></span>
-                              <span></span>
-                            </span>
-                          </span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </header>
-              <StudentMobileSideBar
+              {/* <StudentMobileSideBar
                 isOpen={isSidebarOpen}
                 toggleSidebar={toggleSidebar}
-                />
+                /> */}
               </>
         }
     </>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { statsSAAreaCodeOptions } from "./data";
+import { useRouter } from "next/navigation";
 
 export default function DemocraticLegal({student}:any) {
   const cookies = new Cookies();
@@ -22,7 +23,8 @@ export default function DemocraticLegal({student}:any) {
   const [provinceCode, setProvinceCode] = useState('');
   const [statsSAAreaCode, setStatsSAAreaCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [codes, setCodes] = useState<any>()
+  const [codes, setCodes] = useState<any>();
+  const router = useRouter();
 
   async function getInputCodes() {
     const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
@@ -82,6 +84,7 @@ export default function DemocraticLegal({student}:any) {
       if (res) {
         console.log('response', res);
         setIsSubmitting(false);
+        router.push('/student/student-profile?tab=ContactInformation')
       }
   }
 
@@ -117,6 +120,7 @@ export default function DemocraticLegal({student}:any) {
       name="equityCode" 
       value={equityCode} 
       id=""
+      required
       onChange={(e) => setEquityCode(e.target.value)}>
         <option value="">select</option>
         {
@@ -136,6 +140,7 @@ export default function DemocraticLegal({student}:any) {
         name="nationalityCode"
         value={nationalityCode}
         id="nationalityCode"
+        required
         onChange={(e) => setNationalityCode(e.target.value)}
       >
         <option value="">select</option>
@@ -154,6 +159,7 @@ export default function DemocraticLegal({student}:any) {
         name="homeLanguageCode"
         value={homeLanguageCode}
         id="homeLanguageCode"
+        required
         onChange={(e) => setHomeLanguageCode(e.target.value)}
       >
         <option value="">select</option>
@@ -172,6 +178,7 @@ export default function DemocraticLegal({student}:any) {
         name="citizenStatusCode"
         value={citizenStatusCode}
         id="citizenStatusCode"
+        required
         onChange={(e) => setCitizenStatusCode(e.target.value)}
       >
         <option value="">select</option>
@@ -190,6 +197,7 @@ export default function DemocraticLegal({student}:any) {
         name="socioeconomicCode"
         value={socioeconomicCode}
         id="socioeconomicCode"
+        required
         onChange={(e) => setSocioeconomicCode(e.target.value)}
       >
         <option value="">select</option>
@@ -208,6 +216,7 @@ export default function DemocraticLegal({student}:any) {
         name="disabilityCode"
         value={disabilityCode}
         id="disabilityCode"
+        required
         onChange={(e) => setDisabilityCode(e.target.value)}
       >
         <option value="">select</option>
@@ -226,6 +235,7 @@ export default function DemocraticLegal({student}:any) {
         name="disabilityRating"
         value={disabilityRating}
         id="disabilityRating"
+        required
         onChange={(e) => setDisabilityRating(e.target.value)}
       >
         <option value="">select</option>
@@ -244,6 +254,7 @@ export default function DemocraticLegal({student}:any) {
         name="immigrantStatus"
         value={immigrantStatus}
         id="immigrantStatus"
+        required
         onChange={(e) => setImmigrantStatus(e.target.value)}
       >
         <option value="">select</option>
@@ -292,6 +303,7 @@ export default function DemocraticLegal({student}:any) {
         name="provinceCode"
         value={provinceCode}
         id="provinceCode"
+        required
         onChange={(e) => setProvinceCode(e.target.value)}
         >
         <option value="">select</option>
@@ -310,6 +322,7 @@ export default function DemocraticLegal({student}:any) {
           name="statsSAAreaCode"
           id="statsSAAreaCode"
           value={statsSAAreaCode}
+          required
           onChange={(e) => setStatsSAAreaCode(e.target.value)}
         >
           <option value="">Select STATSSA Area Code</option>
@@ -327,13 +340,26 @@ export default function DemocraticLegal({student}:any) {
   </div>
   <div className="col-12 mt--20">
     <div className="rbt-form-group">
-      <button
+      {/* <button
          className="rbt-btn btn-gradient"
          type='submit'
          style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
       >
         {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
-      </button>
+      </button> */}
+      <button
+        className="btn-sm mr--10 hover-icon-reverse w-100"
+        style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+        type="submit"
+        disabled={isSubmitting}
+    >
+        <span className="icon-reverse-wrapper">
+            <span className="btn-text">Proceed</span>
+            <span className="btn-icon">
+                <i className="feather-arrow-right" />
+            </span>
+        </span>
+    </button>
     </div>
   </div>
     </form>

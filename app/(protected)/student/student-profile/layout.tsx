@@ -33,7 +33,7 @@ return (
          {navArray.map((nav) => (
                 <li role="presentation" key={nav.key}>
                 <Link
-                   className={`tab-button ${pathname == `/student/student-profile/${nav.key}`  ? 'active' : ''}`}
+                   className={`tab-button ${pathname == `/student/student-profile?tab=${nav.key}`  ? 'active' : ''}`}
                    id={`${nav.key}-tab`}
                   data-bs-toggle="tab"
                   data-bs-target="#password"

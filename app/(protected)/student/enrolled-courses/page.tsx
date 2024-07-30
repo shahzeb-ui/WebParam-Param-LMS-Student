@@ -8,6 +8,7 @@ import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standard
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
 import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
 import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
+import courseImage from './courseImage.jpeg';
 import Cookies from "universal-cookie";
 
 const EnrolledCourses = () => {
@@ -22,6 +23,7 @@ const EnrolledCourses = () => {
   const [showDescription, setShowDescription] = useState(false);
   const [showAuthor, setShowAuthor] = useState(false);
   const [courseStyle, setCourseStyle] = useState("two");
+  
   const cookies = new Cookies();
 
   const user = cookies.get("loggedInUser");
@@ -30,17 +32,6 @@ const EnrolledCourses = () => {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-//   const handleNext = () => {
-//     if (endIndex < unitStandards.length) {
-//       setCurrentPage(currentPage + 1);
-//     }
-//   };
-
-//   const handlePrevious = () => {
-//     if (currentPage > 0) {
-//       setCurrentPage(currentPage - 1);
-//     }
-//   };
 
   const getUnitStandards = async (courseId: string) => {
     setLoading(true);
@@ -72,8 +63,6 @@ const EnrolledCourses = () => {
   }
 
   useEffect(() => {
-    // const courseId = "668fcf681a1ce7b0635b61c6";
-    // getUnitStandards(courseId);
     debugger;
     getKnowledgeModules(user.data.id||user.data.userId);
 
@@ -157,45 +146,56 @@ const EnrolledCourses = () => {
             >
               <div className="row g-5">
                 {unitStandards?.slice(0,1).map((standard, index) => (
-                  <div
-                    className="col-lg-4 col-md-6 col-12"
-                    key={`unit-standard-completed-${index}`}
-                  >
-                   <div className="rbt-card variation-01 rbt-hover">
+                  <div className="col-lg-4 col-md-6 col-12" key={index}>
+                  <div className="rbt-card variation-01 rbt-hover">
                     <div className="rbt-card-img">
                       <a href="/lesson">
-                      <img alt="Introductory studies for Project Managers" loading="lazy" width={330} height={227} decoding="async" data-nimg={1} src="/_next/static/media/courseImage.b0b06990.jpeg" style={{color: 'transparent'}} />
+                        <img
+                          alt="Introductory studies for Project Managers"
+                          loading="lazy"
+                          width={330}
+                          height={227}
+                          decoding="async"
+                          data-nimg={1}
+                          src={courseImage.src}
+                          style={{ color: "transparent" }}
+                        />
                       </a>
                     </div>
                     <div className="rbt-card-body">
-                      <div className="rbt-card-top">
-                        <div className="rbt-bookmark-btn">
-                          <a className="rbt-round-btn" title="Bookmark" href="#">
-                            <i className="feather-bookmark" />
-                          </a>
-                        </div>
-                      </div>
-                      <h4 className="rbt-card-title">
-                        <a href="/lesson">{standard.title}</a>
+                      <div className="rbt-card-top" />
+                      <h4
+                        className="rbt-card-title"
+                        style={{ fontSize: "1.2em", margin: "5px 0px" }}
+                      >
+                        <a href="/lesson">Introductory studies for Project Managers</a>
                       </h4>
-                      <ul className="rbt-meta">
-                        <li><i className="feather-book" />0 Lessons</li>
-                        <li><i className="feather-users" />0 Students</li>
+                      <ul className="rbt-meta mt-3">
+                        <li>
+                          <i className="feather-book" />
+                          KM269{" "}
+                        </li>
+                        <li>
+                          <i className="bi bi-play-circle-fill" />
+                          8 Videos
+                        </li>
                       </ul>
                       <div className="rbt-progress-style-1 mb--20 mt--10">
                         <div className="single-progress">
-                        <h6 className="rbt-title-style-2 mb--10" dangerouslySetInnerHTML={{ __html: standard.description }}></h6>
-                          </div>
+                          <h6 className="rbt-title-style-2 mb--10" />
                         </div>
-                        <h6 className="rbt-title-style-2 mb--10" />
-                        <div className="rbt-card-bottom">
-                          <Link href="/lesson">
-                            <button className="bi bi-play rbt-btn bg-primary-opacity w-100 text-center">Start Watching</button>
-                          </Link>
-                        </div>
+                      </div>
+                      <div className="rbt-card-bottom" />
+                      <h6 className="rbt-title-style-2 mb--10" />
+                      <div className="rbt-card-bottom">
+                        <button className="bi bi-play rbt-btn bg-primary-opacity w-100 text-center continue-watching">
+                          <a href="/lesson">Continue Watching</a>
+                        </button>
                       </div>
                     </div>
                   </div>
+                </div>
+                
                 ))}
               </div>
             </div>

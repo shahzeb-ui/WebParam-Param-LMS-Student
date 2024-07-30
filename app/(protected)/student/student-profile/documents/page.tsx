@@ -273,7 +273,10 @@ const FileUpload: React.FC = () => {
           </Worker>
         </Modal.Body>
       </Modal>
-
+      <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{width:'80%', margin:'0 auto'}}>
+        <span className="fw-semibold">Attention!</span> Please upload all your documents to proceed.
+        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
       <div className="requiredDocs">
         {documentsRequired.map((doc, index) => {
           const docType = doc.documentName as DocumentType;

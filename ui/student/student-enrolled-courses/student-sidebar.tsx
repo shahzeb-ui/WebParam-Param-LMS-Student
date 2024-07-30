@@ -124,7 +124,7 @@ const StudentDashboardSidebar = ({isEnrolled}:any) => {
                     </Link>
                   </li>
 
-                  <li>
+                  {/* <li>
                     <Link
                       href={'#'}
                       className={`${path === '/student/settings' ? "active" : ""}`}
@@ -132,7 +132,7 @@ const StudentDashboardSidebar = ({isEnrolled}:any) => {
                       <i className='feather-volume-2' />
                       <span>Settings</span>
                     </Link>
-                  </li>
+                  </li> */}
 
                   <li>
                     <div
