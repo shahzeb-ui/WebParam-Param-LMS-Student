@@ -15,7 +15,7 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const sections = [
-    { id: "dashboard", label: "Dashboard", link: "/student/analytics" },
+    { id: "dashboard", label: "Dashboard", link: "/student/dashboard" },
     { id: "course", label: "My Courses", link: "/student/enrolled-courses" },
   ];
 
@@ -64,11 +64,11 @@ const Navbar = () => {
               <div className="header-left">
                 <Link href="/" className="logo" 
                 style={{
-                  fontFamily: "League Spartan",
-                  fontWeight: "bolder",
+                  fontFamily:`"League Spartan" sans-serif `,
+                  fontWeight: "900",
                   color: "rgb(36, 52, 92)",
-                  fontSize: "40px"}}>
-                  Thooto
+                  fontSize: "50px"}}>
+                  thooto
                 </Link>
               </div>
 
