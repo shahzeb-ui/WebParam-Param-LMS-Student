@@ -64,8 +64,8 @@ const Navbar = () => {
               <div className="header-left">
                 <Link href="/" className="logo" 
                 style={{
-                  fontFamily: "League Spartan",
-                  fontWeight: "bolder",
+                  fontFamily:`"League Spartan" sans-serif `,
+                  fontWeight: "900",
                   color: "rgb(36, 52, 92)",
                   fontSize: "40px"}}>
                   Thooto
