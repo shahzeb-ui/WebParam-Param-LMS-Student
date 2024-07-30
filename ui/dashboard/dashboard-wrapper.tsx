@@ -7,6 +7,15 @@ import "./userProfile.scss";
 const InstructorDashboardHeader = () => {
   return (
     <>
+    <div className="mb-5">
+  <h3 className="mb-2">
+    Course: <span style={{ fontWeight: 400 }}>Learning Telecommunication</span>
+  </h3>
+  <p className="ml-5">
+    Course Code: <strong>C3498</strong>
+  </p>
+</div>
+
       <div className="rbt-dashboard-content-wrapper">
         <div className="height-350 rbt-shadow-box" 
         style={{

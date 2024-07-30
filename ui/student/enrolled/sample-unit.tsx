@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import { useLessonContext } from "@/context/lesson-context/lesson-context";
-import styles from "@/ui/student/enrolled/course.module.css";
+import './courseStyle.scss'
 import courseImage from './courseImage.jpeg'
 import "@/styles/css/plugins/mainstyle.css"
 
@@ -86,8 +86,8 @@ const UnitStandardWidget: React.FC<Props> = ({
       <div className="rbt-card variation-01 rbt-hover">
         <div className="rbt-card-img">
           <Link
-            href={`/student/enrolled-courses/${data.id}`}
-            onClick={() => handleClick(data.id)}
+            href={`/lesson`}
+            // onClick={() => handleClick(data.id)}
           >
             <Image
               width={330}
@@ -102,16 +102,12 @@ const UnitStandardWidget: React.FC<Props> = ({
           {courseStyle === "two" && (
             <>
               <div className="rbt-card-top">
-                <div className="rbt-bookmark-btn">
-                  <Link className="rbt-round-btn" title="Bookmark" href="#">
-                    <i className="feather-bookmark" />
-                  </Link>
-                </div>
+                <p className="w-100"><strong>C3498</strong></p>
               </div>
               <h4 className="rbt-card-title">
                 <Link
-                  href={`/student/enrolled-courses/${data.id}`}
-                  onClick={() => handleClick(data.id)}
+                  href={`/lesson`}
+                  // onClick={() => handleClick(data.id)}
                 >
                   {data.title}
                 </Link>
@@ -138,22 +134,22 @@ const UnitStandardWidget: React.FC<Props> = ({
               </div>
 
               <div className="rbt-card-bottom">
-                <Link
+                {/* <Link
                   className="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
                   href="#"
                 >
                   View More
-                </Link>
+                </Link> */}
               </div>
               <h6 className="rbt-title-style-2 mb--10"></h6>
               <div className="rbt-card-bottom">
-                <Link href="#" onClick={() => handleClick(data.id)}>
                   <button
-                    className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center ${styles.buttonSmall}`}
+                    className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center continue-watching`}
                   >
-                    Continue Watching
+                      <Link href="/lesson">
+                          Continue Watching
+                      </Link>
                   </button>
-                </Link>
               </div>
             </>
           ) : (
