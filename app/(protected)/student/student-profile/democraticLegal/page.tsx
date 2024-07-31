@@ -228,6 +228,8 @@ export default function DemocraticLegal({student}:any) {
       </select>
     </div>
   </div>
+  
+  {disabilityCode != "N" && 
   <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="disabilityRating">Disability Rating</label>
@@ -246,7 +248,8 @@ export default function DemocraticLegal({student}:any) {
         }
       </select>
     </div>
-  </div>
+  </div>}
+
   <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
       <label htmlFor="immigrantStatus">Immigrant Status</label>

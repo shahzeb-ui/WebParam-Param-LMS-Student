@@ -267,7 +267,7 @@ const FileUpload: React.FC = () => {
         <Modal.Body>
           <Worker workerUrl={pdfWorkerUrl}>
             <Viewer
-              fileUrl={`https://khumla-development-user-read.azurewebsites.net/api/Documents/PreviewDocument/${documentToView}`}
+              fileUrl={`https://khumla-dev-user-read.azurewebsites.net/api/v1/Documents/PreviewDocument/${documentToView}`}
               plugins={[defaultLayoutPluginInstance]}
             />
           </Worker>

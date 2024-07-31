@@ -4,18 +4,21 @@ import { useRouter } from 'next/navigation';
 import './layout.scss'
 
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 export default function Layout({children}: {children: React.ReactNode}) {
     const navArray = [
         { key: 'profile', label: 'Bio' },
         { key: 'democraticLegal', label: 'Demographics' },
         { key: 'ContactInformation', label: 'Contacts' },
-        // { key: 'RegionalInformation', label: 'Regional' },
         { key: 'EmploymentInformation', label: 'Employment' },
         { key: 'documents', label: 'Documents' }
     ];
 
     const pathname = usePathname();
     const router = useRouter();
+    const [tab, setTab] = useState('');
+
+    console.log("pathname: ", tab);
 
 return (
 <div className="col-lg-9" style={{width:'100%'}}>
@@ -33,7 +36,7 @@ return (
          {navArray.map((nav) => (
                 <li role="presentation" key={nav.key}>
                 <Link
-                   className={`tab-button ${pathname == `/student/student-profile?tab=${nav.key}`  ? 'active' : ''}`}
+                   className={`tab-button ${tab == `${nav.key}`  ? 'active' : ''}`}
                    id={`${nav.key}-tab`}
                   data-bs-toggle="tab"
                   data-bs-target="#password"
@@ -42,7 +45,7 @@ return (
                   aria-selected="false"
                   href={`/student/student-profile/${nav.key}`}
                   tabIndex={-1}
-                  onClick={() => router.push(`/student/student-profile?tab=${nav.key}`)}
+                  onClick={() => (router.push(`/student/student-profile?tab=${nav.key}`), setTab(nav.key))}
                 >
                   <span className="title">{nav.label}</span>
                 </Link>
