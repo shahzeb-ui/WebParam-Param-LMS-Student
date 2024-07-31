@@ -56,7 +56,7 @@ function Assessments() {
                   aria-selected={activeTab === "upcoming"}
                   href="#"
                 >
-                  <span className="title">Upcoming Assessments</span>
+                  <span className="title">Upcoming</span>
                 </a>
               </li>
               <li
@@ -76,7 +76,7 @@ function Assessments() {
                   aria-selected={activeTab === "active"}
                   href="#"
                 >
-                  <span className="title">Active Assessments</span>
+                  <span className="title">Active</span>
                 </a>
               </li>
               <li
@@ -96,7 +96,7 @@ function Assessments() {
                   aria-selected={activeTab === "completed"}
                   href="#"
                 >
-                  <span className="title">Completed Assessments</span>
+                  <span className="title">Completed</span>
                 </a>
               </li>
             </ul>
