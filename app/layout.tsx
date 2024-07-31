@@ -26,8 +26,8 @@ import { LessonProvider } from "@/context/lesson-context/lesson-context";
 const inter = Inter({ subsets: ["latin"] });
 
 
-const APP_NAME = "next-pwa example";
-const APP_DESCRIPTION = "This is an example of using next-pwa";
+const APP_NAME = "Thooto";
+const APP_DESCRIPTION = "Supercharge your learning";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
