@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Nav() {
     const cookies = new Cookies();
@@ -9,6 +10,7 @@ export default function Nav() {
 
     const user = cookies.get("loggedInUser");
     const name = cookies.get("username");
+    const profilePic = cookies.get("profilePic");
 
     console.log("user:::::  ", user);
 
@@ -40,17 +42,17 @@ export default function Nav() {
                     decoding="async"
                     data-nimg={1}
                     style={{ color: "transparent" }}
-                    src="https://histudy-nextjs.vercel.app/_next/image?url=%2Fimages%2Fteam%2Favatar.jpg&w=48&q=75"
+                    src={`${profilePic}`||`https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg`}
                     />
                 </div>
                 <div className="admin-info">
                     <span className="name" style={{fontSize:'12px',marginBottom:'0'}}>{name??user?.data?.email}</span>
-                    <a
+                    <Link
                     className="rbt-btn-link color-primary"
-                    href="/instructor/instructor-profile"
+                    href="/student/student-profile"
                     >
                     View Profile
-                    </a>
+                    </Link>
                 </div>
                 </div>
                 <ul className="user-list-wrapper">

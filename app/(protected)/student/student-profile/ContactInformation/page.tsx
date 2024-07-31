@@ -48,9 +48,10 @@ export default function ContactInformation({student}:any) {
         setStudentContactInformation(student);
     }, [student]);
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
       setIsSubmitting(true);
+      debugger;
   
       const payload = {
         userId: user.data.id || user.data.userId,
@@ -66,16 +67,16 @@ export default function ContactInformation({student}:any) {
         learnerEmailAddress: learnerEmailAddress,
         nextOfKinName: nextOfKinName,
         nextOfKinSurname: nextOfKinSurname,
-        nextOfKinContactNumber: nextOfKinContactNumber,
-        nextOfKinRelationship: nextOfKinRelationship
+        nextOfKinRelationship: nextOfKinRelationship,
+        nextOfKinContactNumber: nextOfKinContactNumber
       };
     
-        const res = updateContactInformation(payload);
+        const res = await updateContactInformation(payload);
   
         if (res) {
           console.log('response', res);
           setIsSubmitting(false);
-          router.push('student//student-profile?tab=EmploymentInformation')
+          router.push('/student/student-profile?tab=EmploymentInformation')
         }
     }
 
@@ -241,13 +242,13 @@ export default function ContactInformation({student}:any) {
 
   <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
-      <label htmlFor="learnerEmailAddress">Surname</label>
+      <label htmlFor="nextOfKinSurname">Surname</label>
       <input
         type="text"
-        name="learnerEmailAddress"
+        name="nextOfKinSurname"
         placeholder="Enter Next of Kin Surname"
         value={nextOfKinSurname}
-        id="learnerEmailAddress"
+        id="nextOfKinSurname"
         onChange={(e) => setNextOfKinSurname(e.target.value)}
       />
     </div>

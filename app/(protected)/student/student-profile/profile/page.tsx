@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { Modal } from 'react-bootstrap';
 
 export default function Profile({ student }: any) {
     const [firstName, setFirstName] = useState('');
@@ -26,6 +27,7 @@ export default function Profile({ student }: any) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [id, setId] = useState('');
     const [codes, setCodes] = useState<any>();
+    const [uploadingPic, setUploadingPic] = useState(false);
     const cookies = new Cookies();
     const user = cookies.get("loggedInUser");
     const router = useRouter();
@@ -37,8 +39,9 @@ export default function Profile({ student }: any) {
     }
     
     useEffect(() => {
-        console.log('codes: ', codes)
-    },[])
+        debugger;
+        getUserProfile();
+    },[profilePic])
     
 
     useEffect(() => {
@@ -49,10 +52,10 @@ export default function Profile({ student }: any) {
 
     async function getUserProfile() {
         debugger;
-        if (!user?.data?.id && !user?.data?.userId) return;
-        const res = await getStudentProfile(user.data.id || user.data.userId);
+        if (!user?.data?.id && !user?.id) return;
+        const res = await getStudentProfile(user.data.id || user.id);
 
-        console.log('res', res);
+        console.log('responseeeee', res);
 
         const dob = res?.data.data.dateOfBirth.split('T')[0];
         if (res?.data) {
@@ -65,10 +68,16 @@ export default function Profile({ student }: any) {
             setCountry(res.data.data.country);
             setCity(res.data.data.city);
             setPhoneNumber(res.data.data.phoneNumber);
-            setProfilePic(res.data.profilePicture);
+
+            if (res.data.data.profilePicture) {
+                setProfilePic(res.data.data.profilePicture);
+            }
+            
             setCoverImage(res.data.coverPicture);
             setBio(res.data.data.bio);
             setId(res.data.data.id);
+
+            cookies.set("profilePic", res.data.data.profilePicture)
 
             if (res.data.data.firstName && res.data.data.surname) {
               cookies.set("username", `${res.data.data.firstName} ${res.data.data.surname}`)
@@ -108,6 +117,7 @@ export default function Profile({ student }: any) {
     };
 
     const handleProfilePicChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUploadingPic(true);
         if (event.target.files && event.target.files[0]) {
             const file = event.target.files[0];
             const reader = new FileReader();
@@ -116,18 +126,17 @@ export default function Profile({ student }: any) {
             };
             reader.readAsDataURL(file);
 
-            // Upload the image to the server
             const formData = new FormData();
             formData.append('file', file);
 
             try {
-                // const response = await axios.post(`https://khumla-dev-user-write.azurewebsites.net/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
-                    const response = await axios.post(``, formData, {
+                const response = await axios.post(`https://khumla-dev-user-write.azurewebsites.net/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
                 });
                 console.log('Profile picture updated:', response.data);
+                setUploadingPic(false);
                 getUserProfile();
             } catch (error) {
                 console.error('Error uploading profile picture:', error);
@@ -136,6 +145,15 @@ export default function Profile({ student }: any) {
     };
 
     return (
+        <>
+        <Modal show={uploadingPic} onHide={() => setUploadingPic(false)}>
+            <Modal.Body>
+                <div className='d-flex justify-content-center flex-column align-items-center'>
+                    <div className="spinner-border" role="status"/>
+                    <p>Uploading Profile Picture...</p>
+                </div>
+            </Modal.Body>
+        </Modal>
         <div
             className="tab-pane fade active show"
             id="profile"
@@ -161,7 +179,7 @@ export default function Profile({ student }: any) {
                                 height={300}
                                 decoding="async"
                                 data-nimg={1}
-                                src={profilePic || defaultImage.src}
+                                src={`${profilePic}` || defaultImage.src}
                                 style={{ color: 'transparent', height: '120px !important' }}
                             />
                             <div className="rbt-edit-photo-inner">
@@ -338,5 +356,6 @@ export default function Profile({ student }: any) {
                 </div>
             </form>
         </div>
+        </>
     );
 }
