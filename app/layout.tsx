@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   applicationName: APP_NAME,
   title: {
     default: APP_NAME,
-    template: "%s - PWA App",
+    template: "%s",
   },
   description: APP_DESCRIPTION,
   manifest: "/manifest.json",
