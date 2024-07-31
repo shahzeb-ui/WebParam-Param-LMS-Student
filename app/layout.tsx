@@ -27,7 +27,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 const APP_NAME = "Thooto";
-const APP_DESCRIPTION = "Supercharge your learning";
+const APP_DESCRIPTION = "Supercharge your learning. 🚀🚀";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
