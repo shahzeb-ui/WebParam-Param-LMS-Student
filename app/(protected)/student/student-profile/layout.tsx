@@ -27,9 +27,9 @@ return (
     <div className="advance-tab-button mb--30" style={{overflow:'hidden'}}>
        {/* <ul className='navigation-tabs'> */}
        <ul className="nav nav-tabs tab-button-style-2 justify-content-start navigation-tabs"
-  id="settinsTab-4"
-  role="tablist"
->
+          id="settinsTab-4"
+          role="tablist"
+        >
          {navArray.map((nav) => (
                 <li role="presentation" key={nav.key}>
                 <Link
@@ -50,8 +50,6 @@ return (
         ))}
       </ul>
  
-
-
       <div
         className="tab-pane fade active show"
         id="profile"
