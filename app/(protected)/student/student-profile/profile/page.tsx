@@ -72,7 +72,7 @@ export default function Profile({ student }: any) {
             if (res.data.data.profilePicture) {
                 setProfilePic(res.data.data.profilePicture);
             }
-            
+
             setCoverImage(res.data.coverPicture);
             setBio(res.data.data.bio);
             setId(res.data.data.id);
@@ -89,6 +89,7 @@ export default function Profile({ student }: any) {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        debugger;
         setIsSubmitting(true);
         const payload = {
             userId: user?.data?.id,
@@ -341,7 +342,7 @@ export default function Profile({ student }: any) {
                 </div>
                 <div className="col-12">
                     <button
-                        className="btn-sm mr--10 hover-icon-reverse w-100"
+                        className="btn-sm mr--10 hover-icon-reverse w-100 text-light"
                         style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
                         type="submit"
                         disabled={isSubmitting}

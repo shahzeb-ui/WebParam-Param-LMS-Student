@@ -110,7 +110,7 @@ const Navbar = () => {
                       </Link>
                     </div>
 
-                    <div className="rbt-main-navigation d-none d-xl-block">
+                    {/* <div className="rbt-main-navigation d-none d-xl-block">
                       <nav className="mainmenu-nav onepagenav">
                         <ul className="mainmenu">
                           {sections.map((sec, i) => (
@@ -125,7 +125,7 @@ const Navbar = () => {
                           ))}
                         </ul>
                       </nav>
-                    </div>
+                    </div> */}
 
                     <div className="rbt-header-sec-col rbt-header-center d-none d-md-block margin-right-3">
                       <div className="rbt-header-content">
