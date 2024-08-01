@@ -57,10 +57,10 @@ export default function Nav() {
                 </div>
                 <ul className="user-list-wrapper">
                 <li>
-                    <a href="/student/dashboard">
+                    <Link href="/student/dashboard">
                     <i className="feather-home" />
                     <span>My Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
 {/*                 
                 <li>
@@ -70,11 +70,20 @@ export default function Nav() {
                     </a>
                 </li> */}
                 <li>
-                    <a href="/student/enrolled-courses">
+                    <Link href="/student/enrolled-courses">
                     <i className="feather-shopping-bag" />
                     <span>Enrolled Courses</span>
-                    </a>
+                    </Link>
                 </li>
+                <li>
+                    <Link
+                      href={'/student/notifications'}
+                    //   className={`${path === '/student/notifications' ? "active" : ""}`}
+                    >
+                      <i className='feather-volume-2' />
+                      <span>Notifications</span>
+                    </Link>
+                  </li>
                 
                 {/* <li>
                     <a href="/instructor/instructor-wishlist">

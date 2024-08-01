@@ -17,6 +17,7 @@ export default function EmploymentInformation({student}:any) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedSector, setSelectedSector] = useState('');
   const [preferedOccupation, setPreferedOccupation] = useState('');
+  const [referalCompany, setReferalCompany] = useState('');
   const [codes, setCodes] = useState<any>()
 
   async function getInputCodes() {
@@ -32,6 +33,9 @@ export default function EmploymentInformation({student}:any) {
     setEmploymentStatus(student?.data?.employmentStatus);
     setDateOfFisa(student?.data?.dateOfFisa);
     setSarsTaxNumber(student?.data?.sarsTaxNumber);
+    setSelectedSector(student?.data?.sector);
+    setPreferedOccupation(student?.data?.preferedOccupation);
+    setReferalCompany(student?.data.referalCompany);
   }
 
   useEffect(() => {
@@ -41,14 +45,14 @@ export default function EmploymentInformation({student}:any) {
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     setIsSubmitting(true);
-
+    debugger;
       const payload = {
         userId: user.data.id||user.data.userId,
         employmentStatus: employmentStatus,
-        // dateOfFisa: dateOfFisa,
         taxNumber: sarsTaxNumber,
         sector: selectedSector,
-        preferedOccupation: preferedOccupation
+        preferedOccupation: preferedOccupation,
+        referalCompany: referalCompany
       }
   
       const res = updateEmployeeInformation(payload);
@@ -134,39 +138,41 @@ export default function EmploymentInformation({student}:any) {
           onChange={(e) => setSelectedSector(e.target.value)}
       >
           <option value="">select</option>
-          {sector.map((item: any, index: number) => (
-              <option key={index} value={item.title} className="text-dark">{item.title}</option>
-          ))}
+          {
+         codes && codes[18]?.codes?.map((item:any, index:number) => (
+            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+          ))
+        }
       </select>
     </div>
   </div>
 
   <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{ marginBottom: '15px' }}>
-        <div className="rbt-form-group">
-          <label htmlFor="preferedOccupation">Preferred Occupation</label>
-          <select
-            name="preferedOccupation"
-            value={preferedOccupation}
-            id="preferedOccupation"
-            onChange={(e) => setPreferedOccupation(e.target.value)}
-          >
-            <option value="">Select</option>
-            {Array.from(new Set(preferredOccupations.map(item => item.sector)))
-              .filter(sector => sector === selectedSector || selectedSector === '')
-              .map((sector, index) => (
-                <optgroup key={index} label={sector}>
-                  {preferredOccupations
-                    .filter(item => item.sector === sector)
-                    .map((item, idx) => (
-                      <option key={idx} value={item.title} className="text-dark">
-                        {item.title}
-                      </option>
-                    ))}
-                </optgroup>
+  <div className="rbt-form-group">
+    <label htmlFor="preferedOccupation">Preferred Occupation</label>
+    <select
+      name="preferedOccupation"
+      value={preferedOccupation}
+      id="preferedOccupation"
+      onChange={(e) => setPreferedOccupation(e.target.value)}
+    >
+      <option value="">Select</option>
+      {Array.from(new Set(preferredOccupations.map(item => item.sector)))
+        .filter(sector => sector === selectedSector || selectedSector === '')
+        .map((sector, index) => (
+          <optgroup key={index} label={sector}>
+            {preferredOccupations
+              .filter(item => item.sector === sector)
+              .map((item, idx) => (
+                <option key={idx} value={item.title} className="text-dark">
+                  {item.title}
+                </option>
               ))}
-          </select>
-        </div>
-      </div>
+          </optgroup>
+        ))}
+    </select>
+  </div>
+</div>
 
       <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
@@ -175,7 +181,8 @@ export default function EmploymentInformation({student}:any) {
         type="text"
         placeholder="Enter The Name of The Referral "
         id="referalStatus"
-        onChange={(e) => setEmploymentStatus(e.target.value)}
+        value={referalCompany}
+        onChange={(e) => setReferalCompany(e.target.value)}
       />
     </div>
     </div>
@@ -197,7 +204,7 @@ export default function EmploymentInformation({student}:any) {
           disabled={isSubmitting}
       >
           <span className="icon-reverse-wrapper">
-              <span className="btn-text">Proceed</span>
+              <span className="btn-text text-light">Proceed</span>
               <span className="btn-icon">
                   <i className="feather-arrow-right" />
               </span>

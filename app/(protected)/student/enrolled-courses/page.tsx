@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import './course.scss'
 import Link from "next/link";
 import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";

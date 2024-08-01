@@ -72,7 +72,7 @@ export default function Profile({ student }: any) {
             if (res.data.data.profilePicture) {
                 setProfilePic(res.data.data.profilePicture);
             }
-            
+
             setCoverImage(res.data.coverPicture);
             setBio(res.data.data.bio);
             setId(res.data.data.id);
@@ -89,12 +89,12 @@ export default function Profile({ student }: any) {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        debugger;
         setIsSubmitting(true);
         const payload = {
             userId: user?.data?.id,
             firstName,
             surname,
-            email,
             idNumber,
             gender,
             dateOfBirth,
@@ -221,6 +221,12 @@ export default function Profile({ student }: any) {
                             id="firstname"
                             required
                             onChange={(e) => setFirstName(e.target.value)}
+                            onKeyDown={(e) => {
+                                // Prevent numeric input
+                                if (/\d/.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -235,6 +241,12 @@ export default function Profile({ student }: any) {
                             id="lastname"
                             required
                             onChange={(e) => setSurname(e.target.value)}
+                            onKeyDown={(e) => {
+                                // Prevent numeric input
+                                if (/\d/.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -242,12 +254,18 @@ export default function Profile({ student }: any) {
                     <div className="rbt-form-group">
                         <label htmlFor="idNumber">ID number</label>
                         <input
-                            type="text"
+                            type="number"
                             name="idNumber"
                             placeholder="Enter your Id number or passport"
                             value={idNumber}
                             required
                             onChange={(e) => setIdNumber(e.target.value)}
+                            // onKeyPress={(e) => {
+                            //     // Prevent non-numeric input
+                            //     if (!/[0-9]/.test(e.key)) {
+                            //         e.preventDefault();
+                            //     }}}
+                                pattern="[0-9]*" 
                         />
                     </div>
                 </div>
@@ -257,10 +275,8 @@ export default function Profile({ student }: any) {
                         <input
                             type="email"
                             name="email"
-                            placeholder="Enter your Id number or passport"
                             value={email}
-                            required
-                            onChange={(e) => setEmail(e.target.value)}
+                            readOnly
                         />
                     </div>
                 </div>
@@ -272,7 +288,6 @@ export default function Profile({ student }: any) {
                         <input
                             type="date"
                             name="date"
-                            placeholder="01/05/1990"
                             value={dateOfBirth}
                             required
                             onChange={(e) => setDateOfBirth(e.target.value)}
@@ -289,6 +304,12 @@ export default function Profile({ student }: any) {
                             value={city}
                             required
                             onChange={(e) => setCity(e.target.value)}
+                            onKeyDown={(e) => {
+                                // Prevent numeric input
+                                if (/\d/.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -296,12 +317,14 @@ export default function Profile({ student }: any) {
                     <div className="rbt-form-group">
                         <label htmlFor="phoneNumber">Phone Number</label>
                         <input
-                            type="text"
+                            type="tel"
                             name="phoneNumber"
                             placeholder="Enter your phone number"
                             value={phoneNumber}
                             required
-                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            onChange={(e) => {
+                                const numericValue = e.target.value.replace(/\D/g, '')
+                                setPhoneNumber(numericValue);}}
                         />
                     </div>
                 </div>
@@ -341,13 +364,13 @@ export default function Profile({ student }: any) {
                 </div>
                 <div className="col-12">
                     <button
-                        className="btn-sm mr--10 hover-icon-reverse w-100"
+                        className="btn-sm mr--10 hover-icon-reverse w-100 text-light"
                         style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
                         type="submit"
                         disabled={isSubmitting}
                     >
                         <span className="icon-reverse-wrapper">
-                            <span className="btn-text">Proceed</span>
+                            <span className="btn-text text-light">Proceed</span>
                             <span className="btn-icon">
                                 <i className="feather-arrow-right" />
                             </span>

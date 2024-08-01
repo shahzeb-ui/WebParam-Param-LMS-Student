@@ -46,7 +46,7 @@ const StudentDashboardSidebar = ({isEnrolled}:any) => {
 
               <nav className="mainmenu-nav">
                 {<ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                      <li>
+                      {/* <li>
                         <Link
                           href={'/student/dashboard'}
                           className={`${path === '/student/dashboard' ? "active" : ""}`}
@@ -54,7 +54,7 @@ const StudentDashboardSidebar = ({isEnrolled}:any) => {
                           <i className='bi bi-grid-fill' />
                           <span>Dashboard</span>
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
                         <Link
                           href={'/student/enrolled-courses'}
