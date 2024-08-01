@@ -204,7 +204,7 @@ export default function EmploymentInformation({student}:any) {
           disabled={isSubmitting}
       >
           <span className="icon-reverse-wrapper">
-              <span className="btn-text">Proceed</span>
+              <span className="btn-text text-light">Proceed</span>
               <span className="btn-icon">
                   <i className="feather-arrow-right" />
               </span>
