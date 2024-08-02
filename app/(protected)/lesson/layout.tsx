@@ -30,7 +30,7 @@ export default function LessonLayout({
   return (
     <>
       <VideoProvider>
-        <div className="rbt-lesson-area bg-color-white">
+        <div className="rbt-lesson-area bg-color-white position-relative">
           <div className="rbt-lesson-content-wrapper">
             <div className={isMobile ? "" : "rbt-lesson-leftsidebar"}>
               <LessonSidebar />

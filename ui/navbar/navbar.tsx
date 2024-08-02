@@ -89,7 +89,7 @@ const Navbar = () => {
         pathname != "/forgot-password" &&
         pathname != "/forgot-password/otp" && (
           <>
-            <header className="rbt-header">
+            <header className="rbt-header position-fixed right-0" style={{left:'0px', right:'0px'}}>
               <div className="rbt-sticky-placeholder"></div>
 
               <div className="rbt-header-wrapper">
