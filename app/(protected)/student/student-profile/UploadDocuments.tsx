@@ -8,7 +8,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import { deployedUrl } from '@/app/api/endpoints';
+import { writeUserData } from '@/app/api/endpoints';
 import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
 const pdfVersion = "2.16.105";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
@@ -100,7 +100,7 @@ const FileUpload: React.FC = () => {
       formData.append('Type', String(['identity', 'qualification', 'cv', 'Leaner Agreement'].indexOf(selectedFile.type)));
 
   try {
-    const response = await axios.post(`${deployedUrl}/api/v1/Profile/SubmitDocument`, formData, {
+    const response = await axios.post(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

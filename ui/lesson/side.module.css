@@ -8,7 +8,7 @@
 .lessonScrollSidebar {
     max-height: 100vh !important;
     overflow-y: auto !important;
-    padding-right: 15px !important;
+    padding-right: 5px !important;
 }
 
 .nextVideo {

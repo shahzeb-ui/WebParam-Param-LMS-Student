@@ -11,6 +11,7 @@ import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
 import LessonSidebar from "@/ui/lesson/Lesson-sidebar";
 import LessonQuiz from "@/app/(protected)/lesson/quiz/page";
 import styles from "@/styles/video/youtubevideo.module.css";
+import { useSearchParams } from "next/navigation";
 
 const QuestionAndAnswers = dynamic(
   () => import("@/ui/lesson/question-answers/question-answer"),
@@ -21,6 +22,10 @@ const Notes = dynamic(() => import("@/ui/lesson/notes/notes"), { ssr: false });
 const LessonHomepage = () => {
   const sidebarRef = useRef<React.ElementRef<typeof LessonSidebar>>(null);
   const [showQuiz, setShowQuiz] = useState<boolean>(false);
+ 
+  const searchParams = useSearchParams();
+
+  const title = searchParams.get("title");
 
   const handlePrevious = () => {
     if (sidebarRef.current) {
@@ -84,7 +89,7 @@ const LessonHomepage = () => {
             onClick={handleNext}
           ></i>
         </div>
-        <h5 className="bi bi-play course-title-2">Welcome to the Course</h5>
+        <h5 className="bi bi-play course-title-2">{title??"Welcome to the Course"}</h5>
         <div className="content-2">
           <div className="advance-tab-button mb--30">
             <ul

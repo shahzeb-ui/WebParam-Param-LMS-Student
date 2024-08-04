@@ -5,7 +5,7 @@ export default function ActiveAssessment() {
         <tr>
           <th>Assessment Name</th>
           <th>Due Date</th>
-          <th>Submission</th>
+          <th>Total Marks</th>
           <th />
         </tr>
       </thead>
@@ -22,7 +22,7 @@ export default function ActiveAssessment() {
             <p className="b3">2024-01-01</p>
           </td>
           <td>
-            <p className="b3">N/A</p>
+            <p className="b3">100</p>
           </td>
           <td>
             <div className="rbt-button-group justify-content-end">
@@ -31,7 +31,7 @@ export default function ActiveAssessment() {
                 title="Edit"
                 href="/lesson/assessments"
               >
-                <i className="feather-edit pl--0" /> Edit
+               Start
               </a>
               {/* <a
                 className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-success"
