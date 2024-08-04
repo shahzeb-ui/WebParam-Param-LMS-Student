@@ -22,7 +22,7 @@ export default function ActiveAssessment() {
             <p className="b3">2024-01-01</p>
           </td>
           <td>
-            <p className="b3">100</p>
+            <p className="b3">50</p>
           </td>
           <td>
             <div className="rbt-button-group justify-content-end">
