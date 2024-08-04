@@ -61,19 +61,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const pathname = usePathname();
+  let pathname = null
+ 
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body >
         <UserProvider>
           <LessonProvider>
-            {/* {pathname != "/register" &&
-              pathname != "/login" &&
-              pathname != "/verify-account" &&
-              pathname != "/forgot-password" &&
-              pathname != "/forgot-password/otp" && <Navbar />} */}
-              <Navbar />
+           <Navbar />
             {children}
             <BootstrapClient />
             <ToastContainer />

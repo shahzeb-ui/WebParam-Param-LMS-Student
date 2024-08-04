@@ -3,8 +3,11 @@
 import Image from "next/image";
 import thootoHeader from "./thoota.jpg"
 import "./userProfile.scss";
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 const InstructorDashboardHeader = () => {
+  var t = isBrowser;
+
   return (
     <>
     <div className="mb-5">
@@ -17,6 +20,18 @@ const InstructorDashboardHeader = () => {
 </div>
 
       <div className="rbt-dashboard-content-wrapper">
+      {isMobile&&
+        <div className="rbt-shadow-box" 
+        style={{
+          backgroundImage: `url(${thootoHeader.src})`,
+          backgroundRepeat:'no-repeat',
+          backgroundSize:'contain',
+          backgroundPosition:'top',
+          height: '175px'
+        }} />
+      }
+
+      {!isMobile&&
         <div className="height-350 rbt-shadow-box" 
         style={{
           backgroundImage: `url(${thootoHeader.src})`,
@@ -24,6 +39,8 @@ const InstructorDashboardHeader = () => {
           backgroundSize:'cover',
           backgroundPosition:'top'
         }} />
+      }
+    
         <div className="rbt-tutor-information">
           <div className="rbt-tutor-information-left">
             <div className="thumbnail rbt-avatars size-lg">
@@ -50,6 +67,8 @@ const InstructorDashboardHeader = () => {
           </div>
         </div>
       </div>
+
+
     </>
   );
 };

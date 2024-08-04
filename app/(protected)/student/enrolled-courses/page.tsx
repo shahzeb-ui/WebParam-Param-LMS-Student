@@ -7,6 +7,7 @@ import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
 import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
+import { isMobile } from "react-device-detect";
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -91,7 +92,9 @@ const EnrolledCourses = () => {
                   aria-controls="home-4"
                   aria-selected="true"
                 >
-                  <span className="title">Enrolled</span>
+                 {!isMobile&& <span className="title">Enrolled</span>}
+                 {isMobile&& <span style={{fontSize:"15px"}} className="title">Enrolled</span>}
+                 
                 </Link>
               </li>
               <li role="presentation">
@@ -105,7 +108,8 @@ const EnrolledCourses = () => {
                   aria-controls="profile-4"
                   aria-selected="false"
                 >
-                  <span className="title">Active</span>
+                  {!isMobile &&<span className="title">Active</span>}
+                  {isMobile &&<span style={{fontSize:"15px"}} className="title">Active</span>}
                 </Link>
               </li>
               <li role="presentation">
@@ -119,7 +123,8 @@ const EnrolledCourses = () => {
                   aria-controls="contact-4"
                   aria-selected="false"
                 >
-                  <span className="title">Completed</span>
+                {!isMobile &&  <span className="title">Completed</span>}
+                {isMobile &&  <span style={{fontSize:"15px"}} className="title">Completed</span>}
                 </Link>
               </li>
             </ul>

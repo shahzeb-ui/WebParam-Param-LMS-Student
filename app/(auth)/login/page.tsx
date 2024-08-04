@@ -54,7 +54,7 @@ export default function Login() {
 
     return (
         <div className="login">
-            <div className="rbt-contact-form contact-form-style-1 max-width-auto">
+            <div className="rbt-contact-form  max-width-auto">
                 <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
                 <form className="max-width-auto" onSubmit={handleLogIn}>

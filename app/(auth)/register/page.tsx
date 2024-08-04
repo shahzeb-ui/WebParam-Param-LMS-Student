@@ -59,7 +59,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     
     return (
         <div className="register">
-            <div className="rbt-contact-form contact-form-style-1 max-width-auto">
+            <div className="rbt-contact-form max-width-auto">
             <h1 style={{textAlign: 'center'}}>Create an account</h1>
             <p style={{textAlign: 'center'}}>Start your journey!</p>
             <form className="max-width-auto" onSubmit={handleRegister}>
