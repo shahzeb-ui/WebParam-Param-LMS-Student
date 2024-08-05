@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import './navbar.scss'
+import "./navbar.scss";
 import { usePathname } from "next/navigation";
 import SearchResults from "../searchResults/SearchResults";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
 import Nav from "./nav";
+import { rCourseUrl } from "@/app/lib/endpoints";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
@@ -26,9 +27,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(
-          "https://khumla-development-newcourse-read.azurewebsites.net/api/v1/Courses/GetCoursesNew"
-        );
+        const response = await axios.get(`${rCourseUrl}/Courses/GetCoursesNew`);
         setCourses(response.data);
         setCoursesCopy(response.data);
       } catch (error) {
@@ -150,10 +149,17 @@ const Navbar = () => {
                       </div>
                     </div>
 
-                    <div className="header-right d-flex align-items-center mt" onClick={() => setIsSidebarOpen(state => !state)} style={{cursor:'pointer', height:'20px'}}>
+                    <div
+                      className="header-right d-flex align-items-center mt"
+                      onClick={() => setIsSidebarOpen((state) => !state)}
+                      style={{ cursor: "pointer", height: "20px" }}
+                    >
                       <div className="d-none d-md-block me-3">
-                        <div className={`humburger-menu ${isSidebarOpen && "active"}`}>
-                        </div>
+                        <div
+                          className={`humburger-menu ${
+                            isSidebarOpen && "active"
+                          }`}
+                        ></div>
                       </div>
                     </div>
                   </div>
@@ -161,9 +167,7 @@ const Navbar = () => {
               </div>
             </header>
 
-            {isSidebarOpen && 
-            <Nav />
-           }
+            {isSidebarOpen && <Nav />}
             {search.trim() && <SearchResults coursesCopy={coursesCopy} />}
           </>
         )}

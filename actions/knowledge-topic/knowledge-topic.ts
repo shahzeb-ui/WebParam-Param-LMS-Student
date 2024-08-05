@@ -1,5 +1,5 @@
+import { rCourseUrl } from "@/app/lib/endpoints";
 import {
-  GET_KNOWLEDGE_TOPICS_URL,
   KnowledgeTopicResponse,
   KnowledgeTopic,
 } from "@/interfaces/knowledge/knowledge";
@@ -8,12 +8,15 @@ export const fetchKnowledgeTopics = async (
   moduleId: string
 ): Promise<KnowledgeTopic[]> => {
   try {
-    const response = await fetch(GET_KNOWLEDGE_TOPICS_URL(moduleId), {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await fetch(
+      `${rCourseUrl}KnowledgeTopics/GetKnowledgeTopics/${moduleId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch knowledge topics.");
