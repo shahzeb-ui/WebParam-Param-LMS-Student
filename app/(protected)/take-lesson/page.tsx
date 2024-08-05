@@ -1,0 +1,422 @@
+"use client";
+
+import "./lesson.scss";
+import { GetKnowledgeTopicsNew, getTopics } from "@/app/api/lesson/lessonEndpoint";
+import { TopicElement } from "@/interfaces/pharaphase/paraphase-d";
+import Notes from "@/ui/lesson/notes/notes";
+import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
+import Overview from "@/ui/overview/overview";
+import Transcript from "@/ui/transcript/transcript";
+import Link from "next/link";
+import { useEffect, useState, useCallback, useRef } from "react";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+export default function TakeLesson() {
+  const [currentVideo, setCurrentVideo] = useState<any>();
+  const [knowledgeTopics, setKnowledgeTopics] = useState<any[]>([]);
+  const [videoLoader, setVideoLoader] = useState(false);
+  const [expandedTopics, setExpandedTopics] = useState<{
+    [key: string]: TopicElement[];
+  }>({});
+  const [checkedSubTopics, setCheckedSubTopics] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<any>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+
+  const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
+  const topicRef = useRef<HTMLLIElement>(null);
+
+  async function fetchKnowledgeTopics() {
+    try {
+      const response = await GetKnowledgeTopicsNew(`668fcfad1a1ce7b0635b61c7`);
+      if (!response.error) {
+        setKnowledgeTopics(response.data);
+      } else {
+        setError("Failed to load data");
+      }
+    } catch (err: any) {
+      console.error("Error fetching knowledge topics:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      firstAccordionButtonRef.current?.click();
+    }
+  }
+
+  async function fetchTopics(topicId: string) {
+    try {
+      const response = await getTopics(topicId);
+      console.log("topics", response);
+      if (!response.error) {
+        setExpandedTopics((prev) => ({
+          ...prev,
+          [topicId]: response.data,
+        }));
+        setTimeout(() => {
+            console.log('hello world')
+            topicRef.current?.click();
+        }, 1000)
+      } else {
+        setError("Failed to load topics data");
+      }
+    } catch (err: any) {
+      console.error("Error fetching topics:", err);
+      setError(err.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchKnowledgeTopics();
+    setVideoLoader(true);
+  }, []);
+
+
+  const handleExpandClick = (topicId: string) => {
+    if (!expandedTopics[topicId]) {
+      fetchTopics(topicId);
+    }
+  };
+
+  const handleSubTopicClick = (subTopic: TopicElement, index: number) => {
+    setVideoLoader(true);
+    setCheckedSubTopics((prev) => ({
+      ...prev,
+      [subTopic.id]: !prev[subTopic.id],
+    }));
+    console.log("selected topic for video:", subTopic);
+    setCurrentVideo(subTopic || null);
+    setCurrentIndex(index);
+    setVideoLoader(false);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
+
+  const filteredTopics = knowledgeTopics.filter(topic =>
+    topic.name.toLowerCase().includes(searchQuery)
+  );
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      const previousSubTopic = expandedTopics[knowledgeTopics[currentIndex].id]?.[currentIndex - 1];
+      if (previousSubTopic) {
+        setCurrentVideo(previousSubTopic);
+        setCheckedSubTopics((prev) => ({
+          ...prev,
+          [previousSubTopic.id]: true,
+        }));
+        setCurrentIndex(currentIndex - 1);
+      }
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < filteredTopics.length - 1) {
+      const nextSubTopic = expandedTopics[filteredTopics[currentIndex].id]?.[currentIndex + 1];
+      if (nextSubTopic) {
+        setCurrentVideo(nextSubTopic);
+        setCheckedSubTopics((prev) => ({
+          ...prev,
+          [nextSubTopic.id]: true,
+        }));
+        setCurrentIndex(currentIndex + 1);
+      }
+    }
+  };
+
+  if (error) return (
+    <div className="error-area">
+      <div className="container">
+        <div className="row justify-content-center text-center">
+          <div className="col-10">
+            <h1 className="title">404!</h1>
+            <h3 className="sub-title">Page not found</h3>
+            <p>The page you were looking for could not be found.</p>
+            <a className="rbt-btn btn-gradient icon-hover" href="/">
+              <span className="btn-text">Back To My Courses</span>
+              <span className="btn-icon">
+                <i className="feather-arrow-right" />
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="rbt-lesson-area bg-color-white">
+      <div className="rbt-lesson-content-wrapper">
+        {/* Sidebar */}
+        <div className="rbt-lesson-leftsidebar">
+          <div className="rbt-course-feature-inner rbt-search-activation">
+            <div className="section-title">
+              <h4 className="rbt-title-style-3">Course Content</h4>
+            </div>
+            <div className="lesson-search-wrapper">
+              <form action="#" className="rbt-search-style-1">
+                <input
+                  className="rbt-search-active"
+                  type="text"
+                  placeholder="Search Lesson"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                />
+                <button className="search-btn disabled">
+                  <i className="feather-search" />
+                </button>
+              </form>
+            </div>
+            <hr className="mt--10" />
+            <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
+              {!loading ? filteredTopics.map((topic, index) => (
+                <div className="accordion-item card" key={topic.id}>
+                  <h2
+                    className="accordion-header card-header"
+                    id={`heading${index}`}
+                  >
+                    <button
+                      ref={index === 0 ? firstAccordionButtonRef : null}
+                      className="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target={`#collapse${index}`}
+                      aria-expanded="false"
+                      aria-controls={`collapse${index}`}
+                      onClick={() => handleExpandClick(topic.id)}
+                    >
+                      {topic.name}
+                    </button>
+                  </h2>
+                  <div
+                    id={`collapse${index}`}
+                    className="accordion-collapse collapse"
+                    aria-labelledby={`heading${index}`}
+                    data-bs-parent="#accordionExampleb2"
+                  >
+                    <div className="accordion-body card-body">
+                      {expandedTopics[topic.id] ? (
+                        <ul>
+                          {expandedTopics[topic.id].map(
+                            (subTopic: TopicElement, subIndex) => (
+                              <li
+                                ref={subIndex === 0 ? topicRef : null}
+                                className="d-flex justify-content-between align-items mt-2"
+                                key={subIndex}
+                                onClick={() => handleSubTopicClick(subTopic, subIndex)}
+                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
+                              >
+                                <div
+                                  className="course-content-left topic_Element_container"
+                                  style={{
+                                    overflow: "hidden",
+                                    display: "flex",
+                                    gap: "5px",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <i className="feather-play-circle icon" />
+                                  <p
+                                    className="topic-Element-Title"
+                                    style={{
+                                      fontSize: 13,
+                                      cursor: "pointer",
+                                      textDecoration: "none",
+                                      fontWeight: "bold",
+                                      whiteSpace: "nowrap",
+                                      overflow: "hidden",
+                                      textWrap: "wrap",
+                                    }}
+                                  >
+                                    {subTopic.title}
+                                  </p>
+                                </div>
+                                <div className="course-content-right">
+                                  <span className="rbt-check ">
+                                    {checkedSubTopics[subTopic.id] ? (
+                                      <i className="feather-check" />
+                                    ) : (
+                                      <i className="feather-square" />
+                                    )}
+                                  </span>
+                                </div>
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      ) : (
+                        <div>Loading topics...</div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )) : (
+                <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <Skeleton count={5} height={40} />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* End of Sidebar */}
+        <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
+          <div className="inner">
+            {!videoLoader ? (
+              <>
+                <iframe
+                  width="100%"
+                  height="500px"
+                  src={currentVideo?.videoUrl}
+                  title="Video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+                <div>
+                  <div className="content">
+                    <div className="section-title">
+                      <h5><u>{currentVideo?.title}</u></h5>
+                    </div>
+                    <div className="rbt-button-group">
+                      <button
+                        className="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity"
+                        onClick={handlePrevious}
+                        disabled={currentIndex <= 0}
+                      >
+                        <span className="btn-icon">
+                          <i className="feather-arrow-left" />
+                        </span>
+                        <span className="btn-text">Previous</span>
+                      </button>
+                      <button
+                        className="rbt-btn icon-hover btn-md"
+                        onClick={handleNext}
+                        disabled={currentIndex >= (filteredTopics.length - 1)}
+                      >
+                        <span className="btn-text">Next</span>
+                        <span className="btn-icon">
+                          <i className="feather-arrow-right" />
+                        </span>
+                      </button>
+                    </div>
+                    <div className="content-2">
+                      <div className="advance-tab-button mb--30">
+                        <ul
+                          className="nav nav-tabs tab-button-style-2 justify-content-start"
+                          id="myTab-4"
+                          role="tablist"
+                        >
+                          <li role="presentation">
+                            <Link
+                              href="#"
+                              className="tab-button active"
+                              id="overview-tab-4"
+                              data-bs-toggle="tab"
+                              data-bs-target="#overview-4"
+                              role="tab"
+                              aria-controls="overview-4"
+                              aria-selected="true"
+                            >
+                              <span className="title">Overview</span>
+                            </Link>
+                          </li>
+                          <li role="presentation">
+                            <Link
+                              href="#"
+                              className="tab-button"
+                              id="transcript-tab-4"
+                              data-bs-toggle="tab"
+                              data-bs-target="#transcript-4"
+                              role="tab"
+                              aria-controls="transcript-4"
+                              aria-selected="false"
+                            >
+                              <span className="title">Transcript</span>
+                            </Link>
+                          </li>
+                          <li role="presentation">
+                            <Link
+                              href="#"
+                              className="tab-button"
+                              id="q&a-tab-4"
+                              data-bs-toggle="tab"
+                              data-bs-target="#q&a-4"
+                              role="tab"
+                              aria-controls="q&a-4"
+                              aria-selected="false"
+                            >
+                              <span className="title">Q&A</span>
+                            </Link>
+                          </li>
+                          <li role="presentation">
+                            <Link
+                              href="#"
+                              className="tab-button"
+                              id="notes-tab-4"
+                              data-bs-toggle="tab"
+                              data-bs-target="#notes-4"
+                              role="tab"
+                              aria-controls="notes-4"
+                              aria-selected="false"
+                            >
+                              <span className="title">Notes</span>
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="tab-content">
+                      <div
+                        className="tab-pane fade active show"
+                        id="overview-4"
+                        role="tabpanel"
+                        aria-labelledby="overview-tab-4"
+                      >
+                        <Overview currentVideo={currentVideo} />
+                      </div>
+                      <div
+                        className="tab-pane fade"
+                        id="transcript-4"
+                        role="tabpanel"
+                        aria-labelledby="transcript-tab-4"
+                      >
+                        <Transcript currentVideo={currentVideo} />
+                      </div>
+                      <div
+                        className="tab-pane fade"
+                        id="q&a-4"
+                        role="tabpanel"
+                        aria-labelledby="q&a-tab-4"
+                      >
+                        <QuestionAndAnswers />
+                      </div>
+                      <div
+                        className="tab-pane fade"
+                        id="notes-4"
+                        role="tabpanel"
+                        aria-labelledby="notes-tab-4"
+                      >
+                        <Notes />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div style={{display:'flex', flexDirection:'column', gap:'10px', alignItems:'center', justifyContent:'center'}}>
+                <SkeletonTheme baseColor="#fff" highlightColor="#6b7385">
+                    <Skeleton width="100%" height="700px" />
+                </SkeletonTheme>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

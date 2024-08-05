@@ -105,7 +105,7 @@ const UnitStandardWidget: React.FC<Props> = ({
       <div className="rbt-card variation-01 rbt-hover">
         <div className="rbt-card-img">
           <Link
-            href={`/lesson`}
+            href={`/take-lesson`}
             // onClick={() => handleClick(data.id)}
           >
             <Image
@@ -127,7 +127,7 @@ const UnitStandardWidget: React.FC<Props> = ({
                 style={{ fontSize: "1.2em", margin: "5px 0" }}
               >
                 <Link
-                  href={`/lesson`}
+                  href={`/take-lesson`}
                   // onClick={() => handleClick(data.id)}
                 >
                   {data.title}
@@ -167,7 +167,7 @@ const UnitStandardWidget: React.FC<Props> = ({
                 <button
                   className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center continue-watching`}
                 >
-                  <Link href="/lesson">Continue Watching</Link>
+                  <Link href="/take-lesson">Continue Watching</Link>
                 </button>
               </div>
             </>
