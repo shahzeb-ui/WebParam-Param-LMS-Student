@@ -48,11 +48,13 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     const getAllKnowledgeTopics = async (id: string) => {
       try {
         const topics = await fetchKnowledgeTopics(id);
+        console.log('topics:', topics);
         setKnowledgeTopics(topics);
 
         if (topics.length > 0) {
           const firstTopicId = topics[0].id;
           const elements = await fetchTopicElements(firstTopicId);
+          console.log('elements:', elements);
           setExpandedTopics((prevState) => ({
             ...prevState,
             [firstTopicId]: elements,
@@ -78,6 +80,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
 
   useEffect(() => {
     // This effect runs when knowledgeTopics or expandedTopics change
+    debugger;
     if (knowledgeTopics.length > 0) {
       const firstTopicId = knowledgeTopics[0].id;
       if (expandedTopics[firstTopicId] && expandedTopics[firstTopicId].length > 0) {
