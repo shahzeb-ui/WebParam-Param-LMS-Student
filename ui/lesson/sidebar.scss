@@ -1,0 +1,62 @@
+.topic_Element_container {
+    position: relative; 
+    overflow: visible; 
+    white-space: nowrap;
+  
+    .topic-Element-Title {
+        display: inline-block;
+        min-width: 100% !important;
+        transition: transform 4s; 
+        white-space: nowrap;
+        cursor: pointer; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+        
+        &:hover {
+            width: 100% !important;
+            transform: translateX(-50%);
+            overflow: visible !important;
+        }
+    }
+}   
+
+ .icon {
+     // border: 1px solid red;
+     position: relative;
+     background-color: #fff !important;
+     z-index: 10;
+    }
+    
+    .sidebar-container {
+        
+        
+        @media (min-width:991px) {
+        position: fixed;
+        width: 400px;
+        overflow-y: scroll !important;
+
+        
+        /* Target the scrollbar */
+        &::-webkit-scrollbar {
+            width: 0px; /* Set the scrollbar width */
+            height: 8px; /* Set the scrollbar height for horizontal scrollbars */
+        }
+        
+        /* Handle of the scrollbar */
+        &::-webkit-scrollbar-thumb {
+            background-color: #3f3f3f; /* Color of the scrollbar handle */
+            border-radius: 10px; /* Rounding the corners of the scrollbar handle */
+        }
+        
+        /* Track of the scrollbar */
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Color of the scrollbar track */
+            border-radius: 10px; /* Rounding the corners of the scrollbar track */
+        }
+        
+        /* Handle hover state */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555; /* Color of the scrollbar handle on hover */
+        }
+    }
+}

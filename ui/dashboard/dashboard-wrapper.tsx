@@ -9,10 +9,10 @@ const InstructorDashboardHeader = () => {
     <>
     <div className="mb-5">
   <h3 className="mb-2">
-    Course: <span style={{ fontWeight: 400 }}>Learning Telecommunication</span>
+    <span style={{ fontWeight: '700' }}>Learning Telecommunication</span>
   </h3>
   <p className="ml-5">
-    Course Code: <strong>C3498</strong>
+    C3498
   </p>
 </div>
 

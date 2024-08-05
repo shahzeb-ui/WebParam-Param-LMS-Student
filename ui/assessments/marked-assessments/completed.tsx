@@ -38,7 +38,7 @@ export default function CompletedAssessment() {
              <a
                    className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Delete"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                  <i className="bi bi-bell-fill pl--0" />View
                 </a>
@@ -50,7 +50,7 @@ export default function CompletedAssessment() {
             <span className="h6 mb--5">Speaking Korean for Beginners</span>
             <p className="b3">
               Course:{" "}
-              <a href="/instructor/instructor-assignments#">Speaking 101</a>
+              <a href="#">Speaking 101</a>
             </p>
           </th>
           <td>
@@ -71,7 +71,7 @@ export default function CompletedAssessment() {
               <a
                    className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Delete"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                  <i className="bi bi-eye pl--0" />View
                 </a>
@@ -83,7 +83,7 @@ export default function CompletedAssessment() {
             <span className="h6 mb--5">Song Writing Techniques 101</span>
             <p className="b3">
               Course:{" "}
-              <a href="/instructor/instructor-assignments#">Song Writing</a>
+              <a href="#">Song Writing</a>
             </p>
           </th>
           <td>
@@ -104,7 +104,7 @@ export default function CompletedAssessment() {
               <a
                    className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Delete"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                  <i className="bi bi-eye pl--0" />View
                 </a>
@@ -116,7 +116,7 @@ export default function CompletedAssessment() {
             <span className="h6 mb--5">Arabic For Beginners</span>
             <p className="b3">
               Course:{" "}
-              <a href="/instructor/instructor-assignments#">Arabic Writing</a>
+              <a href="#">Arabic Writing</a>
             </p>
           </th>
           <td>
@@ -137,7 +137,7 @@ export default function CompletedAssessment() {
                <a
                    className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Delete"
-                  href="/instructor/instructor-assignments#"
+                  href="#"
                 >
                  <i className="bi bi-eye pl--0" />View
                 </a>
