@@ -25,22 +25,7 @@ const LogbookList = ({
   hasMore,
 }: LogbookListProps) => {
   return (
-    <div className={styles["logbook-list-container"]}>
-      <InfiniteScroll
-        dataLength={logbooks.length}
-        next={fetchMoreLogbooks}
-        hasMore={hasMore}
-        loader={
-          <div className={styles["loading-custom"]}>
-            Loading more logbooks...
-          </div>
-        }
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>No more logbooks</b>
-          </p>
-        }
-      >
+    <div className={styles["logbook-list-container"]}>    
         {logbooks.map((logbook, index) => (
           <div
             key={index}
@@ -98,7 +83,6 @@ const LogbookList = ({
             </div>
           </div>
         ))}
-      </InfiniteScroll>
     </div>
   );
 };
