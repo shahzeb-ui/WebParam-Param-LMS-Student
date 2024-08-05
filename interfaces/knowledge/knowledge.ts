@@ -1,5 +1,5 @@
 export const GET_KNOWLEDGE_TOPICS_URL = (moduleId: string) =>
-  `https://khumla-dev-newcourse-read.azurewebsites.net/api/v1/KnowledgeTopics/GetKnowledgeTopics/${moduleId}`;
+  `https://khumla-prod-newcourse-read.azurewebsites.net/api/v1/KnowledgeTopics/GetKnowledgeTopics/${moduleId}`;
 
 export interface KnowledgeTopic {
   id: string;
