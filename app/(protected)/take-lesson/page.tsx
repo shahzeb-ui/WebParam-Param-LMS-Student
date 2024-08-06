@@ -25,7 +25,7 @@ export default function TakeLesson() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
@@ -118,8 +118,9 @@ export default function TakeLesson() {
   };
 
   const handleNext = () => {
+    debugger;
     const allSubTopics = Object.values(expandedTopics).flat();
-    if (currentIndex < allSubTopics.length - 1) {
+    if (currentIndex < allSubTopics.length) {
       const nextSubTopic = allSubTopics[currentIndex + 1];
       if (nextSubTopic) {
         setCurrentVideo(nextSubTopic);
@@ -205,7 +206,7 @@ export default function TakeLesson() {
                   >
                     <div className="accordion-body card-body">
                       {expandedTopics[topic.id] ? (
-                        <ul>
+                        <ul style={{marginLeft:'0', paddingLeft:'0'}}>
                           {expandedTopics[topic.id].map(
                             (subTopic: TopicElement, subIndex) => (
                               <li
@@ -220,11 +221,12 @@ export default function TakeLesson() {
                                   style={{
                                     overflow: "hidden",
                                     display: "flex",
-                                    gap: "5px",
+                                    gap: "18x",
                                     alignItems: "center",
+                                    width:'100%'
                                   }}
                                 >
-                                  <i className="feather-play-circle icon" />
+                                  {currentVideo?.id == subTopic.id ? <i className="bi bi-pause-circle-fill"></i>:<i className="feather-play-circle icon" />}
                                   <p
                                     className="topic-Element-Title"
                                     style={{
@@ -300,7 +302,7 @@ export default function TakeLesson() {
                       <button
                         className="rbt-btn icon-hover btn-md"
                         onClick={handleNext}
-                        disabled={currentIndex >= (filteredTopics.length - 1)}
+                        disabled={currentIndex > (filteredTopics.length - 1)}
                       >
                         <span className="btn-text">Next</span>
                         <span className="btn-icon">
