@@ -101,9 +101,11 @@ export default function TakeLesson() {
     topic.name.toLowerCase().includes(searchQuery)
   );
 
+
   const handlePrevious = () => {
+    const allSubTopics = Object.values(expandedTopics).flat();
     if (currentIndex > 0) {
-      const previousSubTopic = expandedTopics[knowledgeTopics[currentIndex].id]?.[currentIndex - 1];
+      const previousSubTopic = allSubTopics[currentIndex - 1];
       if (previousSubTopic) {
         setCurrentVideo(previousSubTopic);
         setCheckedSubTopics((prev) => ({
@@ -116,8 +118,9 @@ export default function TakeLesson() {
   };
 
   const handleNext = () => {
-    if (currentIndex < filteredTopics.length - 1) {
-      const nextSubTopic = expandedTopics[filteredTopics[currentIndex].id]?.[currentIndex + 1];
+    const allSubTopics = Object.values(expandedTopics).flat();
+    if (currentIndex < allSubTopics.length - 1) {
+      const nextSubTopic = allSubTopics[currentIndex + 1];
       if (nextSubTopic) {
         setCurrentVideo(nextSubTopic);
         setCheckedSubTopics((prev) => ({
@@ -189,6 +192,7 @@ export default function TakeLesson() {
                       aria-expanded="false"
                       aria-controls={`collapse${index}`}
                       onClick={() => handleExpandClick(topic.id)}
+                      style={{fontSize:'16px'}}
                     >
                       {topic.name}
                     </button>

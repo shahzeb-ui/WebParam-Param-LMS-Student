@@ -5,3 +5,7 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.rbt-accordion-style .card + .card {
+    margin-top: 0 !important;
+}
