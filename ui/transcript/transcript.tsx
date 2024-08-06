@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "@/styles/transcript/transcript.module.css";
 
-const Transcript = () => {
+const Transcript = ({currentVideo}:any) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -59,21 +59,9 @@ const Transcript = () => {
       <div className="row mt-3">
         <div className="mb-3">
           <div className="mt-2">
-            {transcriptData.map((entry, index) => (
-              <div className={styles.transcriptLine} key={index}>
-                <div className={styles.transcriptTime}>{entry.time}</div>
-                <div className={styles.transcriptContent}>{entry.text}</div>
-              </div>
+            {currentVideo?.videoScript.split('**').map((item:string) => (
+              <p>{item}</p>
             ))}
-            {isLong && (
-              <a
-                onClick={toggleCollapse}
-                className="ms-2"
-                style={{ cursor: "pointer" }}
-              >
-                {isCollapsed ? "Read more" : "Show less"}
-              </a>
-            )}
           </div>
         </div>
       </div>
