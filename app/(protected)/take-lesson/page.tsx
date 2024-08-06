@@ -226,7 +226,7 @@ export default function TakeLesson() {
                                     width:'100%'
                                   }}
                                 >
-                                  {currentVideo?.id == subTopic.id ? <i className="bi bi-pause-circle-fill"></i>:<i className="feather-play-circle icon" />}
+                                  {currentVideo?.id == subTopic.id ? <i className="bi bi-pause-circle-fill" style={{marginRight:'15px'}}></i>:<i className="feather-play-circle icon" style={{marginRight:'15px'}} />}
                                   <p
                                     className="topic-Element-Title"
                                     style={{
