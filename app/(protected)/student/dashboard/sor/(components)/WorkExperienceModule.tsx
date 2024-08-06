@@ -12,38 +12,10 @@ interface Module {
 
 const WorkExperienceModules: React.FC = () => {
   const [modules, setModules] = useState<Module[]>([
-    { date: '2023-01-01', signedOff: '100%', name: 'Work Module 1', credits: '10', achievement: '' },
-    { date: '2023-02-01', signedOff: '95%', name: 'Work Module 2', credits: '8', achievement: '' },
+    { date: '2023-01-01', signedOff: '100%', name: 'Work Module 1', credits: '10', achievement: 'Competent' },
+    { date: '2023-02-01', signedOff: '95%', name: 'Work Module 2', credits: '8', achievement: 'Competent' },
   ]);
 
-  const [show, setShow] = useState(false);
-  const [newModule, setNewModule] = useState<Module>({
-    date: '',
-    signedOff: '',
-    name: '',
-    credits: '',
-    achievement: '',
-  });
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewModule({ ...newModule, [name]: value });
-  };
-
-  const addModule = () => {
-    setModules([...modules, newModule]);
-    setNewModule({
-      date: '',
-      signedOff: '',
-      name: '',
-      credits: '',
-      achievement: '',
-    });
-    handleClose();
-  };
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center gap-2 p-10 mt-5 rbt-review-wrapper rbt-shadow-box">
@@ -51,14 +23,14 @@ const WorkExperienceModules: React.FC = () => {
         <h5>Work Experience Modules</h5>
       </div>
       
-      <table className="table mb-0 thead-border-top-0 table-nowrap">
-        <thead>
+      <table className="rbt-table table table-borderless">
+        <thead className='thead-light'>
           <tr>
-            <th>Date</th>
-            <th>% Signed off</th>
-            <th>Name of Module</th>
-            <th>Credits</th>
-            <th>Achievement</th>
+            <th scope="col">Date</th>
+            <th scope="col">% Signed off</th>
+            <th scope="col">Name of Module</th>
+            <th scope="col">Credits</th>
+            <th scope="col">Achievement</th>
           </tr>
         </thead>
         <tbody>
@@ -73,74 +45,6 @@ const WorkExperienceModules: React.FC = () => {
           ))}
         </tbody>
       </table>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Work Experience Module</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formDate">
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                type="text"
-                name="date"
-                value={newModule.date}
-                onChange={handleChange}
-                placeholder="Enter date"
-              />
-            </Form.Group>
-            <Form.Group controlId="formSignedOff">
-              <Form.Label>% Signed off</Form.Label>
-              <Form.Control
-                type="text"
-                name="signedOff"
-                value={newModule.signedOff}
-                onChange={handleChange}
-                placeholder="Enter signed off"
-              />
-            </Form.Group>
-            <Form.Group controlId="formName">
-              <Form.Label>Name of Module</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={newModule.name}
-                onChange={handleChange}
-                placeholder="Enter name of module"
-              />
-            </Form.Group>
-            <Form.Group controlId="formCredits">
-              <Form.Label>Credits</Form.Label>
-              <Form.Control
-                type="text"
-                name="credits"
-                value={newModule.credits}
-                onChange={handleChange}
-                placeholder="Enter credits"
-              />
-            </Form.Group>
-            <Form.Group controlId="formAchievement">
-              <Form.Label>Achievement</Form.Label>
-              <Form.Control
-                type="text"
-                name="achievement"
-                value={newModule.achievement}
-                onChange={handleChange}
-                placeholder="Enter achievement"
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary btn-dark" onClick={addModule}>
-            Add Module
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };
