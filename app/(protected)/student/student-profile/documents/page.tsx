@@ -183,7 +183,7 @@ const FileUpload: React.FC = () => {
       formData.append('DocumentId', document?.id);
 
       try {
-        const response = await axios.put(`${writeUserData}/api/Documents/UpdateStudentDocument`, formData, {
+        const response = await axios.put(`${writeUserData}/api/v1/Documents/UpdateStudentDocument`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
