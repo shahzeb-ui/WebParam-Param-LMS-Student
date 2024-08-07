@@ -232,7 +232,6 @@ const FileUpload: React.FC = () => {
   }, [documents]);
 
   if (loaded) {
-    debugger;
     return <Loading />; // Show loading while documents are being fetched
   }
 
@@ -313,7 +312,9 @@ const FileUpload: React.FC = () => {
         <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <div className="requiredDocs">
-        {courseId =='66aa8cab45223bcb337a9643' ? yesProgramme.map((doc, index) => {
+        {courseId =='66aa8cab45223bcb337a9643' ? 
+        
+        yesProgramme.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
           const matchingDoc = documents.find((doc) => doc.type === index);
 
@@ -369,7 +370,8 @@ const FileUpload: React.FC = () => {
               )}
             </div>
           );
-        }):
+        })
+        :
         documentsRequired.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
           const matchingDoc = documents.find((doc) => doc.type === index);
