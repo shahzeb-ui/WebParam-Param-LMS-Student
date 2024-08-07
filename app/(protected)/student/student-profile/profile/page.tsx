@@ -266,12 +266,7 @@ export default function Profile({ student }: any) {
                             value={idNumber}
                             required
                             onChange={(e) => setIdNumber(e.target.value)}
-                            // onKeyPress={(e) => {
-                            //     // Prevent non-numeric input
-                            //     if (!/[0-9]/.test(e.key)) {
-                            //         e.preventDefault();
-                            //     }}}
-                                pattern="[0-9]*" 
+                            pattern="[0-9]*" 
                         />
                     </div>
                 </div>
@@ -311,7 +306,6 @@ export default function Profile({ student }: any) {
                             required
                             onChange={(e) => setCity(e.target.value)}
                             onKeyDown={(e) => {
-                                // Prevent numeric input
                                 if (/\d/.test(e.key)) {
                                     e.preventDefault();
                                 }
@@ -330,7 +324,8 @@ export default function Profile({ student }: any) {
                             required
                             onChange={(e) => {
                                 const numericValue = e.target.value.replace(/\D/g, '')
-                                setPhoneNumber(numericValue);}}
+                                setPhoneNumber(numericValue);
+                            }}
                         />
                     </div>
                 </div>
@@ -350,7 +345,6 @@ export default function Profile({ student }: any) {
                                 <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
                             ))
                             }
-                            
                         </select>
                     </div>
                 </div>

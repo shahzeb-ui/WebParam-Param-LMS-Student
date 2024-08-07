@@ -48,7 +48,7 @@ export default function EmploymentInformation({ student }: any) {
     setIsSubmitting(true);
     debugger;
       const payload = {
-        userId: user.data.id||user.data.userId,
+        userId: user.data.id||user.id,
         employmentStatus: employmentStatus,
         taxNumber: sarsTaxNumber,
         sector: selectedSector,

@@ -30,11 +30,9 @@ export default function StudentLayout({
   }, [user]);
 
   async function getEnrollmentStatus(userId: string) {
-    debugger;
+    
     try {
-      const res = await axios.get(
-        `${rCourseUrl}/Enrollments/GetUserEnrollment/${userId}`
-      );
+      const res = await axios.get(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrollment/${userId}`);
 
       if (res.data) {
         console.log("enrollment status: ", res.data.data.status);
@@ -50,9 +48,7 @@ export default function StudentLayout({
 
   async function getCourse(courseId: string) {
     debugger;
-    const res = await axios.get(
-      `${rCourseUrl}/Courses/GetCourseNew/${courseId}`
-    );
+    const res = await axios.get(`${rCourseUrl}/api/v1/Courses/GetCourseNew/${courseId}`);
 
     if (res) {
       setCourse(res.data.data);
@@ -65,13 +61,11 @@ export default function StudentLayout({
     }
   }, [courseId]);
 
-  if (courseId) {
-  }
-
+ 
   useEffect(() => {
-    if (user?.data?.id) {
+    if (user?.data?.id||user?.id) {
       if (isEnrolled != 0) {
-        getEnrollmentStatus(user.data.id);
+        getEnrollmentStatus(user.data.id||user.id);
       }
     }
     console.log("enrolled status:", isEnrolled);
