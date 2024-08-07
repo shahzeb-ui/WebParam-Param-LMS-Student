@@ -8,10 +8,10 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import { writeUserData } from '@/app/api/endpoints';
-import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
-import { documentsRequired } from './data';
+import { getDocumentsByCourseId, getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
+import { documentsRequired, yesProgramme } from './data';
 import Loading from './loading';
+import { readUserData, writeUserData } from '@/app/lib/endpoints';
 
 const pdfVersion = "2.16.105";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
@@ -21,6 +21,8 @@ type DocumentType = typeof documentsRequired[number]['documentName'];
 
 const FileUpload: React.FC = () => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  const cookies = new Cookies();
+
   const [isUploading, setIsUploading] = useState(false);
   const [upLoadingLoader, setUpLoadingLoader] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -31,16 +33,44 @@ const FileUpload: React.FC = () => {
   const [isChangingDoc, setIsChangingDoc] = useState(false);
   const [loaded, setLoader] = useState(true);
   const [docToChange, setDocToChange] = useState<any>()
+  
+  const [files, setFiles] = useState<Record<DocumentType, File | null>>();
 
-  const [files, setFiles] = useState<Record<DocumentType, File | null>>(
-    documentsRequired.reduce((acc, doc) => {
-      acc[doc.documentName] = null;
-      return acc;
-    }, {} as Record<DocumentType, File | null>)
-  );
+  const courseId = cookies.get("courseId");
 
-  const cookies = new Cookies();
+  useEffect(() => {
+  if (courseId =='66aa8cab45223bcb337a9643') {
+      setFiles(
+      yesProgramme.reduce((acc, doc) => {
+        acc[doc.documentName] = null;
+        return acc;
+      }, {} as Record<DocumentType, File | null>)
+    );
+  } else {
+    setFiles(
+      documentsRequired.reduce((acc, doc) => {
+        acc[doc.documentName] = null;
+        return acc;
+      }, {} as Record<DocumentType, File | null>)
+    );
+  }
+  },[])
+
+
   const user = cookies.get('loggedInUser');
+
+  async function getDocumentsByCourse(courseId: string) {
+    try {
+      const response = await getDocumentsByCourseId(courseId);
+      if (response?.data?.data) {
+        console.log('Documents by course:', response.data.data);
+        return response.data.data; // Return documents data if needed elsewhere
+      }
+    } catch (error) {
+      console.error('Error fetching documents by course:', error);
+    }
+    return [];
+  }
 
   async function getDocuments() {
     setLoader(true);
@@ -108,9 +138,13 @@ const FileUpload: React.FC = () => {
       const formData = new FormData();
       formData.append('UserId', user.data.id);
       formData.append('Name', selectedFile.type);
-      const type = documentsRequired.findIndex(doc => doc.documentName === selectedFile.type);
+      let type:any;
 
-      console.log('type: ', type, documentsRequired);
+      if (courseId == "66aa8cab45223bcb337a9643") {
+        type = yesProgramme.findIndex(doc => doc.documentName === selectedFile.type);
+      } else {
+        type = documentsRequired.findIndex(doc => doc.documentName === selectedFile.type);
+      }
 
       if (type !== undefined) {
         formData.append('Type', type.toString());
@@ -149,7 +183,7 @@ const FileUpload: React.FC = () => {
       formData.append('DocumentId', document?.id);
 
       try {
-        const response = await axios.put(`https://khumla-dev-user-write.azurewebsites.net/api/Documents/UpdateStudentDocument`, formData, {
+        const response = await axios.put(`${writeUserData}/api/Documents/UpdateStudentDocument`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -185,6 +219,12 @@ const FileUpload: React.FC = () => {
   useEffect(() => {
     getDocuments();
     console.log('documents:', documents);
+
+    const courseId = cookies.get("courseId");
+
+    if (courseId) {
+      getDocumentsByCourse(courseId)
+    }
   }, []);
 
   useEffect(() => {
@@ -196,11 +236,6 @@ const FileUpload: React.FC = () => {
     return <Loading />; // Show loading while documents are being fetched
   }
 
-  
-  // if (!loaded) {
-  //   debugger;
-  //   return <Loading />; // Show loading while documents are being fetched
-  // }
 
   return (
     <>
@@ -267,7 +302,7 @@ const FileUpload: React.FC = () => {
         <Modal.Body>
           <Worker workerUrl={pdfWorkerUrl}>
             <Viewer
-              fileUrl={`https://khumla-dev-user-read.azurewebsites.net/api/v1/Documents/PreviewDocument/${documentToView}`}
+              fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
               plugins={[defaultLayoutPluginInstance]}
             />
           </Worker>
@@ -278,7 +313,7 @@ const FileUpload: React.FC = () => {
         <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <div className="requiredDocs">
-        {documentsRequired.map((doc, index) => {
+        {courseId =='66aa8cab45223bcb337a9643' ? yesProgramme.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
           const matchingDoc = documents.find((doc) => doc.type === index);
 
@@ -309,7 +344,64 @@ const FileUpload: React.FC = () => {
                 )}
               </div>
               <h5>OR</h5>
-              {files[docType] && <p className="fileName">{files[docType]?.name}</p>}
+              {files && files[docType] && <p className="fileName">{files[docType]?.name}</p>}
+              <input
+                type="file"
+                name={docType}
+                id={docType}
+                accept="application/pdf"
+                onChange={(event) => {
+                  setSelectedFile({ type: docType, file: event.target.files ? event.target.files[0] : null });
+                  if (matchingDoc) {
+                    setIsChangingDoc(true);
+                    setDocToChange(matchingDoc);
+                  } else {
+                    setIsUploading(true);
+                  }
+                  handleFileChange(event, docType);
+                }}
+              />
+
+              {matchingDoc ? (
+                <label htmlFor={docType} style={{background:'2F4F9E'}}>Change</label>
+              ) : (
+                <label htmlFor={docType}>Browse Files</label>
+              )}
+            </div>
+          );
+        }):
+        documentsRequired.map((doc, index) => {
+          const docType = doc.documentName as DocumentType;
+          const matchingDoc = documents.find((doc) => doc.type === index);
+
+          return (
+            <div
+              className={`docContainer ${matchingDoc && 'uploaded'} ${dragging[docType] ? 'dragover' : ''}`}
+              key={index}
+              onDrop={(event) => handleDrop(event, docType)}
+              onDragOver={(event) => handleDragOver(event, docType)}
+              onDragLeave={(event) => handleDragLeave(event, docType)}
+            >
+              <h6>{docType.charAt(0).toUpperCase() + docType.slice(1)}</h6>
+              <h3>Drag and drop your file here</h3>
+              <div>
+                {matchingDoc ? (
+                  <i className="bi bi-file-check-fill" style={{ cursor: 'pointer', color:'#dfedfa' }} onClick={() => viewDocument(matchingDoc.id)}></i>
+                ) : (
+                  <i className="bi bi-cloud-arrow-up"></i>
+                )}
+
+                {matchingDoc && (
+                  <span
+                    onClick={() => viewDocument(matchingDoc.id)}
+                    style={{ display: 'block', cursor: 'pointer', fontSize: '12px', marginTop: '10px', textDecoration: 'underline', color: 'green' }}
+                  >
+                    View doc
+                  </span>
+                )}
+              </div>
+              <h5>OR</h5>
+              {files && files[docType] && <p className="fileName">{files[docType]?.name}</p>}
               <input
                 type="file"
                 name={docType}

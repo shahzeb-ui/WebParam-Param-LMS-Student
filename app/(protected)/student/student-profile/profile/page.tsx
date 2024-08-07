@@ -1,4 +1,5 @@
-'use client';
+"use client";
+
 import { useEffect, useState } from 'react';
 import './userProfile.scss';
 import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
@@ -9,29 +10,35 @@ import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
-import { readUserData } from '@/app/api/endpoints';
+import { readUserData } from '@/app/lib/endpoints';
+
 
 export default function Profile({ student }: any) {
-    const [firstName, setFirstName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [idNumber, setIdNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [gender, setGender] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [country, setCountry] = useState('');
-    const [city, setCity] = useState('');
-    const [province, setProvince] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [bio, setBio] = useState('');
-    const [profilePic, setProfilePic] = useState('');
-    const [coverImage, setCoverImage] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [id, setId] = useState('');
-    const [codes, setCodes] = useState<any>();
-    const [uploadingPic, setUploadingPic] = useState(false);
-    const cookies = new Cookies();
-    const user = cookies.get("loggedInUser");
-    const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [province, setProvince] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [bio, setBio] = useState("");
+  const [profilePic, setProfilePic] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [id, setId] = useState("");
+  const [codes, setCodes] = useState<any>();
+  const [uploadingPic, setUploadingPic] = useState(false);
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
+  const router = useRouter();
+
+    useEffect(() => {
+        debugger;
+        getUserProfile();
+    }, [profilePic]);
 
     async function getInputCodes() {
         const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
@@ -51,19 +58,17 @@ export default function Profile({ student }: any) {
         getInputCodes();
     }, []);
 
-    async function getUserProfile() {
-        debugger;
-        if (!user?.data?.id && !user?.id) return;
-        const res = await getStudentProfile(user.data.id || user.id);
-
-        console.log('responseeeee', res);
+  async function getUserProfile() {
+    debugger;
+    if (!user?.data?.id && !user?.id) return;
+    const res = await getStudentProfile(user.data.id || user.id);
 
         const dob = res?.data.data.dateOfBirth.split('T')[0];
         if (res?.data) {
             setFirstName(res.data.data.firstName);
             setSurname(res.data.data.surname);
             setIdNumber(res.data.data.idNumber);
-            setEmail(res.data.data.email);
+            // setEmail(res.data.data.email);
             setGender(res.data.data.gender);
             setDateOfBirth(dob);
             setCountry(res.data.data.country);

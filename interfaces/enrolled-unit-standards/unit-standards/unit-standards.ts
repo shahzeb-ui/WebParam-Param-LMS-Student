@@ -1,5 +1,3 @@
-export const GET_UNIT_STANDARDS_URL = (courseId: string) =>
-  `https://khumla-dev-newcourse-read.azurewebsites.net/api/v1/KnowledgeModules/GetKnowledgeModules/${courseId}`;
 export interface UnitStandardData {
   id: string;
   title: string;
@@ -20,4 +18,3 @@ export interface ApiResponse {
   message: string | null;
   error: boolean;
 }
-

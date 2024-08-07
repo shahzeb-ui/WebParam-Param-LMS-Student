@@ -1,12 +1,13 @@
-'use client'
+"use client";
 import { updateDemographicsInformation } from "@/app/api/studentProfile/studentprofile";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { statsSAAreaCodeOptions } from "./data";
 import { useRouter } from "next/navigation";
+import { readUserData } from "@/app/lib/endpoints";
 
-export default function DemocraticLegal({student}:any) {
+export default function DemocraticLegal({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
 
@@ -27,14 +28,14 @@ export default function DemocraticLegal({student}:any) {
   const router = useRouter();
 
   async function getInputCodes() {
-    const res = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetCodes`);
+    const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
 
-    console.log('codes:', res.data.data);
-    setCodes(res.data.data)
+    console.log("codes:", res.data.data);
+    setCodes(res.data.data);
   }
 
   function setStudentContactInformation(student: any) {
-    console.log('stu:', student?.data);
+    console.log("stu:", student?.data);
     setEquityCode(student?.data?.equityCode);
     setNationalityCode(student?.data?.nationalityCode);
     setHomeLanguageCode(student?.data?.homeLanguageCode);
@@ -50,12 +51,12 @@ export default function DemocraticLegal({student}:any) {
   }
 
   useEffect(() => {
-      setStudentContactInformation(student);
-    }, [student]);
-    
+    setStudentContactInformation(student);
+  }, [student]);
+
   useEffect(() => {
     getInputCodes();
-  }, [])
+  }, []);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
@@ -364,9 +365,10 @@ export default function DemocraticLegal({student}:any) {
         </span>
     </button>
     </div>
-  </div>
+    </div>
     </form>
-  </div>
-  </div>
-  )
+    </div>
+    </div>
+  );
 }
+  

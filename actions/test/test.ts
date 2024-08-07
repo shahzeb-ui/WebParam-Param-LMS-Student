@@ -1,6 +1,8 @@
+import { wCourseUrl } from "@/app/lib/endpoints";
+
 // Define the API URL
 export const GET_PRACTICAL_KNOWLEDGE_MODULES_URL = (courseId: string) =>
-  `https://khumla-dev-newcourse-read.azurewebsites.net/api/v1/KnowledgeModules/GetPracticalKnowledgeModules/${courseId}`;
+  `${wCourseUrl}/KnowledgeModules/GetPracticalKnowledgeModules/${courseId}`;
 
 // Define the types for the response data
 export interface KnowledgeModuleData {

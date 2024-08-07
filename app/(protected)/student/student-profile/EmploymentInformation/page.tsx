@@ -1,12 +1,13 @@
-'use client'
+"use client";
 import { updateEmployeeInformation } from "@/app/api/studentProfile/studentprofile";
 import { FormEvent, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { preferredOccupations, sector } from "./data";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { readUserData } from "@/app/lib/endpoints";
 
-export default function EmploymentInformation({student}:any) {
+export default function EmploymentInformation({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function EmploymentInformation({student}:any) {
   const [codes, setCodes] = useState<any>()
 
   async function getInputCodes() {
-    const res = await axios.get(`https://khumla-dev-user-read.azurewebsites.net/api/Student/GetCodes`);
+    const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
 
     console.log('codes:', res.data.data);
     setCodes(res.data.data)
@@ -29,7 +30,7 @@ export default function EmploymentInformation({student}:any) {
 
 
   function setStudentContactInformation(student: any) {
-    console.log('stu:', student?.data);
+    console.log("stu:", student?.data);
     setEmploymentStatus(student?.data?.employmentStatus);
     setDateOfFisa(student?.data?.dateOfFisa);
     setSarsTaxNumber(student?.data?.sarsTaxNumber);
@@ -39,7 +40,7 @@ export default function EmploymentInformation({student}:any) {
   }
 
   useEffect(() => {
-      setStudentContactInformation(student);
+    setStudentContactInformation(student);
   }, [student]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -75,106 +76,90 @@ export default function EmploymentInformation({student}:any) {
     id="profile"
     role="tabpanel"
     aria-labelledby="Personal Information"
-  >
+    >
     <div className="rbt-dashboard-content-wrapper">
-    <form
-  onSubmit={handleSubmit}
-  className="rbt-profile-row rbt-default-form row row--15"
->
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-    <div className="rbt-form-group">
-      <label htmlFor="employmentStatus">Employment Status</label>
-        <select
-        // placeholder="Enter Employment Status"
-        id="employmentStatus"
-        value={employmentStatus}
-        onChange={(e) => setEmploymentStatus(e.target.value)}
-      >
-        <option value="">select</option>
-        {
-         codes && codes[6]?.codes?.map((item:any, index:number) => (
-            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
-          ))
-        }
-      </select>
-    </div>
-  
-  </div>
-
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-  <div className="rbt-form-group">
-      <label htmlFor="sarsTaxNumber">SARS TAX NUMBER</label>
-      <input
-        type="text"
-        name="sarsTaxNumber"
-        placeholder="Enter SARS Tax Number"
-        value={sarsTaxNumber}
-        id="sarsTaxNumber"
-        onChange={(e) => setSarsTaxNumber(e.target.value)}
-      />
-    </div>
-  </div>
-
-  {/* <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-    <div className="rbt-form-group">
-      <label htmlFor="dateOfFisa">DATE OF FISA</label>
-      <input
-        type="date"
-        name="dateOfFisa"
-        value={dateOfFisa}
-        id="dateOfFisa"
-        onChange={(e) => setDateOfFisa(e.target.value)}
-      />
-    </div>
-  </div> */}
-
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
-    <div className="rbt-form-group">
-      <label htmlFor="immigrantStatus">Sector</label>
-       <select
-          name="sector"
-          value={selectedSector}
-          id="sector"
-          onChange={(e) => setSelectedSector(e.target.value)}
-      >
+    <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15">
+    <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+      <div className="rbt-form-group">
+        <label htmlFor="employmentStatus">Employment Status</label>
+          <select
+          // placeholder="Enter Employment Status"
+          id="employmentStatus"
+          value={employmentStatus}
+          onChange={(e) => setEmploymentStatus(e.target.value)}
+        >
           <option value="">select</option>
           {
-         codes && codes[18]?.codes?.map((item:any, index:number) => (
-            <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
-          ))
-        }
+          codes && codes[6]?.codes?.map((item:any, index:number) => (
+              <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+            ))
+          }
+        </select>
+      </div>
+    
+    </div>
+
+    <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+    <div className="rbt-form-group">
+        <label htmlFor="sarsTaxNumber">SARS TAX NUMBER</label>
+        <input
+          type="text"
+          name="sarsTaxNumber"
+          placeholder="Enter SARS Tax Number"
+          value={sarsTaxNumber}
+          id="sarsTaxNumber"
+          onChange={(e) => setSarsTaxNumber(e.target.value)}
+        />
+      </div>
+    </div>
+
+    <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
+      <div className="rbt-form-group">
+        <label htmlFor="immigrantStatus">Sector</label>
+        <select
+            name="sector"
+            value={selectedSector}
+            id="sector"
+            onChange={(e) => setSelectedSector(e.target.value)}
+        >
+            <option value="">select</option>
+            {
+          codes && codes[18]?.codes?.map((item:any, index:number) => (
+              <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
+            ))
+          }
+        </select>
+      </div>
+    </div>
+
+    <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{ marginBottom: '15px' }}>
+    <div className="rbt-form-group">
+      <label htmlFor="preferedOccupation">Preferred Occupation</label>
+      <select
+        name="preferedOccupation"
+        value={preferedOccupation}
+        id="preferedOccupation"
+        onChange={(e) => setPreferedOccupation(e.target.value)}
+      >
+        <option value="">Select</option>
+        {Array.from(new Set(preferredOccupations.map(item => item.sector)))
+          .filter(sector => sector === selectedSector || selectedSector === '')
+          .map((sector, index) => (
+            <optgroup key={index} label={sector}>
+              {preferredOccupations
+                .filter(item => item.sector === sector)
+                .map((item, idx) => (
+                  <option key={idx} value={item.title} className="text-dark">
+                    {item.title}
+                  </option>
+                ))}
+            </optgroup>
+          ))}
       </select>
     </div>
-  </div>
+    </div>
 
-  <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{ marginBottom: '15px' }}>
-  <div className="rbt-form-group">
-    <label htmlFor="preferedOccupation">Preferred Occupation</label>
-    <select
-      name="preferedOccupation"
-      value={preferedOccupation}
-      id="preferedOccupation"
-      onChange={(e) => setPreferedOccupation(e.target.value)}
-    >
-      <option value="">Select</option>
-      {Array.from(new Set(preferredOccupations.map(item => item.sector)))
-        .filter(sector => sector === selectedSector || selectedSector === '')
-        .map((sector, index) => (
-          <optgroup key={index} label={sector}>
-            {preferredOccupations
-              .filter(item => item.sector === sector)
-              .map((item, idx) => (
-                <option key={idx} value={item.title} className="text-dark">
-                  {item.title}
-                </option>
-              ))}
-          </optgroup>
-        ))}
-    </select>
-  </div>
-</div>
-
-      <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+    <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
       <label htmlFor="employmentStatus">Referral Person/ Company</label>
       <input
@@ -188,34 +173,34 @@ export default function EmploymentInformation({student}:any) {
     </div>
   
 
-  <div className="col-12 mt--20">
-    <div className="rbt-form-group">
-      {/* <button
-         className="rbt-btn btn-gradient"
-         type='submit'
-         style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
-      >
-        {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
-      </button> */}
-      <button
-          className="btn-sm mr--10 hover-icon-reverse w-100"
-          style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
-          type="submit"
-          disabled={isSubmitting}
-      >
-          <span className="icon-reverse-wrapper">
-              <span className="btn-text text-light">Proceed</span>
-              <span className="btn-icon text-light">
-                  <i className="feather-arrow-right" />
-              </span>
-          </span>
-      </button>
+    <div className="col-12 mt--20">
+      <div className="rbt-form-group">
+        {/* <button
+          className="rbt-btn btn-gradient"
+          type='submit'
+          style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
+        >
+          {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
+        </button> */}
+        <button
+            className="btn-sm mr--10 hover-icon-reverse w-100"
+            style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+            type="submit"
+            disabled={isSubmitting}
+        >
+            <span className="icon-reverse-wrapper">
+                <span className="btn-text text-light">Proceed</span>
+                <span className="btn-icon text-light">
+                    <i className="feather-arrow-right" />
+                </span>
+            </span>
+        </button>
+      </div>
     </div>
-  </div>
 
   
-</form>
-</div>
-</div>
+      </form>
+    </div>
+    </div>
   )
 }

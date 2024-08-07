@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
 import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
+import logo from './logo.jpg';
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
@@ -62,13 +62,8 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo" 
-                style={{
-                  fontFamily:`"League Spartan" sans-serif `,
-                  fontWeight: "900",
-                  color: "rgb(36, 52, 92)",
-                  fontSize: "50px"}}>
-                  thooto
+                <Link href="/" className="logo">
+                  <Image src={logo.src} alt="logo" width={80} height={20} />
                 </Link>
               </div>
 
