@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useEffect, useState, useCallback, useRef } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import LessonQuiz from "../lesson/quiz/page";
 
 export default function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -26,6 +27,7 @@ export default function TakeLesson() {
   const [error, setError] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [videoEnded, setVideoEnded] = useState<boolean>(false);
 
   const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
@@ -74,7 +76,6 @@ export default function TakeLesson() {
     setVideoLoader(true);
   }, []);
 
-
   const handleExpandClick = (topicId: string) => {
     if (!expandedTopics[topicId]) {
       fetchTopics(topicId);
@@ -90,6 +91,7 @@ export default function TakeLesson() {
     console.log("selected topic for video:", subTopic);
     setCurrentVideo(subTopic || null);
     setCurrentIndex(index);
+    setVideoEnded(false); // Reset videoEnded state when a new video is selected
     setVideoLoader(false);
   };
 
@@ -100,7 +102,6 @@ export default function TakeLesson() {
   const filteredTopics = knowledgeTopics.filter(topic =>
     topic.name.toLowerCase().includes(searchQuery)
   );
-
 
   const handlePrevious = () => {
     const allSubTopics = Object.values(expandedTopics).flat();
@@ -113,14 +114,19 @@ export default function TakeLesson() {
           [previousSubTopic.id]: true,
         }));
         setCurrentIndex(currentIndex - 1);
+        setVideoEnded(false); // Reset videoEnded state when a new video is selected
       }
     }
   };
 
   const handleNext = () => {
-    debugger;
     const allSubTopics = Object.values(expandedTopics).flat();
-    if (currentIndex < allSubTopics.length) {
+    if (!videoEnded) {
+      setVideoEnded(true); // Show quiz first
+      return;
+    }
+  
+    if (currentIndex < allSubTopics.length - 1) {
       const nextSubTopic = allSubTopics[currentIndex + 1];
       if (nextSubTopic) {
         setCurrentVideo(nextSubTopic);
@@ -129,8 +135,13 @@ export default function TakeLesson() {
           [nextSubTopic.id]: true,
         }));
         setCurrentIndex(currentIndex + 1);
+        setVideoEnded(false); // Reset videoEnded state for the next video
       }
     }
+  };
+
+  const handleVideoEnd = () => {
+    setVideoEnded(true);
   };
 
   if (error) return (
@@ -209,6 +220,7 @@ export default function TakeLesson() {
                         <ul style={{marginLeft:'0', paddingLeft:'0'}}>
                           {expandedTopics[topic.id].map(
                             (subTopic: TopicElement, subIndex) => (
+                              <>
                               <li
                                 ref={subIndex === 0 ? topicRef : null}
                                 className="d-flex justify-content-between align-items mt-2"
@@ -252,6 +264,14 @@ export default function TakeLesson() {
                                   </span>
                                 </div>
                               </li>
+                              {/* <li className="" style={{listStyle:'none'}}>
+                                <div className="course-content-left quiz">
+                                  <i className="feather-file-text" />
+                                  <span className="text">Quiz</span>
+                                </div>
+                              </li>
+                              <hr /> */}
+                              </>
                             )
                           )}
                         </ul>
@@ -271,7 +291,7 @@ export default function TakeLesson() {
         </div>
         {/* End of Sidebar */}
         <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
-          <div className="inner">
+          {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
                 <iframe
@@ -282,6 +302,7 @@ export default function TakeLesson() {
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  onEnded={handleVideoEnd}
                 />
                 <div>
                   <div className="content">
@@ -421,6 +442,10 @@ export default function TakeLesson() {
               </div>
             )}
           </div>
+          :
+          <div className="inner">
+            <LessonQuiz setVideoEnded={setVideoEnded} handleNext={handleNext} />
+          </div>}
         </div>
       </div>
     </div>
