@@ -68,7 +68,7 @@ export default function Profile({ student }: any) {
             setFirstName(res.data.data.firstName);
             setSurname(res.data.data.surname);
             setIdNumber(res.data.data.idNumber);
-            // setEmail(res.data.data.email);
+            setEmail(res.data.data.email);
             setGender(res.data.data.gender);
             setDateOfBirth(dob);
             setCountry(res.data.data.country);
