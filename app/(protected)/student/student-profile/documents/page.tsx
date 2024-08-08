@@ -146,9 +146,9 @@ const FileUpload: React.FC = () => {
         type = documentsRequired.findIndex(doc => doc.documentName === selectedFile.type);
       }
 
-      if (type !== undefined) {
-        formData.append('Type', type.toString());
-      }
+      // if (type !== undefined) {
+      //   formData.append('Type', type.toString());
+      // }
       formData.append('File', selectedFile.file);
 
       try {
@@ -316,7 +316,8 @@ const FileUpload: React.FC = () => {
         
         yesProgramme.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
-          const matchingDoc = documents.find((doc) => doc.type === index);
+          const matchingDoc = documents.find((doc) => doc.name === docType);
+          console.log('matched', matchingDoc)
 
           return (
             <div
@@ -374,7 +375,7 @@ const FileUpload: React.FC = () => {
         :
         documentsRequired.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
-          const matchingDoc = documents.find((doc) => doc.type === index);
+          const matchingDoc = documents.find((doc) => doc.name === docType);
 
           return (
             <div
