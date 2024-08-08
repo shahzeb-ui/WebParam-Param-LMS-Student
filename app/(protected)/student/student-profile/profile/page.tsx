@@ -359,7 +359,7 @@ export default function Profile({ student }: any) {
                             required
                             onChange={(e) => setGender(e.target.value)}
                             className="w-100">                                
-                            <option value={""}>select</option>
+                            <option value={""} >select</option>
                             {
                             codes && codes[4]?.codes?.map((item:any, index:number) => (
                                 <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>

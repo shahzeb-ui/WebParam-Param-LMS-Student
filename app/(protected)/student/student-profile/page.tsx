@@ -28,7 +28,7 @@ function UserProfileContent() {
 
     useEffect(() => {
         getStudent();
-    }, []);
+    }, [user]);
 
     const renderComponent = (tab: string | null) => {
         switch (tab) {

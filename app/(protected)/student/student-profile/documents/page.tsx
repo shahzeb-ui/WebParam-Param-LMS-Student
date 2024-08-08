@@ -317,7 +317,6 @@ const FileUpload: React.FC = () => {
         yesProgramme.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
           const matchingDoc = documents.find((doc) => doc.name === docType);
-          console.log('matched', matchingDoc)
 
           return (
             <div
