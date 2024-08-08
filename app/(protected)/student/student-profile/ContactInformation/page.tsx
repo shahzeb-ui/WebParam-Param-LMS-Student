@@ -54,7 +54,7 @@ export default function ContactInformation({student}:any) {
       debugger;
   
       const payload = {
-        userId: user.data.id || user.data.userId,
+        userId: user?.data?.id || user?.data?.userId,
         homeAddress1: homeAddress1,
         postalAddress1: postalAddress1,
         postalAddress2: postalAddress2,

@@ -64,7 +64,7 @@ export default function DemocraticLegal({ student }: any) {
     setIsSubmitting(true);
 
       const payload = {
-        userId: user.data.id||user.data.userId,
+        userId: user?.data?.id||user?.id,
         equityCode: equityCode,
         nationalityCode: nationalityCode,
         homeLanguageCode: homeLanguageCode,

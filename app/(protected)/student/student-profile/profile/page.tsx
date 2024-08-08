@@ -42,8 +42,8 @@ export default function Profile({ student }: any) {
 
     async function getInputCodes() {
         const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
-        console.log('codes:', res.data.data);
-        setCodes(res.data.data);
+        console.log('codes:', res?.data?.data);
+        setCodes(res?.data?.data);
     }
     
     useEffect(() => {
@@ -58,7 +58,7 @@ export default function Profile({ student }: any) {
         getInputCodes();
 
         if (user) {
-            setEmail(user.data.email)
+            setEmail(user?.data?.email)
         }
     }, []);
 
@@ -102,7 +102,7 @@ export default function Profile({ student }: any) {
         debugger;
         setIsSubmitting(true);
         const payload = {
-            userId: user?.data?.id,
+            userId: user?.data?.id||user?.id,
             firstName,
             surname,
             idNumber,

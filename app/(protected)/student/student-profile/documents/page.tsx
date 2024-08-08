@@ -76,7 +76,7 @@ const FileUpload: React.FC = () => {
     setLoader(true);
     try {
       if (user?.data) {
-        const docs = await getStudentDocuments(user?.data.id || user?.id);
+        const docs = await getStudentDocuments(user?.data?.id || user?.id);
 
         if (docs) {
           setDocuments(docs?.data.data);
