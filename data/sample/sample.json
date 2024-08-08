@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Sample Note",
+    "content": "Next.js is a React framework that enables server-side rendering and static site generation, providing a powerful toolset for building fast and SEO-friendly web applications. It offers features like file-based routing, API routes, and automatic code splitting, which enhance development efficiency and application performance. Additionally, Next.js supports CSS and Sass for styling and includes an image optimization component to improve page load times. Getting started with Next.js involves simple setup commands and allows for easy creation of pages and navigation between them, making it a go-to choice for modern web development.",
+    "studentName": "John Doe",
+    "timestamp": "2024-06-20T14:00:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Understanding React",
+    "content": "React is a JavaScript library for building user interfaces. It allows developers to create large web applications that can update and render efficiently in response to data changes. The main concept in React is the component, which is a piece of the UI that can be reused and composed in different ways to build complex interfaces.",
+    "studentName": "Jane Smith",
+    "timestamp": "2024-06-21T10:30:00Z"
+  },
+  {
+    "id": 3,
+    "title": "Introduction to Node.js",
+    "content": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It allows developers to use JavaScript to write server-side code, enabling the creation of scalable and high-performance network applications. Node.js is event-driven and non-blocking, making it ideal for building real-time applications such as chat servers and online gaming.",
+    "studentName": "Alice Johnson",
+    "timestamp": "2024-06-22T16:45:00Z"
+  },
+  {
+    "id": 4,
+    "title": "CSS Grid Layout",
+    "content": "CSS Grid Layout is a powerful layout system available in CSS. It allows developers to create complex, responsive web layouts with ease. The grid system is based on rows and columns, enabling precise control over the placement of items within a container. This makes it possible to design web pages that look great on all devices, from mobile phones to large desktop monitors.",
+    "studentName": "Bob Lee",
+    "timestamp": "2024-06-23T08:20:00Z"
+  }
+]

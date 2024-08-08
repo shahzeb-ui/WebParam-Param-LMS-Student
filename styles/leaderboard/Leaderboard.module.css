@@ -1,0 +1,26 @@
+/* styles/Leaderboard.module.css */
+.minimalTable {
+    border-collapse: collapse;
+  }
+  
+  .minimalTable th,
+  .minimalTable td {
+    border: none;
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: center;
+  }
+  
+  .minimalTable thead th {
+    background-color: #cfcfcf; 
+    color: #343a40;
+  }
+  
+  .minimalTable tbody td {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .minimalTable tbody tr:last-child td {
+    border-bottom: none;
+  }
+  

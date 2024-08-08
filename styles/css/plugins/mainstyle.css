@@ -1,0 +1,58 @@
+.btn-gradient {
+    background: linear-gradient(45deg,  #25355d);
+    border: none;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(45deg,  #25355c);
+}
+
+.btn-text, .btn-icon {
+    color: white;
+}
+
+.spinner-border {
+    color: white;
+}
+
+/* styles.css or a relevant CSS file */
+.rbt-banner-image {
+    background: linear-gradient(#25355c, #25355c) !important;
+  }
+
+  /* styles.css or a relevant CSS file */
+/* styles.css or a relevant CSS file */
+.custom-banner {
+    background: #25355c !important;
+    background-image: none !important; /* Ensure no gradient is applied */
+  }
+
+ 
+/* sidebar*/
+.rbt-default-sidebar {
+    /* ... existing styles ... */
+    border: 4px solid #f1f2f3; /* Updated border color and thickness */
+    box-shadow: 0 0 10px #f1f2f3; /* Optional: add a shiny effect */
+    /* ... existing styles ... */
+  }
+
+
+  /* styles.css or a relevant CSS file */
+/* styles.css or a relevant CSS file */
+/* styles.css or a relevant CSS file */
+.custom-gradient {
+    background: linear-gradient(#25355c, #25355c) !important;
+    color: #ffffff !important; /* Change text color to white */
+  }
+  
+  .custom-gradient span {
+    color: #ffffff !important; /* Ensure all spans inside the badge have the correct color */
+  }
+
+
+  /* import "@/styles/css/plugins/mainstyle.css"; */
+
+  
+  

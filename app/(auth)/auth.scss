@@ -1,10 +1,11 @@
 .layoutContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Changed from space-between to center */
     align-items: center;
     height: 100dvh;
     overflow: hidden;
     background-color: white;
+    perspective: 1000px;
 }
 
 .register {
@@ -12,7 +13,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 
     & h1 {
         font-size: 34px;
@@ -22,65 +22,14 @@
         font-weight: 400;
     }
 
-
-    & form {
+    & .terms {
+        margin-top: 10px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-top: 50px;
+        gap: 8px;
 
-        & > div {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 5px;
-
-            & label {
-                font-size: 16px;
-
-                & .required {
-                    color: tomato;
-                }
-            }
-
-            & input {
-                height: 40px;
-                width: 100%;
-                border: 1px solid grey;
-                outline: none;
-                padding-left: 3px;
-                border-radius: 4px;
-            }
-
-            & input[type="checkbox"] {
-                height: 16px;
-                width: 16px;
-            }
-        }
-
-        & button {
-            background-color: #05A602;
-            height: 50px;
-            width: 100%;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            margin-top: 25px;
-        }
-
-        & .terms {
-            flex-direction: row;
-            gap: 5px;
-            align-items: center;
-            color: darkgray;
-
-            & span {
-                text-decoration: underline;
-                color: blue;
-                cursor: pointer;
-            }
+        & a {
+            text-decoration: underline;
+            color: #2597ac;
         }
     }
 }
@@ -91,15 +40,53 @@
     justify-content: center;
     align-items: center;
 
+    & h1 {
+        font-size: 34px;
+        width: 100%;
+        text-wrap: nowrap;
+    }
+   
+    & > p {
+        font-weight: 400;
+        font-size: 16px;
+    }
+
+    & .auth-footer {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        & p {
+            margin: 0;
+        }
+
+        & a {
+            text-decoration: underline;
+            color: #2597ac;
+        }
+    }
+
+}
+
+.verify {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
 
     & h1 {
         font-size: 34px;
+        width: 100%;
+        text-align: center;
     }
 
     & > p {
         font-weight: 400;
-    }
-
+        font-size: 16px;
+        max-width: 70%;
+        text-align: center;
+    }   
 
     & form {
         display: flex;
@@ -107,36 +94,19 @@
         justify-content: center;
         align-items: center;
         gap: 10px;
-        margin-top: 50px;
 
-        & > div {
+        & .otpContainer {
             display: flex;
-            flex-direction: column;
-            width: 100%;
-            gap: 5px;
-
-            & label {
-                font-size: 16px;
-
-                & .required {
-                    color: tomato;
-                }
-            }
+            gap: 15px;
 
             & input {
-                height: 40px;
-                width: 100%;
-                border: 1px solid grey;
+                width: 50px;
+                height: 50px;
+                border: 1px solid gray;
                 outline: none;
-                padding-left: 3px;
-                border-radius: 4px;
-            }
-
-            & input[type="checkbox"] {
-                height: 16px;
-                width: 16px;
             }
         }
+
 
         & button {
             background-color: #05A602;
@@ -145,20 +115,44 @@
             border: none;
             border-radius: 4px;
             color: white;
-            margin-top: 25px;
+            margin-top: 15px;
         }
 
-        & .terms {
+        & .rememberme {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        & .account {
             flex-direction: row;
             gap: 5px;
             align-items: center;
             color: darkgray;
 
-            & span {
+            & a {
                 text-decoration: underline;
                 color: blue;
                 cursor: pointer;
+                margin-left: 5px;
             }
         }
     }
+}
+
+.errorMessage {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    transition: .5s;
+    color: tomato;
+    opacity: .8;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
 }

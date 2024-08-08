@@ -1,0 +1,77 @@
+[
+  {
+    "question": "What is the primary role of a project manager?",
+    "options": ["To develop software", "To design marketing strategies", "To oversee and manage project progress", "To manage the company’s finances"],
+    "answer": "To oversee and manage project progress"
+  },
+  {
+    "question": "Which document outlines the objectives, scope, and participants in a project?",
+    "options": ["Project Charter", "Business Plan", "Risk Management Plan", "Stakeholder Analysis"],
+    "answer": "Project Charter"
+  },
+  {
+    "question": "What is a Gantt Chart used for?",
+    "options": ["Tracking project milestones", "Managing project budget", "Scheduling project tasks", "Conducting risk analysis"],
+    "answer": "Scheduling project tasks"
+  },
+  {
+    "question": "What does the term 'scope creep' refer to in project management?",
+    "options": ["Increased project costs", "Uncontrolled changes in the project scope", "Delays in project timeline", "Decrease in project quality"],
+    "answer": "Uncontrolled changes in the project scope"
+  },
+  {
+    "question": "What is the critical path in project management?",
+    "options": ["The sequence of project activities which add the most value", "The longest path through the project schedule", "The path with the most dependencies", "The sequence of activities that leads to project failure"],
+    "answer": "The longest path through the project schedule"
+  },
+  {
+    "question": "Which methodology is known for its iterative approach and flexibility to changes?",
+    "options": ["Waterfall", "Six Sigma", "Agile", "PRINCE2"],
+    "answer": "Agile"
+  },
+  {
+    "question": "What is the main purpose of a risk management plan?",
+    "options": ["To define the project budget", "To schedule project tasks", "To identify, analyze, and mitigate risks", "To manage team communication"],
+    "answer": "To identify, analyze, and mitigate risks"
+  },
+  {
+    "question": "Which phase of a project involves determining if the project objectives were met and documenting lessons learned?",
+    "options": ["Initiation", "Planning", "Execution", "Closure"],
+    "answer": "Closure"
+  },
+  {
+    "question": "In the context of project management, what is a 'deliverable'?",
+    "options": ["A financial report", "A completed project task or product", "A team meeting", "A risk management plan"],
+    "answer": "A completed project task or product"
+  },
+  {
+    "question": "What is the main focus during the execution phase of a project?",
+    "options": ["Planning project details", "Tracking and managing project performance", "Closing the project", "Defining project goals"],
+    "answer": "Tracking and managing project performance"
+  },
+  {
+    "question": "What does 'PMBOK' stand for?",
+    "options": ["Project Management Book of Knowledge", "Professional Management Bureau of Knowledge", "Project Monitoring and Budgeting Knowledge", "Project Maintenance and Business Organization Knowledge"],
+    "answer": "Project Management Book of Knowledge"
+  },
+  {
+    "question": "What is a stakeholder in project management?",
+    "options": ["A team member", "A project sponsor", "Anyone who has an interest or investment in the project's outcome", "A client"],
+    "answer": "Anyone who has an interest or investment in the project's outcome"
+  },
+  {
+    "question": "Which tool is commonly used for project cost management?",
+    "options": ["PERT Chart", "Earned Value Management (EVM)", "SWOT Analysis", "Pareto Chart"],
+    "answer": "Earned Value Management (EVM)"
+  },
+  {
+    "question": "What is a 'milestone' in project management?",
+    "options": ["A small task within a project", "A significant point or event in the project", "A project risk", "An internal team meeting"],
+    "answer": "A significant point or event in the project"
+  },
+  {
+    "question": "What is the purpose of a Work Breakdown Structure (WBS)?",
+    "options": ["To organize the team's workload", "To outline the project budget", "To divide the project into manageable sections", "To manage project risks"],
+    "answer": "To divide the project into manageable sections"
+  }
+]

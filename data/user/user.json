@@ -1,0 +1,21 @@
+{
+    "user": [
+      {
+        "name": "Mpho Dev",
+        "img": "/images/team/avatar.jpg",
+        "userList": [
+          {
+            "icon": "feather-home",
+            "text": "My Dashboard",
+            "link": "/student/analytics"
+          },
+          {
+            "icon": "feather-shopping-bag",
+            "text": "Enrolled Courses",
+            "link": "/student/enrolled-courses"
+          }
+        ]
+      }
+    ]
+  }
+  

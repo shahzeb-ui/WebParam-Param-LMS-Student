@@ -1,0 +1,122 @@
+/* components/uploadDocs.scss */
+.requiredDocs {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    justify-content: center;
+}
+
+.docContainer {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    margin: 10px;
+    position: relative;
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+
+    &.uploaded {
+        background-color: #e9dbdc;
+        border: 2px dashed #ccc;
+    }
+
+    & > span {
+        cursor: pointer;
+    }
+}
+
+.docContainer h3 {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.docContainer i {
+    font-size: 24px;
+    color: #ffffff;
+    background-color:#24345c ;
+   padding: 10px 15px;
+   border-radius: 50%;
+}
+
+.docContainer h5 {
+    margin: 10px 0;
+}
+
+.docContainer input[type="file"] {
+    display: none;
+}
+
+.docContainer label {
+    background:#24345c;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.docContainer .fileName {
+    margin: 10px 0;
+    font-style: italic;
+}
+
+.docContainer.dragover {
+    background-color: #24345c;
+    border-color: #24345c;
+}
+
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    min-height: 200px;
+    transition: .5s all;
+
+    & p {
+        color: #24345c;
+    }
+
+    & button {
+        width: 200px;
+        height: 50px;
+        border: none;
+        border-radius: 8px;
+        background-color: #24345c;
+        outline: none;
+    }
+}
+
+.successUpload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    min-height: 200px;
+
+    & > :first-child {
+        transform: scale(4);
+        color: #24345c;
+    }
+
+    & button {
+        width: 200px;
+        height: 50px;
+        border: none;
+        border-radius: 8px;
+        background-color: #24345c;
+        outline: none;
+        margin-top: 40px;
+    }
+}
+
+.fileName {
+    font-size: 12px;
+    width: 100%;
+    text-wrap: wrap;
+    max-width: 100%;
+    overflow-x: hidden;
+}
