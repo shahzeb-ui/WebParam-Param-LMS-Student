@@ -76,7 +76,7 @@ const FileUpload: React.FC = () => {
     setLoader(true);
     try {
       if (user?.data) {
-        const docs = await getStudentDocuments(user?.data.id || user?.id);
+        const docs = await getStudentDocuments(user?.data?.id || user?.id);
 
         if (docs) {
           setDocuments(docs?.data.data);
@@ -146,9 +146,9 @@ const FileUpload: React.FC = () => {
         type = documentsRequired.findIndex(doc => doc.documentName === selectedFile.type);
       }
 
-      if (type !== undefined) {
-        formData.append('Type', type.toString());
-      }
+      // if (type !== undefined) {
+      //   formData.append('Type', type.toString());
+      // }
       formData.append('File', selectedFile.file);
 
       try {
@@ -183,7 +183,7 @@ const FileUpload: React.FC = () => {
       formData.append('DocumentId', document?.id);
 
       try {
-        const response = await axios.put(`${writeUserData}/api/Documents/UpdateStudentDocument`, formData, {
+        const response = await axios.put(`${writeUserData}/api/v1/Documents/UpdateStudentDocument`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -316,7 +316,8 @@ const FileUpload: React.FC = () => {
         
         yesProgramme.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
-          const matchingDoc = documents.find((doc) => doc.type === index);
+          const matchingDoc = documents.find((doc) => doc.name === docType);
+          console.log('matched', matchingDoc)
 
           return (
             <div
@@ -374,7 +375,7 @@ const FileUpload: React.FC = () => {
         :
         documentsRequired.map((doc, index) => {
           const docType = doc.documentName as DocumentType;
-          const matchingDoc = documents.find((doc) => doc.type === index);
+          const matchingDoc = documents.find((doc) => doc.name === docType);
 
           return (
             <div

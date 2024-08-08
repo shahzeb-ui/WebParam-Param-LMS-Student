@@ -6,8 +6,9 @@ import Image from "next/image";
 import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
-import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
+
 import logo from './logo.jpg';
+import Nav from "./nav";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
@@ -34,11 +35,11 @@ const Navbar = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    // return () => {
+    //   window.removeEventListener("scroll", handleScroll);
+    // };
   }, [currentSection]);
 
   const handleAvatarClick = () => {
@@ -75,7 +76,7 @@ const Navbar = () => {
                         className={currentSection === sec.id ? "current" : ""}
                         key={i}
                       >
-                        <Link href={sec.link}>{sec.label}</Link>
+                        <span aria-disabled style={{cursor:'none', margin:'0 10px', opacity:'.8'}}>{sec.label}</span>
                       </li>
                     ))}
                   </ul>
@@ -102,7 +103,7 @@ const Navbar = () => {
 
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
-                  <Link href="#" onClick={handleAvatarClick}>
+                  <span onClick={handleAvatarClick}>
                     <Image
                       src={User}
                       alt="User Avatar"
@@ -110,10 +111,11 @@ const Navbar = () => {
                       height={40}
                       className="rounded-circle"
                     />
-                  </Link>
+                  </span>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
-                      <UserStudent closeDropdown={closeDropdown} />
+                      {/* <UserStudent closeDropdown={closeDropdown} /> */}
+                      {isDropdownVisible && <Nav />}
                     </div>
                   )}
                 </div>
@@ -135,11 +137,8 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+      
       </header>
-      <StudentMobileSideBar
-        isOpen={isSidebarOpen}
-        toggleSidebar={toggleSidebar}
-      />
     </>
   );
 };

@@ -10,7 +10,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
-import { readUserData } from '@/app/lib/endpoints';
+import { readUserData, writeUserData } from '@/app/lib/endpoints';
 
 
 export default function Profile({ student }: any) {
@@ -42,8 +42,8 @@ export default function Profile({ student }: any) {
 
     async function getInputCodes() {
         const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
-        console.log('codes:', res.data.data);
-        setCodes(res.data.data);
+        console.log('codes:', res?.data?.data);
+        setCodes(res?.data?.data);
     }
     
     useEffect(() => {
@@ -56,6 +56,10 @@ export default function Profile({ student }: any) {
         getUserProfile();
         setProvince(student?.data?.country)
         getInputCodes();
+
+        if (user) {
+            setEmail(user?.data?.email)
+        }
     }, []);
 
   async function getUserProfile() {
@@ -68,7 +72,7 @@ export default function Profile({ student }: any) {
             setFirstName(res.data.data.firstName);
             setSurname(res.data.data.surname);
             setIdNumber(res.data.data.idNumber);
-            setEmail(res.data.data.email);
+            // setEmail(res.data.data.email);
             setGender(res.data.data.gender);
             setDateOfBirth(dob);
             setCountry(res.data.data.country);
@@ -98,7 +102,7 @@ export default function Profile({ student }: any) {
         debugger;
         setIsSubmitting(true);
         const payload = {
-            userId: user?.data?.id,
+            userId: user?.data?.id||user?.id,
             firstName,
             surname,
             idNumber,
@@ -136,7 +140,7 @@ export default function Profile({ student }: any) {
             formData.append('file', file);
 
             try {
-                const response = await axios.post(`${readUserData}/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
+                const response = await axios.post(`${writeUserData}/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -148,6 +152,14 @@ export default function Profile({ student }: any) {
                 console.error('Error uploading profile picture:', error);
             }
         }
+    };
+
+    const getTodayDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     };
 
     return (
@@ -260,13 +272,19 @@ export default function Profile({ student }: any) {
                     <div className="rbt-form-group">
                         <label htmlFor="idNumber">ID number</label>
                         <input
-                            type="number"
+                            type="text"
                             name="idNumber"
                             placeholder="Enter your Id number or passport"
                             value={idNumber}
                             required
                             onChange={(e) => setIdNumber(e.target.value)}
                             pattern="[0-9]*" 
+                            onKeyDown={(e) => {
+                                // Prevent numeric input
+                                if (!/\d/.test(e.key) && e.key !== "Backspace" && e.key !== "Tab" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -277,6 +295,7 @@ export default function Profile({ student }: any) {
                             type="email"
                             name="email"
                             value={email}
+                            // onChange={(e)=> setEmail(e.target.value)}
                             readOnly
                         />
                     </div>
@@ -289,9 +308,10 @@ export default function Profile({ student }: any) {
                         <input
                             type="date"
                             name="date"
-                            value={dateOfBirth}
+                            value={dateOfBirth == "0001-01-01" ? getTodayDate() : dateOfBirth}
                             required
                             onChange={(e) => setDateOfBirth(e.target.value)}
+                            
                         />
                     </div>
                 </div>
@@ -329,7 +349,7 @@ export default function Profile({ student }: any) {
                         />
                     </div>
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{ marginTop: '10px' }}>
+                <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="filter-select rbt-modern-select">
                         <label htmlFor="gender">Gender</label>
                         <select

@@ -24,8 +24,8 @@ export default function EmploymentInformation({ student }: any) {
   async function getInputCodes() {
     const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
 
-    console.log('codes:', res.data.data);
-    setCodes(res.data.data)
+    console.log('codes:', res?.data?.data);
+    setCodes(res?.data?.data)
   }
 
 
@@ -36,7 +36,7 @@ export default function EmploymentInformation({ student }: any) {
     setSarsTaxNumber(student?.data?.sarsTaxNumber);
     setSelectedSector(student?.data?.sector);
     setPreferedOccupation(student?.data?.preferedOccupation);
-    setReferalCompany(student?.data.referalCompany);
+    setReferalCompany(student?.data?.referalCompany);
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function EmploymentInformation({ student }: any) {
     setIsSubmitting(true);
     debugger;
       const payload = {
-        userId: user.data.id||user.id,
+        userId: user?.data?.id||user?.id,
         employmentStatus: employmentStatus,
         taxNumber: sarsTaxNumber,
         sector: selectedSector,

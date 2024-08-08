@@ -167,4 +167,52 @@ export const preferredOccupations = [
     { title: "Employee Relations Specialist", sector: "HR" },
     { title: "Organizational Development Manager", sector: "HR" },
     { title: "HR Information Systems Analyst", sector: "HR" },
-  ];
+
+    // Health Services
+    { title: "Nurse", sector: "HEALTH" },
+    { title: "Physician", sector: "HEALTH" },
+    { title: "Pharmacist", sector: "HEALTH" },
+    { title: "Medical Laboratory Technician", sector: "HEALTH" },
+    { title: "Physical Therapist", sector: "HEALTH" },
+    { title: "Occupational Therapist", sector: "HEALTH" },
+    { title: "Radiologic Technologist", sector: "HEALTH" },
+    { title: "Medical Billing Specialist", sector: "HEALTH" },
+
+    { title: "Production Manager", sector: "MANUF" },
+    { title: "Quality Control Inspector", sector: "MANUF" },
+    { title: "Manufacturing Engineer", sector: "MANUF" },
+    { title: "CNC Machinist", sector: "MANUF" },
+    { title: "Assembler", sector: "MANUF" },
+    { title: "Industrial Designer", sector: "MANUF" },
+    { title: "Supply Chain Manager", sector: "MANUF" },
+    { title: "Plant Operator", sector: "MANUF" },
+
+    { title: "Geologist", sector: "MINING" },
+    { title: "Mining Engineer", sector: "MINING" },
+    { title: "Heavy Equipment Operator", sector: "MINING" },
+    { title: "Driller", sector: "MINING" },
+    { title: "Mine Safety Officer", sector: "MINING" },
+    { title: "Mineral Surveyor", sector: "MINING" },
+    { title: "Mine Planner", sector: "MINING" },
+    { title: "Metallurgist", sector: "MINING" },
+  
+    // Transport
+    { title: "Truck Driver", sector: "TRANS" },
+    { title: "Logistics Manager", sector: "TRANS" },
+    { title: "Airline Pilot", sector: "TRANS" },
+    { title: "Train Conductor", sector: "TRANS" },
+    { title: "Ship Captain", sector: "TRANS" },
+    { title: "Traffic Controller", sector: "TRANS" },
+    { title: "Transportation Planner", sector: "TRANS" },
+    { title: "Freight Broker", sector: "TRANS" },
+
+    // Utilities
+    { title: "Electrician", sector: "UTIL" },
+    { title: "Utility Manager", sector: "UTIL" },
+    { title: "Water Treatment Specialist", sector: "UTIL" },
+    { title: "Gas Technician", sector: "UTIL" },
+    { title: "Power Plant Operator", sector: "UTIL" },
+    { title: "Line Worker", sector: "UTIL" },
+    { title: "Renewable Energy Technician", sector: "UTIL" },
+    { title: "Energy Auditor", sector: "UTIL" },
+];
