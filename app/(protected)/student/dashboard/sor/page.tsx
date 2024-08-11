@@ -25,7 +25,7 @@ const Sor = () => {
         <KnowledgeModules />
         <PracticalSkillsModules  />
         <WorkExperienceModules />
-        <button className="mt-5 bg-dark text-light h-2" style={{width:'100px', height:'40px', border:'none', borderRadius:'8px'}}><i className="bi bi-cloud-download-fill"></i></button>
+        <button className="mt-5 text-light h-2" style={{width:'100px', height:'40px', border:'none', borderRadius:'8px', backgroundColor:'#2e3f5f'}}><i className="bi bi-cloud-download-fill"></i></button>
         </div>
     </>
   );

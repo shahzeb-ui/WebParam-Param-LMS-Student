@@ -14,6 +14,9 @@ import { useLessonContext } from "@/context/lesson-context/lesson-context";
 import { KnowledgeTopic } from "@/interfaces/knowledge/knowledge";
 import LessonData from "@/data/lessons/lesson.json";
 import { TopicElement } from "@/interfaces/pharaphase/paraphase-d";
+import { useRouter } from "next/navigation";
+import './sidebar.scss';
+import Cookies from "universal-cookie";
 
 interface LessonSidebarHandle {
   handlePrevious: () => void;
@@ -39,15 +42,19 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
   }>({});
   const [activeAssessment, setActiveAssessment] = useState<string | null>(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     const getAllKnowledgeTopics = async (id: string) => {
       try {
         const topics = await fetchKnowledgeTopics(id);
+        console.log('topics:', topics);
         setKnowledgeTopics(topics);
 
         if (topics.length > 0) {
           const firstTopicId = topics[0].id;
           const elements = await fetchTopicElements(firstTopicId);
+          console.log('elements:', elements);
           setExpandedTopics((prevState) => ({
             ...prevState,
             [firstTopicId]: elements,
@@ -71,7 +78,20 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     }
   }, []);
 
+  useEffect(() => {
+    // This effect runs when knowledgeTopics or expandedTopics change
+    debugger;
+    if (knowledgeTopics.length > 0) {
+      const firstTopicId = knowledgeTopics[0].id;
+      if (expandedTopics[firstTopicId] && expandedTopics[firstTopicId].length > 0) {
+        const firstElement = expandedTopics[firstTopicId][0];
+        handleSetActiveElement(firstElement);
+      }
+    }
+  }, [knowledgeTopics, expandedTopics]);
+
   const handleTopicClick = async (topicId: string, index: number) => {
+    debugger;
     if (!expandedTopics[topicId]) {
       try {
         const elements = await fetchTopicElements(topicId);
@@ -108,6 +128,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     setIsActiveUrl(videoUrl);
     setCurrentElementIndex(elementIndex);
   };
+
 
   const handlePrevious = async () => {
     setIsQuizActive(false);
@@ -188,12 +209,18 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     }));
   };
 
+  function handleSetActiveElement(element:any) {
+    router.push(`/lesson?title=${element.title}&description=${element.description}`)
+  }
+
   return (
-    <div className={styles.lessonScrollSidebar}>
+    <div className={`sidebar-container ${styles.lessonScrollSidebar}`}>
       <div className="rbt-course-feature-inner rbt-search-activation">
         <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
           <div className="accordion" id="accordionExampleb2">
-            {knowledgeTopics.map((topic, index) => (
+            {knowledgeTopics.map((topic, index) => {
+              console.log('knowlwdge topic: ', topic)
+              return (
               <div className="accordion-item card" key={topic.id}>
                 <h2
                   className={`accordion-header card-header ${
@@ -231,45 +258,44 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                   aria-labelledby={`heading${index + 1}`}
                 >
                   <div className="accordion-body card-body">
-                    {expandedTopics[topic.id] && (
+                    {expandedTopics[topic.id] && 
                       <ul className="rbt-course-main-content liststyle">
-                        {expandedTopics[topic.id].map((element, elIndex) => (
+                        {expandedTopics[topic.id].map((element, elIndex) => {
+                          console.log('topic elemnet: ', element)
+                          return (
                           <React.Fragment key={element.id}>
                             <li className="d-flex justify-content-between align-items mt-2">
-                              <div className="course-content-left">
+                              <div className="course-content-left topic_Element_container" style={{overflow:'hidden'}}>
                                 <i
-                                  className="feather-play-circle"
+                                  className="feather-play-circle icon"
                                   style={{
                                     color:
-                                      isActiveUrl === element.videoUrl
-                                        ? "#2f57ef"
-                                        : "#6b7385",
+                                      isActiveUrl === element.videoUrl ? "#2f57ef" : "#6b7385",
                                   }}
                                 ></i>
                                 <p
+                                  className="topic-Element-Title"
+
                                   onClick={() =>
-                                    element.videoUrl &&
+                                    {element.videoUrl &&
                                     handleActiveVideoUrl(
                                       element.videoUrl,
                                       elIndex
-                                    )
-                                  }
-                                  style={{
+                                    ), handleSetActiveElement(element)
+                                    }}
+
+                                    style={{fontSize:'13px',
                                     cursor: element.videoUrl
                                       ? "pointer"
                                       : "default",
                                     textDecoration: "none",
                                     fontWeight:
-                                      isActiveUrl === element.videoUrl
-                                        ? "bold"
-                                        : "normal",
+                                      isActiveUrl === element.videoUrl ? "bold" : "normal",
                                     color:
-                                      isActiveUrl === element.videoUrl
-                                        ? "#2f57ef"
-                                        : "#6b7385",
+                                      isActiveUrl === element.videoUrl ? "#2f57ef" : "#6b7385",
                                     whiteSpace: "nowrap",
                                     overflow: "hidden",
-                                    maxWidth: "240px",
+                                    maxWidth: "310px",
                                   }}
                                 >
                                   {element.title}
@@ -278,16 +304,12 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                               <div className="course-content-right">
                                 <span
                                   className={`rbt-check ${
-                                    isActiveUrl === element.videoUrl
-                                      ? ""
-                                      : "unread"
+                                    isActiveUrl === element.videoUrl ? "" : "unread"
                                   }`}
                                 >
                                   <i
                                     className={`feather-${
-                                      isActiveUrl === element.videoUrl
-                                        ? "check"
-                                        : "circle"
+                                      isActiveUrl === element.videoUrl ? "check" : "circle"
                                     }`}
                                   ></i>
                                 </span>
@@ -295,9 +317,11 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                             </li>
 
                             {/* Quizzes Section */}
-                            {LessonData.lesson
+                            {element.isQuizGenerated &&  LessonData.lesson
                               .filter((lesson) => lesson.title.includes("quiz"))
-                              .map((quiz, quizIndex) => (
+                              .map((quiz, quizIndex) => {
+                                console.log('quiz',quiz)
+                                return (
                                 <li
                                   key={`quiz-${elIndex}-${quizIndex}`}
                                   className="d-flex justify-content-between align-items mt-2"
@@ -308,18 +332,16 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                                 >
                                   <div className="course-content-left">
                                     <i
-                                      className="feather-help-circle"
+                                      className="feather-file-text"
                                       style={{
                                         color:
                                           isActiveUrl ===
-                                          quiz.listItem[0].lssonLink
-                                            ? "#2f57ef"
-                                            : "#6b7385",
+                                          quiz.listItem[quizIndex].lssonLink ? "#2f57ef" : "#6b7385",
                                       }}
                                     ></i>
                                     <p>
-                                      <a href={quiz.listItem[0].lssonLink}>
-                                        {quiz.title}
+                                      <a href={quiz.listItem[quizIndex].lssonLink} style={{fontSize:'12px'}}>
+                                        quiz
                                       </a>
                                     </p>
                                   </div>
@@ -327,35 +349,34 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                                     <span
                                       className={`rbt-check ${
                                         isActiveUrl ===
-                                        quiz.listItem[0].lssonLink
-                                          ? ""
-                                          : "unread"
+                                        quiz.listItem[0].lssonLink ? "" : "unread"
                                       }`}
                                     >
                                       <i
                                         className={`feather-${
                                           isActiveUrl ===
-                                          quiz.listItem[0].lssonLink
-                                            ? "check"
-                                            : "circle"
+                                          quiz.listItem[0].lssonLink ? "check" : "circle"
                                         }`}
                                       ></i>
                                     </span>
                                   </div>
                                 </li>
-                              ))}
+                                )
+                            })}
                           </React.Fragment>
-                        ))}
+                          )
+                        })}
                       </ul>
-                    )}
+                    }
                   </div>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
 
           {/* Assessments Section */}
-          <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
+          {/* <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
             {LessonData.lesson
               .filter((lesson) => lesson.title.includes("Assessments"))
               .map((assessment, index) => (
@@ -433,7 +454,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                   </div>
                 </div>
               ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

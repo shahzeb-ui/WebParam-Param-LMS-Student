@@ -17,7 +17,7 @@ const StudentMobileSideBar = ({
   };
 
   return (
-    <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
+    <div className={`${styles.sidebar} ${!isOpen ? styles.open : ""}`}>
       <div className={styles.overlay} onClick={toggleSidebar}></div>
       <div className={styles["sidebar-content"]}>
         <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
@@ -47,6 +47,7 @@ const StudentMobileSideBar = ({
                       ))}
                   </ul>
                 </nav>
+
                 <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">User</h6>
                 </div>

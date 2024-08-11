@@ -10,7 +10,7 @@ type QuizQuestion = {
   answer: string;
 };
 
-const LessonQuiz = () => {
+const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -79,7 +79,7 @@ const LessonQuiz = () => {
         if (next + 1 < currentQuiz.length) {
           setNext(next + 1);
         } else {
-          window.location.href = "/lesson";
+          window.location.href = "/take-lesson";
         }
       }, 3000);
     }
@@ -174,7 +174,7 @@ const LessonQuiz = () => {
                   className="rbt-btn btn-gradient btn-sm ms-2"
                   id="next-btn"
                   type="button"
-                  onClick={() => (window.location.href = "/lesson")}
+                  onClick={() => {setVideoEnded(false), handleNext()}}
                 >
                   Done
                 </button>

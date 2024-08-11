@@ -1,10 +1,10 @@
 import axios from "axios";
-import { deployedUrl } from "../endpoints";
+import { writeUserData } from "@/app/lib/endpoints";
 
 
 export async function registerUser(payload:any) {
     try {
-        const register = await axios.post(`${deployedUrl}/api/v1/Users/RegisterStudent`, payload);
+        const register = await axios.post(`${writeUserData}/api/v1/Users/RegisterStudent`, payload);
         return register;
 
     } catch(error: any) {
@@ -15,7 +15,7 @@ export async function registerUser(payload:any) {
 
 export async function verifyUserAccount(payload:any) {
     try {
-        const verify = await axios.post(`${deployedUrl}/api/v1/Users/VerifyOTP`, payload);
+        const verify = await axios.post(`${writeUserData}/api/v1/Users/VerifyOTP`, payload);
         return verify;
 
     } catch(error: any) {
@@ -26,7 +26,7 @@ export async function verifyUserAccount(payload:any) {
 
 export async function LoginUser(payload:any) {
     try {
-        const register = await axios.post(`${deployedUrl}/api/v1/Users/Login`, payload).then(data => {return data});
+        const register = await axios.post(`${writeUserData}/api/v1/Users/Login`, payload).then(data => {return data});
         return register;
 
     } catch(error: any) {
@@ -37,7 +37,7 @@ export async function LoginUser(payload:any) {
 
 export async function sendOtp(payload:any) {
     try {
-        const sendOtp = await axios.post(`${deployedUrl}/api/v1/Users/SendResetPasswordOtp`, payload);
+        const sendOtp = await axios.post(`${writeUserData}/api/v1/Users/SendResetPasswordOtp`, payload);
         return sendOtp;
     } catch(error: any) {
         alert(error);
@@ -46,7 +46,7 @@ export async function sendOtp(payload:any) {
 
 export async function verifyOtp(payload:any) {
     try {
-        const verifyOtp = await axios.put(`${deployedUrl}/api/v1/Users/ResetPassword`, payload);
+        const verifyOtp = await axios.put(`${writeUserData}/api/v1/Users/ResetPassword`, payload);
         return verifyOtp;
     } catch(error: any) {
         alert(error);
