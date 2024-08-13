@@ -94,7 +94,7 @@ export default function StudentLayout({
               <InstructorDashboardHeader />
               <div className="row g-5">
                 <div className={`col-lg-3 ${styles.sidebarHiddenOnMobile}`}>
-                  <StudentDashboardSidebar isEnrolled={isEnrolled} />
+                  <StudentDashboardSidebar />
                 </div>
                 <div className="col-lg-9">{children}</div>
               </div>
