@@ -5,14 +5,14 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Courses from "@/data/dashboard/instructor/instructor.json";
 import { useLessonContext } from "@/context/lesson-context/lesson-context";
-import styles from "@/ui/student/enrolled/course.module.css";
-import courseImage from './courseImage.jpeg'
-import "@/styles/css/plugins/mainstyle.css"
+import "./courseStyle.scss";
+import courseImage from "./courseImage.jpeg";
+import "@/styles/css/plugins/mainstyle.css";
 
 interface UnitData {
   id: string;
   title: string;
-  moduleCode: string;
+  moduleCode?: string;
 }
 
 interface Props {
@@ -47,6 +47,13 @@ const UnitStandardWidget: React.FC<Props> = ({
   const [discountPercentage, setDiscountPercentage] = useState<string>("");
   const [totalReviews, setTotalReviews] = useState<number>(0);
   const [rating, setRating] = useState<number>(0);
+  const [randomNumber, setRandomNumber] = useState<number>(0);
+  const [randomVideoCount, setRandomVideoCount] = useState<number>(0);
+
+  // Function to generate a random number between 20 and 30
+  const generateRandomNumber = () => {
+    return Math.floor(Math.random() * (300 - 200 + 1)) + 200;
+  };
 
   useEffect(() => {
     const calculateDiscount = () => {
@@ -72,6 +79,8 @@ const UnitStandardWidget: React.FC<Props> = ({
       setRating(Math.round(course.rating.average));
     };
 
+    // Set a random number when the component mounts
+    
     calculateDiscount();
     calculateTotalReviews();
     calculateRating();
@@ -83,13 +92,23 @@ const UnitStandardWidget: React.FC<Props> = ({
     navigateToLesson();
   };
 
+  const generateRandomVideoCount = () => {
+    return Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+  };
+
+  useEffect(() => {
+    setRandomNumber(generateRandomNumber());
+    setRandomVideoCount(generateRandomVideoCount())
+
+  }, [])
+
   return (
     <>
       <div className="rbt-card variation-01 rbt-hover">
         <div className="rbt-card-img">
           <Link
-            href={`/student/enrolled-courses/${data.id}`}
-            onClick={() => handleClick(data.id)}
+            href={`/take-lesson`}
+            // onClick={() => handleClick(data.id)}
           >
             <Image
               width={330}
@@ -97,23 +116,21 @@ const UnitStandardWidget: React.FC<Props> = ({
               src={courseImage.src}
               alt={data.title}
             />
-           
           </Link>
         </div>
         <div className="rbt-card-body">
           {courseStyle === "two" && (
             <>
               <div className="rbt-card-top">
-                <div className="rbt-bookmark-btn">
-                  <Link className="rbt-round-btn" title="Bookmark" href="#">
-                    <i className="feather-bookmark" />
-                  </Link>
-                </div>
+                {/* <p className="w-100"></p> */}
               </div>
-              <h4 className="rbt-card-title">
+              <h4
+                className="rbt-card-title"
+                style={{ fontSize: "1.2em", margin: "5px 0" }}
+              >
                 <Link
-                  href={`/student/enrolled-courses/${data.id}`}
-                  onClick={() => handleClick(data.id)}
+                  href={`/take-lesson`}
+                  // onClick={() => handleClick(data.id)}
                 >
                   {data.title} - {data.moduleCode}
                   
@@ -121,14 +138,14 @@ const UnitStandardWidget: React.FC<Props> = ({
               </h4>
             </>
           )}
-          <ul className="rbt-meta">
+          <ul className="rbt-meta mt-3">
             <li>
               <i className="feather-book" />
-              {course.lectures} Lessons
+              KM{randomNumber} {/* Display the random number here */}
             </li>
             <li>
-              <i className="feather-users" />
-              {course.enrolledStudent} Students
+              <i className="bi bi-play-circle-fill" />
+              {randomVideoCount} Videos
             </li>
           </ul>
 
@@ -140,16 +157,21 @@ const UnitStandardWidget: React.FC<Props> = ({
                 </div>
               </div>
 
-             
+              <div className="rbt-card-bottom">
+                {/* <Link
+                  className="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                  href="#"
+                >
+                  View More
+                </Link> */}
+              </div>
               <h6 className="rbt-title-style-2 mb--10"></h6>
               <div className="rbt-card-bottom">
-                <Link href="#" onClick={() => handleClick(data.id)}>
-                  <button
-                    className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center ${styles.buttonSmall}`}
-                  >
-                    Continue Watching
-                  </button>
-                </Link>
+                <button
+                  className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center continue-watching`}
+                >
+                  <Link href="/take-lesson">Continue Watching</Link>
+                </button>
               </div>
             </>
           ) : (

@@ -9,6 +9,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
+import { readUserData } from '@/app/api/endpoints';
 
 export default function Profile({ student }: any) {
     const [firstName, setFirstName] = useState('');
@@ -33,7 +34,7 @@ export default function Profile({ student }: any) {
     const router = useRouter();
 
     async function getInputCodes() {
-        const res = await axios.get(`https://khumla-dev-user-read.azurewebsites.net/api/Student/GetCodes`);
+        const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
         console.log('codes:', res.data.data);
         setCodes(res.data.data);
     }
@@ -130,7 +131,7 @@ export default function Profile({ student }: any) {
             formData.append('file', file);
 
             try {
-                const response = await axios.post(`https://khumla-dev-user-write.azurewebsites.net/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
+                const response = await axios.post(`${readUserData}/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },

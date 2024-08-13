@@ -72,8 +72,8 @@ const EnrolledCourses = () => {
   }
 
   useEffect(() => {
-    // const courseId = "668fcf681a1ce7b0635b61c6";
-    // getUnitStandards(courseId);
+    const courseId = "6698edd230068555e54ac58e";
+    getUnitStandards(courseId);
     debugger;
     getKnowledgeModules(user.data.id||user.data.userId);
 

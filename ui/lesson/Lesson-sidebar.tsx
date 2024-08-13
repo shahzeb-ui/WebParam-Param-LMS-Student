@@ -295,7 +295,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                             </li>
 
                             {/* Quizzes Section */}
-                            {LessonData.lesson
+                            {/* {LessonData.lesson
                               .filter((lesson) => lesson.title.includes("quiz"))
                               .map((quiz, quizIndex) => (
                                 <li
@@ -343,7 +343,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                                     </span>
                                   </div>
                                 </li>
-                              ))}
+                              ))} */}
                           </React.Fragment>
                         ))}
                       </ul>
@@ -355,7 +355,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
           </div>
 
           {/* Assessments Section */}
-          <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
+          {/* <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion mt-4">
             {LessonData.lesson
               .filter((lesson) => lesson.title.includes("Assessments"))
               .map((assessment, index) => (
@@ -433,7 +433,7 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
                   </div>
                 </div>
               ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

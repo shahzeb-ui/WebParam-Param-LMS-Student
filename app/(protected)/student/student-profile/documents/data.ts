@@ -48,4 +48,3 @@ export const documentsRequired = [
         Type: DocumentType.BankStatement
     }
 ];
-

@@ -358,7 +358,7 @@ export default function DemocraticLegal({student}:any) {
     >
         <span className="icon-reverse-wrapper">
             <span className="btn-text text-light">Proceed</span>
-            <span className="btn-icon">
+            <span className="btn-icon text-light">
                 <i className="feather-arrow-right" />
             </span>
         </span>

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import LessonSidebar from "@/ui/lesson/Lesson-sidebar";
 import styles from "@/ui/lesson/lesson-home/scroll.module.css";
-
 import "@/public/scss/styles.scss";
 import { VideoProvider } from "@/context/video-context/video-context";
 
@@ -12,14 +11,19 @@ export default function LessonLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [activeElement, setActiveElement] = useState<any>();
+
+  function handleElementChange(element:any) {
+    setActiveElement(element)
+  }
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize();
+    handleResize(); // Set initial value
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -28,17 +32,18 @@ export default function LessonLayout({
   }, []);
 
   return (
-    <>
-      <VideoProvider>
-        <div className="rbt-lesson-area bg-color-white">
-          <div className="rbt-lesson-content-wrapper">
-            <div className={isMobile ? "" : "rbt-lesson-leftsidebar"}>
-              <LessonSidebar />
+    <VideoProvider>
+      <div className="rbt-lesson-area bg-color-white">
+        <div className="rbt-lesson-content-wrapper">
+          {!isMobile && (
+            <div className="rbt-lesson-leftsidebar">
+              <LessonSidebar 
+              />
             </div>
-            <div className={styles.innerScrollable}>{children}</div>
-          </div>
+          )}
+          <div className={styles.innerScrollable}>{children}</div>
         </div>
-      </VideoProvider>
-    </>
+      </div>
+    </VideoProvider>
   );
 }

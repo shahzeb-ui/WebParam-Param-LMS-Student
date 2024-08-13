@@ -1,4 +1,4 @@
-export const deployedUrl = 'https://khumla-dev-user-write.azurewebsites.net';
+export const writeUserData = 'https://khumla-dev-user-write.azurewebsites.net';
 
 export const readUserData = 'https://khumla-dev-user-read.azurewebsites.net';
 

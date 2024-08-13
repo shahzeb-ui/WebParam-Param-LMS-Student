@@ -10,9 +10,10 @@ const getDirectVideoUrl = (url: string): string => {
 
 const ResponsiveVideoComponent: React.FC = () => {
   const { selectedVideoUrl } = useVideo();
-  // console.log("selected video: ", selectedVideoUrl);
+  console.log("selected video: ", selectedVideoUrl);
 
   const videoUrl = selectedVideoUrl ? getDirectVideoUrl(selectedVideoUrl) : "";
+  
 
   useEffect(() => {
     if (videoUrl) {

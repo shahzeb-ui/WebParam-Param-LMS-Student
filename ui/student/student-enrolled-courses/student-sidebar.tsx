@@ -36,6 +36,7 @@ const StudentDashboardSidebar = ({isEnrolled}:any) => {
             <div className="rbt-default-sidebar-wrapper">
               <div className="section-title mb--20">
                 <h6 className="rbt-title-style-2">{username ? `Welcome ${username}` : "name surname"}</h6>
+                <h6 className="rbt-title-style-2">{username ? `Welcome ${username}` : "name surname"}</h6>
               </div>
 
               {isEnrolled == 0 && 
@@ -102,6 +103,7 @@ const StudentDashboardSidebar = ({isEnrolled}:any) => {
               <div className="section-title mt--40 mb--20">
                 <h6 className="rbt-title-style-2">User</h6>
               </div>
+              </div>
 
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
@@ -148,7 +150,6 @@ const StudentDashboardSidebar = ({isEnrolled}:any) => {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

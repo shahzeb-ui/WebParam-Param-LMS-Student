@@ -73,6 +73,10 @@ const Navbar = () => {
     };
   }, [currentSection]);
 
+  const handleAvatarClick = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };

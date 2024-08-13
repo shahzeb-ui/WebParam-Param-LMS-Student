@@ -9,6 +9,7 @@ export interface TopicElement {
   topicId: string;
   title: string;
   elementCode: string;
+  isQuizGenerated: any;
 }
 
 export interface TopicElementResponse {

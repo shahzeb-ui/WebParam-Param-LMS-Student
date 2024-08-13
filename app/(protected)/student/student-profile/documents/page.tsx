@@ -8,7 +8,7 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import { deployedUrl } from '@/app/api/endpoints';
+import { writeUserData } from '@/app/api/endpoints';
 import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
 import { documentsRequired } from './data';
 import Loading from './loading';
@@ -46,7 +46,7 @@ const FileUpload: React.FC = () => {
     setLoader(true);
     try {
       if (user?.data) {
-        const docs = await getStudentDocuments(user?.data.id || user?.data?.userId);
+        const docs = await getStudentDocuments(user?.data.id || user?.id);
 
         if (docs) {
           setDocuments(docs?.data.data);
@@ -118,7 +118,7 @@ const FileUpload: React.FC = () => {
       formData.append('File', selectedFile.file);
 
       try {
-        const response = await axios.post(`${deployedUrl}/api/v1/Profile/SubmitDocument`, formData, {
+        const response = await axios.post(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
