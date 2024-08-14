@@ -178,11 +178,11 @@ const AssessmentComponent = () => {
                 style={{backgroundColor:'rgb(36, 52, 92)'}}
                 type="button"
                 onClick={handleSubmitAssessment}
-                disabled={
-                  !isInteracted ||
-                  loading ||
-                  answers.some((answer) => answer === "")
-                }
+                // disabled={
+                //   !isInteracted ||
+                //   loading ||
+                //   answers.some((answer) => answer === "")
+                // }
               >
                 {loading ? (
                   <>
