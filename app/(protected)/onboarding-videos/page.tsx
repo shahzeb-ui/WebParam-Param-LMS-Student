@@ -119,32 +119,6 @@ function OnboardingVdeos() {
     }
   }
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     new Plyr(".rbtplayer", {
-  //       muted: false,
-  //       volume: 1,
-  //       controls: [
-  //         "play-large",
-  //         "play",
-  //         "progress",
-  //         "current-time",
-  //         "mute",
-  //         "volume",
-  //         "fullscreen",
-  //       ],
-  //       youtube: {
-  //         noCookie: true,
-  //         rel: 0,
-  //         modestbranding: 1,
-  //         iv_load_policy: 3,
-  //         showinfo: 0,
-  //         controls: 0,
-  //         disablekb: 1,
-  //       },
-  //     });
-  //   }
-  // }, [currentVideo]);
 
 
   return (
