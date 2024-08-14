@@ -184,7 +184,11 @@ const AssessmentComponent = () => {
                 style={{backgroundColor:'rgb(36, 52, 92) !important'}}
                 type="button"
                 onClick={handleSubmitAssessment}
-                disabled={isInteracted}
+                // disabled={
+                //   !isInteracted ||
+                //   loading ||
+                //   answers.some((answer) => answer === "")
+                // }
               >
                 {loading ? (
                   <>
