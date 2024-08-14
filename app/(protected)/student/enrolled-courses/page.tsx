@@ -11,11 +11,13 @@ import Enrolled from "./enrolled";
 import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
 import { useRouter, useSearchParams } from "next/navigation";
+import Cookies from "universal-cookie";
+import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [unitStandards, setUnitStandards] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const [isProgress, setIsProgress] = useState(true);
@@ -24,6 +26,10 @@ const EnrolledCourses = () => {
   const [showDescription, setShowDescription] = useState(false);
   const [showAuthor, setShowAuthor] = useState(false);
   const [courseStyle, setCourseStyle] = useState("two");
+  
+  const cookies = new Cookies();
+
+  const user = cookies.get("loggedInUser");
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -47,9 +53,25 @@ const EnrolledCourses = () => {
     }
   };
 
+  const getKnowledgeModules = async (userId:any) => {
+    if (userId) {
+        const courseId = await getCourseId(userId);
+        if (courseId?.data) {
+            const res = await getEnrolledCourse(courseId?.data);
+    
+            console.log("knowledge modules: ", res?.data.data);
+            if (res?.data) {
+                setUnitStandards(res.data.data);
+            }
+        }
+    }
+  }
+
   useEffect(() => {
-    const courseId = "668fcf681a1ce7b0635b61c6";
-    getUnitStandards(courseId);
+    debugger;
+    getKnowledgeModules(user.data.id||user.data.userId);
+
+    console.log("knowledge modules:", unitStandards);
   }, []);
 
   useEffect(() => {

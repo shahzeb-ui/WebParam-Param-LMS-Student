@@ -18,7 +18,8 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     const [isPasswordNotMatch, setPasswordNotMatch] = useState(false);
     
     const cookies = new Cookies();
-    const router = useRouter()
+    const router = useRouter();
+
     async function handleRegister(e:any) {
         e.preventDefault();
         setIsSubmitted(true);

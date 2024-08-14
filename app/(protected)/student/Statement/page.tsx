@@ -127,7 +127,7 @@ const EnrolledCourses = () => {
                     className="col-lg-4 col-md-6 col-12"
                     key={`unit-standard-completed-${index}`}
                   >
-                    <UnitStandardWidget
+                    {/* <UnitStandardWidget
                       data={standard}
                       courseStyle={courseStyle}
                       isProgress={isProgress}
@@ -135,7 +135,7 @@ const EnrolledCourses = () => {
                       showDescription={showDescription}
                       isEdit={isEdit}
                       showAuthor={showAuthor}
-                    />
+                    /> */}
                   </div>
                 ))}
               </div>
@@ -153,7 +153,7 @@ const EnrolledCourses = () => {
                     className="col-lg-4 col-md-6 col-12"
                     key={`unit-standard-completed-${index}`}
                   >
-                    <UnitStandardWidget
+                    {/* <UnitStandardWidget
                       data={standard}
                       courseStyle={courseStyle}
                       isProgress={isProgress}
@@ -161,7 +161,7 @@ const EnrolledCourses = () => {
                       showDescription={showDescription}
                       isEdit={isEdit}
                       showAuthor={showAuthor}
-                    />
+                    /> */}
                   </div>
                 ))}
               </div>
@@ -179,7 +179,7 @@ const EnrolledCourses = () => {
                     className="col-lg-4 col-md-6 col-12"
                     key={`unit-standard-completed-${index}`}
                   >
-                    <UnitStandardWidget
+                    {/* <UnitStandardWidget
                       data={standard}
                       courseStyle={courseStyle}
                       isProgress={isProgress}
@@ -187,7 +187,7 @@ const EnrolledCourses = () => {
                       showDescription={showDescription}
                       isEdit={isEdit}
                       showAuthor={showAuthor}
-                    />
+                    /> */}
                   </div>
                 ))}
               </div>

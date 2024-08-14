@@ -2,6 +2,7 @@ import axios from "axios";
 import { writeUserData } from "../endpoints";
 import { readUserData } from "../endpoints";
 
+const route = "dev";
 
 export async function StudentProfile(payload: any) {
     try {
