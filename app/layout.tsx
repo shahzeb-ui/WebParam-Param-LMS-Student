@@ -22,6 +22,8 @@ import "@/public/css/plugins/euclid-circulara.css";
 import "@/public/scss/styles.scss";
 import { UserProvider } from "@/context/user-context/user-context";
 import { LessonProvider } from "@/context/lesson-context/lesson-context";
+import { useState } from "react";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,20 +58,27 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  let pathname = null
- 
+export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+  const pathname = usePathname();
+  const [menuToggler, setMenuToggler] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <html lang="en">
       <body >
         <UserProvider>
           <LessonProvider>
-           <Navbar />
+            {pathname != "/register" &&
+              pathname != "/login" &&
+              pathname != "/verify-account" &&
+              pathname != "/forgot-password" &&
+              pathname != "/forgot-password/otp" && 
+              <>
+              {/* <Header
+                menuTogglerFunction={setMenuToggler}
+                menuTogglerValue={menuToggler} /> */}
+                <Navbar />
+                </>}
             {children}
             <BootstrapClient />
             <ToastContainer />
