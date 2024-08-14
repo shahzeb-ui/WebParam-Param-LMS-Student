@@ -29,7 +29,7 @@ export default function ActiveAssessment() {
               <a
                 className="rbt-btn btn-xs bg-primary-opacity radius-round"
                 title="Edit"
-                href="/lesson/assessments"
+                href="/take-assessment"
               >
                Start
               </a>
