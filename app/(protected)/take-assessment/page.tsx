@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
 import assessmentData from "@/data/assessment/assessment.json";
+import { useRouter } from "next/navigation";
 import { submitAssessment } from "@/actions/assessments/assessments-action";
 import MultipleChoice from "./multipleChoise";
 
@@ -25,6 +26,7 @@ const AssessmentComponent = () => {
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const savedState = JSON.parse(
@@ -58,7 +60,7 @@ const AssessmentComponent = () => {
     setAnswers(newAnswers);
     if (!isInteracted) {
       setIsInteracted(true);
-      setTimeRemaining(3600); // Start the timer with 1 hour (3600 seconds)
+      setTimeRemaining(3600);
     }
   };
 
@@ -81,8 +83,12 @@ const AssessmentComponent = () => {
       setAnswers(Array(assessment.quizData.length).fill(""));
       setTimeRemaining(null); // Reset the timer
 
+      setTimeout(() => {
+        
+        router.push("/student/assessments?tab=completed");
+      }, 2000)
+
       // Redirect to /lesson
-      window.location.href = "/student/assessment?tab=completed";
     } catch (error) {
       console.error("Error submitting assessment:", error);
     } finally {
@@ -174,15 +180,11 @@ const AssessmentComponent = () => {
 
             <div className={styles.buttonWrapper}>
               <button
-                className="rbt-btn btn-gradient btn-sm"
-                style={{backgroundColor:'rgb(36, 52, 92)'}}
+                className="rbt-btn btn-sm"
+                style={{backgroundColor:'rgb(36, 52, 92) !important'}}
                 type="button"
                 onClick={handleSubmitAssessment}
-                disabled={
-                  !isInteracted ||
-                  loading ||
-                  answers.some((answer) => answer === "")
-                }
+                disabled={isInteracted}
               >
                 {loading ? (
                   <>

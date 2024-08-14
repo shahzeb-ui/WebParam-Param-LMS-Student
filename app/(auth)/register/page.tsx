@@ -9,6 +9,7 @@ import Cookies from 'universal-cookie';
 export default function Register({searchParams}: {searchParams: {courseId: string}}) {
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setpassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [agreeToTerms, setAgreeToTerms] = useState(false);
@@ -22,11 +23,12 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
-            email,
-            username,
-            password,
-            confirmPassword,
-            courseId: searchParams.courseId
+            courseId: searchParams.courseId,
+            email:email,
+            phoneNumber:phone,
+            username:username,
+            password:password,
+            confirmPassword:confirmPassword,
         };
 
         debugger;
@@ -56,6 +58,12 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         }
     }, [password, confirmPassword])
 
+    useEffect(() => {
+        if (phone && !phone.startsWith('+27')) {
+          setPhone(`+27${phone}`);
+        }
+      }, [phone]);
+
     
     return (
         <div className="register">
@@ -68,7 +76,11 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                 <span className="focus-border" />
                 </div>
                 <div className="form-group">
-                <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username" name="username *" required />
+                <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username *" name="username *" required />
+                    <span className="focus-border" />
+                </div>
+                <div className="form-group">
+                <input type="text"  value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter Phone Number *" name="phone *" required />
                     <span className="focus-border" />
                 </div>
                 <div className="form-group">
