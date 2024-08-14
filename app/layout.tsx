@@ -59,7 +59,7 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
-  const pathname = usePathna me();
+  const pathname = usePathname();
   const [menuToggler, setMenuToggler] = useState(false);
   const [open, setOpen] = useState(false);
 
