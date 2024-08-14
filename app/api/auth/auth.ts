@@ -44,7 +44,7 @@ export async function sendOtp(payload:any) {
     }
 }
 
-export async function verifyOtp(payload:any) {
+export async function veri fyOtp(payload:any) {
     try {
         const verifyOtp = await axios.put(`${writeUserData}/api/v1/Users/ResetPassword`, payload);
         return verifyOtp;
