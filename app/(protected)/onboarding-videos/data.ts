@@ -17,38 +17,38 @@ export const cardVideos: topicElements[] = [
             {
                 id: '01',
                 title: 'Get Seen, Get Promotedï¼ The Power of Exposure in Your Career',
-                videoUrl: 'https://www.youtube.com/embed/mVhg3wF0tWc?list=PLQyftl00L3mkvHYFt27Qii2OH_eLSIMwp',
+                videoUrl: 'https://d2j5z4rlwmhrt5.cloudfront.net/Get%20Seen,%20Get%20Promotedï¼%20%20%20The%20Power%20of%20Exposure%20in%20Your%20Career.mp4',
                 videoScript:'',
                 
             },
             {
                 id: '02',
                 title: 'How to Master the PIE Model at Every Career Stage',
-                videoUrl: 'https://www.youtube.com/embed/RO0trjec6CY?list=PLQyftl00L3mkvHYFt27Qii2OH_eLSIMwp',
+                videoUrl: 'https://d2j5z4rlwmhrt5.cloudfront.net/How%20to%20Master%20the%20PIE%20Model%20at%20Every%20Career%20Stage.mp4',
                 videoScript:'',
             },
             {
                 id: '03',
                 title: 'How to Use the PIE Model to Achieve Career Success',
-                videoUrl: 'https://www.youtube.com/embed/J5JrFlus76U?list=PLQyftl00L3mkvHYFt27Qii2OH_eLSIMwp',
+                videoUrl: 'https://d2j5z4rlwmhrt5.cloudfront.net/How%20to%20Use%20the%20PIE%20Model%20to%20Achieve%20Career%20Success.mp4',
                 videoScript:'',
             },
             {
                 id: '04',
                 title: 'The Power of Image in Your Career',
-                videoUrl: 'https://www.youtube.com/embed/akGn0EU_ENQ?list=PLQyftl00L3mkvHYFt27Qii2OH_eLSIMwp',
+                videoUrl: 'https://d2j5z4rlwmhrt5.cloudfront.net/Unveiling%20the%20Truthï¼%20%20%20Prioritizing%20Performance,%20Image,%20or%20Exposure.mp4',
                 videoScript:'',
             },
             {
                 id: '05',
                 title: 'Unveiling the Truthï¼ Prioritizing Performance, Image, or Exposure',
-                videoUrl: 'https://www.youtube.com/embed/9qfOz-Xe7Ow?list=PLQyftl00L3mkvHYFt27Qii2OH_eLSIMwp',
+                videoUrl: 'https://d2j5z4rlwmhrt5.cloudfront.net/Unveiling%20the%20Truthï¼%20%20%20Prioritizing%20Performance,%20Image,%20or%20Exposure.mp4',
                 videoScript:'',
             },
             {
                 id: '06',
                 title: 'Why Performance is Key but Not Enough',
-                videoUrl: 'https://www.youtube.com/embed/GkF67oyP-e0?list=PLQyftl00L3mkvHYFt27Qii2OH_eLSIMwp',
+                videoUrl: 'https://d2j5z4rlwmhrt5.cloudfront.net/Why%20Performance%20is%20Key%20but%20Not%20Enough.mp4',
                 videoScript:'',
             },
         ]

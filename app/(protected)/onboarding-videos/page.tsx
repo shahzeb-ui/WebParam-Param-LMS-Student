@@ -1,6 +1,11 @@
 "use client";
 
 import "./lesson.scss";
+
+import "plyr/dist/plyr.css";
+import Plyr from "plyr";
+import { useVideo } from '@/context/video-context/video-context';
+import styles from "@/styles/video/ResponsiveVideoComponent.module.css";
 import { GetKnowledgeTopicsNew, getTopics } from "@/app/api/lesson/lessonEndpoint";
 import { TopicElement } from "@/interfaces/pharaphase/paraphase-d";
 import Notes from "@/ui/lesson/notes/notes";
@@ -8,16 +13,19 @@ import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
 import Overview from "@/ui/overview/overview";
 import Transcript from "@/ui/transcript/transcript";
 import Link from "next/link";
-import { useEffect, useState, useRef, Suspense } from "react";
+import { useEffect, useState, useRef, Suspense, forwardRef } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
 import { cardVideos } from "./data";
 import { useSearchParams } from "next/navigation";
 import Loader from "@/ui/loader/loader";
+import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
+import { VideoProvider } from "@/context/video-context/video-context";
 
 function OnboardingVdeos() {
   const [currentVideo, setCurrentVideo] = useState<any>();
+  const { setSelectedVideoUrl } = useVideo();
   const [knowledgeTopics, setKnowledgeTopics] = useState<any[]>([]);
   const [videoLoader, setVideoLoader] = useState(false);
   const [expandedTopics, setExpandedTopics] = useState<{
@@ -26,21 +34,17 @@ function OnboardingVdeos() {
   const [checkedSubTopics, setCheckedSubTopics] = useState<{
     [key: string]: boolean;
   }>({});
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
-
-  const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const topicRef = useRef<HTMLLIElement>(null);
+
 
   const searchparams = useSearchParams();
 
   const title = searchparams.get("title");
-
-  const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
   useEffect(() => {
     setVideoLoader(true);
@@ -55,6 +59,7 @@ function OnboardingVdeos() {
     }));
     console.log("selected topic for video:", subTopic);
     setCurrentVideo(subTopic || null);
+    setSelectedVideoUrl(subTopic.videoUrl);
     setCurrentIndex(index);
     setVideoEnded(false);
     setVideoLoader(false);
@@ -98,6 +103,7 @@ function OnboardingVdeos() {
       const previousIndex = currentIndex - 1;
       setCurrentIndex(previousIndex);
       setCurrentVideo(filteredVideos[0].videos[previousIndex]);
+      setSelectedVideoUrl(filteredVideos[0].videos[previousIndex].videoUrl);
       setVideoEnded(false);
     }
   }
@@ -107,9 +113,13 @@ function OnboardingVdeos() {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
       setCurrentVideo(filteredVideos[0].videos[nextIndex]);
+      
+      setSelectedVideoUrl(filteredVideos[0].videos[nextIndex].videoUrl);
       setVideoEnded(false);
     }
   }
+
+
 
   return (
     <div className="rbt-lesson-area bg-color-white">
@@ -215,11 +225,6 @@ function OnboardingVdeos() {
                     </div>
                   </div>
                 </div>
-              {/* )) : ( */}
-                {/* <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <Skeleton count={5} height={40} />
-                </div> */}
-              {/* )} */}
             </div>
           </div>
         </div>
@@ -228,15 +233,8 @@ function OnboardingVdeos() {
           {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
-                <iframe
-                  width="100%"
-                  height="500px"
-                  src={currentVideo?.videoUrl}
-                  title="Video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  onEnded={handleVideoEnd}
-                />
+                  {/* video component */}
+                   <ResponsiveVideoComponent />
                 <div>
                   <div className="content">
                     <div className="section-title">
