@@ -29,7 +29,7 @@ const Overview = ({currentVideo}:any) => {
       <div className="row mt-3">
         <div className="mb-3">
           <div className="mt-2">
-            {currentVideo?.description??"descriptiomn will appear here"}
+            {currentVideo?.description??"description"}
           </div>
         </div>
       </div>

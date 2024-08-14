@@ -39,55 +39,13 @@ function OnboardingVdeos() {
 
   const title = searchparams.get("title");
 
-  async function fetchKnowledgeTopics() {
-    try {
-      const response = await GetKnowledgeTopicsNew(`668fcfad1a1ce7b0635b61c7`);
-      if (!response.error) {
-        setKnowledgeTopics(response.data);
-      } else {
-        setError("Failed to load data");
-      }
-    } catch (err: any) {
-      console.error("Error fetching knowledge topics:", err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-      firstAccordionButtonRef.current?.click();
-    }
-  }
-
-  async function fetchTopics(topicId: string) {
-    try {
-      const response = await getTopics(topicId);
-      console.log("topics", response);
-      if (!response.error) {
-        setExpandedTopics((prev) => ({
-          ...prev,
-          [topicId]: response.data,
-        }));
-        setTimeout(() => {
-            console.log('hello world')
-            topicRef.current?.click();
-        }, 1000)
-      } else {
-        setError("Failed to load topics data");
-      }
-    } catch (err: any) {
-      console.error("Error fetching topics:", err);
-      setError(err.message);
-    }
-  }
+  const [currentTopicIndex, setCurrentTopicIndex] = useState(0);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
   useEffect(() => {
-    // fetchKnowledgeTopics();
     setVideoLoader(true);
   }, []);
 
-  const handleExpandClick = (topicId: string) => {
-    if (!expandedTopics[topicId]) {
-      fetchTopics(topicId);
-    }
-  };
 
   const handleSubTopicClick = (subTopic: TopicElement, index: number) => {
     setVideoLoader(true);
@@ -98,7 +56,7 @@ function OnboardingVdeos() {
     console.log("selected topic for video:", subTopic);
     setCurrentVideo(subTopic || null);
     setCurrentIndex(index);
-    setVideoEnded(false); // Reset videoEnded state when a new video is selected
+    setVideoEnded(false);
     setVideoLoader(false);
   };
 
@@ -106,46 +64,6 @@ function OnboardingVdeos() {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
-  const filteredTopics = knowledgeTopics.filter(topic =>
-    topic.name.toLowerCase().includes(searchQuery)
-  );
-
-  const handlePrevious = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
-    if (currentIndex > 0) {
-      const previousSubTopic = allSubTopics[currentIndex - 1];
-      if (previousSubTopic) {
-        setCurrentVideo(previousSubTopic);
-        setCheckedSubTopics((prev) => ({
-          ...prev,
-          [previousSubTopic.id]: true,
-        }));
-        setCurrentIndex(currentIndex - 1);
-        setVideoEnded(false); // Reset videoEnded state when a new video is selected
-      }
-    }
-  };
-
-  const handleNext = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
-    if (!videoEnded) {
-      setVideoEnded(true); // Show quiz first
-      return;
-    }
-  
-    if (currentIndex < allSubTopics.length - 1) {
-      const nextSubTopic = allSubTopics[currentIndex + 1];
-      if (nextSubTopic) {
-        setCurrentVideo(nextSubTopic);
-        setCheckedSubTopics((prev) => ({
-          ...prev,
-          [nextSubTopic.id]: true,
-        }));
-        setCurrentIndex(currentIndex + 1);
-        setVideoEnded(false); // Reset videoEnded state for the next video
-      }
-    }
-  };
 
   const handleVideoEnd = () => {
     setVideoEnded(true);
@@ -174,6 +92,24 @@ function OnboardingVdeos() {
   const filteredVideos = cardVideos.filter(items => items.title == title);
 
   console.log('filtered: ', filteredVideos);
+
+  function handlePrevious(): void {
+    if (currentIndex > 0) {
+      const previousIndex = currentIndex - 1;
+      setCurrentIndex(previousIndex);
+      setCurrentVideo(filteredVideos[0].videos[previousIndex]);
+      setVideoEnded(false);
+    }
+  }
+  
+  function handleNext(): void {
+    if (currentIndex < filteredVideos[0].videos.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      setCurrentVideo(filteredVideos[0].videos[nextIndex]);
+      setVideoEnded(false);
+    }
+  }
 
   return (
     <div className="rbt-lesson-area bg-color-white">
@@ -231,7 +167,7 @@ function OnboardingVdeos() {
                                 className="d-flex justify-content-between align-items mt-2"
                                 key={subIndex}
                                 onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
+                                style={{ color: `${currentVideo?.id === subTopic.id && 'rgb(47, 87, 239)'}` }}
                               >
                                 <div
                                   className="course-content-left topic_Element_container"
@@ -261,7 +197,7 @@ function OnboardingVdeos() {
                                 </div>
                                 <div className="course-content-right">
                                   <span className="rbt-check ">
-                                    {checkedSubTopics[subTopic.id] ? (
+                                    {currentVideo?.id === subTopic.id ? (
                                       <i className="feather-check" />
                                     ) : (
                                       <i className="feather-square" />
@@ -320,7 +256,7 @@ function OnboardingVdeos() {
                       <button
                         className="rbt-btn icon-hover btn-md"
                         onClick={handleNext}
-                        disabled={currentIndex > (filteredTopics.length - 1)}
+                        disabled={currentIndex > (filteredVideos[0].videos.length - 1)}
                       >
                         <span className="btn-text">Next</span>
                         <span className="btn-icon">
