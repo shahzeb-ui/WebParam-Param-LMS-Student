@@ -175,7 +175,7 @@ const AssessmentComponent = () => {
             <div className={styles.buttonWrapper}>
               <button
                 className="rbt-btn btn-gradient btn-sm"
-                style={{backgroundColor:'rgb(36, 52, 92)'}}
+                style={{backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`}}
                 type="button"
                 onClick={handleSubmitAssessment}
                 disabled={

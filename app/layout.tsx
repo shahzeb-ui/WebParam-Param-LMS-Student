@@ -39,6 +39,9 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
 
   return (
     <html lang="en">
+      <head>
+        
+      </head>
       <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
