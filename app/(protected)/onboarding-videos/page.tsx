@@ -1,6 +1,11 @@
 "use client";
 
 import "./lesson.scss";
+
+import "plyr/dist/plyr.css";
+import Plyr from "plyr";
+import { useVideo } from '@/context/video-context/video-context';
+import styles from "@/styles/video/ResponsiveVideoComponent.module.css";
 import { GetKnowledgeTopicsNew, getTopics } from "@/app/api/lesson/lessonEndpoint";
 import { TopicElement } from "@/interfaces/pharaphase/paraphase-d";
 import Notes from "@/ui/lesson/notes/notes";
@@ -8,13 +13,19 @@ import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
 import Overview from "@/ui/overview/overview";
 import Transcript from "@/ui/transcript/transcript";
 import Link from "next/link";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef, Suspense, forwardRef } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
+import { cardVideos } from "./data";
+import { useSearchParams } from "next/navigation";
+import Loader from "@/ui/loader/loader";
+import ResponsiveVideoComponent from "@/ui/synthesia/synthesia-video-frame";
+import { VideoProvider } from "@/context/video-context/video-context";
 
-export default function TakeLesson() {
+function OnboardingVdeos() {
   const [currentVideo, setCurrentVideo] = useState<any>();
+  const { setSelectedVideoUrl } = useVideo();
   const [knowledgeTopics, setKnowledgeTopics] = useState<any[]>([]);
   const [videoLoader, setVideoLoader] = useState(false);
   const [expandedTopics, setExpandedTopics] = useState<{
@@ -23,64 +34,22 @@ export default function TakeLesson() {
   const [checkedSubTopics, setCheckedSubTopics] = useState<{
     [key: string]: boolean;
   }>({});
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
-
-  const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const topicRef = useRef<HTMLLIElement>(null);
 
-  async function fetchKnowledgeTopics() {
-    try {
-      const response = await GetKnowledgeTopicsNew(`668fcfad1a1ce7b0635b61c7`);
-      if (!response.error) {
-        setKnowledgeTopics(response.data);
-      } else {
-        setError("Failed to load data");
-      }
-    } catch (err: any) {
-      console.error("Error fetching knowledge topics:", err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-      firstAccordionButtonRef.current?.click();
-    }
-  }
 
-  async function fetchTopics(topicId: string) {
-    try {
-      const response = await getTopics(topicId);
-      console.log("topics", response);
-      if (!response.error) {
-        setExpandedTopics((prev) => ({
-          ...prev,
-          [topicId]: response.data,
-        }));
-        setTimeout(() => {
-            console.log('hello world')
-            topicRef.current?.click();
-        }, 1000)
-      } else {
-        setError("Failed to load topics data");
-      }
-    } catch (err: any) {
-      console.error("Error fetching topics:", err);
-      setError(err.message);
-    }
-  }
+  const searchparams = useSearchParams();
+
+  const title = searchparams.get("title");
 
   useEffect(() => {
-    fetchKnowledgeTopics();
     setVideoLoader(true);
   }, []);
 
-  const handleExpandClick = (topicId: string) => {
-    if (!expandedTopics[topicId]) {
-      fetchTopics(topicId);
-    }
-  };
 
   const handleSubTopicClick = (subTopic: TopicElement, index: number) => {
     setVideoLoader(true);
@@ -90,8 +59,9 @@ export default function TakeLesson() {
     }));
     console.log("selected topic for video:", subTopic);
     setCurrentVideo(subTopic || null);
+    setSelectedVideoUrl(subTopic.videoUrl);
     setCurrentIndex(index);
-    setVideoEnded(false); // Reset videoEnded state when a new video is selected
+    setVideoEnded(false);
     setVideoLoader(false);
   };
 
@@ -99,46 +69,6 @@ export default function TakeLesson() {
     setSearchQuery(event.target.value.toLowerCase());
   };
 
-  const filteredTopics = knowledgeTopics.filter(topic =>
-    topic.name.toLowerCase().includes(searchQuery)
-  );
-
-  const handlePrevious = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
-    if (currentIndex > 0) {
-      const previousSubTopic = allSubTopics[currentIndex - 1];
-      if (previousSubTopic) {
-        setCurrentVideo(previousSubTopic);
-        setCheckedSubTopics((prev) => ({
-          ...prev,
-          [previousSubTopic.id]: true,
-        }));
-        setCurrentIndex(currentIndex - 1);
-        setVideoEnded(false); // Reset videoEnded state when a new video is selected
-      }
-    }
-  };
-
-  const handleNext = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
-    if (!videoEnded) {
-      setVideoEnded(true); // Show quiz first
-      return;
-    }
-  
-    if (currentIndex < allSubTopics.length - 1) {
-      const nextSubTopic = allSubTopics[currentIndex + 1];
-      if (nextSubTopic) {
-        setCurrentVideo(nextSubTopic);
-        setCheckedSubTopics((prev) => ({
-          ...prev,
-          [nextSubTopic.id]: true,
-        }));
-        setCurrentIndex(currentIndex + 1);
-        setVideoEnded(false); // Reset videoEnded state for the next video
-      }
-    }
-  };
 
   const handleVideoEnd = () => {
     setVideoEnded(true);
@@ -163,6 +93,33 @@ export default function TakeLesson() {
       </div>
     </div>
   );
+
+  const filteredVideos = cardVideos.filter(items => items.title == title);
+
+  console.log('filtered: ', filteredVideos);
+
+  function handlePrevious(): void {
+    if (currentIndex > 0) {
+      const previousIndex = currentIndex - 1;
+      setCurrentIndex(previousIndex);
+      setCurrentVideo(filteredVideos[0].videos[previousIndex]);
+      setSelectedVideoUrl(filteredVideos[0].videos[previousIndex].videoUrl);
+      setVideoEnded(false);
+    }
+  }
+  
+  function handleNext(): void {
+    if (currentIndex < filteredVideos[0].videos.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      setCurrentVideo(filteredVideos[0].videos[nextIndex]);
+      
+      setSelectedVideoUrl(filteredVideos[0].videos[nextIndex].videoUrl);
+      setVideoEnded(false);
+    }
+  }
+
+
 
   return (
     <div className="rbt-lesson-area bg-color-white">
@@ -189,44 +146,38 @@ export default function TakeLesson() {
             </div>
             <hr className="mt--10" />
             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
-              {!loading ? filteredTopics.map((topic, index) => (
-                <div className="accordion-item card" key={topic.id}>
+                <div className="accordion-item card">
                   <h2
                     className="accordion-header card-header"
-                    id={`heading${index}`}
                   >
                     <button
-                      ref={index === 0 ? firstAccordionButtonRef : null}
-                      className="accordion-button collapsed"
+                    
+                      className="accordion-button collapsed "
                       type="button"
                       data-bs-toggle="collapse"
-                      data-bs-target={`#collapse${index}`}
+                    
                       aria-expanded="false"
-                      aria-controls={`collapse${index}`}
-                      onClick={() => handleExpandClick(topic.id)}
                       style={{fontSize:'16px'}}
                     >
-                      {topic.name}
+                      {title??""}
                     </button>
                   </h2>
                   <div
-                    id={`collapse${index}`}
-                    className="accordion-collapse collapse"
-                    aria-labelledby={`heading${index}`}
+                    className="accordion-collapse collapse show"
                     data-bs-parent="#accordionExampleb2"
                   >
                     <div className="accordion-body card-body">
-                      {expandedTopics[topic.id] ? (
+                      {filteredVideos[0].videos ? (
                         <ul style={{marginLeft:'0', paddingLeft:'0'}}>
-                          {expandedTopics[topic.id].map(
-                            (subTopic: TopicElement, subIndex) => (
+                          {filteredVideos[0].videos?.map(
+                            (subTopic: any, subIndex:any) => (
                               <>
                               <li
                                 ref={subIndex === 0 ? topicRef : null}
                                 className="d-flex justify-content-between align-items mt-2"
                                 key={subIndex}
                                 onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
+                                style={{ color: `${currentVideo?.id === subTopic.id && 'rgb(47, 87, 239)'}` }}
                               >
                                 <div
                                   className="course-content-left topic_Element_container"
@@ -256,7 +207,7 @@ export default function TakeLesson() {
                                 </div>
                                 <div className="course-content-right">
                                   <span className="rbt-check ">
-                                    {checkedSubTopics[subTopic.id] ? (
+                                    {currentVideo?.id === subTopic.id ? (
                                       <i className="feather-check" />
                                     ) : (
                                       <i className="feather-square" />
@@ -264,13 +215,6 @@ export default function TakeLesson() {
                                   </span>
                                 </div>
                               </li>
-                              {/* <li className="" style={{listStyle:'none'}}>
-                                <div className="course-content-left quiz">
-                                  <i className="feather-file-text" />
-                                  <span className="text">Quiz</span>
-                                </div>
-                              </li>
-                              <hr /> */}
                               </>
                             )
                           )}
@@ -281,11 +225,6 @@ export default function TakeLesson() {
                     </div>
                   </div>
                 </div>
-              )) : (
-                <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <Skeleton count={5} height={40} />
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -294,15 +233,8 @@ export default function TakeLesson() {
           {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
-                <iframe
-                  width="100%"
-                  height="500px"
-                  src={currentVideo?.videoUrl}
-                  title="Video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  onEnded={handleVideoEnd}
-                />
+                  {/* video component */}
+                   <ResponsiveVideoComponent />
                 <div>
                   <div className="content">
                     <div className="section-title">
@@ -322,7 +254,7 @@ export default function TakeLesson() {
                       <button
                         className="rbt-btn icon-hover btn-md"
                         onClick={handleNext}
-                        disabled={currentIndex > (filteredTopics.length - 1)}
+                        disabled={currentIndex > (filteredVideos[0].videos.length - 1)}
                       >
                         <span className="btn-text">Next</span>
                         <span className="btn-icon">
@@ -434,9 +366,10 @@ export default function TakeLesson() {
                 </div>
               </>
             ) : (
-              <div style={{display:'flex', flexDirection:'column', gap:'10px', alignItems:'center', justifyContent:'center'}}>
-                <SkeletonTheme baseColor="#fff" highlightColor="#6b7385">
+              <div>
+                <SkeletonTheme baseColor="#fff" highlightColor="#EBEBEB">
                     <Skeleton width="100%" height="700px" />
+                    <p style={{position:'absolute', top:'25%', left:"50%",transform: "translate(-50%, -50%)"}}><i className="bi bi-arrow-left"></i> click video to play</p>
                 </SkeletonTheme>
               </div>
             )}
@@ -450,3 +383,13 @@ export default function TakeLesson() {
     </div>
   );
 }
+
+const OnboardingVdeosContainer = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <OnboardingVdeos />
+    </Suspense>
+  );
+};
+
+export default OnboardingVdeosContainer;

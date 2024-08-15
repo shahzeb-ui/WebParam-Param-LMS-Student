@@ -12,6 +12,7 @@ import "@/styles/css/plugins/mainstyle.css";
 interface UnitData {
   id: string;
   title: string;
+  moduleCode?: string;
 }
 
 interface Props {
@@ -32,6 +33,7 @@ const UnitStandardWidget: React.FC<Props> = ({
   showAuthor,
 }) => {
   const { setId, navigateToLesson } = useLessonContext();
+  
   const course = Courses.find((course) => course.id.toString() === data.id) || {
     courseThumbnail: "images/course/course-02.jpg",
     coursePrice: 0,
@@ -130,7 +132,8 @@ const UnitStandardWidget: React.FC<Props> = ({
                   href={`/take-lesson`}
                   // onClick={() => handleClick(data.id)}
                 >
-                  {data.title}
+                  {data.title} - {data.moduleCode}
+                  
                 </Link>
               </h4>
             </>
@@ -200,7 +203,7 @@ const UnitStandardWidget: React.FC<Props> = ({
             </div>
           )}
 
-          {courseStyle === "one" && (
+          {/* {courseStyle === "one" && (
             <div className="rbt-review">
               <div className="rating">
                 {Array.from({ length: rating }, (_, i) => (
@@ -209,7 +212,7 @@ const UnitStandardWidget: React.FC<Props> = ({
               </div>
               <span className="rating-count"> ({totalReviews} Reviews)</span>
             </div>
-          )}
+          )} */}
 
           {!isProgress ? (
             <div className="rbt-card-bottom">
