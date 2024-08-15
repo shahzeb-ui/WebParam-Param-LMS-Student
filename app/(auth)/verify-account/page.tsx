@@ -105,10 +105,7 @@ export default function VerifyAccount() {
                 {errorMessage && <span className={`errorMessage`} style={{marginBottom:'3px'}}>Incorrect OTP, please check and try again</span>}
                 <button type="submit" disabled={isSubmitted}>
                     {
-                        isSubmitted ? 
-                        <div className="spinner-border" role="status"/>
-                        :
-                        'Confirm'
+                        isSubmitted ? <div className="spinner-border" role="status"/> :'Confirm'
                     }
                 </button>
                 <div className="account">
