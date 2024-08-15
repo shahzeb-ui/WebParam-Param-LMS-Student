@@ -11,7 +11,7 @@ import "bootstrap/scss/bootstrap.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-quill/dist/quill.snow.css";
 import "react-responsive-modal/styles.css";
-
+import PWAPrompt from 'react-ios-pwa-prompt'
 import "@/app/globals.css";
 
 /// Plugin CSS
@@ -22,8 +22,6 @@ import "@/public/css/plugins/euclid-circulara.css";
 import "@/public/scss/styles.scss";
 import { UserProvider } from "@/context/user-context/user-context";
 import { LessonProvider } from "@/context/lesson-context/lesson-context";
-import { useState } from "react";
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -58,29 +56,27 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
-  const pathname = usePathna me();
-  const [menuToggler, setMenuToggler] = useState(false);
-  const [open, setOpen] = useState(false);
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  // const pathname = usePathname();
 
   return (
     <html lang="en">
-      <body >
+      <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
-            {pathname != "/register" &&
+            {/* {pathname != "/register" &&
               pathname != "/login" &&
               pathname != "/verify-account" &&
               pathname != "/forgot-password" &&
-              pathname != "/forgot-password/otp" && 
-              <>
-              {/* <Header
-                menuTogglerFunction={setMenuToggler}
-                menuTogglerValue={menuToggler} /> */}
-                <Navbar />
-                </>}
+              pathname != "/forgot-password/otp" && <Navbar />} */}
+              <Navbar />
             {children}
             <BootstrapClient />
+           
             <ToastContainer />
           </LessonProvider>
         </UserProvider>

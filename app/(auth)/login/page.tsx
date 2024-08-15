@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
 import "@/styles/css/plugins/mainstyle.css";
-
+import PWAPrompt from 'react-ios-pwa-prompt'
 export default function Login() {
     const [email, setEmail] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -54,6 +54,7 @@ export default function Login() {
 
     return (
         <div className="login">
+             <PWAPrompt />
             <div className="rbt-contact-form  max-width-auto">
                 <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
