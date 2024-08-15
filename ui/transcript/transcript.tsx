@@ -59,7 +59,7 @@ const Transcript = ({currentVideo}:any) => {
       <div className="row mt-3">
         <div className="mb-3">
           <div className="mt-2">
-            {currentVideo?.videoScript.split('**').map((item:string) => (
+            {currentVideo?.videoScript?.split('**').map((item:string) => (
               <p>{item}</p>
             ))}
           </div>
