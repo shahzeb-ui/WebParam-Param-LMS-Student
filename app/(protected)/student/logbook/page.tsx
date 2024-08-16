@@ -217,7 +217,7 @@ const StudentLogbook = () => {
     if (!userId) return;
 
     try {
-      setLoadingLogbooks(true);
+      // setLoadingLogbooks(true);
       await getAllLogbooks(userId);
     } catch (error) {
       console.error("Error fetching more logbooks:", error);
@@ -239,9 +239,9 @@ const StudentLogbook = () => {
 
     return (
       <div
-        className={`logbook-entry p-4 mb-4 rounded border ${
-          entry.status === "Checked Out" ? "bg-light" : "border-success"
-        }`}
+      className={` logbook-entry p-4 mb-4 rounded border ${
+        entry.status === "Checked Out" ? "bg-light" : "border-success"
+      }`}
       >
         <div className="d-flex justify-content-between align-items-center">
           <h5>
@@ -328,24 +328,25 @@ const StudentLogbook = () => {
       <div className={styles.buttonContainer}>
         <button
           className="rbt-btn btn-gradient"
-          style={{ backgroundColor: '#25355c', backgroundImage: 'none' }}
-          onClick={() =>{
-            setShowLogbookList(!showLogbookList);
+          style={{ backgroundColor: `${!showLogbookList ? 'white':'#25355c'} `, backgroundImage: 'none', color:`${!showLogbookList ? 'black':'white'}`,border:`${!showLogbookList && '1px solid #25355c'}` }}
+          onClick={() => (
+            
+            setShowLogbookList(false),
             addNewEntry(
               activeTab === "school" ? setStudentEntry : setWorkEntry,
               activeTab === "school" ? studentEntry : workEntry
             )
+          )
           }
-          }
-          disabled={disableAddEntry}
+          // disabled={disableAddEntry}
         >
           <i className="bi bi-plus"></i> Add Entry
         </button>
         <button
-          className="rbt-btn btn-gradient"
-          style={{ backgroundColor: '#25355c', backgroundImage: 'none' }}
+          className={`rbt-btn btn-gradient`}
+          style={{ backgroundColor: `${showLogbookList ? 'white':'#25355c'} `, backgroundImage: 'none', color:`${showLogbookList ? 'black':'white'}`,border:`${showLogbookList && '1px solid #25355c'}` }}
           onClick={() => {
-            setShowLogbookList(!showLogbookList);
+            setShowLogbookList(true);
             if (!showLogbookList) fetchMoreLogbooks();
           }}
         >

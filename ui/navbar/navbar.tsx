@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
 import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
@@ -9,6 +10,7 @@ import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 
 import logo from './logo.jpg';
 import Nav from "./nav";
+import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
@@ -137,8 +139,11 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-      
       </header>
+      <StudentMobileSideBar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+      />
     </>
   );
 };

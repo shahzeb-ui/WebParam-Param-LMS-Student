@@ -173,32 +173,31 @@ export default function EmploymentInformation({ student }: any) {
     </div>
   
 
-    <div className="col-12 mt--20">
-      <div className="rbt-form-group">
-        {/* <button
-          className="rbt-btn btn-gradient"
-          type='submit'
-          style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
-        >
-          {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
-        </button> */}
-        <button
-            className="btn-sm mr--10 hover-icon-reverse w-100"
-            style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
-            type="submit"
-            disabled={isSubmitting}
-        >
-            <span className="icon-reverse-wrapper">
-                <span className="btn-text text-light">Proceed</span>
-                <span className="btn-icon text-light">
-                    <i className="feather-arrow-right" />
-                </span>
-            </span>
-        </button>
-      </div>
+  <div className="col-12 mt--20">
+    <div className="rbt-form-group">
+      {/* <button
+         className="rbt-btn btn-gradient"
+         type='submit'
+         style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
+      >
+        {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
+      </button> */}
+      <button
+          className="btn-sm mr--10 hover-icon-reverse w-100"
+          style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+          type="submit"
+          disabled={isSubmitting}
+      >
+          <span className="icon-reverse-wrapper">
+              <span className="btn-text text-light">Proceed</span>
+              <span className="btn-icon text-light">
+                  <i className="feather-arrow-right" />
+              </span>
+          </span>
+      </button>
     </div>
 
-  
+  </div>
       </form>
     </div>
     </div>

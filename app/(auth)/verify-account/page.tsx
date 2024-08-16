@@ -83,9 +83,9 @@ export default function VerifyAccount() {
       }
   
     return (
-        <div className="verify">
-            <h1>Confirm  your email address</h1>
-            <p>We’ve sent an email to the address you provided.
+        <div className="verify rbt-card">
+            <h1>Confirm  your Phone Number</h1>
+            <p>We’ve sent an OTP to the phone number you provided.
             Check your inbox and enter the 5 digit code.</p>
             <form onSubmit={handleVerify}>
                 <div className="otpContainer">
@@ -105,10 +105,7 @@ export default function VerifyAccount() {
                 {errorMessage && <span className={`errorMessage`} style={{marginBottom:'3px'}}>Incorrect OTP, please check and try again</span>}
                 <button type="submit" disabled={isSubmitted}>
                     {
-                        isSubmitted ? 
-                        <div className="spinner-border" role="status"/>
-                        :
-                        'Confirm'
+                        isSubmitted ? <div className="spinner-border" role="status"/> :'Confirm'
                     }
                 </button>
                 <div className="account">

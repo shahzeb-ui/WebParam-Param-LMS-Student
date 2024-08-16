@@ -21,6 +21,7 @@ function Assessments() {
   }, [searchParams]);
 
 
+
   return (
     <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
       <div className="content">
@@ -56,11 +57,7 @@ function Assessments() {
 }
 
 export default function AssignmentsPage() {
-  const router = useRouter();
 
-  useEffect(() => {
-    router.push("/student/assessments?tab=active");
-  }, []);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

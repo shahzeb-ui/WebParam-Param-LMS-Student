@@ -12,7 +12,7 @@ import "@/styles/css/plugins/mainstyle.css";
 interface UnitData {
   id: string;
   title: string;
-  moduleCode: string;
+  moduleCode?: string;
 }
 
 interface Props {

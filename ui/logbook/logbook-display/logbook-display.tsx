@@ -25,11 +25,26 @@ const LogbookList = ({
   hasMore,
 }: LogbookListProps) => {
   return (
-    <div className={styles["logbook-list-container"]}>    
+    <div className={styles["logbook-list-container"]}>
+      <InfiniteScroll
+        dataLength={logbooks.length}
+        next={fetchMoreLogbooks}
+        hasMore={hasMore}
+        loader={
+          <div className={styles["loading-custom"]}>
+            {/* Loading more logbooks... */}
+          </div>
+        }
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>No more logbooks</b>
+          </p>
+        }
+      >
         {logbooks.map((logbook, index) => (
           <div
             key={index}
-            className={`${styles["logbook-card-custom"]} ${
+            className={`rbt-card ${styles["logbook-card-custom"]} ${
               logbook.status === "Checked Out"
                 ? styles["bg-light-custom"]
                 : styles["border-success-custom"]
@@ -83,6 +98,7 @@ const LogbookList = ({
             </div>
           </div>
         ))}
+        </InfiniteScroll>
     </div>
   );
 };

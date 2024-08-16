@@ -67,6 +67,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
+            {/* TODO: Brad: do this without pathname, this page is cannot have 'use client' for pwa. Use window.location or something instead. */}
             {/* {pathname != "/register" &&
               pathname != "/login" &&
               pathname != "/verify-account" &&
