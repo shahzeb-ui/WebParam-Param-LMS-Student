@@ -46,7 +46,6 @@ export default function Login() {
         }
     }
     
-
     useEffect(() => {
         setErrorMessage(false);
     }, [email, password])
