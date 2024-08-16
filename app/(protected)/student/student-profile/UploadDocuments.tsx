@@ -8,7 +8,6 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import { writeUserData } from '@/app/api/endpoints';
 import { getStudentDocuments } from '@/app/api/studentProfile/studentprofile';
 import { readUserData, writeUserData } from '@/app/lib/endpoints';
 const pdfVersion = "2.16.105";
