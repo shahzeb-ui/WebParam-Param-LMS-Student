@@ -12,6 +12,7 @@ import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
 import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
 import courseImage from './courseImage.jpeg';
 import Cookies from "universal-cookie";
+import { isMobile } from "react-device-detect";
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);

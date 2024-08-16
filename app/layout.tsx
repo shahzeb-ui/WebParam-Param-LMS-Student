@@ -11,7 +11,6 @@ import "bootstrap/scss/bootstrap.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-quill/dist/quill.snow.css";
 import "react-responsive-modal/styles.css";
-import PWAPrompt from 'react-ios-pwa-prompt'
 import "@/app/globals.css";
 
 /// Plugin CSS
