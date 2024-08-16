@@ -7,6 +7,7 @@ import ActiveAssignment from '@/ui/assignments/active';
 import UpcomingAssignment from '@/ui/assignments/upcoming';
 import { useEffect } from 'react';
 import { Suspense } from 'react';
+import WorkBooks from './(components)/WorkBooks';
 
 function Assignments() {
   const searchParams = useSearchParams();
@@ -30,17 +31,27 @@ function Assignments() {
             <ul className="nav nav-tabs tab-button-style-2 justify-content-start nav-assignments" id="myTab-4" role="tablist">
               <li role="presentation" onClick={() => router.push('/student/assignments?tab=upcoming')}>
                 <a className={`tab-button ${tab === 'upcoming' ? 'active' : ''}`} id="home-tab-4" role="tab" aria-selected={tab === 'upcoming'}>
-                  <span className="title">Upcoming Assignments</span>
+                  <span className="title">Upcoming</span>
                 </a>
               </li>
               <li role="presentation" onClick={() => router.push('/student/assignments?tab=active')}>
                 <a className={`tab-button ${tab === 'active' ? 'active' : ''}`} id="profile-tab-4" role="tab" aria-selected={tab === 'active'}>
-                  <span className="title">Active Assignments</span>
+                  <span className="title">Active</span>
                 </a>
               </li>
               <li role="presentation" onClick={() => router.push('/student/assignments?tab=completed')}>
                 <a className={`tab-button ${tab === 'completed' ? 'active' : ''}`} id="contact-tab-4" role="tab" aria-selected={tab === 'completed'}>
-                  <span className="title">Completed Assignments</span>
+                  <span className="title">Completed</span>
+                </a>
+              </li>
+              <li role="presentation" onClick={() => router.push('/student/assignments?tab=workbooks')}>
+                <a className={`tab-button ${tab === 'workbooks' ? 'active' : ''}`} id="workbooks-tab-4" role="tab" aria-selected={tab === 'workbooks'}>
+                  <span className="title">Workbooks</span>
+                </a>
+              </li>
+              <li role="presentation" onClick={() => router.push('/student/assignments?tab=workbooks')}>
+                <a className={`tab-button ${tab === 'logbooks' ? 'active' : ''}`} id="logbooks-tab-4" role="tab" aria-selected={tab === 'logbooks'}>
+                  <span className="title">Logbooks</span>
                 </a>
               </li>
             </ul>
@@ -51,6 +62,7 @@ function Assignments() {
           {tab === 'completed' && <CompletedAssignment />}
           {tab === 'active' && <ActiveAssignment />}
           {tab === 'upcoming' && <UpcomingAssignment />}
+          {tab === 'workbooks' && <WorkBooks/>}
         </div>
       </div>
     </div>
