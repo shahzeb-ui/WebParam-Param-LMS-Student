@@ -16,11 +16,12 @@ const StudentMobileSideBar = ({
     toggleSidebar();
   };
 
+
   return (
-    <div className={`${styles.sidebar} ${!isOpen ? styles.open : ""}`}>
+    <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`} style={{ width:'100%', position:'absolute', bottom:'0 !important', left:'0 !important', right:'0 !important', top:'75px !important',zIndex:'1000'}}>
       <div className={styles.overlay} onClick={toggleSidebar}></div>
       <div className={styles["sidebar-content"]}>
-        <div className="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border">
+        <div className="rbt-shadow-box" style={{borderRadius:'0'}}>
           <div className="inner">
             <div className="content-item-content">
               <div className="rbt-default-sidebar-wrapper">

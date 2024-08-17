@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import './navbar.scss'
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
@@ -123,17 +124,12 @@ const Navbar = () => {
                 </div>
 
                 <div
-                  className="rbt-offcanvas-trigger d-xl-none"
+                  className={`humburger-menu ${isSidebarOpen ? 'active' : ''}`}
                   id="rbt-offcanvas-activation"
                   onClick={toggleSidebar}
+                  style={{cursor:'pointer'}}
                 >
-                  <span className="offcanvas-trigger">
-                    <span className="offcanvas-bars">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </span>
-                  </span>
+                
                 </div>
               </div>
             </div>
