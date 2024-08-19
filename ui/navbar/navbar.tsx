@@ -12,6 +12,7 @@ import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import logo from './logo.jpg';
 import Nav from "./nav";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
@@ -57,7 +58,13 @@ const Navbar = () => {
     setIsDropdownVisible(false);
   };
 
+  const pathname = usePathname();
+  const display = pathname != '/register' && pathname != "/login" && pathname != "/verify-account" && pathname != "/forgot-password" && pathname != "/forgot-password/otp";
+
+
   return (
+
+    display ?
     <>
       <header className="rbt-header">
         <div className="rbt-sticky-placeholder"></div>
@@ -141,6 +148,8 @@ const Navbar = () => {
         toggleSidebar={toggleSidebar}
       />
     </>
+                :<>
+                </>
   );
 };
 

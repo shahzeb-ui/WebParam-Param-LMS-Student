@@ -39,7 +39,7 @@ const InstructorDashboardHeader = () => {
   }
 
   async function getCourse(courseId: string) {
-    debugger;
+    
     const res = await axios.get(`${rCourseUrl}/api/v1/Courses/GetCourseNew/${courseId}`);
 
     if (res) {

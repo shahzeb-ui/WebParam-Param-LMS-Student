@@ -34,7 +34,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
             confirmPassword:confirmPassword,
         };
 
-        debugger;
+        
         const res = await registerUser(payload);
         setIsSubmitted(false);
         if (res?.data.message !== "User exists") {

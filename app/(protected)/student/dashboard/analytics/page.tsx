@@ -49,7 +49,7 @@ export default function Analytics() {
   console.log(showModal)
 
   function handleShowModal(): void {
-    debugger;
+    
     setShowModal(true)
   }
 
@@ -178,7 +178,7 @@ export default function Analytics() {
                         style={{ width: "87%" }}
                       />
                     </div>
-                    <span className="value-text">{person.points} point</span>
+                    <span className="value-text">{person.points} </span>
                   </div>
                   ))}
                 </div>
@@ -255,27 +255,6 @@ export default function Analytics() {
               type="bar"
             />
           </div>
-
-          {/* <div className="col-lg-6 col-md-12 card-group-row__col">
-            <ChartWrapper
-              title="Comments"
-              barDescriptions={CommentsChartBarDescription}
-              options={CommentsChartBarOptions}
-              data={CommentsChartBarData}
-              type="bar"
-            />
-          </div> */}
-{/* 
-          <div className="col-lg-6 col-md-12 card-group-row__col">
-            <ChartLayout
-              title="Progress Status"
-              barDescriptions={StudentsProgressStatusDescription}
-              type="pie"
-            >
-              <StudentsProgressStatus />
-            </ChartLayout>
-          </div> */}
-
         </div>
         </>
     )

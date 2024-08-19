@@ -60,19 +60,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const pathname = usePathname();
+
+
 
   return (
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
-            {/* TODO: Brad: do this without pathname, this page is cannot have 'use client' for pwa. Use window.location or something instead. */}
-            {/* {pathname != "/register" &&
-              pathname != "/login" &&
-              pathname != "/verify-account" &&
-              pathname != "/forgot-password" &&
-              pathname != "/forgot-password/otp" && <Navbar />} */}
+          
               <Navbar />
             {children}
             <BootstrapClient />

@@ -188,6 +188,8 @@ const LessonSidebar = forwardRef<LessonSidebarHandle>((props, ref) => {
     }));
   };
 
+  
+
   return (
     <div className={styles.lessonScrollSidebar}>
       <div className="rbt-course-feature-inner rbt-search-activation">

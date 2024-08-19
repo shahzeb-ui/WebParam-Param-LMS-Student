@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
+import thootoHeader from "../../../ui/dashboard/boundlessCover.png";
 import "@/styles/css/plugins/mainstyle.css";
+import { isMobile } from "react-device-detect";
 export default function Login() {
     const [email, setEmail] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -24,7 +26,7 @@ export default function Login() {
         };
     
         try {
-            debugger;
+            
             const res = await LoginUser(payload);
             setIsSubmitted(false);
             
@@ -34,7 +36,7 @@ export default function Login() {
             }
             
             if (res) {
-                debugger;
+                
                 cookies.set("loggedInUser", res.data);
                 router.push('/student/student-profile');
             }
@@ -52,7 +54,34 @@ export default function Login() {
 
     return (
         <div className="login">
-            <div className="rbt-contact-form  max-width-auto">
+
+            {isMobile&&
+            <div className="rbt-shadow-box" 
+            style={{
+                width: "100%",
+                height: "150px",
+            backgroundImage: `url(${thootoHeader.src})`,
+            backgroundRepeat:'no-repeat',
+            backgroundSize:'contain',
+            backgroundPosition:'top'
+            
+            }} />
+            }
+
+            {!isMobile&&
+                <div className=" rbt-shadow-box" 
+                style={{
+                backgroundImage: `url(${thootoHeader.src})`,
+                backgroundRepeat:'no-repeat',
+                backgroundSize:'cover',
+                backgroundPosition:'center',
+                width: "100%",
+                    height: "150px"
+                
+                }} />
+            }
+
+            <div className="rbt-contact-form  max-width-auto" style={{marginTop:"10%"}}>
                 <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
                 <form className="max-width-auto" onSubmit={handleLogIn}>
