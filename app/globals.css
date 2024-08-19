@@ -192,3 +192,7 @@ a {
 a#recieved-tab.tab-button.active::after {
   background-color: '#081427' !important;
 }
+
+.side-bar_overlay__3AZA1 {
+  height: 0 !important;
+}

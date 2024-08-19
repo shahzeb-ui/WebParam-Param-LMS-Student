@@ -12,11 +12,14 @@ import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import logo from './logo.jpg';
 import Nav from "./nav";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const pathname = usePathname();
 
   const sections = [
     { id: "dashboard", label: "Dashboard", link: "/student/dashboard" },
@@ -56,6 +59,11 @@ const Navbar = () => {
   const closeDropdown = () => {
     setIsDropdownVisible(false);
   };
+
+  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp"].includes(pathname)) {
+    return <div></div>;
+  } 
+  
 
   return (
     <>
@@ -117,7 +125,6 @@ const Navbar = () => {
                   </span>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
-                      {/* <UserStudent closeDropdown={closeDropdown} /> */}
                       {isDropdownVisible && <Nav />}
                     </div>
                   )}
@@ -129,7 +136,6 @@ const Navbar = () => {
                   onClick={toggleSidebar}
                   style={{cursor:'pointer'}}
                 >
-                
                 </div>
               </div>
             </div>
