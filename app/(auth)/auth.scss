@@ -40,10 +40,39 @@
     justify-content: center;
     align-items: center;
 
+    @media (max-width: 468px) {
+        width: 90%;
+    }
+
+    &-inner {
+        @media (max-width: 468px) {
+            width: 90%;
+        }
+    }
+
+    .remember-me {
+
+        @media (max-width: 468px) {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        & :nth-child(n) {
+            display: flex;
+            justify-content: flex-start;
+        }
+    }
+
     & h1 {
         font-size: 34px;
         width: 100%;
         text-wrap: nowrap;
+
+        @media (max-width: 468px) {
+        text-wrap: wrap;
+        text-align: center;
+        }
     }
    
     & > p {

@@ -52,10 +52,10 @@ export default function Login() {
 
     return (
         <div className="login">
-            <div className="rbt-contact-form  max-width-auto">
+            <div className="login-inner" style={{width: '90%'}}>
                 <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
-                <form className="max-width-auto" onSubmit={handleLogIn}>
+                <form onSubmit={handleLogIn}>
                     <div className="form-group">
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email *" name="email" />
                         <span className="focus-border" />
@@ -64,7 +64,7 @@ export default function Login() {
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password *" name="password" />
                         <span className="focus-border" />
                     </div>
-                    <div className="row mb--30">
+                    <div className="row mb--30 remember-me">
                         <div className="col-lg-6">
                             <div className="rbt-checkbox">
                                 <input type="checkbox" id="rememberme" name="rememberme" />
