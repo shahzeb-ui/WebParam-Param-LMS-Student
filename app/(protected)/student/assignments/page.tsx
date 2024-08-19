@@ -7,6 +7,7 @@ import ActiveAssignment from '@/ui/assignments/active';
 import UpcomingAssignment from '@/ui/assignments/upcoming';
 import { useEffect } from 'react';
 import { Suspense } from 'react';
+import WorkBooks from './(components)/WorkBooks';
 
 function Assignments() {
   const searchParams = useSearchParams();
@@ -43,6 +44,17 @@ function Assignments() {
                   <span className="title">Completed</span>
                 </a>
               </li>
+              <li role="presentation" onClick={() => router.push('/student/assignments?tab=workbooks')}>
+                <a className={`tab-button ${tab === 'workbooks' ? 'active' : ''}`} id="workbooks-tab-4" role="tab" aria-selected={tab === 'workbooks'}>
+                  <span className="title">Workbooks</span>
+                </a>
+              </li>
+              <li role="presentation" onClick={() => router.push('/student/assignments?tab=Logbooks')}>
+                <a className={`tab-button ${tab === 'logbooks' ? 'active' : ''}`} id="logbooks-tab-4" role="tab" aria-selected={tab === 'logbooks'}>
+                  <span className="title">Logbooks</span>
+
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -51,6 +63,7 @@ function Assignments() {
           {tab === 'completed' && <CompletedAssignment />}
           {tab === 'active' && <ActiveAssignment />}
           {tab === 'upcoming' && <UpcomingAssignment />}
+          {tab === 'workbooks' && <WorkBooks/>}
         </div>
       </div>
     </div>
