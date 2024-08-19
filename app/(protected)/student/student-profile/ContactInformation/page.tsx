@@ -51,10 +51,10 @@ export default function ContactInformation({student}:any) {
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
       setIsSubmitting(true);
-      debugger;
+      
   
       const payload = {
-        userId: user.data.id || user.data.userId,
+        userId: user?.data?.id || user?.data?.userId,
         homeAddress1: homeAddress1,
         postalAddress1: postalAddress1,
         postalAddress2: postalAddress2,
@@ -224,7 +224,7 @@ export default function ContactInformation({student}:any) {
     </div>
   </div>
 
-  <h5 className="rbt-form-group text-decoration-underline mt-5">Next of Kin</h5>
+  <h6 className="rbt-form-group mt-5">Next of Kin</h6>
 
   <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">

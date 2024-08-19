@@ -1,7 +1,8 @@
 "use client";
+import Cookies from "universal-cookie";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import SidebarData from "@/data/dashboard/student/siderbar.json";
-import Cookies from "universal-cookie";
 import { useEffect, useState } from "react";
 
 const StudentDashboardSidebar = () => {
@@ -9,13 +10,6 @@ const StudentDashboardSidebar = () => {
   const user = cookies.get("loggedInUser");
   const path = usePathname();
 
-  const [username, setUsername] = useState<string | null>(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    const storedUsername = cookies.get("username");
-    setUsername(storedUsername);
-  }, []);
 
   function handleLogOut() {
     cookies.remove("loggedInUser");
@@ -24,9 +18,13 @@ const StudentDashboardSidebar = () => {
      cookies.remove("resetEmail")
      router.push('/login')
   }
+  const [username, setUsername] = useState<string | null>(null);
+  const router = useRouter();
 
-
-  
+  useEffect(() => {
+    const storedUsername = cookies.get("username");
+    setUsername(storedUsername);
+  }, []);
   
   
   return (

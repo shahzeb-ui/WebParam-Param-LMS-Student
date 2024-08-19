@@ -1,55 +1,108 @@
 "use client";
 
-import Image from "next/image";
-import thootoHeader from "./thoota.jpg"
+import { rCourseUrl } from "@/app/lib/endpoints";
+import thootoHeader from "./boundlessCover.png"
 import "./userProfile.scss";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Cookies from "universal-cookie";
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 const InstructorDashboardHeader = () => {
+  var t = isBrowser;
+
+  const [isEnrolled, setIsEnrolled] = useState<any>();
+  const [courseId, setCourseId] = useState("");
+  const [course, setCourse] = useState<any>();
+
+  const cookies = new Cookies();
+
+  const user = cookies.get("loggedInUser");
+
+  
+  async function getEnrollment(userId: string) {
+    
+    try {
+      const res = await axios.get(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrollment/${userId}`);
+
+      if (res.data) {
+        console.log("enrollment id: ", res.data.data.course);
+        cookies.set("courseId", res.data.data.course)
+        setCourseId(res.data.data.course);
+        
+        return;
+      }
+    } catch (error: any) {
+      console.log("error with enrollment:", error);
+    }
+    return null;
+  }
+
+  async function getCourse(courseId: string) {
+    
+    const res = await axios.get(`${rCourseUrl}/api/v1/Courses/GetCourseNew/${courseId}`);
+
+    if (res) {
+      setCourse(res.data.data);
+    }
+  }
+
+  useEffect(() => {
+    if (user.data.id||user.id) {
+      getEnrollment(user.data.id||user.id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (courseId) {
+      getCourse(courseId);
+    }
+  }, [courseId]);
+
+
   return (
     <>
     <div className="mb-5">
-  <h3 className="mb-2">
-    <span style={{ fontWeight: '700' }}>Learning Telecommunication</span>
-  </h3>
-  <p className="ml-5">
-    C3498
-  </p>
-</div>
-
+        <h3 className="mb-2">
+          <span style={{ fontWeight: '700' }}>{course?.title}</span>
+        </h3>
+        <p className="ml-5">
+        {course?.id.slice(-4)}
+        </p>
+      </div>
       <div className="rbt-dashboard-content-wrapper">
+      {isMobile&&
+        <div className="rbt-shadow-box" 
+        style={{
+          backgroundImage: `url(${thootoHeader.src})`,
+          backgroundRepeat:'no-repeat',
+          backgroundSize:'contain',
+          backgroundPosition:'top',
+          height: '175px'
+        }} />
+      }
+
+      {!isMobile&&
         <div className="height-350 rbt-shadow-box" 
         style={{
           backgroundImage: `url(${thootoHeader.src})`,
           backgroundRepeat:'no-repeat',
           backgroundSize:'cover',
-          backgroundPosition:'top'
+          backgroundPosition:'center'
         }} />
+      }
+    
         <div className="rbt-tutor-information">
           <div className="rbt-tutor-information-left">
             <div className="thumbnail rbt-avatars size-lg">
-              {/* <Image
-                width={300}
-                height={300}
-                src="https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
-                alt="Instructor"
-              /> */}
             </div>
             <div className="tutor-content">
-              {/* <h5 className="title">John Due</h5> */}
-              {/* <div className="rbt-review">
-                <div className="rating">
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                  <i className="fas fa-star" />
-                </div>
-                <span className="rating-count"> (15 Reviews)</span>
-              </div> */}
             </div>
           </div>
         </div>
       </div>
+
+
     </>
   );
 };

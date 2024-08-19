@@ -1,5 +1,5 @@
+import { rCourseUrl } from "@/app/lib/endpoints";
 import {
-  GET_TOPIC_ELEMENTS_URL,
   TopicElement,
   TopicElementResponse,
 } from "@/interfaces/pharaphase/paraphase-d";
@@ -8,12 +8,15 @@ export const fetchTopicElements = async (
   topicId: string
 ): Promise<TopicElement[]> => {
   try {
-    const response = await fetch(GET_TOPIC_ELEMENTS_URL(topicId), {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await fetch(
+      `${rCourseUrl}/TopicElements/GetTopicElements/${topicId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to fetch topic elements.");

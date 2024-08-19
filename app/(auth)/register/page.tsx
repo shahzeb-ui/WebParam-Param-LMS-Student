@@ -19,7 +19,9 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     
     const cookies = new Cookies();
     const router = useRouter();
+    const hasConstantCourseId = "";//TODO: BRAD: get from env
 
+    
     async function handleRegister(e:any) {
         e.preventDefault();
         setIsSubmitted(true);
@@ -32,11 +34,16 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
             confirmPassword:confirmPassword,
         };
 
-        debugger;
+        
         const res = await registerUser(payload);
         setIsSubmitted(false);
-        if (res?.data.message != "User exists") {
-         cookies.set('userEmail', payload.email);
+        if (res?.data.message !== "User exists") {
+            cookies.set('userEmail', payload.email);
+
+            if(hasConstantCourseId!=""){
+                cookies.set('courseId', payload.courseId);
+            }
+            
             router.push('/verify-account');
         } else {
             setErrorMessage(true)
