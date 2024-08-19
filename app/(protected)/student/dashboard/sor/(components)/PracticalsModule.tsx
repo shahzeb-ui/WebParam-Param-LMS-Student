@@ -1,6 +1,7 @@
 // components/PracticalSkillsModules.tsx
 import React, { useState, ChangeEvent } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { isMobile } from 'react-device-detect';
 
 interface Module {
   date: string;
@@ -12,8 +13,8 @@ interface Module {
 
 const PracticalSkillsModules: React.FC = () => {
   const [modules, setModules] = useState<Module[]>([
-    { date: '2023-01-01', assessment: '95%', name: 'Practical Module 1', credits: '10', achievement: 'A' },
-    { date: '2023-02-01', assessment: '88%', name: 'Practical Module 2', credits: '8', achievement: 'B' },
+    { date: '2023-01-01', assessment: '95%', name: 'Practical Module 1', credits: '10', achievement: 'Competent' },
+    { date: '2023-02-01', assessment: '88%', name: 'Practical Module 2', credits: '8', achievement: 'Competent' },
   ]);
 
   const [show, setShow] = useState(false);
@@ -46,18 +47,18 @@ const PracticalSkillsModules: React.FC = () => {
   };
 
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center gap-2 p-10 mt-5 rbt-review-wrapper rbt-shadow-box">
-      <div className="d-flex justify-content-between align-items-center w-100 p-2">
+    <div className={isMobile? "rbt-dashboard-table table-responsive mobile-table-200 mt-3" :"rbt-dashboard-table table-responsive mobile-table-200 mt-3"}>   
+    <div className="d-flex justify-content-between align-items-center w-100 p-2">
         <h5>Practical Skills Modules</h5>
       </div>
-      <table className="table mb-0 thead-border-top-0 table-nowrap">
-        <thead>
+      <table className="rbt-table table table-borderless">
+        <thead className='thead-light'>
           <tr>
-            <th>Date</th>
-            <th>% Assessment</th>
-            <th>Name of Module</th>
-            <th>Credits</th>
-            <th>Achievement</th>
+          <th >Date</th>
+            <th >Mark</th>
+            <th >Module name</th>
+            <th >Credits</th>
+            <th >Achievement</th>
           </tr>
         </thead>
         <tbody>
@@ -73,73 +74,7 @@ const PracticalSkillsModules: React.FC = () => {
         </tbody>
       </table>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Practical Skills Module</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formDate">
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                type="text"
-                name="date"
-                value={newModule.date}
-                onChange={handleChange}
-                placeholder="Enter date"
-              />
-            </Form.Group>
-            <Form.Group controlId="formAssessment">
-              <Form.Label>% Assessment</Form.Label>
-              <Form.Control
-                type="text"
-                name="assessment"
-                value={newModule.assessment}
-                onChange={handleChange}
-                placeholder="Enter assessment"
-              />
-            </Form.Group>
-            <Form.Group controlId="formName">
-              <Form.Label>Name of Module</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={newModule.name}
-                onChange={handleChange}
-                placeholder="Enter name of module"
-              />
-            </Form.Group>
-            <Form.Group controlId="formCredits">
-              <Form.Label>Credits</Form.Label>
-              <Form.Control
-                type="text"
-                name="credits"
-                value={newModule.credits}
-                onChange={handleChange}
-                placeholder="Enter credits"
-              />
-            </Form.Group>
-            <Form.Group controlId="formAchievement">
-              <Form.Label>Achievement</Form.Label>
-              <Form.Control
-                type="text"
-                name="achievement"
-                value={newModule.achievement}
-                onChange={handleChange}
-                placeholder="Enter achievement"
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary btn-dark" onClick={addModule}>
-            Add Module
-          </Button>
-        </Modal.Footer>
-      </Modal>
+   
     </div>
   );
 };

@@ -1,7 +1,16 @@
 import axios from "axios";
-import { getnotificationUrl } from "../endpoints";
+import { rNotificationUrl, wNotificationUrl } from "@/app/lib/endpoints";
 
-export default async function getNotifications(userId:any) {
-    const res = axios.get(`${getnotificationUrl}/api/v1/UserNotifications/GetUserNotifications/${userId}`)
-    return res;
+export async function getNotifications(userId: any) {
+  const res = axios.get(
+    `${rNotificationUrl}/UserNotifications/GetUserNotifications/${userId}`
+  );
+  return res;
+}
+
+export async function markNotificationRead(notificationId: any) {
+  const res = axios.put(
+    `${wNotificationUrl}/UserNotifications/MarkNotificationAsRead/${notificationId}`
+  );
+  return res;
 }

@@ -9,6 +9,7 @@ import Cookies from 'universal-cookie';
 export default function Register({searchParams}: {searchParams: {courseId: string}}) {
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setpassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [agreeToTerms, setAgreeToTerms] = useState(false);
@@ -17,23 +18,32 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     const [isPasswordNotMatch, setPasswordNotMatch] = useState(false);
     
     const cookies = new Cookies();
-    const router = useRouter()
+    const router = useRouter();
+    const hasConstantCourseId = "";//TODO: BRAD: get from env
+
+    
     async function handleRegister(e:any) {
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
-            email,
-            username,
-            password,
-            confirmPassword,
-            courseId: searchParams.courseId
+            courseId: searchParams.courseId,
+            email:email,
+            phoneNumber:phone,
+            username:username,
+            password:password,
+            confirmPassword:confirmPassword,
         };
 
-        debugger;
+        
         const res = await registerUser(payload);
         setIsSubmitted(false);
-        if (res?.data.message != "User exists") {
-         cookies.set('userEmail', payload.email);
+        if (res?.data.message !== "User exists") {
+            cookies.set('userEmail', payload.email);
+
+            if(hasConstantCourseId!=""){
+                cookies.set('courseId', payload.courseId);
+            }
+            
             router.push('/verify-account');
         } else {
             setErrorMessage(true)
@@ -56,6 +66,12 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         }
     }, [password, confirmPassword])
 
+    useEffect(() => {
+        if (phone && !phone.startsWith('+27')) {
+          setPhone(`+27${phone}`);
+        }
+      }, [phone]);
+
     
     return (
         <div className="register">
@@ -68,7 +84,11 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                 <span className="focus-border" />
                 </div>
                 <div className="form-group">
-                <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username" name="username *" required />
+                <input type="text"  value={username} onChange={(e) => setUserName(e.target.value)} placeholder="Enter Username *" name="username *" required />
+                    <span className="focus-border" />
+                </div>
+                <div className="form-group">
+                <input type="text"  value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Enter Phone Number *" name="phone *" required />
                     <span className="focus-border" />
                 </div>
                 <div className="form-group">
@@ -83,7 +103,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                 
                 {errorMessage && <span className={`errorMessage`}>user email already exists, please log in</span>}
                 <div className="form-submit-group">
-                    <button type="submit" className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100" disabled={isSubmitted}>
+                    {/* <button type="submit" className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100" disabled={isSubmitted}>
                         {isSubmitted ? <div className="spinner-border" role="status"/> : <span className="icon-reverse-wrapper">
                             <span className="btn-text">Register</span>
                             <span className="btn-icon">
@@ -93,7 +113,22 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                                 <i className="feather-arrow-right" />
                             </span>
                         </span>}
-                    </button>
+                    </button> */}
+                    <button
+                            type="submit"
+                            className="rbt-btn btn-gradient hover-icon-reverse w-100"
+                            style={{ background: 'linear-gradient(#25355c, #25355c)' }}
+                        >
+                            {isSubmitted ? <div className="spinner-border" role="status" /> : <span className="icon-reverse-wrapper">
+                                <span className="btn-text">Register</span>
+                                <span className="btn-icon">
+                                    <i className="feather-arrow-right" />
+                                </span>
+                                <span className="btn-icon">
+                                    <i className="feather-arrow-right" />
+                                </span>
+                            </span>}
+                        </button>
                     
                 </div>
             </form>

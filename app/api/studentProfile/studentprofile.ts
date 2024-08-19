@@ -1,11 +1,10 @@
+import { rCourseUrl, readUserData, writeUserData } from "@/app/lib/endpoints";
 import axios from "axios";
-import { deployedUrl } from "../endpoints";
-import { readUserData } from "../endpoints";
 
 
 export async function StudentProfile(payload: any) {
     try {
-        const register = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/v1/Profile/UpdateProfile`,payload);
+        const register = await axios.put(`${writeUserData}/api/v1/Profile/UpdateProfile`,payload);
         return register;
     } catch (error: any) {
         console.log(error);
@@ -14,7 +13,7 @@ export async function StudentProfile(payload: any) {
 
 export async function updateDemographicsInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentDemographicsInformation`,payload);
+        const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentDemographicsInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -23,7 +22,7 @@ export async function updateDemographicsInformation(payload: any) {
 
 export async function updateContactInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentContactInformation`,payload);
+        const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentContactInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -32,7 +31,7 @@ export async function updateContactInformation(payload: any) {
 
 export async function updateEmployeeInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentEmployeeInformation`,payload);
+        const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentEmployeeInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -41,16 +40,32 @@ export async function updateEmployeeInformation(payload: any) {
 
 export async function updateRegionalInformation(payload: any) {
     try {
-        const res = await axios.put(`https://khumla-development-user-write.azurewebsites.net/api/Student/UpdateStudentRegionalInformation`,payload);
+        const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentRegionalInformation`,payload);
         return res;
     } catch (error: any) {
         console.log(error);
     }
 }
 
-export async function getStudentProfile(userId:any) {
+export async function getStudentProfile(userId: any) {
+  try {
+    const register = await axios.get(`${readUserData}/api/v1/Profile/GetUserProfile/${userId}`
+    );
+    return register;
+  } catch (error: any) {
+    console.log(error);
+  }
+}
+
+export const getStudentData = async (studentId: string) => {
+    const resp = await axios.get(`${readUserData}/api/v1/Student/GetStudentInformation/${studentId} `)
+    return resp.data
+  }
+  
+
+export async function getStudentDocuments(userId:any) {
     try {
-        const register = await axios.get(`${readUserData}/api/v1/Profile/GetUserProfile/${userId}`);
+        const register = await axios.get(`${readUserData}/api/v1/Documents/GetDocuments/${userId}`);
         return register;
 
     } catch(error: any) {
@@ -58,15 +73,15 @@ export async function getStudentProfile(userId:any) {
     }
 }
 
-export const getStudentData = async (studentId: string) => {
-    const resp = await axios.get(`https://khumla-development-user-read.azurewebsites.net/api/Student/GetStudentInformation/${studentId} `)
-    return resp.data
-  }
-  
 
-export async function getStudentDocuments(userId:any) {
+
+
+export async function getDocumentsByCourseId(courseId:any) {
     try {
-        const register = await axios.get(`${readUserData}/api/Documents/GetDocuments/${userId}`);
+        //TODO: BRAD: Pass in id from env for boundlesss
+        //  const register = await axios.get(`https://khumla-prod-newcourse-read.azurewebsites.net/api/v1/Document/GetCourseDocuments/66aa8c8245223bcb337a9641`);
+
+        const register = await axios.get(`${readUserData}/api/v1/Documents/GetDocuments/${courseId}`);
         return register;
 
     } catch(error: any) {

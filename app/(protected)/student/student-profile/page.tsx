@@ -21,7 +21,7 @@ function UserProfileContent() {
     const router = useRouter();
 
     async function getStudent() {
-        const res = await getStudentData(user.data.id || user.data.userId);
+        const res = await getStudentData(user.data.id || user.id);
         console.log('student:', res.data);
         setStudent(res);
     }
@@ -33,7 +33,7 @@ function UserProfileContent() {
     const renderComponent = (tab: string | null) => {
         switch (tab) {
             case 'profile':
-                return <Profile user={user} />;
+                return <Profile student={student} />;
             case 'democraticLegal':
                 return <DemocraticLegal student={student} />;
             case 'ContactInformation':

@@ -1,5 +1,5 @@
+import { wAssessmentUrl } from "@/app/lib/endpoints";
 import {
-  ADD_NEW_ASSESSMENT_URL,
   AssessmentResponse,
 } from "@/interfaces/assessments/assessments-interface";
 
@@ -9,14 +9,17 @@ export const submitAssessment = async (
 ): Promise<AssessmentResponse> => {
   try {
     console.log("Submitting assessment:", { title, courseId });
-    const response = await fetch(ADD_NEW_ASSESSMENT_URL, {
-      method: "POST",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, courseId }),
-    });
+    const response = await fetch(
+      `${wAssessmentUrl}/Assessments/AddNewAssessment`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "text/plain",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, courseId }),
+      }
+    );
 
     console.log("Response status:", response.status);
     if (!response.ok) {

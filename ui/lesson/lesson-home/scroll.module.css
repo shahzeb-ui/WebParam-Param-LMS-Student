@@ -3,4 +3,28 @@
     overflow-y: auto !important; 
     overflow-x: hidden !important;
     width: 100% !important;
+
+
+    /* Target the scrollbar */
+    &::-webkit-scrollbar {
+        width: 0px; /* Set the scrollbar width */
+        height: 80% !important; 
+    }
+    
+    /* Handle of the scrollbar */
+    &::-webkit-scrollbar-thumb {
+        background-color: #5b85b5; /* Color of the scrollbar handle */
+        border-radius: 10px; /* Rounding the corners of the scrollbar handle */
+    }
+    
+    /* Track of the scrollbar */
+    &::-webkit-scrollbar-track {
+        background: #f9f9ff; /* Color of the scrollbar track */
+        border-radius: 10px; /* Rounding the corners of the scrollbar track */
+    }
+    
+    /* Handle hover state */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Color of the scrollbar handle on hover */
+    }
 }
