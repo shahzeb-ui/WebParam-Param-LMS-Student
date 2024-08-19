@@ -69,7 +69,7 @@ export default function RootLayout({
         <UserProvider>
           <LessonProvider>
           
-              <Navbar />
+              {/* <Navbar /> */}
             {children}
             <BootstrapClient />
            
