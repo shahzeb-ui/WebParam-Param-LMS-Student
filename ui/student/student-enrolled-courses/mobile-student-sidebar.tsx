@@ -24,7 +24,7 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
 
 
   return (
-    <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`} style={{ width:'100%', position:'fixed', bottom:'0 !important', left:'0 !important', right:'0 !important', top:'85px !important',zIndex:'1000'}}>
+    <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`} style={{ width:'100%', position:'fixed', bottom:'0 !important', left:'0 !important', right:'0 !important', marginTop:'75px !important',zIndex:'1000'}}>
       <div className={styles.overlay} onClick={toggleSidebar}></div>
       <div className={styles["sidebar-content"]}>
         <div className="rbt-shadow-box" style={{borderRadius:'0', border:'1px solid #e0e0e0'}}>
