@@ -73,7 +73,7 @@ const EnrolledCourses = () => {
   }
 
   useEffect(() => {
-    debugger;
+    
     getKnowledgeModules(user.data.id||user.data.userId);
 
     console.log("knowledge modules:", unitStandards);

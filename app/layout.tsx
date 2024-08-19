@@ -59,6 +59,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+
+
   return (
     <html lang="en">
       <head>
@@ -67,7 +69,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
-            <Navbar />
+          
+              <Navbar />
             {children}
             <BootstrapClient />
            

@@ -35,7 +35,7 @@ export default function Profile({ student }: any) {
   const router = useRouter();
 
     useEffect(() => {
-        debugger;
+        
         getUserProfile();
     }, [profilePic]);
 
@@ -46,7 +46,7 @@ export default function Profile({ student }: any) {
     }
     
     useEffect(() => {
-        debugger;
+        
         getUserProfile();
     },[profilePic])
     
@@ -62,7 +62,7 @@ export default function Profile({ student }: any) {
     }, []);
 
   async function getUserProfile() {
-    debugger;
+    
     if (!user?.data?.id && !user?.id) return;
     const res = await getStudentProfile(user.data.id || user.id);
 
@@ -98,7 +98,7 @@ export default function Profile({ student }: any) {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        debugger;
+        
         setIsSubmitting(true);
         const payload = {
             userId: user?.data?.id||user?.id,
@@ -349,7 +349,7 @@ export default function Profile({ student }: any) {
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="filter-select rbt-modern-select">
+                    <div className="filter-select rbt-modern-select rbt-form-group">
                         <label htmlFor="gender">Gender</label>
                         <select
                             id="gender"
@@ -369,6 +369,7 @@ export default function Profile({ student }: any) {
                 </div>
                 <div className="col-12">
                     <div className="rbt-form-group">
+                        <br/>
                         <label htmlFor="bio">Biography</label>
                         <textarea
                             name="bio"

@@ -46,7 +46,7 @@ export default function EmploymentInformation({ student }: any) {
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     setIsSubmitting(true);
-    debugger;
+    
       const payload = {
         userId: user?.data?.id||user?.id,
         employmentStatus: employmentStatus,
@@ -88,7 +88,7 @@ export default function EmploymentInformation({ student }: any) {
           value={employmentStatus}
           onChange={(e) => setEmploymentStatus(e.target.value)}
         >
-          <option value="">select</option>
+          <option value="">Select</option>
           {
           codes && codes[6]?.codes?.map((item:any, index:number) => (
               <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
@@ -101,6 +101,7 @@ export default function EmploymentInformation({ student }: any) {
 
     <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
+      <br/>
         <label htmlFor="sarsTaxNumber">SARS TAX NUMBER</label>
         <input
           type="text"
@@ -122,7 +123,7 @@ export default function EmploymentInformation({ student }: any) {
             id="sector"
             onChange={(e) => setSelectedSector(e.target.value)}
         >
-            <option value="">select</option>
+            <option value="">Select</option>
             {
           codes && codes[18]?.codes?.map((item:any, index:number) => (
               <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>

@@ -57,7 +57,7 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
   const [selectedAnswers, setSelectedAnswers] = useState(Array(questions.length).fill(null));
 
   const handleOptionChange = (questionIndex:any, option:any) => {
-    debugger;
+    
 
     if (!setIsInteracted) {
        setIsInteracted(true); 

@@ -68,7 +68,7 @@ export default function VerifyAccount() {
         }
 
         const res = await verifyUserAccount(payload);
-        debugger;
+        
         if (res?.data.message != `Otp don't match`) {
             console.log(res);
             setIsSubmitted(false);

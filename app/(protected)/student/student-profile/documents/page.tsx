@@ -133,7 +133,7 @@ const FileUpload: React.FC = () => {
 
   const handleUpload = async () => {
     setUpLoadingLoader(true);
-    debugger;
+    
     if (selectedFile && selectedFile.file) {
       const formData = new FormData();
       formData.append('UserId', user.data.id);
