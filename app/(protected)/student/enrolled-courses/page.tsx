@@ -58,6 +58,7 @@ const EnrolledCourses = () => {
   };
 
   const getKnowledgeModules = async (userId:any) => {
+    debugger;
     if (userId) {
         const courseId = await getCourseId(userId);
         if (courseId?.data) {
