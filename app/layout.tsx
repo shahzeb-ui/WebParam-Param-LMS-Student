@@ -1,10 +1,8 @@
-// "use client";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import BootstrapClient from "@/ui/bootstrapclient/bootstrap-client";
 import Navbar from "@/ui/navbar/navbar";
-import { usePathname } from "next/navigation";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/scss/bootstrap.scss";
@@ -65,6 +63,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        
+      </head>
       <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
