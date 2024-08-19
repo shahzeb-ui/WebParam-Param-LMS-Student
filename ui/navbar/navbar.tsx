@@ -67,15 +67,15 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="rbt-header">
+      <header className="rbt-header" style={{padding:'10px 0'}}>
         <div className="rbt-sticky-placeholder"></div>
 
-        <div className="rbt-header-wrapper">
+        <div className="rbt-header-wrapper" style={{padding:'10px 0'}}>
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
                 <Link href="/" className="logo">
-                  <Image src={logo.src} alt="logo" width={80} height={20} />
+                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} />
                 </Link>
               </div>
 
