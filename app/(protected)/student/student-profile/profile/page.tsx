@@ -1,4 +1,5 @@
-'use client';
+"use client";
+
 import { useEffect, useState } from 'react';
 import './userProfile.scss';
 import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
@@ -12,26 +13,31 @@ import { Modal } from 'react-bootstrap';
 import { readUserData } from '@/app/api/endpoints';
 
 export default function Profile({ student }: any) {
-    const [firstName, setFirstName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [idNumber, setIdNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [gender, setGender] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [country, setCountry] = useState('');
-    const [city, setCity] = useState('');
-    const [province, setProvince] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [bio, setBio] = useState('');
-    const [profilePic, setProfilePic] = useState('');
-    const [coverImage, setCoverImage] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [id, setId] = useState('');
-    const [codes, setCodes] = useState<any>();
-    const [uploadingPic, setUploadingPic] = useState(false);
-    const cookies = new Cookies();
-    const user = cookies.get("loggedInUser");
-    const router = useRouter();
+  const [firstName, setFirstName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [province, setProvince] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [bio, setBio] = useState("");
+  const [profilePic, setProfilePic] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [id, setId] = useState("");
+  const [codes, setCodes] = useState<any>();
+  const [uploadingPic, setUploadingPic] = useState(false);
+  const cookies = new Cookies();
+  const user = cookies.get("loggedInUser");
+  const router = useRouter();
+
+    useEffect(() => {
+        
+        getUserProfile();
+    }, [profilePic]);
 
     async function getInputCodes() {
         const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
@@ -40,7 +46,7 @@ export default function Profile({ student }: any) {
     }
     
     useEffect(() => {
-        debugger;
+        
         getUserProfile();
     },[profilePic])
     
@@ -49,21 +55,23 @@ export default function Profile({ student }: any) {
         getUserProfile();
         setProvince(student?.data?.country)
         getInputCodes();
+
+        if (user) {
+            setEmail(user?.data?.email)
+        }
     }, []);
 
-    async function getUserProfile() {
-        debugger;
-        if (!user?.data?.id && !user?.id) return;
-        const res = await getStudentProfile(user.data.id || user.id);
-
-        console.log('responseeeee', res);
+  async function getUserProfile() {
+    
+    if (!user?.data?.id && !user?.id) return;
+    const res = await getStudentProfile(user.data.id || user.id);
 
         const dob = res?.data.data.dateOfBirth.split('T')[0];
         if (res?.data) {
             setFirstName(res.data.data.firstName);
             setSurname(res.data.data.surname);
             setIdNumber(res.data.data.idNumber);
-            setEmail(res.data.data.email);
+            // setEmail(res.data.data.email);
             setGender(res.data.data.gender);
             setDateOfBirth(dob);
             setCountry(res.data.data.country);
@@ -90,10 +98,10 @@ export default function Profile({ student }: any) {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        debugger;
+        
         setIsSubmitting(true);
         const payload = {
-            userId: user?.data?.id,
+            userId: user?.data?.id||user?.id,
             firstName,
             surname,
             idNumber,
@@ -143,6 +151,14 @@ export default function Profile({ student }: any) {
                 console.error('Error uploading profile picture:', error);
             }
         }
+    };
+
+    const getTodayDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     };
 
     return (
@@ -255,18 +271,19 @@ export default function Profile({ student }: any) {
                     <div className="rbt-form-group">
                         <label htmlFor="idNumber">ID number</label>
                         <input
-                            type="number"
+                            type="text"
                             name="idNumber"
                             placeholder="Enter your Id number or passport"
                             value={idNumber}
                             required
                             onChange={(e) => setIdNumber(e.target.value)}
-                            // onKeyPress={(e) => {
-                            //     // Prevent non-numeric input
-                            //     if (!/[0-9]/.test(e.key)) {
-                            //         e.preventDefault();
-                            //     }}}
-                                pattern="[0-9]*" 
+                            pattern="[0-9]*" 
+                            onKeyDown={(e) => {
+                                // Prevent numeric input
+                                if (!/\d/.test(e.key) && e.key !== "Backspace" && e.key !== "Tab" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") {
+                                    e.preventDefault();
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -277,6 +294,7 @@ export default function Profile({ student }: any) {
                             type="email"
                             name="email"
                             value={email}
+                            // onChange={(e)=> setEmail(e.target.value)}
                             readOnly
                         />
                     </div>
@@ -289,9 +307,10 @@ export default function Profile({ student }: any) {
                         <input
                             type="date"
                             name="date"
-                            value={dateOfBirth}
+                            value={dateOfBirth == "0001-01-01" ? getTodayDate() : dateOfBirth}
                             required
                             onChange={(e) => setDateOfBirth(e.target.value)}
+                            
                         />
                     </div>
                 </div>
@@ -306,7 +325,6 @@ export default function Profile({ student }: any) {
                             required
                             onChange={(e) => setCity(e.target.value)}
                             onKeyDown={(e) => {
-                                // Prevent numeric input
                                 if (/\d/.test(e.key)) {
                                     e.preventDefault();
                                 }
@@ -325,12 +343,13 @@ export default function Profile({ student }: any) {
                             required
                             onChange={(e) => {
                                 const numericValue = e.target.value.replace(/\D/g, '')
-                                setPhoneNumber(numericValue);}}
+                                setPhoneNumber(numericValue);
+                            }}
                         />
                     </div>
                 </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{ marginTop: '10px' }}>
-                    <div className="filter-select rbt-modern-select">
+                <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="filter-select rbt-modern-select rbt-form-group">
                         <label htmlFor="gender">Gender</label>
                         <select
                             id="gender"
@@ -339,18 +358,18 @@ export default function Profile({ student }: any) {
                             required
                             onChange={(e) => setGender(e.target.value)}
                             className="w-100">                                
-                            <option value={""}>select</option>
+                            <option value={""} >select</option>
                             {
                             codes && codes[4]?.codes?.map((item:any, index:number) => (
                                 <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
                             ))
                             }
-                            
                         </select>
                     </div>
                 </div>
                 <div className="col-12">
                     <div className="rbt-form-group">
+                        <br/>
                         <label htmlFor="bio">Biography</label>
                         <textarea
                             name="bio"
@@ -366,7 +385,7 @@ export default function Profile({ student }: any) {
                 <div className="col-12">
                     <button
                         className="btn-sm mr--10 hover-icon-reverse w-100 text-light"
-                        style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+                        style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                         type="submit"
                         disabled={isSubmitting}
                     >

@@ -52,6 +52,7 @@ function Assignments() {
               <li role="presentation" onClick={() => router.push('/student/assignments?tab=Logbooks')}>
                 <a className={`tab-button ${tab === 'logbooks' ? 'active' : ''}`} id="logbooks-tab-4" role="tab" aria-selected={tab === 'logbooks'}>
                   <span className="title">Logbooks</span>
+
                 </a>
               </li>
             </ul>

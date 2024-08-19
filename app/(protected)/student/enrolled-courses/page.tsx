@@ -6,13 +6,17 @@ import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
+import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
+// import { isMobile } from "react-device-detect";
+import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
+import courseImage from './courseImage.jpeg';
+import Cookies from "universal-cookie";
+import { isMobile } from "react-device-detect";
 import Active from "./active";
 import Enrolled from "./enrolled";
 import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
 import { useRouter, useSearchParams } from "next/navigation";
-import Cookies from "universal-cookie";
-import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -54,6 +58,7 @@ const EnrolledCourses = () => {
   };
 
   const getKnowledgeModules = async (userId:any) => {
+    debugger;
     if (userId) {
         const courseId = await getCourseId(userId);
         if (courseId?.data) {
@@ -68,7 +73,7 @@ const EnrolledCourses = () => {
   }
 
   useEffect(() => {
-    debugger;
+    
     getKnowledgeModules(user.data.id||user.data.userId);
 
     console.log("knowledge modules:", unitStandards);

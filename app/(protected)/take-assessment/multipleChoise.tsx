@@ -57,7 +57,7 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
   const [selectedAnswers, setSelectedAnswers] = useState(Array(questions.length).fill(null));
 
   const handleOptionChange = (questionIndex:any, option:any) => {
-    debugger;
+    
 
     if (!setIsInteracted) {
        setIsInteracted(true); 
@@ -86,7 +86,7 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
           {q.options.map((option, i) => (
             <div key={i}>
               <label style={{
-                border: `${selectedAnswers[index] === option ? '2px solid rgb(36, 52, 92)':'2px solid var(--color-border)'}`,
+                border: `${selectedAnswers[index] === option ? `2px solid ${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`:'2px solid var(--color-border)'}`,
                 height: '40px',
                 display: 'flex',
                 alignItems: 'center',

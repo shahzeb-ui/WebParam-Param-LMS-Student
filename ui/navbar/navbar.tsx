@@ -1,18 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import './navbar.scss'
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
 import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
+
+import logo from './logo.jpg';
+import Nav from "./nav";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const pathname = usePathname();
 
   const sections = [
     { id: "dashboard", label: "Dashboard", link: "/student/dashboard" },
@@ -34,11 +41,11 @@ const Navbar = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    // return () => {
+    //   window.removeEventListener("scroll", handleScroll);
+    // };
   }, [currentSection]);
 
   const handleAvatarClick = () => {
@@ -53,22 +60,22 @@ const Navbar = () => {
     setIsDropdownVisible(false);
   };
 
+  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp"].includes(pathname)) {
+    return <div></div>;
+  } 
+  
+
   return (
     <>
-      <header className="rbt-header">
+      <header className="rbt-header" style={{padding:'10px 0'}}>
         <div className="rbt-sticky-placeholder"></div>
 
-        <div className="rbt-header-wrapper">
+        <div className="rbt-header-wrapper" style={{padding:'10px 0'}}>
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo" 
-                style={{
-                  fontFamily:`"League Spartan" sans-serif `,
-                  fontWeight: "900",
-                  color: "rgb(36, 52, 92)",
-                  fontSize: "50px"}}>
-                  thooto
+                <Link href="/" className="logo">
+                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} />
                 </Link>
               </div>
 
@@ -80,7 +87,7 @@ const Navbar = () => {
                         className={currentSection === sec.id ? "current" : ""}
                         key={i}
                       >
-                        <Link href={sec.link}>{sec.label}</Link>
+                        <span aria-disabled style={{cursor:'none', margin:'0 10px', opacity:'.8'}}>{sec.label}</span>
                       </li>
                     ))}
                   </ul>
@@ -107,7 +114,7 @@ const Navbar = () => {
 
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
-                  <Link href="#" onClick={handleAvatarClick}>
+                  <span onClick={handleAvatarClick}>
                     <Image
                       src={User}
                       alt="User Avatar"
@@ -115,26 +122,20 @@ const Navbar = () => {
                       height={40}
                       className="rounded-circle"
                     />
-                  </Link>
+                  </span>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
-                      <UserStudent closeDropdown={closeDropdown} />
+                      {isDropdownVisible && <Nav />}
                     </div>
                   )}
                 </div>
 
                 <div
-                  className="rbt-offcanvas-trigger d-xl-none"
+                  className={`humburger-menu ${isSidebarOpen ? 'active' : ''}`}
                   id="rbt-offcanvas-activation"
                   onClick={toggleSidebar}
+                  style={{cursor:'pointer'}}
                 >
-                  <span className="offcanvas-trigger">
-                    <span className="offcanvas-bars">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </span>
-                  </span>
                 </div>
               </div>
             </div>
