@@ -1,93 +1,27 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
+import './course.scss';
+import { Suspense, useEffect } from "react";
 import Link from "next/link";
 import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
-import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
-import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
-import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
-// import { isMobile } from "react-device-detect";
-import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
-import courseImage from './courseImage.jpeg';
-import Cookies from "universal-cookie";
-import { isMobile } from "react-device-detect";
-import Active from "./active";
 import Enrolled from "./enrolled";
 import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
 import { useRouter, useSearchParams } from "next/navigation";
+import Active from "./active";
 
 const EnrolledCourses = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [unitStandards, setUnitStandards] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  const [isProgress, setIsProgress] = useState(true);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showAuthor, setShowAuthor] = useState(false);
-  const [courseStyle, setCourseStyle] = useState("two");
-  
-  const cookies = new Cookies();
-
-  const user = cookies.get("loggedInUser");
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
 
-  const itemsPerPage = 3;
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const getUnitStandards = async (courseId: string) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await getAlltUnitStandards(courseId);
-      setUnitStandards(data);
-      setLoading(false);
-    } catch (error: any) {
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
-  const getKnowledgeModules = async (userId:any) => {
-    debugger;
-    if (userId) {
-        const courseId = await getCourseId(userId);
-        if (courseId?.data) {
-            const res = await getEnrolledCourse(courseId?.data);
-    
-            console.log("knowledge modules: ", res?.data.data);
-            if (res?.data) {
-                setUnitStandards(res.data.data);
-            }
-        }
-    }
-  }
-
-  useEffect(() => {
-    
-    getKnowledgeModules(user.data.id||user.data.userId);
-
-    console.log("knowledge modules:", unitStandards);
-  }, []);
 
   useEffect(() => {
     if (tab == null) {
       router.push('/student/enrolled-courses?tab=enrolled');
     }
   }, [tab]);
-
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
@@ -98,6 +32,7 @@ const EnrolledCourses = () => {
             <span className="style-3-left">My Courses</span>
           </h4>
         </div>
+          {/* <span className="left-arrow">hi</span> */}
         <div className={`advance-tab-button mb--30 ${styles.advanceTabButton}`}>
           <ul className={`nav nav-tabs tab-button-style-2 ${styles.navTabs}`} id="myTab-4" role="tablist">
             <li role="presentation">
@@ -162,6 +97,7 @@ const EnrolledCourses = () => {
             </li>
           </ul>
         </div>
+          {/* <span className="right-arrow">hi</span> */}
 
         <div className="tab-content">
           {tab === "enrolled" && <Enrolled />}
