@@ -19,6 +19,8 @@ const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const pathname = usePathname();
+
   const sections = [
     { id: "dashboard", label: "Dashboard", link: "/student/dashboard" },
     { id: "course", label: "My Courses", link: "/student/enrolled-courses" },
@@ -58,23 +60,22 @@ const Navbar = () => {
     setIsDropdownVisible(false);
   };
 
-  const pathname = usePathname();
-  const display = pathname != '/register' && pathname != "/login" && pathname != "/verify-account" && pathname != "/forgot-password" && pathname != "/forgot-password/otp";
-
+  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp"].includes(pathname)) {
+    return <div></div>;
+  } 
+  
 
   return (
-
-    display ?
     <>
-      <header className="rbt-header">
+      <header className="rbt-header" style={{padding:'10px 0'}}>
         <div className="rbt-sticky-placeholder"></div>
 
-        <div className="rbt-header-wrapper">
+        <div className="rbt-header-wrapper" style={{padding:'10px 0'}}>
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
                 <Link href="/" className="logo">
-                  <Image src={logo.src} alt="logo" width={80} height={20} />
+                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} />
                 </Link>
               </div>
 
@@ -124,7 +125,6 @@ const Navbar = () => {
                   </span>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
-                      {/* <UserStudent closeDropdown={closeDropdown} /> */}
                       {isDropdownVisible && <Nav />}
                     </div>
                   )}
@@ -136,7 +136,6 @@ const Navbar = () => {
                   onClick={toggleSidebar}
                   style={{cursor:'pointer'}}
                 >
-                
                 </div>
               </div>
             </div>
@@ -148,8 +147,6 @@ const Navbar = () => {
         toggleSidebar={toggleSidebar}
       />
     </>
-                :<>
-                </>
   );
 };
 

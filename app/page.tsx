@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import { Metadata } from "next";
 import styles from "./page.module.css";
@@ -7,6 +7,12 @@ import { useEffect } from "react";
 
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(()=>{
+    router.push("/login")
+  },[])
+
   
 
   return (
