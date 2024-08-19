@@ -32,7 +32,6 @@ const EnrolledCourses = () => {
             <span className="style-3-left">My Courses</span>
           </h4>
         </div>
-          {/* <span className="left-arrow">hi</span> */}
         <div className={`advance-tab-button mb--30 ${styles.advanceTabButton}`}>
           <ul className={`nav nav-tabs tab-button-style-2 ${styles.navTabs}`} id="myTab-4" role="tablist">
             <li role="presentation">
@@ -97,7 +96,6 @@ const EnrolledCourses = () => {
             </li>
           </ul>
         </div>
-          {/* <span className="right-arrow">hi</span> */}
 
         <div className="tab-content">
           {tab === "enrolled" && <Enrolled />}
