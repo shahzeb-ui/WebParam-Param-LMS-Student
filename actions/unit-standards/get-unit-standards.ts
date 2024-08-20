@@ -1,4 +1,4 @@
-import { GET_UNIT_STANDARDS_URL } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
+import { rCourseUrl } from "@/app/lib/endpoints";
 import {
   UnitStandardData,
   ApiResponse,
@@ -8,16 +8,15 @@ export const getAlltUnitStandards = async (
   courseId: string
 ): Promise<UnitStandardData[]> => {
   try {
-    const response = await fetch(GET_UNIT_STANDARDS_URL(courseId), {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch unit standards.");
-    }
+    const response = await fetch(
+      `${rCourseUrl}/api/v1/KnowledgeModules/GetKnowledgeModules/${courseId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
 
     const responseData: ApiResponse = await response.json();
 

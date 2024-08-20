@@ -1,8 +1,6 @@
+import { rCourseUrl, readUserData, writeUserData } from "@/app/lib/endpoints";
 import axios from "axios";
-import { writeUserData } from "../endpoints";
-import { readUserData } from "../endpoints";
 
-const route = "dev";
 
 export async function StudentProfile(payload: any) {
     try {
@@ -49,14 +47,14 @@ export async function updateRegionalInformation(payload: any) {
     }
 }
 
-export async function getStudentProfile(userId:any) {
-    try {
-        const register = await axios.get(`${readUserData}/api/v1/Profile/GetUserProfile/${userId}`);
-        return register;
-
-    } catch(error: any) {
-        console.log(error);
-    }
+export async function getStudentProfile(userId: any) {
+  try {
+    const register = await axios.get(`${readUserData}/api/v1/Profile/GetUserProfile/${userId}`
+    );
+    return register;
+  } catch (error: any) {
+    console.log(error);
+  }
 }
 
 export const getStudentData = async (studentId: string) => {
@@ -68,6 +66,22 @@ export const getStudentData = async (studentId: string) => {
 export async function getStudentDocuments(userId:any) {
     try {
         const register = await axios.get(`${readUserData}/api/v1/Documents/GetDocuments/${userId}`);
+        return register;
+
+    } catch(error: any) {
+        console.log(error);
+    }
+}
+
+
+
+
+export async function getDocumentsByCourseId(courseId:any) {
+    try {
+        //TODO: BRAD: Pass in id from env for boundlesss
+        //  const register = await axios.get(`https://khumla-prod-newcourse-read.azurewebsites.net/api/v1/Document/GetCourseDocuments/66aa8c8245223bcb337a9641`);
+
+        const register = await axios.get(`${readUserData}/api/v1/Documents/GetDocuments/${courseId}`);
         return register;
 
     } catch(error: any) {

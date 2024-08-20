@@ -1,5 +1,5 @@
 import axios from "axios";
-import { writeUserData } from "../endpoints";
+import { writeUserData } from "@/app/lib/endpoints";
 
 
 export async function registerUser(payload:any) {

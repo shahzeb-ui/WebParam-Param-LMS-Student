@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import ActiveAssessment from "@/ui/assessments/marked-assessments/active";
 import CompletedAssessment from "@/ui/assessments/marked-assessments/completed";
 import styles from "@/app/(protected)/student/assessments/assessments.module.css";
+import { isMobile } from "react-device-detect";
 
 function Assessments() {
   const searchParams = useSearchParams();
@@ -32,21 +33,21 @@ function Assessments() {
           <div className="col-lg-10 offset-lg-1">
           <ul className="nav nav-tabs tab-button-style-2 justify-content-center " id="myTab-4" role="tablist">
               
-              <li role="presentation" onClick={() => router.push('/student/assessments?tab=active')} style={{cursor:'pointer'}}>
+                  <li role="presentation" onClick={() => router.push('/student/assessments?tab=active')} style={{cursor:'pointer'}}>
                 <a className={`tab-button ${activeTab === 'active' ? 'active' : ''}`} id="profile-tab-4" role="tab" aria-selected={activeTab === 'active'}>
-                  <span className="title">Active Assessments</span>
+                  <span className="title">Active </span>
                 </a>
               </li>
               <li role="presentation" onClick={() => router.push('/student/assessments?tab=completed')} style={{cursor:'pointer'}}>
                 <a className={`tab-button ${activeTab === 'completed' ? 'active' : ''}`} id="contact-tab-4" role="tab" aria-selected={activeTab === 'completed'}>
-                  <span className="title">Completed Assessments</span>
+                  <span className="title">Completed </span>
                 </a>
               </li>
             </ul>
           </div>
         </div>
         {/* <hr className="mt-3" /> */}
-        <div className="rbt-dashboard-table table-responsive mobile-table-750 mt-3">
+        <div className={isMobile? "rbt-dashboard-table table-responsive mobile-table-200 mt-3" :"rbt-dashboard-table table-responsive mobile-table-200 mt-3"}>
           {activeTab === "completed" && <CompletedAssessment />}
           {activeTab === "active" && <ActiveAssessment />}
 

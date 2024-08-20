@@ -15,7 +15,7 @@ function StudentInfoLayout({ children }: { children: React.ReactNode }) {
 
     const router = useRouter();
     const searchParams = useSearchParams();
-    const currentTab = searchParams.get('tab') || 'profile'; // Default to 'profile' if no tab is specified
+    const currentTab = searchParams.get('tab') || 'profile';
 
     return (
         <div className="col-lg-9" style={{ width: '100%' }}>
@@ -71,3 +71,4 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         </Suspense>
     );
 }
+

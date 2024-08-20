@@ -44,7 +44,7 @@ export default function Enrolled() {
 
     try {
       const data = await getAlltUnitStandards(courseId);
-      // console.log("get data: ", data);
+      console.log("get data: ", data);
       setUnitStandards(data);
       setLoading(false);
     } catch (error: any) {
