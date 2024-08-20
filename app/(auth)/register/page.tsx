@@ -103,7 +103,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                 
                 {errorMessage && <span className={`errorMessage`}>user email already exists, please log in</span>}
                 <div className="form-submit-group">
-                    <button type="submit" className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100" disabled={isSubmitted}>
+                    {/* <button type="submit" className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100" disabled={isSubmitted}>
                         {isSubmitted ? <div className="spinner-border" role="status"/> : <span className="icon-reverse-wrapper">
                             <span className="btn-text">Register</span>
                             <span className="btn-icon">
@@ -113,7 +113,22 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                                 <i className="feather-arrow-right" />
                             </span>
                         </span>}
-                    </button>
+                    </button> */}
+                    <button
+                            type="submit"
+                            className="rbt-btn btn-gradient hover-icon-reverse w-100"
+                            style={{ background: 'linear-gradient(#25355c, #25355c)' }}
+                        >
+                            {isSubmitted ? <div className="spinner-border" role="status" /> : <span className="icon-reverse-wrapper">
+                                <span className="btn-text">Register</span>
+                                <span className="btn-icon">
+                                    <i className="feather-arrow-right" />
+                                </span>
+                                <span className="btn-icon">
+                                    <i className="feather-arrow-right" />
+                                </span>
+                            </span>}
+                        </button>
                     
                 </div>
             </form>
