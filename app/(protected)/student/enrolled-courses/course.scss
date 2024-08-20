@@ -27,5 +27,8 @@
 }
 
 .rbt-btn {
-    padding: 0 16px !important;
+    padding: 16px;
+    @media (max-width: 600px) {
+        padding: 0 16px;
+    }
 }
