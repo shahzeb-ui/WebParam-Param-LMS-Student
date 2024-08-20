@@ -9,7 +9,7 @@ export const getAlltUnitStandards = async (
 ): Promise<UnitStandardData[]> => {
   try {
     const response = await fetch(
-      `${rCourseUrl}KnowledgeModules/GetKnowledgeModules/${courseId}`,
+      `${rCourseUrl}/api/v1/KnowledgeModules/GetKnowledgeModules/${courseId}`,
       {
         method: "GET",
         headers: {

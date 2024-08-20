@@ -1,5 +1,5 @@
 'use client';
-import React, { Suspense, useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Question {
@@ -37,7 +37,13 @@ const workbooksData: Workbook[] = [
 const WorkbookPage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const workbookName = searchParams.get("workbookName");
+  const [workbookName, setWorkbookName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWorkbookName(searchParams.get("workbookName"));
+    }
+  }, [searchParams]);
 
   const workbook = workbooksData.find(wb => wb.name === workbookName);
 
