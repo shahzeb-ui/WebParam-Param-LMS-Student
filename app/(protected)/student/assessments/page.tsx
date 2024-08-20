@@ -5,9 +5,9 @@ import { Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import ActiveAssessment from "@/ui/assessments/marked-assessments/active";
-import CompletedAssessment from "@/ui/assessments/marked-assessments/completed";
 import styles from "@/app/(protected)/student/assessments/assessments.module.css";
 import { isMobile } from "react-device-detect";
+import CompletedAssessment from "@/ui/assessments/marked-assessments/completed";
 
 function Assessments() {
   const searchParams = useSearchParams();
@@ -58,8 +58,6 @@ function Assessments() {
 }
 
 export default function AssignmentsPage() {
-
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Assessments />
