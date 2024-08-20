@@ -99,10 +99,12 @@ const WorkbookPage: React.FC = () => {
   );
 };
 
-export default function WorkBookDetails() {
+
+export default function WorkbookDetails() {
   return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <WorkbookPage/>
+    <Suspense fallback={<div>Loading...</div>}>
+      <WorkbookPage />
       </Suspense>
-  );
+  )
 }
+
