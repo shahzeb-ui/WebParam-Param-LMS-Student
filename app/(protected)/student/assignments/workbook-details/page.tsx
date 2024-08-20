@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Question {
@@ -93,4 +93,12 @@ const WorkbookPage: React.FC = () => {
   );
 };
 
-export default WorkbookPage;
+
+export default function WorkbookDetails() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WorkbookPage />
+      </Suspense>
+  )
+}
+
