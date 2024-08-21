@@ -59,7 +59,7 @@ export default function StudentLayout({
 
     useEffect(() => {
       // if (courseId) {
-        getCourse("6698edd230068555e54ac58e");
+        getCourse("669f4301cb3eaf57cd1040db");
       // }
     }, [])
   

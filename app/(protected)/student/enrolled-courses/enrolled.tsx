@@ -54,7 +54,7 @@ export default function Enrolled() {
   };
 
   useEffect(() => {
-    const courseId = "6698edd230068555e54ac58e";
+    const courseId = "669f4301cb3eaf57cd1040db";
     getUnitStandards(courseId);
   }, []);
 

@@ -24,7 +24,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
-            courseId: searchParams.courseId??"6698edd230068555e54ac58e",
+            courseId: searchParams.courseId??"669f4301cb3eaf57cd1040db",
             email:email,
             phoneNumber:phone,
             username:username,
@@ -47,7 +47,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     }, [username, email, password, confirmPassword])
 
     useEffect(() => {
-        const courseId = '6698edd230068555e54ac58e';
+        const courseId = '669f4301cb3eaf57cd1040db';
         router.push(`/register?courseId=${courseId}`)
     }, [])
 
