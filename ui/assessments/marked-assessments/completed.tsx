@@ -78,7 +78,6 @@ export default function CompletedAssessment() {
                 >
                  <i className="bi bi-box-arrow-down" style={{paddingLeft:'0'}}></i>
                 </Link>
-              
             </div>
           </td>
         </tr>
