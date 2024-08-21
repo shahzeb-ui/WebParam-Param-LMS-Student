@@ -1,21 +1,14 @@
 'use client'
-import ChartWrapper from "@/ui/analytics/graphs/ChartWrapper";
-import {
-  options as QuestionsAskedOptions,
-  data as QuestionsAskedData,
-  barDescriptions as QuestionsAskedDescription,
-} from "@/ui/analytics/graphs/QuestionsAsked/data";
+
 
 import { leaderboard } from './data';
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 
-import { areaChartSeries, sparkLineOptions,areaChartOptions, sparkLineSeries } from "@/ui/charts/lib/data";
-import SparkLineChart from "@/ui/charts/sparkline";
-import AreaChart from "@/ui/charts/area";
-
 import LineChart from "@/ui/charts/lineGraph";
 import BarGraph from "@/ui/charts/barGraph";
+import DoubleLineGraph from "@/ui/charts/doubleLineGraph";
+import PieChart from "@/ui/charts/pieChart";
 
 export default function Analytics() {
   const [showModal, setShowModal] = useState(false);
@@ -224,23 +217,20 @@ export default function Analytics() {
       </div>
                   </div>
                   </div>
-          <div className="col-lg-6 col-md-12 card-group-row__col">
+          <div className="col-lg-6 col-md-12 card-group-row__col mb-3">
             <LineChart />
           </div>
 
-          <div className="col-lg-6 col-md-12 card-group-row__col">
-          
+          <div className="col-lg-6 col-md-12 card card-group-row__col mb-3">
             <BarGraph />
           </div>
 
-          <div className="col-lg-6 col-md-12 card-group-row__col">
-            <ChartWrapper
-              title="Questions Asked"
-              barDescriptions={QuestionsAskedDescription}
-              options={QuestionsAskedOptions}
-              data={QuestionsAskedData}
-              type="bar"
-            />
+          <div className="col-lg-6 col-md-12 p-0 card-group-row__col">
+            <DoubleLineGraph />
+          </div>
+
+          <div className="col-lg-6 col-md-12 p-3 card d-flex justify-content-center align-items-center card-group-row__col">
+            <PieChart />
           </div>
         </div>
         </>
