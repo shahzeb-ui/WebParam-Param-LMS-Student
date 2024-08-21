@@ -1,22 +1,35 @@
 'use client'
+
+import "./marked.scss";
 import { useSearchParams } from "next/navigation";
 import { assessmentsData } from "../data";
 import { Suspense } from "react";
-import { color } from "framer-motion";
+import { useRouter } from "next/navigation";
 
  function MarkedAssessmentPage() {
     const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+    const id = searchParams.get("id");
+    const router = useRouter();
 
-  const assessment = assessmentsData.find((assessment:any) => Number(assessment.id) == Number(id));
+    const assessment = assessmentsData.find((assessment:any) => Number(assessment.id) == Number(id));
 
     if (!assessment) {
         return <div>Assessment not found</div>;
-      }
+    }
 
     return (
         <div>
-            <h4>{assessment.title}</h4>
+            <div className="d-flex justify-content-between align-items-center mb-3 marked-header">
+            <h4 className="m-0">{assessment.title}</h4>
+                <button 
+                    type="button" 
+                    className="btn btn-outline-dark" 
+                    style={{width:'100px', height:'40px', fontSize:'14px'}}
+                    onClick={() => router.back()}
+                    >
+                    <i className="bi bi-arrow-left-short"></i> Back
+                </button>
+            </div>
             {assessment.id == 1 && <EssayAnswer />}
             {assessment.id == 2 && <IntroductionAnswer />}
         </div>
@@ -26,7 +39,7 @@ import { color } from "framer-motion";
 const EssayAnswer = () => {
     return (
         <>
-           <div className="table-responsive o-hidden">
+           <div className="table-responsive o-hidden m-4">
                 <h5>Question 1:</h5>
                 <div className="rbt-card height-330 o-hidden">
                 <span style={{color:'green'}}>answer</span>: <br/>
@@ -56,7 +69,7 @@ const EssayAnswer = () => {
 const IntroductionAnswer = () => {
     return (
         <>
-           <div className="table-responsive o-hidden">
+           <div className="table-responsive o-hidden m-4">
                 <h5>Question 1: </h5>
                 <div className="rbt-card height-330 o-hidden">
                     <p><u>Which of the following is a key component of project management?</u></p>
