@@ -54,7 +54,7 @@ export default function Completed() {
   };
 
   useEffect(() => {
-    const courseId = "668fcf681a1ce7b0635b61c6";
+    const courseId = "66698edd230068555e54ac58e";
     getUnitStandards(courseId);
   }, []);
 
