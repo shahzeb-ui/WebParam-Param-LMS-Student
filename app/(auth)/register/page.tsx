@@ -27,7 +27,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
-            courseId: hasConstantCourseId,
+            courseId: hasConstantCourseId??"6669f0ff8759b480859c10a7",
             email:email,
             phoneNumber:phone,
             username:username,
