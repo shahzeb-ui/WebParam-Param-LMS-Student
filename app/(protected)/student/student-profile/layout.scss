@@ -5,6 +5,7 @@
     width: 100%;
     list-style: none;
     transition: transform 0.3s ease-in-out;
+    justify-content: center; 
 
     &::-webkit-scrollbar {
         height: 2px;
@@ -23,6 +24,7 @@
         padding-left: 0px;
         min-width: fit-content;
         transform: scale(0.9);
+        margin: 0 10px; /* Decreased gap between tabs */
     }
 }
 
@@ -44,7 +46,7 @@
     background: none;
     border: none;
     font-size: 1.5em;
-    color: darkblue;
+    color: #2f57ef;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -52,9 +54,18 @@
     padding: 0;
     margin: 0;
     box-shadow: none;
+    position: absolute; 
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%); 
+    z-index: 1000;
+    margin-top: 6px; /* Moved the more tabs button down a bit */
 }
 
 @media only screen and (max-width: 767px) {
+    .navigation-tabs {
+        justify-content: center; /* Center the tabs */
+    }
     .navigation-tabs .tab-button {
         display: none;
     }
