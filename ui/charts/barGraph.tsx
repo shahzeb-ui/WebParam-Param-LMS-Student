@@ -13,9 +13,9 @@ export default function BarGraph() {
         data: [10, 12, 17, 14, 18, 22, 15, 16, 19, 22, 25, 28]
       },
       {
-        name: 'Pending',
+        name: 'Incomplete',
         group: 'budget',
-        data: [5, 7, 10, 8, 12, 16, 9, 12, 15, 18, 22, 26]
+        data: [5, 7, 10, 8, 12, 5, 9, 12, 5, 8, 2, 6]
       },
     ],
     options: {
@@ -53,12 +53,16 @@ export default function BarGraph() {
       fill: {
         opacity: 1
       },
+      title: {
+        text: 'Assessments Analytics',
+        style: {
+          fontSize: '20px',
+          color: '#333'
+        }
+      },
       colors: ['#008ffb', '#800080'],
       yaxis: {
         labels: {
-        //   formatter: (val:any) => {
-        //     return val / 1000 + 'K';
-        //   }
         }
       },
       legend: {
@@ -70,7 +74,7 @@ export default function BarGraph() {
 
   return (
     <div>
-      <div id="chart">
+      <div id="chart" className='p-2' >
         <ReactApexChart options={chartData.options as any} series={chartData.series} type="bar" height={350} />
       </div>
       <div id="html-dist"></div>
