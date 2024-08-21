@@ -1,25 +1,21 @@
 'use client'
 import ChartWrapper from "@/ui/analytics/graphs/ChartWrapper";
 import {
-  options as OverallAssessmentBarOptions,
-  data as OverallAssessmentBarData,
-  barDescriptions as OverallAssessmentBarDescription,
-} from "@/ui/analytics/graphs/OverallAssessment/data";
-import {
   options as QuestionsAskedOptions,
   data as QuestionsAskedData,
   barDescriptions as QuestionsAskedDescription,
 } from "@/ui/analytics/graphs/QuestionsAsked/data";
 
-import {
-  options as OverallQuizBarOptions,
-  data as OverallQuizBarData,
-  barDescriptions as OverallQuizBarDescription,
-} from "@/ui/analytics/graphs/OverallQuiz/data";
-
 import { leaderboard } from './data';
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
+
+import { areaChartSeries, sparkLineOptions,areaChartOptions, sparkLineSeries } from "@/ui/charts/lib/data";
+import SparkLineChart from "@/ui/charts/sparkline";
+import AreaChart from "@/ui/charts/area";
+
+import LineChart from "@/ui/charts/lineGraph";
+import BarGraph from "@/ui/charts/barGraph";
 
 export default function Analytics() {
   const [showModal, setShowModal] = useState(false);
@@ -48,6 +44,8 @@ export default function Analytics() {
 
   console.log(showModal)
 
+
+  
   function handleShowModal(): void {
     
     setShowModal(true)
@@ -160,7 +158,6 @@ export default function Analytics() {
                 </div>
               </div>
 
-
               <div className="col-lg-9">
                 <div className="review-wrapper">
                   {leaderboard.sort((a, b) => (Number(a.points) + Number(b.points))).slice(0,5).map((person, index) => (
@@ -190,6 +187,7 @@ export default function Analytics() {
           </div>
         </div>
       </div>
+        
 
       <div className="row card-group-row mt-3">
       <div className="col-lg-6 col-md-12 card-group-row__col">
@@ -227,23 +225,12 @@ export default function Analytics() {
                   </div>
                   </div>
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <ChartWrapper
-              title="Quiz Attempts"
-              barDescriptions={OverallQuizBarDescription}
-              options={OverallQuizBarOptions}
-              data={OverallQuizBarData}
-              type="line"
-            />
+            <LineChart />
           </div>
 
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <ChartWrapper
-              title="Assessment Completed"
-              barDescriptions={OverallAssessmentBarDescription}
-              options={OverallAssessmentBarOptions}
-              data={OverallAssessmentBarData}
-              type="bar"
-            />
+          
+            <BarGraph />
           </div>
 
           <div className="col-lg-6 col-md-12 card-group-row__col">
