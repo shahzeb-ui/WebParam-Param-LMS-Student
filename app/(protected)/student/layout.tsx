@@ -53,27 +53,25 @@ export default function StudentLayout({
     
       if (res) {
         setCourse(res.data.data);
+        console.log('course: ', res.data.data);
       }
     }
 
     useEffect(() => {
-      if (courseId) {
-        getCourse(courseId);
-      }
-    }, [courseId])
-
-  if (courseId) {
-  }
+      // if (courseId) {
+        getCourse("6698edd230068555e54ac58e");
+      // }
+    }, [])
   
-  useEffect(() => {
-    if (user?.data?.id) {
+  // useEffect(() => {
+  //   if (user?.data?.id) {
       
-      if (isEnrolled != 0) {
-        getEnrollmentStatus(user.data.id);
-      }
-    }
-    console.log('enrolled status:', isEnrolled);
-  }, [path])
+  //     if (isEnrolled != 0) {
+  //       getEnrollmentStatus(user.data.id);
+  //     }
+  //   }
+  //   console.log('enrolled status:', isEnrolled);
+  // }, [path])
 
   
 
@@ -87,7 +85,7 @@ export default function StudentLayout({
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <InstructorDashboardHeader />
+              <InstructorDashboardHeader course={course} />
               <div className="row g-5">
                 <div className={`col-lg-3 ${styles.sidebarHiddenOnMobile}`}>
                   <StudentDashboardSidebar />

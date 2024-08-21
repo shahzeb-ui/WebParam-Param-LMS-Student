@@ -4,12 +4,12 @@ import Image from "next/image";
 import thootoHeader from "./thoota.jpg"
 import "./userProfile.scss";
 
-const InstructorDashboardHeader = () => {
+const InstructorDashboardHeader = ({course}:{course:any}) => {
   return (
     <>
     <div className="mb-5">
   <h3 className="mb-2">
-    <span style={{ fontWeight: '700' }}>Learning Telecommunication</span>
+    <span style={{ fontWeight: '700' }}>{course?.title}</span>
   </h3>
   <p className="ml-5">
     C3498

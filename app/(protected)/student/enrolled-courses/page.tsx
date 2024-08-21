@@ -57,7 +57,7 @@ const EnrolledCourses = () => {
     if (userId) {
         const courseId = await getCourseId(userId);
         if (courseId?.data) {
-            const res = await getEnrolledCourse(courseId?.data);
+            const res = await getEnrolledCourse("6698edd230068555e54ac58e");
     
             console.log("knowledge modules: ", res?.data.data);
             if (res?.data) {

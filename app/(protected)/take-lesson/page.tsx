@@ -34,7 +34,7 @@ export default function TakeLesson() {
 
   async function fetchKnowledgeTopics() {
     try {
-      const response = await GetKnowledgeTopicsNew(`668fcfad1a1ce7b0635b61c7`);
+      const response = await GetKnowledgeTopicsNew(`66990c0430068555e54ac5af`);
       if (!response.error) {
         setKnowledgeTopics(response.data);
       } else {
