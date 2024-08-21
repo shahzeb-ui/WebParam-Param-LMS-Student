@@ -21,6 +21,12 @@ import { leaderboard } from './data';
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 
+import Chart from "react-apexcharts";
+import { areaChartSeries, radialOptions, radialSeries, sparkLineOptions,areaChartOptions, sparkLineSeries } from "@/ui/charts/lib/data";
+import RadialChart from "@/ui/charts/radial";
+import SparkLineChart from "@/ui/charts/sparkline";
+import AreaChart from "@/ui/charts/area";
+
 export default function Analytics() {
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,6 +54,8 @@ export default function Analytics() {
 
   console.log(showModal)
 
+
+  
   function handleShowModal(): void {
     
     setShowModal(true)
@@ -160,6 +168,24 @@ export default function Analytics() {
                 </div>
               </div>
 
+<div className="col-lg-12">
+
+<div className="col-lg-4 col-md-12">
+  <RadialChart options={radialOptions} series={radialSeries} />
+  </div>
+  <div className="col-lg-4 col-md-12">
+  <SparkLineChart options={sparkLineOptions} series={sparkLineSeries} />
+  </div>
+  <div className="col-lg-4 col-md-12">
+  <AreaChart options={areaChartOptions} series={areaChartSeries} />
+</div>
+{/* <Chart options={options} series={series} type="area" />
+<Chart options={_options} series={_series} type="radialBar" />
+<Chart options={_options2} series={_series2} type="line" /> */}
+{/* <div id="chart-1">
+                <ReactApexChart options={this.state.options1} series={this.state.series1} type="line" height={35} width={100} />
+              </div> */}
+</div>
 
               <div className="col-lg-9">
                 <div className="review-wrapper">
