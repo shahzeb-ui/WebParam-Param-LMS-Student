@@ -19,7 +19,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     
     const cookies = new Cookies();
     const router = useRouter();
-    const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID??"6669f0ff8759b480859c10a7";
+    const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID;
 
 
     
@@ -27,7 +27,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
-            courseId: hasConstantCourseId,
+            courseId: hasConstantCourseId??"6669f0ff8759b480859c10a7",
             email:email,
             phoneNumber:phone,
             username:username,
