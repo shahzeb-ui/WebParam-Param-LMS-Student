@@ -48,23 +48,6 @@ export default function CompletedAssessment() {
 
   return (
     <>
-    <Modal
-      show={showDownload}
-        onHide={() => setShowDownload(false)}
-        className="modal fade"
-        id="exampleModal"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        centered
-        backdrop="static"
-      >
-        <div className="d-flex justify-content-center align-items-center" style={{height:'100px'}}>
-          <div className="spinner-border" role="status" />
-        </div>
-      </Modal>
-
     <table className="rbt-table table table-borderless">
       <thead>
         <tr>
