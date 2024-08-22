@@ -224,8 +224,8 @@ export default function Analytics() {
           </div>
         </div>
       </div>
-                  </div>
-                  </div>
+      </div>
+        </div>
           <div className="col-lg-6 col-md-12 card-group-row__col">
             <ChartWrapper
               title="Quiz Attempts"
