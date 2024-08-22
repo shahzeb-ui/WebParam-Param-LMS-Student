@@ -142,6 +142,7 @@ export default function TakeLesson() {
 
   const handleVideoEnd = () => {
     setVideoEnded(true);
+    alert('video ended');
   };
 
   if (error) return (
