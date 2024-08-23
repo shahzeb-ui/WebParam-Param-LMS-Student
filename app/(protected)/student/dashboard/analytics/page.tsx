@@ -1,6 +1,6 @@
 'use client'
 
-
+import './analytics.scss'
 import { leaderboard } from './data';
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
@@ -147,16 +147,16 @@ export default function Analytics() {
                       <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                     </svg>
                   </div>
-                  <span className="sub-title">You are currently ranked <b> 8th out of 56 </b> participants</span>
+                  <span className="sub-title">You are currently ranked <b> 71st out of 100 </b> participants</span>
                 </div>
               </div>
 
               <div className="col-lg-9">
                 <div className="review-wrapper">
-                  {leaderboard.sort((a, b) => (Number(a.points) + Number(b.points))).slice(0,5).map((person, index) => (
+                  {leaderboard.sort((a, b) => (Number(a.points) + Number(b.points))).slice(0,7).map((person, index) => (
                     <div className="single-progress-bar" key={index}>
                     <div className="rating-text">
-                      <p><small>{person.name}</small></p>
+                      <p><small>{index+1}. {person.name}</small></p>
                     </div>
                     <div className="progress">
                       <div
@@ -165,16 +165,16 @@ export default function Analytics() {
                         aria-valuenow={person.points}
                         aria-valuemin={0}
                         aria-valuemax={100}
-                        style={{ width: "87%" }}
+                        style={{ width: "80%" }}
                       />
                     </div>
-                    <span className="value-text">{person.points} </span>
+                    <span className="value-text">{person.points}</span>
                   </div>
                   ))}
                 </div>
-                <div  className="d-flex justify--content center p-3">
+                {/* <div  className="d-flex justify--content center p-3">
                   <button onClick={handleShowModal} className="bg-dark" style={{height:'40px',margin:'0 auto', width:'100px', fontSize:'12px', border:'none', borderRadius:'8px', backgroundColor:'#ff8f3c' }}>View More</button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

@@ -128,7 +128,7 @@ const Navbar = () => {
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
                   <span onClick={handleAvatarClick}>
-                    <Image
+                  {profilePic ? <Image
                       src={`${profilePic}`||User.src}
                       alt="User Avatar"
                       width={40}
@@ -137,7 +137,16 @@ const Navbar = () => {
                       style={{
                         border:'2px solid lightgray'
                       }}
-                    />
+                    />:<Image
+                    src={`${profilePic}`||User.src}
+                    alt="User Avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-circle"
+                    style={{
+                      border:'2px solid lightgray'
+                    }}
+                  />}
                   </span>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
