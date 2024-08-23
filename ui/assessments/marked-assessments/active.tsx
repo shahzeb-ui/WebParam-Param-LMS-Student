@@ -7,12 +7,14 @@ const summativeData = [
     course: "Fundamentals 101",
     dueDate: "2024-01-01",
     totalMarks: 50,
+    link: "/take-assessment?id=1",
   },
   {
     title: "Advanced Project Management",
     course: "Fundamentals 102",
     dueDate: "2024-02-01",
     totalMarks: 100,
+    link: "/take-assessment?id=2",
   },
 ];
 
@@ -22,12 +24,14 @@ const formativeData = [
     course: "Communication 101",
     dueDate: "2024-01-15",
     totalMarks: 20,
+    link: "/take-assessment?id=3",
   },
   {
     title: "How to Be Well-Articulated and Well-Spoken",
     course: "Communication 102",
     dueDate: "2024-01-20",
     totalMarks: 30,
+    link: "/take-assessment?id=4",
   },
 ];
 
@@ -65,7 +69,7 @@ export default function ActiveAssessment() {
                 <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Start"
-                  href="/take-assessment"
+                  href={assessment.link}
                 >
                   Start
                 </a>

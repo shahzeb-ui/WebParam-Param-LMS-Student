@@ -9,7 +9,6 @@ import styles from "@/app/(protected)/student/assessments/assessments.module.css
 import { isMobile } from "react-device-detect";
 import { AssessmentProvider, useAssessmentContext } from "../../../../ui/assessments/(context)/AssessmentContext";
 
-
 function Assessments() {
   const { assessmentType, activeTab, setAssessmentType, setActiveTab } = useAssessmentContext();
   const router = useRouter();
