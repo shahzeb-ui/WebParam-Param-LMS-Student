@@ -16,10 +16,11 @@ export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
 
     function handleLogOut() {
         cookies.remove("loggedInUser");
-         cookies.remove("username");
-         cookies.remove("userEmail")
-         cookies.remove("resetEmail")
-         router.push('/login')
+        cookies.remove("username");
+        cookies.remove("userEmail");
+        cookies.remove("resetEmail");
+        cookies.remove("profilePic");
+        router.push('/login')
       }
 
       const userMenuLinks = [
@@ -37,7 +38,23 @@ export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
           href: "/student/notifications",
           iconClass: "feather-volume-2",
           label: "Notifications",
-        }
+        },
+        {   
+            href: "/student/assignments",
+            iconClass: "feather-file-text",
+            label: "My Assignments",
+        },
+        {
+            href:'/student/logbook',
+            iconClass:'feather-book-open',
+            label:'My Logbook'
+        },
+        {
+            href: "/",
+            iconClass: "feather-log-out",
+            label: "Log Out",
+        },
+       
       ];
 
       const handleLinkClick = (link:string) => {
@@ -45,11 +62,10 @@ export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
         setIsDropdownVisible(false);
         router.push(link);
         window.scrollTo({
-          top: 1000,
+          top: 600,
           behavior: 'smooth'
         });
       }
-
 
 
     return (
@@ -97,6 +113,5 @@ export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
             </div>
             </motion.div>
         </AnimatePresence>
-
     )
 }
