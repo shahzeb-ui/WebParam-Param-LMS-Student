@@ -1,4 +1,6 @@
-"use client";
+'use client'
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import styles from "./page.module.css";
 import { useRouter } from "next/navigation";
@@ -9,6 +11,9 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(()=>{
+    AOS.init({
+      duration: 1200,
+    });
     router.push("/login")
   },[])
 
