@@ -1,19 +1,21 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import SidebarData from "@/data/dashboard/student/siderbar.json";
 import StudentMobileProps from "@/interfaces/side-bar";
 import styles from "@/styles/side-bar/side-bar.module.css";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
+import Link from "next/link";
 
-const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.Element => {
+const StudentMobileSideBar = ({isOpen,toggleSidebar}: StudentMobileProps): JSX.Element => {
   const [username, setUsername] = useState<string | null>(null);
   const path = usePathname();
+  const router = useRouter();
   const cookies = new Cookies();
 
   const handleLinkClick = (link: string) => {
-    window.location.href = link;
+    router.push(link);
     toggleSidebar();
   };
 
@@ -43,13 +45,13 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
                           key={index}
                           role="presentation"
                         >
-                          <a
+                          <Link
                             className={`${path === data.link ? "active" : ""}`}
                             href={data.link}
                           >
                             <i className={data.icon} />
                             <span>{data.text}</span>
-                          </a>
+                          </Link>
                         </li>
                       ))}
                   </ul>
