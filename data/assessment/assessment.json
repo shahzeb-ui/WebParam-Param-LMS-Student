@@ -1,72 +1,34 @@
 {
-  "assessments": [
+  "quizData": [
     {
-      "id": 1,
-      "title": "Introduction to Project Management",
-      "totalMarks": 50,
-      "quizData": [
-        { "question": "What are the key phases of a project management lifecycle?" },
-        { "question": "Describe the role of a project manager in a project." },
-        { "question": "What are some common project management methodologies?" },
-        { "question": "Explain the importance of stakeholder management in project management." },
-        { "question": "How do you perform risk management in a project?" },
-        { "question": "What tools and techniques can be used for effective project scheduling?" },
-        { "question": "How do you ensure effective communication within a project team?" },
-        { "question": "What is the significance of a project charter?" },
-        { "question": "How can project scope creep be prevented?" },
-        { "question": "What are the key components of a project management plan?" }
-      ]
+      "question": "What are the key phases of a project management lifecycle?"
     },
     {
-      "id": 2,
-      "title": "Advanced Project Management",
-      "totalMarks": 100,
-      "quizData": [
-        { "question": "What are the key phases of a project management lifecycle?" },
-        { "question": "Describe the role of a project manager in a project." },
-        { "question": "What are some common project management methodologies?" },
-        { "question": "Explain the importance of stakeholder management in project management." },
-        { "question": "How do you perform risk management in a project?" },
-        { "question": "What tools and techniques can be used for effective project scheduling?" },
-        { "question": "How do you ensure effective communication within a project team?" },
-        { "question": "What is the significance of a project charter?" },
-        { "question": "How can project scope creep be prevented?" },
-        { "question": "What are the key components of a project management plan?" }
-      ]
+      "question": "Describe the role of a project manager in a project."
     },
     {
-      "id": 3,
-      "title": "Effective Communication in the Workplace",
-      "totalMarks": 20,
-      "quizData": [
-        { "question": "What is effective communication?" },
-        { "question": "Describe the barriers to effective communication." },
-        { "question": "How can you improve communication in the workplace?" },
-        { "question": "Explain the role of active listening in communication." },
-        { "question": "What are the key components of non-verbal communication?" },
-        { "question": "How does feedback play a role in effective communication?" },
-        { "question": "What are the differences between verbal and non-verbal communication?" },
-        { "question": "How can cultural differences impact communication?" },
-        { "question": "What strategies can be used to resolve communication conflicts?" },
-        { "question": "How can technology be used to enhance communication in the workplace?" }
-      ]
+      "question": "What are some common project management methodologies?"
     },
     {
-      "id": 4,
-      "title": "How to Be Well-Articulated and Well-Spoken",
-      "totalMarks": 30,
-      "quizData": [
-        { "question": "What does it mean to be well-articulated?" },
-        { "question": "Describe the importance of clear speech." },
-        { "question": "How can you improve your articulation?" },
-        { "question": "Explain the role of vocabulary in articulation." },
-        { "question": "What are the best practices for public speaking?" },
-        { "question": "How can you structure your thoughts for better articulation?" },
-        { "question": "What techniques can be used to reduce filler words in speech?" },
-        { "question": "How does body language affect articulation?" },
-        { "question": "What are the common challenges in articulation and how can they be overcome?" },
-        { "question": "How can practicing with a peer or mentor improve your articulation?" }
-      ]
+      "question": "Explain the importance of stakeholder management in project management."
+    },
+    {
+      "question": "How do you perform risk management in a project?"
+    },
+    {
+      "question": "What tools and techniques can be used for effective project scheduling?"
+    },
+    {
+      "question": "How do you ensure effective communication within a project team?"
+    },
+    {
+      "question": "What is the significance of a project charter?"
+    },
+    {
+      "question": "How can project scope creep be prevented?"
+    },
+    {
+      "question": "What are the key components of a project management plan?"
     }
   ]
 }
