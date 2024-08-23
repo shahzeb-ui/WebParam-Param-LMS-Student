@@ -1,8 +1,33 @@
 import { motion, AnimatePresence } from "framer-motion";
 import bookCover from './bookCover.jpeg'
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 
-export default function SearchResults({ coursesCopy }:any) {
+export default function SearchResults({ search }:any) {
+  const [coursesCopy, setCoursesCopy] = useState<any[]>([]);
+
+  const getUnitStandards = async (courseId: string) => {
+
+    try {
+      const data = await getAlltUnitStandards(courseId);
+      console.log("get data: ", data);
+      setCoursesCopy(data);
+    } catch (error: any) {
+      console.log("error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    const courseId = "668fcf681a1ce7b0635b61c6";
+    getUnitStandards(courseId);
+  }, []);
+
+  useEffect(() => {
+    const filteredCourses = coursesCopy.filter((course:any) => course.title.toLowerCase().includes(search.toLowerCase()));
+    setCoursesCopy(filteredCourses);
+  }, [search]);
+
   return (
     <AnimatePresence>
       <motion.div
@@ -19,13 +44,13 @@ export default function SearchResults({ coursesCopy }:any) {
           </div>
         </div>
 
-        {coursesCopy.map((course:any) => (
+        {coursesCopy.slice(0, 8).map((course:any) => (
           <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 1 }}
-            key={course.data.id}
+            key={course?.id}
             className="col-lg-3 col-md-4 col-sm-6 col-12"
             style={{cursor:'none'}}
           >
@@ -40,13 +65,13 @@ export default function SearchResults({ coursesCopy }:any) {
                     decoding="async"
                     data-nimg={1}
                     style={{ color: "transparent" }}
-                    src={bookCover.src}
+                    src={bookCover?.src}
                   />
                 </a>
               </div>
               <div className="rbt-card-body">
                 <h5 className="rbt-card-title">
-                  <span >{course.data.title}</span>
+                  <span >{course?.title}</span>
                 </h5>
                 <div className="rbt-card-bottom">
                   <div className="rbt-price">
