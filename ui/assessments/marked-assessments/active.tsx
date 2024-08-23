@@ -3,8 +3,8 @@ import { useAssessmentContext } from '../(context)/AssessmentContext';
 
 const summativeData = [
   {
-    title: "Introduction to Project Management",
-    course: "Fundamentals 101",
+    title: "Introduction to Advanced Project Management",
+    course: "Fundamentals 111",
     dueDate: "2024-01-01",
     totalMarks: 50,
   },
@@ -13,17 +13,11 @@ const summativeData = [
 
 const formativeData = [
   {
-    title: "Effective Communication in the Workplace",
-    course: "Communication 101",
+    title: "Introduction to Project Management",
+    course: "Fundamentals 101",
     dueDate: "2024-01-15",
     totalMarks: 20,
-  },
-  {
-    title: "How to Be Well-Articulated and Well-Spoken",
-    course: "Communication 102",
-    dueDate: "2024-01-20",
-    totalMarks: 30,
-  },
+  }
 ];
 
 export default function ActiveAssessment() {
