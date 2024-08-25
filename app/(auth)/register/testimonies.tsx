@@ -1,5 +1,7 @@
 'use client'
 
+import './register.scss'
+
 import Image from "next/image"
 import { useState } from "react";
 
@@ -158,7 +160,7 @@ export default function Testimonies() {
             
         </div>
         <button type="button" className="btn btn-light mt-3 flex justify-center items-center" onClick={() => setStop(!stop)}>
-            <i className="bi bi-stop-circle" style={{transform:'scale(1.5)'}}></i>
+            <i className="bi bi-stop-circle" style={{fontSize:'1.3rem'}}></i>
         </button>
         </div>
     )

@@ -4,6 +4,11 @@
     text-align: center !important;
 }
 
+h1 {
+    font-size: 28px !important;
+    margin: 0;
+}
+
 
 
 .register-container {
@@ -39,7 +44,7 @@
     }
 }
 
-.login-inner {
+.login-inner {  
     background-color: #f0eeef;
     width: 55%;
     height: 100vh;
@@ -156,14 +161,13 @@ input[type="text"].error {
 .rbt-testimonial-box .inner {
     background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
     box-shadow: var(--shadow-7);
-    backdrop-filter: blur(20px); /* Blurs the background behind the element */
     border-radius: 10px; /* Optional: adds rounded corners for a smoother look */
     color: #fff; /* Ensures text stands out on the glass background */
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transformation */
     transform-style: preserve-3d; 
 
     &:hover {
-        transform: perspective(1000px) rotateX(10deg) scale(0.95); /* Bends inwards on hover */
+        transform: perspective(1000px) rotateX(20deg) scale(0.95); /* Bends inwards on hover */
         box-shadow: var(--shadow-7), 0 10px 20px rgba(0, 0, 0, 0.3); 
     }
 }
@@ -178,7 +182,6 @@ input[type="text"].error {
 
 .wrapper,
 .cards-wrapper {
-    
 
     @media (max-width: 768px) {
         display: none;
@@ -194,5 +197,21 @@ input[type="text"].error {
         background: -moz-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
         
         background: -webkit-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+    
+    
+        & button {
+            display: none;
+        }
+
+        @media (max-height: 757px) {
+            padding-top: 10px;
+            margin-bottom: 30px;
+        }
     }
+}
+
+.thooto {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
