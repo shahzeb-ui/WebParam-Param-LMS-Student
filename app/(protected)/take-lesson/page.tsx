@@ -12,6 +12,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
+import { isMobile, isDesktop } from "react-device-detect";
 
 export default function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -170,10 +171,10 @@ export default function TakeLesson() {
         {/* Sidebar */}
 
         
-        <div className="rbt-lesson-leftsidebar">
+        <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title">
-              <h4 className="rbt-title-style-3">Course Contsasasasasent</h4>
+              <h4 className="rbt-title-style-3">Course Content</h4>
             </div>
             <div className="lesson-search-wrapper">
               <form action="#" className="rbt-search-style-1">
@@ -304,11 +305,11 @@ export default function TakeLesson() {
                 <div>
                   <div className="content">
                     <div className="section-title">
-                      <h5><u>{currentVideo?.title}</u></h5>
+                      <h5>{currentVideo?.title}</h5>
                     </div>
                     <div className="rbt-button-group">
                       <button
-                        className="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity"
+                        className="rbt-btn  btn-md bg-primary-opacity"
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
@@ -318,7 +319,7 @@ export default function TakeLesson() {
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
-                        className="rbt-btn icon-hover btn-md"
+                        className="rbt-btn  btn-md"
                         onClick={handleNext}
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
@@ -391,7 +392,7 @@ export default function TakeLesson() {
                               <span className="title">Notes</span>
                             </Link>
                           </li>
-                          <li role="presentation">
+                          {!isDesktop &&  <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -404,7 +405,8 @@ export default function TakeLesson() {
                             >
                               <span className="title">Content</span>
                             </Link>
-                          </li>
+                          </li>}
+                         
                         </ul>
                       </div>
                     </div>
@@ -441,6 +443,7 @@ export default function TakeLesson() {
                       >
                         <Notes />
                       </div>
+                  
                       <div
                         className="tab-pane fade"
                         id="content-4"
@@ -449,10 +452,10 @@ export default function TakeLesson() {
                       >
                         <div className="rbt-lesson-leftsidebar">
                           <div className="rbt-course-feature-inner rbt-search-activation">
-                            <div className="section-title">
+                            {/* <div className="section-title">
                               <h4 className="rbt-title-style-3">Course Content</h4>
-                            </div>
-                            <div className="lesson-search-wrapper">
+                            </div> */}
+                            {/* <div className="lesson-search-wrapper">
                               <form action="#" className="rbt-search-style-1">
                                 <input
                                   className="rbt-search-active"
@@ -465,8 +468,8 @@ export default function TakeLesson() {
                                   <i className="feather-search" />
                                 </button>
                               </form>
-                            </div>
-                            <hr className="mt--10" />
+                            </div> */}
+                            {/* <hr className="" /> */}
                             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
                               {!loading ? filteredTopics.map((topic, index) => (
                                 <div className="accordion-item card" key={topic.id}>
@@ -485,7 +488,7 @@ export default function TakeLesson() {
                                       onClick={() => handleExpandClick(topic.id)}
                                       style={{fontSize:'16px'}}
                                     >
-                                      {topic.name}
+                                     <small> {topic.name}</small>
                                     </button>
                                   </h2>
                                   <div

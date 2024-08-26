@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import quizData from "@/data/quiz/quiz.json";
+import quizData from "@/data/quiz/quiz-callcenter.json";
 import styles from "@/styles/quiz/quiz.module.css";
 import './quiz.scss'
 
