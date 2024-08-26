@@ -45,7 +45,7 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
     {
       question: "What is the critical path in project management?",
       options: [
-        "The sequence of project activities",
+        "The sequence of project activities which add the most value",
         "The longest path through the project schedule",
         "The path with the most dependencies",
         "The sequence of activities that leads to project failure"
@@ -86,7 +86,7 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
           {q.options.map((option, i) => (
             <div key={i}>
               <label style={{
-                border: `${selectedAnswers[index] === option ? `2px solid ${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`:'2px solid var(--color-border)'}`,
+                border: `${selectedAnswers[index] === option ? '2px solid rgb(36, 52, 92)':'2px solid var(--color-border)'}`,
                 height: '40px',
                 display: 'flex',
                 alignItems: 'center',

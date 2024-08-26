@@ -6,6 +6,7 @@ import imageCover from "./loginImage.png";
 import { LoginUser } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -72,9 +73,7 @@ export default function LoginPage() {
     }, [email, password]);
 
     return (
-        <div className="login-container">
-            <div 
-                className='left-container'
+        <div className="login left-container"
                 data-aos="zoom-out-right"
                 style={{
                     backgroundImage: `url(${imageCover.src})`,
@@ -83,25 +82,41 @@ export default function LoginPage() {
                     boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
                 }}
                 >
-            </div>
-           <div className="login-inner" data-aos="zoom-out-left">
-                <h1>Sign in</h1>
+            {/* {isMobile&&
+            <div className="rbt-shadow-box" 
+            style={{
+                width: "100%",
+                height: "150px",
+            backgroundImage: `url(${imageCover.src})`,
+            backgroundRepeat:'no-repeat',
+            backgroundSize:'contain',
+            backgroundPosition:'top'
+            
+            }} />
+            }
+
+            {!isMobile&&
+                <div className=" rbt-shadow-box" 
+                style={{
+                backgroundImage: `url(${imageCover.src})`,
+                backgroundRepeat:'no-repeat',
+                backgroundSize:'cover',
+                backgroundPosition:'center',
+                width: "100%",
+                    height: "150px"
+                
+                }} />
+            } */}
+
+            <div className="rbt-contact-form  max-width-auto" style={{marginTop:"10%"}}>
+                <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
-                <form className='col-12' onSubmit={handleSubmit}>
-                <div>
-                    <div className="rbt-form-group mb-5">
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Enter Email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            // required
-                            className={hasError.email ? 'error' : ''}
-                        />
+                <form className="max-width-auto" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email *" name="email" />
+                        <span className="focus-border" />
                     </div>
-                </div>
+           
                 <div>
                     <div className="rbt-form-group mb-5">
                         <input
@@ -115,12 +130,12 @@ export default function LoginPage() {
                             className={hasError.password ? 'error' : ''}
                         />
                     </div>
-                </div>
-                    <div className="mb--30 remember-me">
-                        <div>
-                        <div className="form-check form-switch">
-                            <input type="checkbox" className="form-check-input" id="formSwitch1" checked={true} />
-                            <label className="form-check-label" htmlFor="formSwitch1" >Remember me</label>
+                    <div className="row mb--30">
+                        <div className="col-lg-6">
+                            <div className="rbt-checkbox">
+                                <input type="checkbox" id="rememberme" name="rememberme" />
+                                <label htmlFor="rememberme">Remember me</label>
+                            </div>
                         </div>
                         </div>
                         <div>
