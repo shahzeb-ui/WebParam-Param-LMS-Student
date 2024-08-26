@@ -19,15 +19,14 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     
     const cookies = new Cookies();
     const router = useRouter();
-    const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
-
+    const hasConstantCourseId = "";//TODO: BRAD: get from env
 
     
     async function handleRegister(e:any) {
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
-            courseId: hasConstantCourseId??"6669f0ff8759b480859c10a7",
+            courseId: searchParams.courseId,
             email:email,
             phoneNumber:phone,
             username:username,

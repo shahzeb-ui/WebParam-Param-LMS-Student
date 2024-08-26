@@ -53,7 +53,7 @@ export default function Login() {
     }, [email, password])
 
     return (
-        <div className="login" data-aos="fade-up">
+        <div className="login">
             <div className="login-inner">
                 <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
