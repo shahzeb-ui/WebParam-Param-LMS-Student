@@ -12,6 +12,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
+import { isMobile } from "react-device-detect";
 
 export default function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -168,7 +169,7 @@ export default function TakeLesson() {
     <div className="rbt-lesson-area bg-color-white">
       <div className="rbt-lesson-content-wrapper">
         {/* Sidebar */}
-        <div className="rbt-lesson-leftsidebar">
+        <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title">
               <h4 className="rbt-title-style-3">Course Content</h4>
@@ -445,7 +446,8 @@ export default function TakeLesson() {
                         role="tabpanel"
                         aria-labelledby="content-tab-4"
                       >
-                        <div className="rbt-lesson-leftsidebar">
+
+                        <div id="left-sidebar-" className="rbt-lesson-leftsidebar">
                           <div className="rbt-course-feature-inner rbt-search-activation">
                             <div className="section-title">
                               <h4 className="rbt-title-style-3">Course Content</h4>
@@ -465,6 +467,7 @@ export default function TakeLesson() {
                               </form>
                             </div>
                             <hr className="mt--10" />
+                           
                             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
                               {!loading ? filteredTopics.map((topic, index) => (
                                 <div className="accordion-item card" key={topic.id}>
@@ -559,6 +562,9 @@ export default function TakeLesson() {
                             </div>
                           </div>
                         </div>
+
+
+
                       </div>
                     </div>
                   </div>

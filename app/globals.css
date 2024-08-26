@@ -325,6 +325,11 @@ hr{
 
 }
 
+#sidebar-desktop{
+  height: 0px;
+  display: none;
+}
+
 .side-bar_overlay__3AZA1 {
   height: 0 !important;
 }
