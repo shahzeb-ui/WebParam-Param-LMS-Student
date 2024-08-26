@@ -1,7 +1,7 @@
-export const writeUserData = process.env.NEXT_PUBLIC_USER_WRITE_URL;
+export const writeUserData = 'https://khumla-dev-user-write.azurewebsites.net';
 
-export const readUserData = process.env.NEXT_PUBLIC_USER_READ_URL;
+export const readUserData = 'https://khumla-dev-user-read.azurewebsites.net';
 
-export const getnotificationUrl = process.env.NEXT_PUBLIC_NOTIFICATION_READ_URL;
+export const getnotificationUrl = 'https://khumla-dev-notification-read.azurewebsites.net';
 
-export const notificationWriteUrl = process.env.NEXT_PUBLIC_NOTIFICATION_WRITE_URL;
+export const notificationWriteUrl = 'https://khumla-dev-notification-write.azurewebsites.net';
