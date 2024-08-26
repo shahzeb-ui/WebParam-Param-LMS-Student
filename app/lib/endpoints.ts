@@ -1,5 +1,7 @@
+const envDev = "development";
 const test = "testing";
-const env = process.env.NEXT_PUBLIC_API_URL;
+// const env = process.env.NEXT_PUBLIC_API_ENV == "production" ? "prod" : "dev";
+const env = "prod";
 
 export const writeUserData = `https://khumla-${env}-user-write.azurewebsites.net`;
 
