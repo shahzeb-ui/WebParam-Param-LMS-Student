@@ -303,11 +303,11 @@ export default function TakeLesson() {
                 <div>
                   <div className="content">
                     <div className="section-title">
-                      <h5><u>{currentVideo?.title}</u></h5>
+                      <h5>{currentVideo?.title}</h5>
                     </div>
                     <div className="rbt-button-group">
                       <button
-                        className="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity"
+                        className="rbt-btn  btn-md bg-primary-opacity"
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
@@ -317,7 +317,7 @@ export default function TakeLesson() {
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
-                        className="rbt-btn icon-hover btn-md"
+                        className="rbt-btn btn-md"
                         onClick={handleNext}
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
@@ -449,9 +449,9 @@ export default function TakeLesson() {
 
                         <div id="left-sidebar-" className="rbt-lesson-leftsidebar">
                           <div className="rbt-course-feature-inner rbt-search-activation">
-                            <div className="section-title">
+                            {/* <div className="section-title">
                               <h4 className="rbt-title-style-3">Course Content</h4>
-                            </div>
+                            </div> */}
                             <div className="lesson-search-wrapper">
                               <form action="#" className="rbt-search-style-1">
                                 <input
@@ -486,7 +486,7 @@ export default function TakeLesson() {
                                       onClick={() => handleExpandClick(topic.id)}
                                       style={{fontSize:'16px'}}
                                     >
-                                      {topic.name}
+                                     <small> {topic.name}</small>
                                     </button>
                                   </h2>
                                   <div
