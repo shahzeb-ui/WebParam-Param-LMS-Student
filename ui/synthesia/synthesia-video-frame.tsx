@@ -20,7 +20,7 @@ const ResponsiveVideoComponent: React.FC = () => {
       const iframe = document.querySelector("iframe");
       if (iframe) {
         iframe.onload = () => {
-          alert("ended");
+    
           iframe.style.display = "none";
 
           try {
