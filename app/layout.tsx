@@ -1,8 +1,10 @@
+// "use client";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import BootstrapClient from "@/ui/bootstrapclient/bootstrap-client";
 import Navbar from "@/ui/navbar/navbar";
+import { usePathname } from "next/navigation";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/scss/bootstrap.scss";
@@ -53,7 +55,12 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
-export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+
 
 
   return (

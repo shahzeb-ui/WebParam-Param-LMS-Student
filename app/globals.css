@@ -321,21 +321,3 @@ hr{
 
 
 }
-
-.side-bar_overlay__3AZA1 {
-  height: 0 !important;
-}
-
-.side-bar_sidebar__zyQXh.side-bar_open__gVfPR {
-  transform: translateX(0);
-  margin-top: 75px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-iframe .jss3,
-iframe .jss2 {
-  display: none !important;
-}

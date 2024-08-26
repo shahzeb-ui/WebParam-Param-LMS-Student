@@ -19,15 +19,14 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
     
     const cookies = new Cookies();
     const router = useRouter();
-    const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
-
+    const hasConstantCourseId = "";//TODO: BRAD: get from env
 
     
     async function handleRegister(e:any) {
         e.preventDefault();
         setIsSubmitted(true);
         const payload: registerType = {
-            courseId: hasConstantCourseId??"6669f0ff8759b480859c10a7",
+            courseId: searchParams.courseId,
             email:email,
             phoneNumber:phone,
             username:username,
@@ -104,7 +103,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                 
                 {errorMessage && <span className={`errorMessage`}>user email already exists, please log in</span>}
                 <div className="form-submit-group">
-                    {/* <button type="submit" className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100" disabled={isSubmitted}>
+                    <button type="submit" className="rbt-btn btn-md btn-gradient hover-icon-reverse w-100" disabled={isSubmitted}>
                         {isSubmitted ? <div className="spinner-border" role="status"/> : <span className="icon-reverse-wrapper">
                             <span className="btn-text">Register</span>
                             <span className="btn-icon">
@@ -114,22 +113,7 @@ export default function Register({searchParams}: {searchParams: {courseId: strin
                                 <i className="feather-arrow-right" />
                             </span>
                         </span>}
-                    </button> */}
-                    <button
-                            type="submit"
-                            className="rbt-btn btn-gradient hover-icon-reverse w-100"
-                            style={{ background: 'linear-gradient(#25355c, #25355c)' }}
-                        >
-                            {isSubmitted ? <div className="spinner-border" role="status" /> : <span className="icon-reverse-wrapper">
-                                <span className="btn-text">Register</span>
-                                <span className="btn-icon">
-                                    <i className="feather-arrow-right" />
-                                </span>
-                                <span className="btn-icon">
-                                    <i className="feather-arrow-right" />
-                                </span>
-                            </span>}
-                        </button>
+                    </button>
                     
                 </div>
             </form>

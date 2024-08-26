@@ -53,11 +53,38 @@ export default function Login() {
     }, [email, password])
 
     return (
-        <div className="login" data-aos="fade-up">
-            <div className="login-inner">
+        <div className="login">
+
+            {isMobile&&
+            <div className="rbt-shadow-box" 
+            style={{
+                width: "100%",
+                height: "150px",
+            backgroundImage: `url(${thootoHeader.src})`,
+            backgroundRepeat:'no-repeat',
+            backgroundSize:'contain',
+            backgroundPosition:'top'
+            
+            }} />
+            }
+
+            {!isMobile&&
+                <div className=" rbt-shadow-box" 
+                style={{
+                backgroundImage: `url(${thootoHeader.src})`,
+                backgroundRepeat:'no-repeat',
+                backgroundSize:'cover',
+                backgroundPosition:'center',
+                width: "100%",
+                    height: "150px"
+                
+                }} />
+            }
+
+            <div className="rbt-contact-form  max-width-auto" style={{marginTop:"10%"}}>
                 <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
-                <form onSubmit={handleLogIn}>
+                <form className="max-width-auto" onSubmit={handleLogIn}>
                     <div className="form-group">
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email *" name="email" />
                         <span className="focus-border" />
@@ -66,7 +93,7 @@ export default function Login() {
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password *" name="password" />
                         <span className="focus-border" />
                     </div>
-                    <div className="row mb--30 remember-me">
+                    <div className="row mb--30">
                         <div className="col-lg-6">
                             <div className="rbt-checkbox">
                                 <input type="checkbox" id="rememberme" name="rememberme" />

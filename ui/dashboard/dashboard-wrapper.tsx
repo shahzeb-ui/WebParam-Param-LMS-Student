@@ -1,6 +1,7 @@
 "use client";
 
 import { rCourseUrl } from "@/app/lib/endpoints";
+import thootoHeader from "./boundlessCover.png"
 import "./userProfile.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ const InstructorDashboardHeader = () => {
   const cookies = new Cookies();
 
   const user = cookies.get("loggedInUser");
+
   
   async function getEnrollment(userId: string) {
     
@@ -72,10 +74,10 @@ const InstructorDashboardHeader = () => {
       {isMobile&&
         <div className="rbt-shadow-box" 
         style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_BANNER_URL??""})`,
+          backgroundImage: `url(${thootoHeader.src})`,
           backgroundRepeat:'no-repeat',
-          backgroundSize:'cover',
-          backgroundPosition:'center',
+          backgroundSize:'contain',
+          backgroundPosition:'top',
           height: '175px'
         }} />
       }
@@ -83,7 +85,7 @@ const InstructorDashboardHeader = () => {
       {!isMobile&&
         <div className="height-350 rbt-shadow-box" 
         style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_BANNER_URL??""})`,
+          backgroundImage: `url(${thootoHeader.src})`,
           backgroundRepeat:'no-repeat',
           backgroundSize:'cover',
           backgroundPosition:'center'
