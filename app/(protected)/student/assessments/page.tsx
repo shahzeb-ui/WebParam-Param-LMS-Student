@@ -6,7 +6,7 @@ import ActiveAssessment from "@/ui/assessments/marked-assessments/active";
 import CompletedAssessment from "@/ui/assessments/marked-assessments/completed";
 import styles from "@/app/(protected)/student/assessments/assessments.module.css";
 import { isMobile } from "react-device-detect";
-import Statistics from "./(components)/Statistics";\
+import Statistics from "./(components)/Statistics";
 import { AssessmentProvider, useAssessmentContext } from "../../../../ui/assessments/(context)/AssessmentContext";
 
 function Assessments() {
