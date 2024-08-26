@@ -47,7 +47,7 @@ export default function StudentLayout({
   }
 
   async function getCourse(courseId: string) {
-    debugger;
+    
     const res = await axios.get(`${rCourseUrl}/api/v1/Courses/GetCourseNew/${courseId}`);
 
     if (res) {
@@ -79,14 +79,12 @@ export default function StudentLayout({
 
       <div className="rbt-dashboard-area rbt-section-overlayping-top rbt-section-gapBottom">
         <div className="container">
-          <div className="mb-5">
-          </div>
           <div className="row">
             <div className="col-lg-12">
               <InstructorDashboardHeader />
               <div className="row g-5">
                 <div className={`col-lg-3 ${styles.sidebarHiddenOnMobile}`}>
-                  <StudentDashboardSidebar isEnrolled={isEnrolled} />
+                  <StudentDashboardSidebar />
                 </div>
                 <div className="col-lg-9">{children}</div>
               </div>

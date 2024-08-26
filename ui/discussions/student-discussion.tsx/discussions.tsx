@@ -14,11 +14,11 @@ const StudentDiscussions = () => {
 
   return (
     <div className="container mt-5 pb-5">
-      <h4 className="form-label fw-bold underline-2">
+      <h6 className="form-label fw-bold">
         <i className="bi bi-chat-right custom-icon-1 chat-icon-1"></i>
         <i className="bi bi-people custom-icon-1 people-icon-1"></i>
         Q&A
-      </h4>
+      </h6>
       <hr className="custom-line-break-1" />
 
       <div className="mb-4">

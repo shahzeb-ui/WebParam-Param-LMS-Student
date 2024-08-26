@@ -37,9 +37,9 @@ export default function ActiveAssessment() {
                 className="rbt-btn btn-xs bg-color-danger-opacity radius-round color-success"
                 title="Delete"
                 href="/instructor/instructor-assignments#"
-              > */}
-              {/* <i className="bi bi-download pl--0" /> */}
-              {/* </a> */}
+              >
+                <i className="bi bi-download pl--0" />
+              </a> */}
             </div>
           </td>
         </tr>

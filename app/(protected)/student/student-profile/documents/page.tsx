@@ -76,7 +76,7 @@ const FileUpload: React.FC = () => {
     setLoader(true);
     try {
       if (user?.data) {
-        const docs = await getStudentDocuments(user?.data?.id || user?.id);
+        const docs = await getStudentDocuments(user?.data.id || user?.id);
 
         if (docs) {
           setDocuments(docs?.data.data);
@@ -133,7 +133,7 @@ const FileUpload: React.FC = () => {
 
   const handleUpload = async () => {
     setUpLoadingLoader(true);
-    debugger;
+    
     if (selectedFile && selectedFile.file) {
       const formData = new FormData();
       formData.append('UserId', user.data.id);
@@ -325,6 +325,7 @@ const FileUpload: React.FC = () => {
               onDrop={(event) => handleDrop(event, docType)}
               onDragOver={(event) => handleDragOver(event, docType)}
               onDragLeave={(event) => handleDragLeave(event, docType)}
+              style={{backgroundColor:`${matchingDoc ? `${process.env.NEXT_PUBLIC_DOCUMENT_BG_COLOR}`:''}`, border:`1px dotted ${process.env.NEXT_PUBLIC_DOCUMENT_BORDER_COLOR}`}}
             >
               <h6>{docType.charAt(0).toUpperCase() + docType.slice(1)}</h6>
               <h3>Drag and drop your file here</h3>

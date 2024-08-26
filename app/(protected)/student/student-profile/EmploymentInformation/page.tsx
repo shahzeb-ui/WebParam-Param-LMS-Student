@@ -46,7 +46,7 @@ export default function EmploymentInformation({ student }: any) {
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     setIsSubmitting(true);
-    debugger;
+    
       const payload = {
         userId: user?.data?.id||user?.id,
         employmentStatus: employmentStatus,
@@ -88,7 +88,7 @@ export default function EmploymentInformation({ student }: any) {
           value={employmentStatus}
           onChange={(e) => setEmploymentStatus(e.target.value)}
         >
-          <option value="">select</option>
+          <option value="">Select</option>
           {
           codes && codes[6]?.codes?.map((item:any, index:number) => (
               <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
@@ -101,6 +101,7 @@ export default function EmploymentInformation({ student }: any) {
 
     <div className="col-lg-6 col-md-6 col-sm-6 col-12">
     <div className="rbt-form-group">
+      <br/>
         <label htmlFor="sarsTaxNumber">SARS TAX NUMBER</label>
         <input
           type="text"
@@ -122,7 +123,7 @@ export default function EmploymentInformation({ student }: any) {
             id="sector"
             onChange={(e) => setSelectedSector(e.target.value)}
         >
-            <option value="">select</option>
+            <option value="">Select</option>
             {
           codes && codes[18]?.codes?.map((item:any, index:number) => (
               <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
@@ -173,32 +174,31 @@ export default function EmploymentInformation({ student }: any) {
     </div>
   
 
-    <div className="col-12 mt--20">
-      <div className="rbt-form-group">
-        {/* <button
-          className="rbt-btn btn-gradient"
-          type='submit'
-          style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
-        >
-          {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
-        </button> */}
-        <button
-            className="btn-sm mr--10 hover-icon-reverse w-100"
-            style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
-            type="submit"
-            disabled={isSubmitting}
-        >
-            <span className="icon-reverse-wrapper">
-                <span className="btn-text text-light">Proceed</span>
-                <span className="btn-icon text-light">
-                    <i className="feather-arrow-right" />
-                </span>
-            </span>
-        </button>
-      </div>
+  <div className="col-12 mt--20">
+    <div className="rbt-form-group">
+      {/* <button
+         className="rbt-btn btn-gradient"
+         type='submit'
+         style={{ backgroundColor: '#24345c', backgroundImage: 'none' }}
+      >
+        {isSubmitting ? <div className="spinner-border text-light" role="status"/>:'Update Info'}
+      </button> */}
+      <button
+          className="btn-sm mr--10 hover-icon-reverse w-100"
+          style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+          type="submit"
+          disabled={isSubmitting}
+      >
+          <span className="icon-reverse-wrapper">
+              <span className="btn-text text-light">Proceed</span>
+              <span className="btn-icon text-light">
+                  <i className="feather-arrow-right" />
+              </span>
+          </span>
+      </button>
     </div>
 
-  
+  </div>
       </form>
     </div>
     </div>

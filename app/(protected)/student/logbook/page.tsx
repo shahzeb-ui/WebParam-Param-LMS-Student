@@ -39,7 +39,7 @@ const StudentLogbook = () => {
     number | null
   >(null);
   const [logbooks, setLogbooks] = useState<LogbookEntry[]>([]);
-  const [showLogbookList, setShowLogbookList] = useState<boolean>(false);
+  const [showLogbookList, setShowLogbookList] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingLogbooks, setLoadingLogbooks] = useState<boolean>(false);
@@ -217,7 +217,7 @@ const StudentLogbook = () => {
     if (!userId) return;
 
     try {
-      setLoadingLogbooks(true);
+      // setLoadingLogbooks(true);
       await getAllLogbooks(userId);
     } catch (error) {
       console.error("Error fetching more logbooks:", error);
@@ -239,9 +239,9 @@ const StudentLogbook = () => {
 
     return (
       <div
-        className={`logbook-entry p-4 mb-4 rounded border ${
-          entry.status === "Checked Out" ? "bg-light" : "border-success"
-        }`}
+      className={` logbook-entry p-4 mb-4 rounded border ${
+        entry.status === "Checked Out" ? "bg-light" : "border-success"
+      }`}
       >
         <div className="d-flex justify-content-between align-items-center">
           <h5>
@@ -325,56 +325,28 @@ const StudentLogbook = () => {
 
   return (
     <div className={`${styles.logbookContainer}`}>
-      {/* <div className={styles.icon}>
-        <i className="bi bi-journal-bookmark"></i>
-        <span className="get-4-color style-3-left logText">Logbook</span>
-        <div className="section-title">
-          <h4 className="get-4-color">
-            <span className={`logText ${styles.activeTabLabel}`}>
-              {activeTab === "school" ? "Student" : "Work"}
-            </span>
-          </h4>
-        </div>
-      </div> */}
-
-      {/* <div className={styles.navbar}>
-        <button
-          className={`btn ${styles.navButton} ${
-            activeTab === "school" ? styles.navButtonActive : ""
-          }`}
-          onClick={() => setActiveTab("school")}
-        >
-          School
-        </button>
-        <button
-          className={`btn ${styles.navButton} ${
-            activeTab === "work" ? styles.navButtonActive : ""
-          }`}
-          onClick={() => setActiveTab("work")}
-        >
-          Work
-        </button>
-      </div> */}
-
       <div className={styles.buttonContainer}>
         <button
           className="rbt-btn btn-gradient"
-          style={{ backgroundColor: '#25355c', backgroundImage: 'none' }}
-          onClick={() =>
+          style={{ backgroundColor: `${!showLogbookList ? 'white':'#25355c'} `, backgroundImage: 'none', color:`${!showLogbookList ? 'black':'white'}`,border:`${!showLogbookList && '1px solid #25355c'}` }}
+          onClick={() => (
+            
+            setShowLogbookList(false),
             addNewEntry(
               activeTab === "school" ? setStudentEntry : setWorkEntry,
               activeTab === "school" ? studentEntry : workEntry
             )
+          )
           }
-          disabled={disableAddEntry}
+          // disabled={disableAddEntry}
         >
           <i className="bi bi-plus"></i> Add Entry
         </button>
         <button
-          className="rbt-btn btn-gradient"
-          style={{ backgroundColor: '#25355c', backgroundImage: 'none' }}
+          className={`rbt-btn btn-gradient`}
+          style={{ backgroundColor: `${showLogbookList ? 'white':'#25355c'} `, backgroundImage: 'none', color:`${showLogbookList ? 'black':'white'}`,border:`${showLogbookList && '1px solid #25355c'}` }}
           onClick={() => {
-            setShowLogbookList(!showLogbookList);
+            setShowLogbookList(true);
             if (!showLogbookList) fetchMoreLogbooks();
           }}
         >
@@ -401,7 +373,8 @@ const StudentLogbook = () => {
         <div className={`${styles.logbookCard}`}>
           {activeTab === "school" || activeTab === "work"
             ? renderForm(studentEntry, setStudentEntry, setStudentTimer)
-            : renderForm(workEntry, setWorkEntry, setWorkTimer)}
+            : renderForm(workEntry, setWorkEntry, setWorkTimer)
+          }
         </div>
       )}
     </div>

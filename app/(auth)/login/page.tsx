@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
+import thootoHeader from "../../../ui/dashboard/boundlessCover.png";
 import "@/styles/css/plugins/mainstyle.css";
-
+import { isMobile } from "react-device-detect";
 export default function Login() {
     const [email, setEmail] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -25,7 +26,7 @@ export default function Login() {
         };
     
         try {
-            debugger;
+            
             const res = await LoginUser(payload);
             setIsSubmitted(false);
             
@@ -35,7 +36,7 @@ export default function Login() {
             }
             
             if (res) {
-                debugger;
+                
                 cookies.set("loggedInUser", res.data);
                 router.push('/student/student-profile');
             }
@@ -47,17 +48,16 @@ export default function Login() {
         }
     }
     
-
     useEffect(() => {
         setErrorMessage(false);
     }, [email, password])
 
     return (
-        <div className="login">
-            <div className="rbt-contact-form contact-form-style-1 max-width-auto">
+        <div className="login" data-aos="fade-up">
+            <div className="login-inner">
                 <h1>Log in to your account</h1>
                 <p>Welcome back! Please enter your details</p>
-                <form className="max-width-auto" onSubmit={handleLogIn}>
+                <form onSubmit={handleLogIn}>
                     <div className="form-group">
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email *" name="email" />
                         <span className="focus-border" />
@@ -66,7 +66,7 @@ export default function Login() {
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password *" name="password" />
                         <span className="focus-border" />
                     </div>
-                    <div className="row mb--30">
+                    <div className="row mb--30 remember-me">
                         <div className="col-lg-6">
                             <div className="rbt-checkbox">
                                 <input type="checkbox" id="rememberme" name="rememberme" />
@@ -100,8 +100,8 @@ export default function Login() {
                         </button>
                     </div>
                     <div className="auth-footer">
-                        {/* <p>Don&apos;t have an account? </p> */}
-                        {/* <Link href="/register">Register</Link> */}
+                        <p>Don&apos;t have an account? </p>
+                        <Link href="/register">Register</Link>
                     </div>
                 </form>
             </div>
