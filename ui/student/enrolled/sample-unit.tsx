@@ -107,7 +107,10 @@ const UnitStandardWidget: React.FC<Props> = ({
       <div className="rbt-card variation-01 rbt-hover">
         <div className="rbt-card-img">
           <Link
-            href={`/take-lesson`}
+            href={{
+              pathname: '/take-lesson',
+              query: { moduleId: `${data.id}` },
+            }}
             // onClick={() => handleClick(data.id)}
           >
             <Image
@@ -129,10 +132,13 @@ const UnitStandardWidget: React.FC<Props> = ({
                 style={{ fontSize: "1.2em", margin: "5px 0" }}
               >
                 <Link
-                  href={`/take-lesson`}
+                  href={{
+                    pathname: '/take-lesson',
+                    query: { moduleId: `${data.moduleCode}` },
+                  }}
                   // onClick={() => handleClick(data.id)}
                 >
-                  {data.title} - {data.moduleCode}
+                  {data.title} - {data.id}
                   
                 </Link>
               </h4>
@@ -170,7 +176,11 @@ const UnitStandardWidget: React.FC<Props> = ({
                 <button
                   className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center continue-watching`}
                 >
-                  <Link href="/take-lesson">Continue Watching</Link>
+                  <Link href={{
+                    pathname: '/take-lesson',
+                    query: { moduleId: `${data.id}` },
+                  }}>
+                    Continue Watching</Link>
                 </button>
               </div>
             </>

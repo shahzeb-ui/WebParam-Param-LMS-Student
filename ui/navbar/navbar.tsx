@@ -83,7 +83,7 @@ const Navbar = () => {
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
                 <Link href="/" className="logo">
-                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} />
+                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} style={{transform:'scale(2)'}} />
                 </Link>
               </div>
 
