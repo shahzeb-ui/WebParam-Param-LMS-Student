@@ -142,6 +142,7 @@ export default function TakeLesson() {
 
   const handleVideoEnd = () => {
     setVideoEnded(true);
+    alert('video ended');
   };
 
   if (error) return (
@@ -298,7 +299,7 @@ export default function TakeLesson() {
                   width="100%"
                   height="500px"
                   src={currentVideo?.videoUrl}
-                  title="Video player"
+                
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onEnded={handleVideoEnd}
