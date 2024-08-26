@@ -289,6 +289,9 @@ export default function TakeLesson() {
           {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
+                <div className="section-title">
+                  <h5>{currentVideo?.title}</h5>
+                </div>
                 <iframe
                   width="100%"
                   height="500px"
@@ -300,18 +303,13 @@ export default function TakeLesson() {
                 />
                 <div>
                   <div className="content">
-                    <div className="section-title">
-                      <h5><u>{currentVideo?.title}</u></h5>
-                    </div>
                     <div className="rbt-button-group">
                       <button
                         className="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity"
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
-                        <span className="btn-icon">
-                          <i className="feather-arrow-left" />
-                        </span>
+                        
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
@@ -320,9 +318,7 @@ export default function TakeLesson() {
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
                         <span className="btn-text">Next</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right" />
-                        </span>
+                        
                       </button>
                     </div>
                     <div className="content-2">
