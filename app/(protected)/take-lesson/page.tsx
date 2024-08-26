@@ -12,7 +12,6 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
-import { isMobile } from "react-device-detect";
 
 export default function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -170,11 +169,11 @@ export default function TakeLesson() {
       <div className="rbt-lesson-content-wrapper">
         {/* Sidebar */}
 
-        {!isMobile &&
+        
         <div className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title">
-              <h4 className="rbt-title-style-3">Course Content</h4>
+              <h4 className="rbt-title-style-3">Course Contsasasasasent</h4>
             </div>
             <div className="lesson-search-wrapper">
               <form action="#" className="rbt-search-style-1">
@@ -285,7 +284,6 @@ export default function TakeLesson() {
             </div>
           </div>
         </div>
-        }
 
         
         {/* End of Sidebar */}
@@ -393,9 +391,7 @@ export default function TakeLesson() {
                               <span className="title">Notes</span>
                             </Link>
                           </li>
-                          {
-                            isMobile &&
-                            <li role="presentation">
+                          <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -409,8 +405,6 @@ export default function TakeLesson() {
                               <span className="title">Content</span>
                             </Link>
                           </li>
-                          }
-                         
                         </ul>
                       </div>
                     </div>
