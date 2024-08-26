@@ -202,7 +202,7 @@ const ActiveListeningAnswer = () => {
                     The key components of active listening include:
                     <ul>
                         <li>Paying attention</li>
-                        <li>Showing that you're listening</li>
+                        <li>Showing that you are listening</li>
                         <li>Providing feedback</li>
                         <li>Deferring judgment</li>
                         <li>Responding appropriately</li>

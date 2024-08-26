@@ -64,10 +64,10 @@ function Assessments() {
 
 export default function AssignmentsPage() {
   return (
-    <AssessmentProvider>
       <Suspense fallback={<div>Loading...</div>}>
-        <Assessments />
+        <AssessmentProvider>
+          <Assessments />
+        </AssessmentProvider>
       </Suspense>
-    </AssessmentProvider>
   );
 }
