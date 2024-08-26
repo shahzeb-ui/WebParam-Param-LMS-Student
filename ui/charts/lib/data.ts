@@ -36,7 +36,7 @@ export const radialOptions =  {
     },
     value: {
     offsetY: -2,
-    fontSize: '12px'
+    fontSize: '18px'
     }
     }
     }
@@ -47,14 +47,14 @@ export const radialOptions =  {
     }
     },
     fill: {
-    type: 'gradient',
+    type: 'solid',
     gradient: {
     shade: 'light',
     shadeIntensity: 0.4,
     inverseColors: false,
     opacityFrom: 1,
     opacityTo: 1,
-    stops: [0, 50, 53, 91]
+    stops: [0, 120, 113, 111]
     },
     },
     labels: ['Average Results'],

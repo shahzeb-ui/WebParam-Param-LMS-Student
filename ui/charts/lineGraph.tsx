@@ -20,7 +20,10 @@ export default function LineChart() {
             top: 18,
             left: 7,
             blur: 10,
-            opacity: 0.2
+            opacity: 0.2,
+            sparkline: {
+              enabled: true,
+          }
         },
         zoom: {
           enabled: false
