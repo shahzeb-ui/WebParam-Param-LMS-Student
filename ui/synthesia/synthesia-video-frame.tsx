@@ -52,6 +52,7 @@ const ResponsiveVideoComponent: React.FC = () => {
             style={{ width: "100%", height: "100%" }}
           >
             <iframe
+             scrolling="no"
               src={videoUrl}
               loading="lazy"
               // title="Synthesia video player - KM01-KT0101 Project Management Overview"

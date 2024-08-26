@@ -294,6 +294,7 @@ export default function TakeLesson() {
                   height="500px"
                   src={currentVideo?.videoUrl}
                   title="Video player"
+                   scrolling="no"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onEnded={handleVideoEnd}
