@@ -55,7 +55,7 @@ const Navbar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    alert('hi')
+
     if (!isSidebarOpen) {
       window.scrollTo({
         top: 100,
