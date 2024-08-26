@@ -59,22 +59,25 @@ export default function LoginPage() {
       try {
         const res = await registerUser(payload);
             setIsLoading(false);
-            
-            if (res?.data.message !== "User exists") {
-                setIsExploding(true);
-                cookies.set('userEmail', payload.email);
-    
-                if(hasConstantCourseId!=""){
-                    cookies.set('courseId', payload.courseId);
+            if (res) {
+                if (res?.data.message !== "User exists") {
+                    setIsExploding(true);
+                    cookies.set('userEmail', payload.email);
+        
+                    if(hasConstantCourseId!=""){
+                        cookies.set('courseId', payload.courseId);
+                    }
+                    
+                    setTimeout(() => {
+                        router.push('/verify-account');
+                        setIsExploding(false);
+                    }, 2000);
+                } else {
+                    setErrorMessage(res?.data?.message)
                 }
-                
-                setTimeout(() => {
-                    router.push('/verify-account');
-                    setIsExploding(false);
-                }, 2500);
-            } else {
-                setErrorMessage(res?.data?.message)
             }
+            
+           
         } catch (error: any) {
             setErrorMessage('Network Error please try again');
             setIsLoading(false);
