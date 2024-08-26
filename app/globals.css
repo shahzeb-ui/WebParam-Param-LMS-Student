@@ -83,6 +83,9 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none !important;
 }
 
 body {
@@ -334,3 +337,5 @@ hr{
   left: 0;
   right: 0;
 }
+
+
