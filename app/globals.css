@@ -201,6 +201,11 @@ a#recieved-tab.tab-button.active::after {
 /* MEDIA QUERIES */
 
 @media only screen and (max-width: 600px) {
+  #sidebar-desktop{
+    height: 0px;
+    display: none;
+  }
+  
   .title{
     font-size: 1.5rem !important;
     font-weight: 600;
@@ -324,6 +329,8 @@ hr{
 
 
 }
+
+
 
 .side-bar_overlay__3AZA1 {
   height: 0 !important;
