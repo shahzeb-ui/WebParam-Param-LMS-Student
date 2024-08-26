@@ -21,4 +21,18 @@ export const assessmentsData: Assessment[] = [
         submissions: 1,
         link: `/student/assessments/marked-assessment`,
       },
+      {
+        id: 3,
+        title: "Conflict Resolution Strategies",
+        course: "Communication 103",
+        submissions: 6,
+        link: "/student/assessments/marked-assessment",
+    },
+    {
+        id: 4,
+        title: "Active Listening Skills",
+        course: "Communication 104",
+        submissions: 9,
+        link: "/student/assessments/marked-assessment",
+    },
   ];
