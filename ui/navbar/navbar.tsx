@@ -55,7 +55,7 @@ const Navbar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    alert('hi')
+
     if (!isSidebarOpen) {
       window.scrollTo({
         top: 100,
@@ -68,7 +68,7 @@ const Navbar = () => {
     setIsDropdownVisible(false);
   };
 
-  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp"].includes(pathname)) {
+  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp", "/testing"].includes(pathname)) {
     return <div></div>;
   } 
 

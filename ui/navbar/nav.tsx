@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
+export default function Nav() {
     const cookies = new Cookies();
     const router = useRouter();
 
@@ -16,55 +16,10 @@ export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
 
     function handleLogOut() {
         cookies.remove("loggedInUser");
-        cookies.remove("username");
-        cookies.remove("userEmail");
-        cookies.remove("resetEmail");
-        cookies.remove("profilePic");
-        router.push('/login')
-      }
-
-      const userMenuLinks = [
-        {
-          href: "/student/dashboard",
-          iconClass: "feather-home",
-          label: "My Dashboard",
-        },
-        {
-          href: "/student/enrolled-courses",
-          iconClass: "feather-shopping-bag",
-          label: "Enrolled Courses",
-        },
-        {
-          href: "/student/notifications",
-          iconClass: "feather-volume-2",
-          label: "Notifications",
-        },
-        {   
-            href: "/student/assignments",
-            iconClass: "feather-file-text",
-            label: "My Assignments",
-        },
-        {
-            href:'/student/logbook',
-            iconClass:'feather-book-open',
-            label:'My Logbook'
-        },
-        {
-            href: "/",
-            iconClass: "feather-log-out",
-            label: "Log Out",
-        },
-       
-      ];
-
-      const handleLinkClick = (link:string) => {
-        setIsSidebarOpen(false);
-        setIsDropdownVisible(false);
-        router.push(link);
-        window.scrollTo({
-          top: 600,
-          behavior: 'smooth'
-        });
+         cookies.remove("username");
+         cookies.remove("userEmail")
+         cookies.remove("resetEmail")
+         router.push('/login')
       }
 
 
@@ -75,7 +30,7 @@ export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
             animate={{ opacity: 1, x:0,scale: 1 }}
             exit={{ opacity: 0,x:100, scale: 0.8 }}
             transition={{ duration: 1 }}
-            className="rbt-user-menu-list-wrapper nav-summary p-3 bg-light">
+            className="rbt-user-menu-list-wrapper nav-summary p-3">
             <div className="inner">
                 <div className="rbt-admin-profile">
                 <div className="admin-thumbnail">
@@ -101,17 +56,99 @@ export default function Nav({setIsSidebarOpen, setIsDropdownVisible}:any) {
                 </div>
                 </div>
                 <ul className="user-list-wrapper">
-                {userMenuLinks.map((link, index) => (
-                    <li key={index}>
-                    <Link href={link.href} onClick={() => handleLinkClick(link.href)}>
-                        <i className={link.iconClass} />
-                        <span>{link.label}</span>
+                <li>
+                    <Link href="/student/dashboard">
+                    <i className="feather-home" />
+                    <span>My Dashboard</span>
                     </Link>
-                    </li>
-                ))}
+                </li>
+{/*                 
+                <li>
+                    <a href="/#">
+                    <i className="feather-bookmark" />
+                    <span>Bookmark</span>
+                    </a>
+                </li> */}
+                <li>
+                    <Link href="/student/enrolled-courses">
+                    <i className="feather-shopping-bag" />
+                    <span>Enrolled Courses</span>
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                      href={'/student/notifications'}
+                    //   className={`${path === '/student/notifications' ? "active" : ""}`}
+                    >
+                      <i className='feather-volume-2' />
+                      <span>Notifications</span>
+                    </Link>
+                  </li>
+                
+                {/* <li>
+                    <a href="/instructor/instructor-wishlist">
+                    <i className="feather-heart" />
+                    <span>Wishlist</span>
+                    </a>
+                </li> */}
+                
+                {/* <li>
+                    <a href="/instructor/instructor-reviews">
+                    <i className="feather-star" />
+                    <span>Reviews</span>
+                    </a>
+                </li> */}
+                
+                {/* <li>
+                    <a href="/instructor/instructor-my-quiz-attempts">
+                    <i className="feather-list" />
+                    <span>My Quiz Attempts</span>
+                    </a>
+                </li> */}
+                
+                {/* <li>
+                    <a href="/instructor/instructor-order-history">
+                    <i className="feather-clock" />
+                    <span>Order History</span>
+                    </a>
+                </li> */}
+                
+                {/* <li>
+                    <a href="/instructor/instructor-quiz-attempts">
+                    <i className="feather-message-square" />
+                    <span>Question &amp; Answer</span>
+                    </a>
+                </li>
+                </ul>
+                <hr className="mt--10 mb--10" />
+                <ul className="user-list-wrapper">
+                <li>
+                    <a href="/#">
+                    <i className="feather-book-open" />
+                    <span>Getting Started</span>
+                    </a>
+                </li>
+                </ul>
+                <hr className="mt--10 mb--10" />
+                <ul className="user-list-wrapper">
+                <li>
+                    <a href="/instructor/instructor-settings">
+                    <i className="feather-settings" />
+                    <span>Settings</span>
+                    </a>
+                </li> */}
+                
+                <li >
+                    <a onClick={handleLogOut}
+                    style={{cursor:'pointer'}}>
+                    <i className="feather-log-out" />
+                    <span>Logout</span>
+                    </a>
+                </li>
                 </ul>
             </div>
             </motion.div>
         </AnimatePresence>
+
     )
 }

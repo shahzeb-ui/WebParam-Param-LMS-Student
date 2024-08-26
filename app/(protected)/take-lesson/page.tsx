@@ -142,7 +142,6 @@ export default function TakeLesson() {
 
   const handleVideoEnd = () => {
     setVideoEnded(true);
-    alert('video ended');
   };
 
   if (error) return (
@@ -265,13 +264,6 @@ export default function TakeLesson() {
                                   </span>
                                 </div>
                               </li>
-                              {/* <li className="" style={{listStyle:'none'}}>
-                                <div className="course-content-left quiz">
-                                  <i className="feather-file-text" />
-                                  <span className="text">Quiz</span>
-                                </div>
-                              </li>
-                              <hr /> */}
                               </>
                             )
                           )}
@@ -290,6 +282,8 @@ export default function TakeLesson() {
             </div>
           </div>
         </div>
+
+        
         {/* End of Sidebar */}
         <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
           {!videoEnded ? <div className="inner">
@@ -299,7 +293,8 @@ export default function TakeLesson() {
                   width="100%"
                   height="500px"
                   src={currentVideo?.videoUrl}
-                
+                  title="Video player"
+                   scrolling="no"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onEnded={handleVideoEnd}
@@ -394,6 +389,20 @@ export default function TakeLesson() {
                               <span className="title">Notes</span>
                             </Link>
                           </li>
+                          <li role="presentation">
+                            <Link
+                              href="#"
+                              className="tab-button"
+                              id="content-tab-4"
+                              data-bs-toggle="tab"
+                              data-bs-target="#content-4"
+                              role="tab"
+                              aria-controls="content-4"
+                              aria-selected="false"
+                            >
+                              <span className="title">Content</span>
+                            </Link>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -429,6 +438,127 @@ export default function TakeLesson() {
                         aria-labelledby="notes-tab-4"
                       >
                         <Notes />
+                      </div>
+                      <div
+                        className="tab-pane fade"
+                        id="content-4"
+                        role="tabpanel"
+                        aria-labelledby="content-tab-4"
+                      >
+                        <div className="rbt-lesson-leftsidebar">
+                          <div className="rbt-course-feature-inner rbt-search-activation">
+                            <div className="section-title">
+                              <h4 className="rbt-title-style-3">Course Content</h4>
+                            </div>
+                            <div className="lesson-search-wrapper">
+                              <form action="#" className="rbt-search-style-1">
+                                <input
+                                  className="rbt-search-active"
+                                  type="text"
+                                  placeholder="Search Lesson"
+                                  value={searchQuery}
+                                  onChange={handleSearchChange}
+                                />
+                                <button className="search-btn disabled">
+                                  <i className="feather-search" />
+                                </button>
+                              </form>
+                            </div>
+                            <hr className="mt--10" />
+                            <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
+                              {!loading ? filteredTopics.map((topic, index) => (
+                                <div className="accordion-item card" key={topic.id}>
+                                  <h2
+                                    className="accordion-header card-header"
+                                    id={`heading${index}`}
+                                  >
+                                    <button
+                                      ref={index === 0 ? firstAccordionButtonRef : null}
+                                      className="accordion-button collapsed"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target={`#collapse${index}`}
+                                      aria-expanded="false"
+                                      aria-controls={`collapse${index}`}
+                                      onClick={() => handleExpandClick(topic.id)}
+                                      style={{fontSize:'16px'}}
+                                    >
+                                      {topic.name}
+                                    </button>
+                                  </h2>
+                                  <div
+                                    id={`collapse${index}`}
+                                    className="accordion-collapse collapse"
+                                    aria-labelledby={`heading${index}`}
+                                    data-bs-parent="#accordionExampleb2"
+                                  >
+                                    <div className="accordion-body card-body">
+                                      {expandedTopics[topic.id] ? (
+                                        <ul style={{marginLeft:'0', paddingLeft:'0'}}>
+                                          {expandedTopics[topic.id].map(
+                                            (subTopic: TopicElement, subIndex) => (
+                                              <>
+                                              <li
+                                                ref={subIndex === 0 ? topicRef : null}
+                                                className="d-flex justify-content-between align-items mt-2"
+                                                key={subIndex}
+                                                onClick={() => handleSubTopicClick(subTopic, subIndex)}
+                                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
+                                              >
+                                                <div
+                                                  className="course-content-left topic_Element_container"
+                                                  style={{
+                                                    overflow: "hidden",
+                                                    display: "flex",
+                                                    gap: "18x",
+                                                    alignItems: "center",
+                                                    width:'100%'
+                                                  }}
+                                                >
+                                                  {currentVideo?.id == subTopic.id ? <i className="bi bi-pause-circle-fill" style={{marginRight:'15px'}}></i>:<i className="feather-play-circle icon" style={{marginRight:'15px'}} />}
+                                                  <p
+                                                    className="topic-Element-Title"
+                                                    style={{
+                                                      fontSize: 13,
+                                                      cursor: "pointer",
+                                                      textDecoration: "none",
+                                                      fontWeight: "bold",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      textWrap: "wrap",
+                                                    }}
+                                                  >
+                                                    {subTopic.title}
+                                                  </p>
+                                                </div>
+                                                <div className="course-content-right">
+                                                  <span className="rbt-check ">
+                                                    {checkedSubTopics[subTopic.id] ? (
+                                                      <i className="feather-check" />
+                                                    ) : (
+                                                      <i className="feather-square" />
+                                                    )}
+                                                  </span>
+                                                </div>
+                                              </li>
+                                              </>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : (
+                                        <div>Loading topics...</div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              )) : (
+                                <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                  <Skeleton count={5} height={40} />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
