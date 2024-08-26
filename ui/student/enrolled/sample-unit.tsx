@@ -134,11 +134,11 @@ const UnitStandardWidget: React.FC<Props> = ({
                 <Link
                   href={{
                     pathname: '/take-lesson',
-                    query: { moduleId: `${data.moduleCode}` },
+                    query: { moduleId: `${data.id}` },
                   }}
                   // onClick={() => handleClick(data.id)}
                 >
-                  {data.title} - {data.id}
+                  {data.title}
                   
                 </Link>
               </h4>
@@ -147,7 +147,7 @@ const UnitStandardWidget: React.FC<Props> = ({
           <ul className="rbt-meta mt-3">
             <li>
               <i className="feather-book" />
-              KM{randomNumber} {/* Display the random number here */}
+              KM{randomNumber}
             </li>
             <li>
               <i className="bi bi-play-circle-fill" />
