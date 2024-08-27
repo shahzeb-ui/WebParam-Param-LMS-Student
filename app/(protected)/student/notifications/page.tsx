@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import { getNotifications, markNotificationRead } from "@/app/api/notifications/notification";
+import { markNotificationRead } from "@/app/api/notifications/notification";
 import { notificationType } from "@/app/Utils/notificationInterface";
 import Cookies from "universal-cookie";
 import NotificationsSkeleton from "./loading";
@@ -12,20 +12,27 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState<notificationType[]>([]);
   const [notification, setNotification] = useState<notificationType | null>(null);
   const [isReadLoader, setIsReadLoader] = useState(false);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
   const cookies = new Cookies();
 
   const user = cookies.get("loggedInUser");
 
   async function fetchNotifications(userId: string) {
     try {
-      const res = await getNotifications(userId);
-      setNotifications(res.data.data);
-      setLoading(false); // Set loading to false once notifications are fetched
-      console.log("response: ", res.data.data);
+      const dummyNotifications: notificationType[] = [
+        { id: '1', createdAt: '2024-08-01T09:00:00Z', message: 'New assignment: Project Charter due on 2024-08-15.', isRead: false, notificationId: '1', userId: 'user1', reminder: false, reminderTime: '2024-08-01T09:00:00Z' },
+        { id: '2', createdAt: '2024-08-02T14:30:00Z', message: 'Reminder: Team meeting scheduled for 2024-08-05 at 10:00 AM.', isRead: true, notificationId: '2', userId: 'user2', reminder: true, reminderTime: '2024-08-02T14:30:00Z' },
+        { id: '3', createdAt: '2024-08-03T08:45:00Z', message: 'Feedback received on your Project Scope Statement.', isRead: false, notificationId: '3', userId: 'user3', reminder: false, reminderTime: '2024-08-03T08:45:00Z' },
+        { id: '4', createdAt: '2024-08-04T12:00:00Z', message: 'New resource added: Risk Management Plan template.', isRead: true, notificationId: '4', userId: 'user4', reminder: false, reminderTime: '2024-08-04T12:00:00Z' },
+        { id: '5', createdAt: '2024-08-05T16:00:00Z', message: 'Your project proposal has been approved.', isRead: false, notificationId: '5', userId: 'user5', reminder: false, reminderTime: '2024-08-05T16:00:00Z' },
+      ];
+      setNotifications(dummyNotifications);
+      setLoading(false);
+      console.log("response: ", dummyNotifications);
     } catch (error) {
       console.error("Error fetching notifications:", error);
-      setLoading(false); // Ensure loading state is false on error
+      setLoading(false);
     }
   }
 
@@ -38,6 +45,10 @@ export default function Notifications() {
     console.log("response: ", notifications);
   }, [isReadLoader]);
 
+  useEffect(() => {
+    setUnreadCount(notifications.filter((item) => !item.isRead).length);
+  }, [notifications]);
+
   async function handleShowNotification(notif: notificationType) {
     const index = notifications.findIndex((alert) => alert.id === notif.id);
     const noti = notifications.find((alert) => alert.id === notif.id);
@@ -47,8 +58,18 @@ export default function Notifications() {
     setShowNotification(true);
 
     if (noti?.isRead === false) {
-      const markAsRead = await markNotificationRead(notif.id);
-      if (markAsRead.status === 200) {
+      try {
+        const markAsRead = await markNotificationRead(notif.id);
+        if (markAsRead.status === 200) {
+          const updatedNotifications = notifications.map((alert) =>
+            alert.id === notif.id ? { ...alert, isRead: true } : alert
+          );
+          setNotifications(updatedNotifications);
+          setIsReadLoader(false);
+          setUnreadCount(unreadCount - 1);
+        }
+      } catch (error) {
+        console.error("Error marking notification as read:", error);
         setIsReadLoader(false);
       }
     }
@@ -79,8 +100,7 @@ export default function Notifications() {
           </div>
         </div>
       </div>
-      
-    )
+    );
   }
 
   return (
@@ -142,7 +162,7 @@ export default function Notifications() {
                       <th>Message</th>
                       <th>
                         <button type="button" className="btn btn-dark">
-                          Unread <span className="badge bg-light text-dark ms-1">{notifications.filter((item) => item.isRead === false).length}</span>
+                          Unread <span className="badge bg-light text-dark ms-1">{unreadCount}</span>
                         </button>
                       </th>
                     </tr>
