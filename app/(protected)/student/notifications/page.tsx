@@ -13,6 +13,7 @@ export default function Notifications() {
   const [notification, setNotification] = useState<notificationType | null>(null);
   const [isReadLoader, setIsReadLoader] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
   const cookies = new Cookies();
 
   const user = cookies.get("loggedInUser");
@@ -44,6 +45,10 @@ export default function Notifications() {
     console.log("response: ", notifications);
   }, [isReadLoader]);
 
+  useEffect(() => {
+    setUnreadCount(notifications.filter((item) => !item.isRead).length);
+  }, [notifications]);
+
   async function handleShowNotification(notif: notificationType) {
     const index = notifications.findIndex((alert) => alert.id === notif.id);
     const noti = notifications.find((alert) => alert.id === notif.id);
@@ -61,6 +66,7 @@ export default function Notifications() {
           );
           setNotifications(updatedNotifications);
           setIsReadLoader(false);
+          setUnreadCount(unreadCount - 1);
         }
       } catch (error) {
         console.error("Error marking notification as read:", error);
@@ -156,7 +162,7 @@ export default function Notifications() {
                       <th>Message</th>
                       <th>
                         <button type="button" className="btn btn-dark">
-                          Unread <span className="badge bg-light text-dark ms-1">{notifications.filter((item) => item.isRead === false).length}</span>
+                          Unread <span className="badge bg-light text-dark ms-1">{unreadCount}</span>
                         </button>
                       </th>
                     </tr>
