@@ -174,6 +174,8 @@ function TakeLesson() {
     <div className="rbt-lesson-area bg-color-white">
       <div className="rbt-lesson-content-wrapper">
         {/* Sidebar */}
+
+        
         <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title">
@@ -322,7 +324,7 @@ function TakeLesson() {
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
-                        className="rbt-btn btn-md"
+                        className="rbt-btn  btn-md"
                         onClick={handleNext}
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
@@ -447,19 +449,19 @@ function TakeLesson() {
                       >
                         <Notes />
                       </div>
+                  
                       <div
                         className="tab-pane fade"
                         id="content-4"
                         role="tabpanel"
                         aria-labelledby="content-tab-4"
                       >
-
-                        <div id="left-sidebar-" className="rbt-lesson-leftsidebar">
+                        <div className="rbt-lesson-leftsidebar">
                           <div className="rbt-course-feature-inner rbt-search-activation">
                             {/* <div className="section-title">
                               <h4 className="rbt-title-style-3">Course Content</h4>
                             </div> */}
-                            <div className="lesson-search-wrapper">
+                            {/* <div className="lesson-search-wrapper">
                               <form action="#" className="rbt-search-style-1">
                                 <input
                                   className="rbt-search-active"
@@ -472,9 +474,8 @@ function TakeLesson() {
                                   <i className="feather-search" />
                                 </button>
                               </form>
-                            </div>
-                            <hr className="mt--10" />
-                           
+                            </div> */}
+                            {/* <hr className="" /> */}
                             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
                               {!loading ? filteredTopics.map((topic, index) => (
                                 <div className="accordion-item card" key={topic.id}>
@@ -569,9 +570,6 @@ function TakeLesson() {
                             </div>
                           </div>
                         </div>
-
-
-
                       </div>
                     </div>
                   </div>
