@@ -74,7 +74,7 @@ const Navbar = () => {
 
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
-                  <ul className="mainmenu">
+                  {process.env.SHOW_TOP_BANNER &&    <ul className="mainmenu">
                     {sections.map((sec, i) => (
                       <li
                         className={currentSection === sec.id ? "current" : ""}
@@ -83,7 +83,8 @@ const Navbar = () => {
                         <Link href={sec.link}>{sec.label}</Link>
                       </li>
                     ))}
-                  </ul>
+                  </ul>}
+               
                 </nav>
               </div>
 
