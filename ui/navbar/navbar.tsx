@@ -67,14 +67,14 @@ const Navbar = () => {
                   fontFamily:`"League Spartan" sans-serif `,
                   fontWeight: "900",
                   color: "rgb(36, 52, 92)",
-                  fontSize: "50px"}}>
+                  fontSize: "50px"}}> 
                   thooto
                 </Link>
               </div>
 
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
-                  {process.env.SHOW_TOP_BANNER &&    <ul className="mainmenu">
+                    <ul className="mainmenu">
                     {sections.map((sec, i) => (
                       <li
                         className={currentSection === sec.id ? "current" : ""}
@@ -83,11 +83,11 @@ const Navbar = () => {
                         <Link href={sec.link}>{sec.label}</Link>
                       </li>
                     ))}
-                  </ul>}
+                  </ul>
                
                 </nav>
               </div>
-              {process.env.SHOW_TOP_BANNER && 
+            
               <div className="rbt-header-sec-col rbt-header-center d-none d-md-block margin-right-3">
                 <div className="rbt-header-content">
                   <div className="header-info">
@@ -105,8 +105,8 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-            }
-             {process.env.SHOW_TOP_BANNER && 
+            
+           
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
                   <Link href="#" onClick={handleAvatarClick}>
@@ -139,7 +139,7 @@ const Navbar = () => {
                   </span>
                 </div>
               </div>
-            }
+            
             </div>
           </div>
         </div>
