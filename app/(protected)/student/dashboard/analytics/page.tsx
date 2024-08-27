@@ -5,13 +5,13 @@ import { leaderboard } from './data';
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 
-import LineChart from "@/ui/charts/lineGraph";
-import BarGraph from "@/ui/charts/barGraph";
+// import LineChart from "@/ui/charts/lineGraph";
+// import BarGraph from "@/ui/charts/barGraph";
 import DoubleLineGraph from "@/ui/charts/doubleLineGraph";
 import PieChart from "@/ui/charts/pieChart";
 import Sparkline from '@/ui/charts/sparkline';
-import RadialChart from '@/ui/charts/radial';
-import { radialOptions, radialSeries } from '@/ui/charts/lib/data';
+// import RadialChart from '@/ui/charts/radial';
+// import { radialOptions, radialSeries } from '@/ui/charts/lib/data';
 
 export default function Analytics() {
   const [showModal, setShowModal] = useState(false);
@@ -174,8 +174,8 @@ export default function Analytics() {
 
                     </div>
                    <br/><br/>
-                      {/* <BarGraph /> */}
-                      <RadialChart options={radialOptions} series={radialSeries}  />
+                   <Sparkline />
+                      {/* <RadialChart options={radialOptions} series={radialSeries}  /> */}
                       <div className="odometer-inside">
                           <span className="odometer-digit">
                             
@@ -327,7 +327,8 @@ export default function Analytics() {
                     </div>
                     {/* <div className="col-lg-6 col-md-12 card-group-row__col mb-3"> */}
                     <br/>  <br/>
-          <PieChart />  <br/>  <br/>
+          <PieChart />  
+          <br/>  <br/>
           </div>
                 </div>
               </div>
