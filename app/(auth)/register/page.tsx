@@ -1,17 +1,17 @@
 'use client';
 import './register.scss';
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { LoginUser, registerUser } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
 import Testimonies from './testimonies';
-import Confetti from 'react-confetti'
+import { useSearchParams } from 'next/navigation';
 import { isMobile } from 'react-device-detect';
 
 
 
-export default function LoginPage() {
+ function RegisterPage() {
     const [isExploding, setIsExploding] = React.useState(false);
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -25,8 +25,11 @@ export default function LoginPage() {
     const cookies = new Cookies();
     const router = useRouter();
 
+    const searchParams = useSearchParams();
+    
+    const CourseId = searchParams.get('courseId');
+    
     const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
-    const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
   
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
@@ -49,7 +52,7 @@ export default function LoginPage() {
       }
 
       const payload = {
-        courseId: hasConstantCourseId??"6669f0ff8759b480859c10a7",
+        courseId: CourseId,
         email:email,
         phoneNumber:phone,
         username:username,
@@ -65,7 +68,7 @@ export default function LoginPage() {
                     setIsExploding(true);
                     cookies.set('userEmail', payload.email);
         
-                    if(hasConstantCourseId!=""){
+                    if(CourseId!=""){
                         cookies.set('courseId', payload.courseId);
                     }
                     
@@ -207,16 +210,6 @@ export default function LoginPage() {
                     <div className="form-submit-group">
                         <button type="submit" className="btn w-100 text-light position-relative" style={{height:'50px', fontSize:'18px', backgroundColor:'#24345C'}}>
                             {isLoading ? <div className="spinner-grow text-light" role="status" /> : 'Register'}
-                            {isExploding &&  
-                            <div style={{ position: 'absolute', top: 0, left: 0,right:0, bottom:0, width: '100%', height: '100%', overflow:'hidden' }}>
-                            <Confetti
-                              width={400}
-                              height={50} 
-                              numberOfPieces={150} 
-                            
-                            />
-                          </div>
-} 
                         </button>
                     </div>
                     <div className="auth-footer">
@@ -226,5 +219,13 @@ export default function LoginPage() {
                 </form>
             </div>
         </div>
+    );
+}
+
+export default function registerContainer() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RegisterPage />
+        </Suspense>
     );
 }
