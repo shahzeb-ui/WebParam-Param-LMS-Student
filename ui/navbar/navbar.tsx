@@ -55,7 +55,7 @@ const Navbar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-    alert('hi')
+
     if (!isSidebarOpen) {
       window.scrollTo({
         top: 100,
@@ -68,7 +68,7 @@ const Navbar = () => {
     setIsDropdownVisible(false);
   };
 
-  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp"].includes(pathname)) {
+  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp", "/testing"].includes(pathname)) {
     return <div></div>;
   } 
 
@@ -83,7 +83,7 @@ const Navbar = () => {
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
                 <Link href="/" className="logo">
-                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} style={{transform:'scale(2)'}} />
+                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} />
                 </Link>
               </div>
 

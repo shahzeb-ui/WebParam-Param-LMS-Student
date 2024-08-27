@@ -57,7 +57,7 @@ function StudentInfoLayout({ children }: { children: React.ReactNode }) {
                             aria-labelledby="profile-tab"
                         ></div>
                     </div>
-                    <div className="tab-content">{children}</div>
+                    <div className="tab-content"  style={{minWidth:'100%'}}>{children}</div>
                 </div>
             </div>
         </div>
