@@ -87,8 +87,8 @@ export default function VerifyPage() {
                 >
                     <div className='verify-card'>
                         <Image src={imageCover.src} alt="verify" width={200} height={200}/>
-                        <p className='text-center'>We sent an OTP to the phone number you provided.
-                        Check your inbox and enter the 5 digit code.</p>
+                        <p className='text-center'>{process.env.NEXT_PUBLIC_OTP_TEXT} <br/>
+                          Check your inbox and enter the 5 digit code.</p>
                     </div>
             </div>
            <div className="login-inner" data-aos="zoom-out-left">
