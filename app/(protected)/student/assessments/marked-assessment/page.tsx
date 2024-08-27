@@ -23,7 +23,7 @@ function MarkedAssessmentPage() {
                 <h4 className="m-0">{assessment.title}</h4>
                 <button
                     type="button"
-                    className="btn btn-outline-dark"
+                    className="rbt-btn btn-xs bg-primary-opacity radius-round"
                     style={{ width: '100px', height: '40px', fontSize: '14px' }}
                     onClick={() => router.back()}
                 >
@@ -44,7 +44,7 @@ const EssayAnswer = () => {
             <div className="table-responsive o-hidden m-4">
                 <h5>Question 1:</h5>
                 <div className="rbt-card height-330 o-hidden">
-                    <span style={{ color: 'green' }}>answer</span>: <br />
+                    <span style={{ color: 'green' }}>ANSWER</span>: <br />
                     Hi, I am Lucy! I am someone who is always been drawn
                     to technology and design. I love solving problems creatively and
                     figuring out how things work, which is what led me to pursue a career
@@ -164,7 +164,7 @@ const ConflictResolutionAnswer = () => {
             <div className="table-responsive o-hidden m-4">
                 <h5>Question 1:</h5>
                 <div className="rbt-card height-330 o-hidden">
-                    <span style={{ color: 'green' }}>answer</span>: <br />
+                    <span style={{ color: 'green' }}>ANSWER</span>: <br />
                     Conflict resolution is a way for two or more parties to find a peaceful solution to a disagreement among them.
                     The disagreement may be personal, financial, political, or emotional. When a dispute arises, often the best course
                     of action is negotiation to resolve the disagreement.
@@ -194,7 +194,7 @@ const ActiveListeningAnswer = () => {
             <div className="table-responsive o-hidden m-4">
                 <h5>Question 1:</h5>
                 <div className="rbt-card height-330 o-hidden">
-                    <span style={{ color: 'green' }}>answer</span>: <br />
+                    <span style={{ color: 'green' }}>ANSWER</span>: <br />
                     Active listening is a technique that is used in counseling, training, and solving disputes or conflicts.
                     It requires that the listener fully concentrate, understand, respond, and then remember what is being said.
                     <br />
