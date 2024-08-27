@@ -87,7 +87,7 @@ const Navbar = () => {
                
                 </nav>
               </div>
-
+              {process.env.SHOW_TOP_BANNER && 
               <div className="rbt-header-sec-col rbt-header-center d-none d-md-block margin-right-3">
                 <div className="rbt-header-content">
                   <div className="header-info">
@@ -105,7 +105,8 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-
+            }
+             {process.env.SHOW_TOP_BANNER && 
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
                   <Link href="#" onClick={handleAvatarClick}>
@@ -138,6 +139,7 @@ const Navbar = () => {
                   </span>
                 </div>
               </div>
+            }
             </div>
           </div>
         </div>
