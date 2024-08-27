@@ -46,16 +46,11 @@ const InstructorDashboardHeader = () => {
   }
 
   useEffect(() => {
-    if (user.data.id||user.id) {
-      getEnrollment(user.data.id||user.id);
+    const course_Id = process.env.NEXT_PUBLIC_COURSE_ID;
+    if (course_Id) {
+      getCourse(`${course_Id}`);
     }
   }, []);
-
-  useEffect(() => {
-    if (courseId) {
-      getCourse(courseId);
-    }
-  }, [courseId]);
 
 
   return (
