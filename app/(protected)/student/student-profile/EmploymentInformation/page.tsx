@@ -78,7 +78,7 @@ export default function EmploymentInformation({ student }: any) {
     aria-labelledby="Personal Information"
     >
     <div className="rbt-dashboard-content-wrapper">
-    <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15">
+    <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15" style={{minWidth:'100%'}}>
     <div className="col-lg-6 col-md-6 col-sm-6 col-12">
       <div className="rbt-form-group">
         <label htmlFor="employmentStatus">Employment Status</label>

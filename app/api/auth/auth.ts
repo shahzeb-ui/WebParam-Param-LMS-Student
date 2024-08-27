@@ -8,7 +8,7 @@ export async function registerUser(payload:any) {
         return register;
 
     } catch(error: any) {
-        alert(error);
+        console.log(error);
     }
 
 }
@@ -19,7 +19,7 @@ export async function verifyUserAccount(payload:any) {
         return verify;
 
     } catch(error: any) {
-        alert(error);
+        console.log(error);
     }
 
 }
@@ -40,7 +40,7 @@ export async function sendOtp(payload:any) {
         const sendOtp = await axios.post(`${writeUserData}/api/v1/Users/SendResetPasswordOtp`, payload);
         return sendOtp;
     } catch(error: any) {
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -49,6 +49,6 @@ export async function verifyOtp(payload:any) {
         const verifyOtp = await axios.put(`${writeUserData}/api/v1/Users/ResetPassword`, payload);
         return verifyOtp;
     } catch(error: any) {
-        alert(error);
+        console.log(error);
     }
 }

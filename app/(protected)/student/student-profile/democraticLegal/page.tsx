@@ -113,6 +113,7 @@ export default function DemocraticLegal({ student }: any) {
     <form
   onSubmit={handleSubmit}
   className="rbt-profile-row rbt-default-form row row--15"
+  style={{minWidth:'100%'}}
 >
   <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">

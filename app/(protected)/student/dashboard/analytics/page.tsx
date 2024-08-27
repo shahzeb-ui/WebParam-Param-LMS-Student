@@ -5,10 +5,13 @@ import { leaderboard } from './data';
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 
-import LineChart from "@/ui/charts/lineGraph";
-import BarGraph from "@/ui/charts/barGraph";
+// import LineChart from "@/ui/charts/lineGraph";
+// import BarGraph from "@/ui/charts/barGraph";
 import DoubleLineGraph from "@/ui/charts/doubleLineGraph";
 import PieChart from "@/ui/charts/pieChart";
+import Sparkline from '@/ui/charts/sparkline';
+// import RadialChart from '@/ui/charts/radial';
+// import { radialOptions, radialSeries } from '@/ui/charts/lib/data';
 
 export default function Analytics() {
   const [showModal, setShowModal] = useState(false);
@@ -38,27 +41,27 @@ export default function Analytics() {
   console.log(showModal)
 
 
-  
+
   function handleShowModal(): void {
-    
+
     setShowModal(true)
   }
 
-    return (
-        <>
-        <Modal 
-        size="lg" 
-        centered 
+  return (
+    <>
+      <Modal
+        size="lg"
+        centered
         scrollable={false}
-        show={showModal} 
+        show={showModal}
         onHide={() => setShowModal(false)}
         animation
       >
         <Modal.Body>
           <div className="review-wrapper w-100 p-1 m-1">
-            {currentItems.sort((a, b) => (Number(a.points) + Number(b.points))).map((person:any, index:number) => (
-              <div className="single-progress-bar m-3"  key={index}>
-                <div className="rating-text" style={{ margin:'0 30px 0 0'}}>
+            {currentItems.sort((a, b) => (Number(a.points) + Number(b.points))).map((person: any, index: number) => (
+              <div className="single-progress-bar m-3" key={index}>
+                <div className="rating-text" style={{ margin: '0 30px 0 0' }}>
                   <p>{index + 1}. <small>{person.name}</small></p>
                 </div>
                 <div className="progress" >
@@ -74,16 +77,16 @@ export default function Analytics() {
                 <span className="value-text">{person.points} points</span>
               </div>
             ))}
-            <hr/>
+            <hr />
             <div className="d-flex justify-content-between">
               <p className="text-muted">{currentPage}/{totalPages}</p>
               <div className="d-flex gap-2">
-                <i 
+                <i
                   className="bi bi-arrow-left-circle text-dark"
                   style={{ fontSize: '1.5em', cursor: 'pointer' }}
                   onClick={handlePrevPage}
                 ></i>
-                <i 
+                <i
                   className="bi bi-arrow-right-circle text-dark"
                   style={{ fontSize: '1.5em', cursor: 'pointer' }}
                   onClick={handleNextPage}
@@ -94,8 +97,111 @@ export default function Analytics() {
         </Modal.Body>
       </Modal>
 
-         <div className="row mb-lg-8pt"></div>
-        <div className="row mb-lg-8pt">
+      <div className="row mb-lg-8pt"></div>
+   
+
+
+      <div className="row card-group-row mt-3">
+        <div className="col-lg-4 col-md-12 card-group-row__col">
+          <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--10" id="review">
+            <div className="col-lg-12 col-md-12 col-sm-6 col-12">
+              <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
+                <div className="inner">
+                  <div className="rbt-round-icon bg-violet-opacity">
+                    <i className="feather-award" />
+                  </div>
+                  <div className="content">
+                    <h3 className="counter without-icon color-violet">
+                      <div className="odometer odometer-auto-theme">
+                        <div className="odometer-inside">
+                          <span className="odometer-digit">
+                            <span className="odometer-digit-spacer">1</span>
+                            <span className="odometer-digit-inner">
+                              <span className="odometer-ribbon">
+                                <span className="odometer-ribbon-inner">
+                                  <span className="odometer-value"></span>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </h3>
+                    <span className="rbt-title-style-2 d-block">
+                      New Notification
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-lg-4 col-md-12 card-group-row__col">
+          <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--10" id="review">
+            <div className="col-lg-12 col-md-12 col-sm-6 col-12">
+              <div className="rbt-counterup variation-01 rbt-hover-03 bg-primary-opacity">
+                <div className="inner">
+
+                  <div className="content">
+
+                    <div className="odometer odometer-auto-theme">
+
+                    </div>
+                    {/* <div className="col-lg-6 col-md-12 card-group-row__col mb-3"> */}
+                    <br/>
+                    <Sparkline />
+                    {/* </div> */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div className="col-lg-4 col-md-12 card-group-row__col" >
+          <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--10" id="review">
+            <div className="col-lg-12 col-md-12 col-sm-6 col-12">
+              <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-secondary-opacity">
+                <div className="inner">
+
+                  <div className="content">
+
+                    <div className="odometer odometer-auto-theme">
+
+                    </div>
+                   <br/><br/>
+                   <Sparkline />
+                      {/* <RadialChart options={radialOptions} series={radialSeries}  /> */}
+                      <div className="odometer-inside">
+                          <span className="odometer-digit">
+                            
+                          <span className="rbt-title-style-2 d-block mt-4">Average Mark</span>
+                            <span className="odometer-digit-inner">
+                              <span className="odometer-ribbon">
+                                <span className="odometer-ribbon-inner">
+                                  <span className="odometer-value"></span>
+                                </span>
+                              </span>
+                            </span>
+                          </span>
+                        </div>
+                        <br/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+</div>
+
+<div className="row mb-lg-8pt">
         <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--30" id="review">
           <div className="course-content">
             <div className="section-title">
@@ -153,23 +259,23 @@ export default function Analytics() {
 
               <div className="col-lg-9">
                 <div className="review-wrapper">
-                  {leaderboard.sort((a, b) => (Number(a.points) + Number(b.points))).slice(0,7).map((person, index) => (
+                  {leaderboard.sort((a, b) => (Number(a.points) + Number(b.points))).slice(0, 7).map((person, index) => (
                     <div className="single-progress-bar" key={index}>
-                    <div className="rating-text">
-                      <p><small>{index+1}. {person.name}</small></p>
+                      <div className="rating-text">
+                        <p><small>{index + 1}. {person.name}</small></p>
+                      </div>
+                      <div className="progress">
+                        <div
+                          className="progress-bar"
+                          role="progressbar"
+                          aria-valuenow={person.points}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                          style={{ width: "80%" }}
+                        />
+                      </div>
+                      <span className="value-text">{person.points}</span>
                     </div>
-                    <div className="progress">
-                      <div
-                        className="progress-bar"
-                        role="progressbar"
-                        aria-valuenow={person.points}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        style={{ width: "80%" }}
-                      />
-                    </div>
-                    <span className="value-text">{person.points}</span>
-                  </div>
                   ))}
                 </div>
                 {/* <div  className="d-flex justify--content center p-3">
@@ -180,59 +286,57 @@ export default function Analytics() {
           </div>
         </div>
       </div>
-        
+<div className="row card-group-row mt-3">
 
-      <div className="row card-group-row mt-3">
-      <div className="col-lg-6 col-md-12 card-group-row__col">
-      <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--10" id="review">
-      <div className="col-lg-12 col-md-12 col-sm-6 col-12">
-        <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
-          <div className="inner">
-            <div className="rbt-round-icon bg-violet-opacity">
-              <i className="feather-award" />
-            </div>
-            <div className="content">
-              <h3 className="counter without-icon color-violet">
-                <div className="odometer odometer-auto-theme">
-                  <div className="odometer-inside">
-                    <span className="odometer-digit">
-                      <span className="odometer-digit-spacer">1</span>
-                      <span className="odometer-digit-inner">
-                        <span className="odometer-ribbon">
-                          <span className="odometer-ribbon-inner">
-                            <span className="odometer-value"></span>
-                          </span>
-                        </span>
-                      </span>
-                    </span>
-                  </div>
+       
+
+<div className="col-lg-6 col-md-12 card-group-row__col">
+          <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--10" id="review">
+            <div className="col-lg-12 col-md-12 col-sm-6 col-12">
+              <div className="rbt-counterup variation-01 rbt-hover-03 bg-primary-opacity">
+                <div className="inner">
+
+                  <div className="content">
+
+                    <div className="odometer odometer-auto-theme">
+
+                    </div>
+                    {/* <div className="col-lg-6 col-md-12 card-group-row__col mb-3"> */}
+                    <br/>
+          <DoubleLineGraph />
+          </div>
                 </div>
-              </h3>
-              <span className="rbt-title-style-2 d-block">
-                New Notification
-              </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-                  </div>
-                  </div>
-          <div className="col-lg-6 col-md-12 card-group-row__col mb-3">
-            <LineChart />
-          </div>
 
-          <div className="col-lg-6 col-md-12 card card-group-row__col mb-3">
-            <BarGraph />
-          </div>
 
-          <div className="col-lg-6 col-md-12 p-0 card-group-row__col">
-            <DoubleLineGraph />
-          </div>
+            
 
-          <div className="col-lg-6 col-md-12 p-3 card d-flex justify-content-center align-items-center card-group-row__col">
-            <PieChart />
+<div className="col-lg-6 col-md-12 card-group-row__col">
+          <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--10" id="review">
+            <div className="col-lg-12 col-md-12 col-sm-6 col-12">
+              <div className="rbt-counterup variation-01 rbt-hover-03 bg-primary-opacity">
+                <div className="inner">
+                <br/>
+                  <div className="content ">
+
+                    <div className="odometer odometer-auto-theme">
+
+                    </div>
+                    {/* <div className="col-lg-6 col-md-12 card-group-row__col mb-3"> */}
+                    <br/>  <br/>
+          <PieChart />  
+          <br/>  <br/>
+          </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        </>
-    )
+
+</div>
+    </>
+  )
 }
