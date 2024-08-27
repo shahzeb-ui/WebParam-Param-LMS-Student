@@ -346,3 +346,20 @@ hr{
 }
 
 
+.apexcharts-text.apexcharts-datalabel-value {
+  word-break: break-word;
+  font-family: var(--font-secondary) !important;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.apexcharts-canvas{
+  background-color: transparent !important;
+}
+
+.apexcharts-title-text{
+
+  font-family: var(--font-secondary) !important;
+  font-size: 15px;
+  font-weight: 700;
+}

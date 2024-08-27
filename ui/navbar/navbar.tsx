@@ -1,32 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import './navbar.scss'
 import Link from "next/link";
+import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
 import User from "@/avator/user.png";
+import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
-
-import Nav from "./nav";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
-import { usePathname } from "next/navigation";
-import Cookies from "universal-cookie";
-import SearchResults from "../searchResults/SearchResults";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [profilePic, setProfilePic] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [search, setSearch] = useState('');
-
-  const pathname = usePathname();
-  const cookies = new Cookies();
-  
-  useEffect(() => {
-    const Pic = cookies.get("profilePic");
-    setProfilePic(Pic);
-  }, []);
 
   const sections = [
     { id: "dashboard", label: "Dashboard", link: "/student/dashboard" },
@@ -47,6 +33,12 @@ const Navbar = () => {
         }
       }
     };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [currentSection]);
 
   const handleAvatarClick = () => {
@@ -55,35 +47,28 @@ const Navbar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-
-    if (!isSidebarOpen) {
-      window.scrollTo({
-        top: 100,
-        behavior: 'smooth'
-      });
-    }
   };
 
   const closeDropdown = () => {
     setIsDropdownVisible(false);
   };
 
-  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp", "/testing"].includes(pathname)) {
-    return <div></div>;
-  } 
-
-
   return (
     <>
-      <header className="rbt-header" style={{padding:'10px 0'}}>
+      <header className="rbt-header">
         <div className="rbt-sticky-placeholder"></div>
 
-        <div className="rbt-header-wrapper" style={{padding:'10px 0'}}>
+        <div className="rbt-header-wrapper">
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo">
-                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} />
+                <Link href="/" className="logo" 
+                style={{
+                  fontFamily:`"League Spartan" sans-serif `,
+                  fontWeight: "900",
+                  color: "rgb(36, 52, 92)",
+                  fontSize: "50px"}}>
+                  thooto
                 </Link>
               </div>
 
@@ -92,10 +77,10 @@ const Navbar = () => {
                   <ul className="mainmenu">
                     {sections.map((sec, i) => (
                       <li
-                        className={currentSection === sec.label ? "current" : ""}
+                        className={currentSection === sec.id ? "current" : ""}
                         key={i}
                       >
-                        <Link href={sec.link} style={{cursor:'pointer', margin:'0 10px', opacity:'.8'}}>{sec.label}</Link>
+                        <Link href={sec.link}>{sec.label}</Link>
                       </li>
                     ))}
                   </ul>
@@ -107,12 +92,7 @@ const Navbar = () => {
                   <div className="header-info">
                     <div className="rbt-search-field">
                       <div className="search-field">
-                        <input 
-                          type="text" 
-                          value={search}
-                          placeholder="Search Course"
-                          onChange={(e)=>setSearch(e.target.value)}
-                          />
+                        <input type="text" placeholder="Search Course" />
                         <button
                           className="rbt-round-btn serach-btn"
                           type="submit"
@@ -127,40 +107,34 @@ const Navbar = () => {
 
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
-                  <span onClick={handleAvatarClick}>
-                  {profilePic ? <Image
-                      src={`${profilePic}`||User.src}
+                  <Link href="#" onClick={handleAvatarClick}>
+                    <Image
+                      src={User}
                       alt="User Avatar"
                       width={40}
                       height={40}
                       className="rounded-circle"
-                      style={{
-                        border:'2px solid lightgray'
-                      }}
-                    />:<Image
-                    src={`${profilePic}`||User.src}
-                    alt="User Avatar"
-                    width={40}
-                    height={40}
-                    className="rounded-circle"
-                    style={{
-                      border:'2px solid lightgray'
-                    }}
-                  />}
-                  </span>
+                    />
+                  </Link>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
-                      {isDropdownVisible && <Nav setIsSidebarOpen={setIsSidebarOpen} setIsDropdownVisible={setIsDropdownVisible} />}
+                      <UserStudent closeDropdown={closeDropdown} />
                     </div>
                   )}
                 </div>
 
                 <div
-                  className={`humburger-menu ${isSidebarOpen ? 'active' : ''}`}
+                  className="rbt-offcanvas-trigger d-xl-none"
                   id="rbt-offcanvas-activation"
                   onClick={toggleSidebar}
-                  style={{cursor:'pointer'}}
                 >
+                  <span className="offcanvas-trigger">
+                    <span className="offcanvas-bars">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -171,7 +145,6 @@ const Navbar = () => {
         isOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar}
       />
-      {search && <SearchResults search={search} />}
     </>
   );
 };
