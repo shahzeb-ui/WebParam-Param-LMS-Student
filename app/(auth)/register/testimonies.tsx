@@ -73,11 +73,9 @@ export default function Testimonies() {
             <div className="row">
                 <div className="col-lg-12">
                 <div className="section-title text-center mb--10">
-                    <span className="subtitle bg-primary-opacity">
-                    EDUCATION FOR EVERYONE
-                    </span>
+                   
                     <h4 className="title">
-                    People are supercharging their learning!
+                 Lets get started!
                     </h4>
                 </div>
                 </div>
@@ -162,6 +160,20 @@ export default function Testimonies() {
         <button type="button" className="btn btn-light mt-3 flex justify-center items-center" onClick={() => setStop(!stop)}>
             <i className="bi bi-stop-circle" style={{fontSize:'1.3rem'}}></i>
         </button>
+        <div className="wrapper">
+            <div className="container">
+            <div className="row">
+                <div className="col-lg-12">
+                <div className="section-title text-center mb--10">
+                    <span className="subtitle bg-primary-opacity">
+                  <small>powered by <a href="http://www.thooto.com">thooto</a> </small>
+                    </span>
+                 
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
         </div>
     )
 }
