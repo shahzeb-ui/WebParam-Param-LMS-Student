@@ -116,26 +116,22 @@ const AssessmentComponent = () => {
       <div className="inner" style={{margin:'0 auto'}}>
         <div className="content">
           <div className="quiz-form-wrapper">
-             <div className="quize-top-meta">
-                
-                    <>
-                      <div className="quize-top-left">
-                        <span>
-                          Total Marks: <strong>50</strong>
-                        </span>
-                      </div>
-                      <div className="quize-top-right">
-                        <span>
-                          Time remaining:{" "}
-                          <strong>
-                            {timeRemaining !== null
-                              ? formatTime(timeRemaining)
-                              : "No Limit"}
-                          </strong>
-                        </span>
-                      </div>
-                    </>
-                    </div>
+                <div className="quize-top-meta">
+                       
+                            <div className="quize-top-left">
+                                <span>
+                                <i style={{color:"limegreen"}} className="feather-award" />
+                                <small>    <b>   Points: </b>{10} </small>
+                                </span>
+                            </div>
+                            
+                            <div className="quize-top-right">
+                                <span>
+                                <i style={{color:"orange"}} className="feather-clock" />
+                                <small>       <b>    Time remaining: </b> No Limit </small>
+                                </span>
+                            </div>
+                        </div>
             <MultipleChoice setIsInteracted={setIsInteracted} />
             {assessment.quizData.slice(4,9).map((item, index) => (
               <div

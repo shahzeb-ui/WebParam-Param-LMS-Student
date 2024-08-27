@@ -104,17 +104,20 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                         <div className="quize-top-meta">
                             <div className="quize-top-left">
                                 <span>
-                                    Questions No: <strong>{index + 1}/{currentQuiz.length}</strong>
+                                <i style={{color:"skyblue"}} className="feather-help-circle" />
+                                <small> <b>  Question: </b>{index + 1}/{currentQuiz.length}</small> 
                                 </span>
                             </div>
                             <div className="quize-top-left">
                                 <span>
-                                    Points Allocated: <strong>{score}</strong>
+                                <i style={{color:"limegreen"}} className="feather-award" />
+                                <small>    <b>   Points: </b>{score} </small>
                                 </span>
                             </div>
                             <div className="quize-top-right">
                                 <span>
-                                    Time remaining: <strong>No Limit</strong>
+                                <i style={{color:"orange"}} className="feather-clock" />
+                                <small>       <b>    Time remaining: </b> No Limit </small>
                                 </span>
                             </div>
                         </div>
@@ -138,6 +141,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                                   />
                                   <label
                                     htmlFor={`rbt-checkbox-${index + 1}-${optIndex}`}
+                                    style={{border:"none",boxShadow:"0px 6px 34px rgba(215, 216, 222, 0.41)", padding:"30px" }}
                                     className={
                                       answeredQuestions[index]
                                         ? option === item.answer

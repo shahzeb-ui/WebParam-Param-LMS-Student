@@ -2,7 +2,7 @@
 import './login.scss';
 import React, { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
-import imageCover from "./loginImage.png";
+// import imageCover from "./loginImage.png";
 import { LoginUser } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,8 @@ import { isMobile } from 'react-device-detect';
 
 
 export default function LoginPage() {
+    const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
+debugger;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -78,7 +80,7 @@ export default function LoginPage() {
                 className='left-container'
                 data-aos="zoom-out-right"
                 style={{
-                    backgroundImage: !isMobile? `url(${imageCover.src})`:"none",
+                    backgroundImage: !isMobile? `url(${imageCover})`:"none",
                     backgroundSize: 'cover',                
                     backgroundPosition: 'center',
                     backgroundColor:"#f0eee",
