@@ -6,11 +6,6 @@
       "icon": "feather-user"
     },
     {
-      "link": "/student/notifications",
-      "text": "Notifications",
-      "icon": "feather-volume-2"
-    },
-    {
       "link": "/",
       "text": "Logout",
       "icon": "feather-log-out"
