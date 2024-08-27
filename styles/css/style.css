@@ -910,10 +910,7 @@ p.b3 {
   }
 }
 
-p.b4 {
-  font-size: var(--font-size-b4);
-  line-height: var(--line-height-b4);
-}
+
 
 @media only screen and (max-width: 767px) {
   p.b4 {

@@ -395,6 +395,7 @@ function TakeLesson() {
                               <span className="title">Notes</span>
                             </Link>
                           </li>
+                          {isMobile && 
                           <li role="presentation">
                             <Link
                               href="#"
@@ -409,6 +410,7 @@ function TakeLesson() {
                               <span className="title">Content</span>
                             </Link>
                           </li>
+}
                         </ul>
                       </div>
                     </div>
