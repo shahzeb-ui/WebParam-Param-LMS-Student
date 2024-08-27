@@ -7,6 +7,7 @@ import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
 import Testimonies from './testimonies';
 import Confetti from 'react-confetti'
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -24,7 +25,7 @@ export default function LoginPage() {
     const cookies = new Cookies();
     const router = useRouter();
 
-    
+    const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
     const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
   
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -106,10 +107,11 @@ export default function LoginPage() {
                 className='left-container'
                 data-aos="zoom-out-right"
                 style={{
-                    backgroundColor: '#24345C',
-                    backgroundSize: 'cover',
+                    backgroundImage: !isMobile? `url(${imageCover})`:"none",
+                    backgroundSize: 'cover',                
                     backgroundPosition: 'center',
-                    // boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
+                    backgroundColor:"#f0eee",
+                    boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
                 }}
                 >
              
