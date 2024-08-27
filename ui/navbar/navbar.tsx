@@ -78,6 +78,8 @@ const Navbar = () => {
                 </Link>
               </div>
 
+              {process.env.SHOW_TOP_BANNER &&
+<>
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
                     <ul className="mainmenu">
@@ -111,7 +113,7 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-            
+  
            
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
@@ -145,10 +147,13 @@ const Navbar = () => {
                   </span>
                 </div>
               </div>
+              </>
+            }
             
             </div>
           </div>
         </div>
+        
       </header>
       <StudentMobileSideBar
         isOpen={isSidebarOpen}
