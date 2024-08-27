@@ -8,13 +8,14 @@ import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
 import Overview from "@/ui/overview/overview";
 import Transcript from "@/ui/transcript/transcript";
 import Link from "next/link";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, Suspense } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
 import { isMobile } from "react-device-detect";
+import { useSearchParams } from "next/navigation";
 
-export default function TakeLesson() {
+function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
   const [knowledgeTopics, setKnowledgeTopics] = useState<any[]>([]);
   const [videoLoader, setVideoLoader] = useState(false);
@@ -29,13 +30,17 @@ export default function TakeLesson() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
+  
 
   const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
+  const searchParams = useSearchParams();
+  const moduleId = searchParams.get("moduleId");
+
   async function fetchKnowledgeTopics() {
     try {
-      const response = await GetKnowledgeTopicsNew(`668fcfad1a1ce7b0635b61c7`);
+      const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
       } else {
@@ -390,6 +395,7 @@ export default function TakeLesson() {
                               <span className="title">Notes</span>
                             </Link>
                           </li>
+                          {isMobile && 
                           <li role="presentation">
                             <Link
                               href="#"
@@ -404,6 +410,7 @@ export default function TakeLesson() {
                               <span className="title">Content</span>
                             </Link>
                           </li>
+}
                         </ul>
                       </div>
                     </div>
@@ -586,4 +593,12 @@ export default function TakeLesson() {
       </div>
     </div>
   );
+}
+
+export default function TakeLessonContainer() {
+  return (
+    <Suspense fallback={<div>loading</div>}>
+      <TakeLesson />
+    </Suspense>
+  )
 }

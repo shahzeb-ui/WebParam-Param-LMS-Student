@@ -5,13 +5,13 @@ import { leaderboard } from './data';
 import { Modal } from "react-bootstrap";
 import { useState } from "react";
 
-import LineChart from "@/ui/charts/lineGraph";
-import BarGraph from "@/ui/charts/barGraph";
+// import LineChart from "@/ui/charts/lineGraph";
+// import BarGraph from "@/ui/charts/barGraph";
 import DoubleLineGraph from "@/ui/charts/doubleLineGraph";
 import PieChart from "@/ui/charts/pieChart";
 import Sparkline from '@/ui/charts/sparkline';
-import RadialChart from '@/ui/charts/radial';
-import { radialOptions, radialSeries } from '@/ui/charts/lib/data';
+// import RadialChart from '@/ui/charts/radial';
+// import { radialOptions, radialSeries } from '@/ui/charts/lib/data';
 
 export default function Analytics() {
   const [showModal, setShowModal] = useState(false);
@@ -162,24 +162,20 @@ export default function Analytics() {
 
 
 
-        <div className="col-lg-4 col-md-12 card-group-row__col" >
+        <div className="col-lg-4 col-md-12 card-group-row__col">
           <div className="rbt-review-wrapper rbt-shadow-box review-wrapper mt--10" id="review">
             <div className="col-lg-12 col-md-12 col-sm-6 col-12">
-              <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-secondary-opacity">
+              <div className="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
                 <div className="inner">
-
+                  <div className="rbt-round-icon bg-violet-opacity">
+                    <i className="feather-check" />
+                  </div>
                   <div className="content">
-
-                    <div className="odometer odometer-auto-theme">
-
-                    </div>
-                   <br/><br/>
-                      {/* <BarGraph /> */}
-                      <RadialChart options={radialOptions} series={radialSeries}  />
-                      <div className="odometer-inside">
+                    <h3 className="counter without-icon color-violet">
+                      <div className="odometer odometer-auto-theme">
+                        <div className="odometer-inside">
                           <span className="odometer-digit">
-                            
-                          <span className="rbt-title-style-2 d-block mt-4">Average Mark</span>
+                            <span className="odometer-digit-spacer">78</span>
                             <span className="odometer-digit-inner">
                               <span className="odometer-ribbon">
                                 <span className="odometer-ribbon-inner">
@@ -189,14 +185,17 @@ export default function Analytics() {
                             </span>
                           </span>
                         </div>
-                        <br/>
+                      </div>
+                    </h3>
+                    <span className="rbt-title-style-2 d-block">
+                   Average mark
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
 
 
 </div>
@@ -327,7 +326,8 @@ export default function Analytics() {
                     </div>
                     {/* <div className="col-lg-6 col-md-12 card-group-row__col mb-3"> */}
                     <br/>  <br/>
-          <PieChart />  <br/>  <br/>
+          <PieChart />  
+          <br/>  <br/>
           </div>
                 </div>
               </div>

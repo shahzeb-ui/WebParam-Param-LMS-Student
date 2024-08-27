@@ -205,6 +205,10 @@ a#recieved-tab.tab-button.active::after {
     height: 0px;
     display: none;
   }
+
+  .videoPar{
+    font-size: 12px 
+  }
   
   .title{
     font-size: 1.5rem !important;
