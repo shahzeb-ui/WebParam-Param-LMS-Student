@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useAssessmentContext } from '../(context)/AssessmentContext';
 import { Modal } from 'react-bootstrap';
 import Link from 'next/link';
+import styles from '../../../styles/assessment/assessment.module.css'
 
 const summativeData = [
   {
@@ -91,9 +92,9 @@ export default function CompletedAssessment() {
                 <p className="b3 text-align-center" style={{ textAlign: 'center' }}>{assessment.submissions}</p>
               </td>
               <td>
-                <div className="rbt-button-group justify-content-end">
+                <div className={`rbt-button-group justify-content-end ${styles.container}`}>
                   <Link
-                    className="rbt-btn btn-xs bg-primary-opacity radius-round"
+                    className={`rbt-btn btn-xs bg-primary-opacity radius-round ${styles.ViewLink}`}
                     title="View"
                     href={`/student/assessments/marked-assessment?id=${assessment.id}`}
                   >
