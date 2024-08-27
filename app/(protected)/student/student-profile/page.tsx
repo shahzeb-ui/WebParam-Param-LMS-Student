@@ -21,7 +21,7 @@ function UserProfileContent() {
     const router = useRouter();
 
     async function getStudent() {
-        const res = await getStudentData(user.data.id || user.id);
+        const res = await getStudentData(user?.data?.id || user?.id);
         console.log('student:', res.data);
         setStudent(res);
     }

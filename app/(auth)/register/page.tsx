@@ -2,7 +2,7 @@
 import './register.scss';
 import React, { FormEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { LoginUser, registerUser } from '@/app/api/auth/auth';
+import { registerUser } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
 import Testimonies from './testimonies';
@@ -211,7 +211,7 @@ export default function LoginPage() {
                               width={400}
                               height={50} 
                               numberOfPieces={150} 
-                            
+                                recycle={true}
                             />
                           </div>
 } 
