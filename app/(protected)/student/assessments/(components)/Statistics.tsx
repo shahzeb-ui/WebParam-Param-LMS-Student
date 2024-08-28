@@ -3,6 +3,8 @@ import React from 'react';
 import BarChart from '../../../../../ui/analytics/graphs/BarChart';
 import { useAssessmentContext } from '../../../../../ui/assessments/(context)/AssessmentContext';
 import ChartWrapper from '@/ui/analytics/graphs/ChartWrapper';
+import LineChart from '@/ui/charts/lineGraph';
+import BarGraph from '@/ui/charts/barGraph';
 
 export default function Statistics() {
   const { assessmentType } = useAssessmentContext();
@@ -76,27 +78,16 @@ export default function Statistics() {
       {assessmentType === 'summative' && (
         <>
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <BarChart
-              options={chartOptions}
-              data={completedAssessmentData}
-            />
+           <LineChart/>
           </div>
 
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <BarChart
-              options={chartOptions}
-              data={outstandingAssessmentData}
-            />
+          <BarGraph/>
           </div>
 
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <ChartWrapper
-              title="Summative Average Percentage Trend"
-              barDescriptions={[barDescriptions[2]]}
-              options={chartOptions}
-              data={summativeTrendData}
-              type="line"
-            />
+           
+          <BarGraph/>
           </div>
         </>
       )}
@@ -104,27 +95,15 @@ export default function Statistics() {
       {assessmentType === 'formative' && (
         <>
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <BarChart
-              options={chartOptions}
-              data={completedAssessmentData}
-            />
+          <BarGraph/>
           </div>
 
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <BarChart
-              options={chartOptions}
-              data={outstandingAssessmentData}
-            />
+        <LineChart/>
           </div>
 
           <div className="col-lg-6 col-md-12 card-group-row__col">
-            <ChartWrapper
-              title="Formative Average Percentage Trend"
-              barDescriptions={[barDescriptions[3]]}
-              options={chartOptions}
-              data={formativeTrendData}
-              type="line"
-            />
+           <LineChart/>
           </div>
         </>
       )}
