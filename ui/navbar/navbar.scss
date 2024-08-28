@@ -88,3 +88,17 @@
 li .current {
     color: #2f57ef !important;
 }
+
+.rbt-header {
+    position: relative;
+    z-index: 99;
+
+    @media (min-width: 768px) {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 80px;
+        padding: 0 !important;
+    }
+}
