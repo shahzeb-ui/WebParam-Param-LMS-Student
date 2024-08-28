@@ -910,10 +910,6 @@ p.b3 {
   }
 }
 
-p.b4 {
-  font-size: var(--font-size-b4);
-  line-height: var(--line-height-b4);
-}
 
 @media only screen and (max-width: 767px) {
   p.b4 {
@@ -30598,7 +30594,7 @@ Course Sidebar
 
 .rbt-lesson-rightsidebar .rbt-checkbox-wrapper label,
 .rbt-lesson-rightsidebar .rbt-form-check label {
-  border: 2px solid var(--color-border);
+  border: 1px solid rgba(96,96,96,0.1);
   height: 40px;
   display: flex;
   align-items: center;

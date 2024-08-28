@@ -83,6 +83,9 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: none !important;
 }
 
 body {
@@ -198,6 +201,15 @@ a#recieved-tab.tab-button.active::after {
 /* MEDIA QUERIES */
 
 @media only screen and (max-width: 600px) {
+  #sidebar-desktop{
+    height: 0px;
+    display: none;
+  }
+
+  .videoPar{
+    font-size: 12px 
+  }
+  
   .title{
     font-size: 1.5rem !important;
     font-weight: 600;
@@ -322,6 +334,8 @@ hr{
 
 }
 
+
+
 .side-bar_overlay__3AZA1 {
   height: 0 !important;
 }
@@ -335,7 +349,21 @@ hr{
   right: 0;
 }
 
-iframe .jss3,
-iframe .jss2 {
-  display: none !important;
+
+.apexcharts-text.apexcharts-datalabel-value {
+  word-break: break-word;
+  font-family: var(--font-secondary) !important;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.apexcharts-canvas{
+  background-color: transparent !important;
+}
+
+.apexcharts-title-text{
+
+  font-family: var(--font-secondary) !important;
+  font-size: 15px;
+  font-weight: 700;
 }

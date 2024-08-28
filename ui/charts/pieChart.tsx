@@ -16,7 +16,7 @@ export default function PieChart() {
         type: 'pie',
       },
       title: {
-        text: 'Classes Attended',
+        text: 'Student Activity',
         style: {
           fontSize: '14px',
           textAlign: 'center',

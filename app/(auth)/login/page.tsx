@@ -1,37 +1,54 @@
-'use client'
-import { LoginUser } from "@/app/api/auth/auth";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+'use client';
+import './login.scss';
+import React, { FormEvent, useEffect, useState } from 'react';
+import Link from 'next/link';
+// import imageCover from "./loginImage.png";
+import { LoginUser } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
-import thootoHeader from "../../../ui/dashboard/boundlessCover.png";
-import "@/styles/css/plugins/mainstyle.css";
-import { isMobile } from "react-device-detect";
-export default function Login() {
+import { isMobile } from 'react-device-detect';
+
+
+
+export default function LoginPage() {
+    const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
+debugger;
     const [email, setEmail] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(false);
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasError, setHasError] = useState<any>({ email: false, password: false });
 
     const cookies = new Cookies();
     const router = useRouter();
+  
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+      event.preventDefault();
+      setIsLoading(true);
+    
+      const newHasError = {
+        email: email === '',
+        password: password === '',
+      };
+  
+      setHasError(newHasError);
 
-    async function handleLogIn(e: any) {
-        e.preventDefault();
-        setIsSubmitted(true);
-    
-        const payload = {
-            email,
-            password
-        };
-    
-        try {
-            
-            const res = await LoginUser(payload);
-            setIsSubmitted(false);
+      if (newHasError.email || newHasError.password) {
+        setIsLoading(false);
+        return;
+      }
+
+      const payload = {
+        email,
+        password
+      };
+
+      try {
+        const res = await LoginUser(payload);
+            setIsLoading(false);
             
             if (res == undefined) {
-                setErrorMessage(true);
+                setErrorMessage('Incorrect User details');
                 return;
             }
             
@@ -41,40 +58,77 @@ export default function Login() {
                 router.push('/student/student-profile');
             }
         } catch (error: any) {
-   
-            console.error('Error during login:', error);
-            setIsSubmitted(false);
-
+            setErrorMessage('Network Error please try again');
+            setIsLoading(false);
         }
+      
+
+      console.log('Form submitted successfully');
+      setIsLoading(false);
     }
-    
+  
     useEffect(() => {
-        setErrorMessage(false);
-    }, [email, password])
+      if (email !== '' || password !== '') {
+        setHasError({ email: false, password: false });
+        setErrorMessage('')
+      }
+    }, [email, password]);
 
     return (
-        <div className="login" data-aos="fade-up">
-            <div className="login-inner">
-                <h1>Log in to your account</h1>
+        <div className="login-container">
+            <div 
+                className='left-container'
+                data-aos="zoom-out-right"
+                style={{
+                    backgroundImage: !isMobile? `url(${imageCover})`:"none",
+                    backgroundSize: 'cover',                
+                    backgroundPosition: 'center',
+                    backgroundColor:"#f0eee",
+                    boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
+                }}
+                >
+            </div>
+           <div className="login-inner" data-aos="zoom-out-left">
+                <h1>Sign in</h1>
                 <p>Welcome back! Please enter your details</p>
-                <form onSubmit={handleLogIn}>
-                    <div className="form-group">
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter Email *" name="email" />
-                        <span className="focus-border" />
+                <form className='col-12' onSubmit={handleSubmit}>
+                <div>
+                    <div className="rbt-form-group mb-5">
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter Email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            // required
+                            className={hasError.email ? 'error' : ''}
+                        />
                     </div>
-                    <div className="form-group">
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter Password *" name="password" />
-                        <span className="focus-border" />
+                </div>
+                <div>
+                    <div className="rbt-form-group mb-5">
+                        <input
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter Password"
+                            id="password"
+                            // required
+                            className={hasError.password ? 'error' : ''}
+                        />
                     </div>
-                    <div className="row mb--30 remember-me">
-                        <div className="col-lg-6">
-                            <div className="rbt-checkbox">
-                                <input type="checkbox" id="rememberme" name="rememberme" />
-                                <label htmlFor="rememberme">Remember me</label>
-                            </div>
+                </div>
+                    <div className="mb--30 remember-me">
+                        <div>
+                        <div className="form-check form-switch">
+                            <input type="checkbox" className="form-check-input" id="formSwitch1" checked={true} />
+                            <label className="form-check-label" htmlFor="formSwitch1" >Remember me</label>
                         </div>
-                        <div className="col-lg-6">
-                            <div className="rbt-lost-password text-end">
+                        </div>
+                        <div>
+                            <div className="">
                                 <Link className="rbt-btn-link" href="/forgot-password">
                                     Lost your password?
                                 </Link>
@@ -83,20 +137,8 @@ export default function Login() {
                     </div>
                     {errorMessage && <span className="errorMessage">Incorrect User details</span>}
                     <div className="form-submit-group">
-                    <button
-                            type="submit"
-                            className="rbt-btn btn-gradient hover-icon-reverse w-100"
-                            style={{ background: 'linear-gradient(#25355c, #25355c)' }}
-                        >
-                            {isSubmitted ? <div className="spinner-border" role="status" /> : <span className="icon-reverse-wrapper">
-                                <span className="btn-text">Log In</span>
-                                <span className="btn-icon">
-                                    <i className="feather-arrow-right" />
-                                </span>
-                                <span className="btn-icon">
-                                    <i className="feather-arrow-right" />
-                                </span>
-                            </span>}
+                        <button type="submit" className="btn w-100 text-light" style={{height:'50px', fontSize:'18px', backgroundColor:'#24345C'}}>
+                            {isLoading ? <div className="spinner-grow text-light" role="status" /> : 'Sign in'}
                         </button>
                     </div>
                     <div className="auth-footer">
@@ -106,5 +148,5 @@ export default function Login() {
                 </form>
             </div>
         </div>
-    )
+    );
 }
