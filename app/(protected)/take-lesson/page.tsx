@@ -8,12 +8,14 @@ import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
 import Overview from "@/ui/overview/overview";
 import Transcript from "@/ui/transcript/transcript";
 import Link from "next/link";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, Suspense } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
+import { isMobile } from "react-device-detect";
+import { useSearchParams } from "next/navigation";
 
-export default function TakeLesson() {
+function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
   const [knowledgeTopics, setKnowledgeTopics] = useState<any[]>([]);
   const [videoLoader, setVideoLoader] = useState(false);
@@ -28,13 +30,17 @@ export default function TakeLesson() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
+  
 
   const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
+  const searchParams = useSearchParams();
+  const moduleId = searchParams.get("moduleId");
+
   async function fetchKnowledgeTopics() {
     try {
-      const response = await GetKnowledgeTopicsNew(`668fcfad1a1ce7b0635b61c7`);
+      const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
       } else {
@@ -168,7 +174,7 @@ export default function TakeLesson() {
     <div className="rbt-lesson-area bg-color-white">
       <div className="rbt-lesson-content-wrapper">
         {/* Sidebar */}
-        <div className="rbt-lesson-leftsidebar">
+        <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title">
               <h4 className="rbt-title-style-3">Course Content</h4>
@@ -297,15 +303,21 @@ export default function TakeLesson() {
                   height="500px"
                   src={currentVideo?.videoUrl}
                   title="Video player"
+                   scrolling="no"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onEnded={handleVideoEnd}
                 />
                 <div>
                   <div className="content">
+
+                    <div className="section-title">
+                      <h5>{currentVideo?.title}</h5>
+                    </div>
+
                     <div className="rbt-button-group">
                       <button
-                        className="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity"
+                        className="rbt-btn  btn-md bg-primary-opacity"
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
@@ -313,7 +325,7 @@ export default function TakeLesson() {
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
-                        className="rbt-btn icon-hover btn-md"
+                        className="rbt-btn btn-md"
                         onClick={handleNext}
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
@@ -384,6 +396,7 @@ export default function TakeLesson() {
                               <span className="title">Notes</span>
                             </Link>
                           </li>
+                          {isMobile && 
                           <li role="presentation">
                             <Link
                               href="#"
@@ -398,6 +411,7 @@ export default function TakeLesson() {
                               <span className="title">Content</span>
                             </Link>
                           </li>
+}
                         </ul>
                       </div>
                     </div>
@@ -440,11 +454,12 @@ export default function TakeLesson() {
                         role="tabpanel"
                         aria-labelledby="content-tab-4"
                       >
-                        <div className="rbt-lesson-leftsidebar">
+
+                        <div id="left-sidebar-" className="rbt-lesson-leftsidebar">
                           <div className="rbt-course-feature-inner rbt-search-activation">
-                            <div className="section-title">
+                            {/* <div className="section-title">
                               <h4 className="rbt-title-style-3">Course Content</h4>
-                            </div>
+                            </div> */}
                             <div className="lesson-search-wrapper">
                               <form action="#" className="rbt-search-style-1">
                                 <input
@@ -460,6 +475,7 @@ export default function TakeLesson() {
                               </form>
                             </div>
                             <hr className="mt--10" />
+                           
                             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
                               {!loading ? filteredTopics.map((topic, index) => (
                                 <div className="accordion-item card" key={topic.id}>
@@ -478,7 +494,7 @@ export default function TakeLesson() {
                                       onClick={() => handleExpandClick(topic.id)}
                                       style={{fontSize:'16px'}}
                                     >
-                                      {topic.name}
+                                     <small> {topic.name}</small>
                                     </button>
                                   </h2>
                                   <div
@@ -554,6 +570,9 @@ export default function TakeLesson() {
                             </div>
                           </div>
                         </div>
+
+
+
                       </div>
                     </div>
                   </div>
@@ -575,4 +594,12 @@ export default function TakeLesson() {
       </div>
     </div>
   );
+}
+
+export default function TakeLessonContainer() {
+  return (
+    <Suspense fallback={<div>loading</div>}>
+      <TakeLesson />
+    </Suspense>
+  )
 }

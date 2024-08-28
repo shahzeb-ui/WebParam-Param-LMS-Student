@@ -10,10 +10,6 @@
     cursor: pointer;
     transition: .5s;
 
-    @media (min-width: 768px) {
-        display: none;
-    }
-
 
     &::before {
         transition: .5s;

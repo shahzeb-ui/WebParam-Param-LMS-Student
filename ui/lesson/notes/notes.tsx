@@ -123,7 +123,7 @@ const Notes = () => {
             <div className={styles.mb3Custom} key={note.id}>
               {/* <div className="note-title fw-bold">{note.title}</div> */}
               <div className="mt-2">
-                <p  className="b4" dangerouslySetInnerHTML={{ __html: displayContent }} />
+                <p  className="videoPar" dangerouslySetInnerHTML={{ __html: displayContent }} />
                 {isLong && (
                   <a
                     onClick={toggleCollapse}
@@ -136,10 +136,10 @@ const Notes = () => {
               </div>
               <div className="d-flex justify-content-between mt-2">
                 <div>
-                <p  className="b4">  <strong>By:</strong> {note.studentName}</p>
+                <p  className="videoPar">  <strong>By:</strong> {note.studentName}</p>
                 </div>
                 <div>
-                <p  className="b4">     <strong>Posted on:</strong>{" "}
+                <p  className="videoPar">     <strong>Posted on:</strong>{" "}
                   {format(new Date(note.timestamp), "PPpp")}</p>
                 </div>
               </div>

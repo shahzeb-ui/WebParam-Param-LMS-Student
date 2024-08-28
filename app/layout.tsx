@@ -19,6 +19,7 @@ import "@/public/css/plugins/euclid-circulara.css";
 import "@/public/scss/styles.scss";
 import { UserProvider } from "@/context/user-context/user-context";
 import { LessonProvider } from "@/context/lesson-context/lesson-context";
+import { Provider } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,25 +54,18 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-
+export default function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
 
 
   return (
     <html lang="en">
-      <head>
-        
-      </head>
       <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
-          
+            <Provider>
               <Navbar />
             {children}
+            </Provider>
             <BootstrapClient />
            
             <ToastContainer />
