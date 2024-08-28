@@ -19,7 +19,8 @@
 }
 
 
-.lesson-content .jss3,
-.lesson-content .jss2 {
-  border: 1px solid red !important;
+.rbt-lesson-content-wrapper {
+    @media (max-width: 891px) {
+        flex-direction: column-reverse !important;
+    }
 }

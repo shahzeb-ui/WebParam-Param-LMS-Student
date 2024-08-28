@@ -28,11 +28,6 @@
       "icon": "bi bi-journal-bookmark"
     },
     {
-      "link": "/student/Statement",
-      "text": "Statement of record",
-      "icon": "bi bi-journal-bookmark"
-    },
-    {
       "link": "/student/student-profile",
       "text": "My Profile",
       "icon": "feather-user"

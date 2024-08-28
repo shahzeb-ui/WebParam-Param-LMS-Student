@@ -6,6 +6,7 @@ import imageCover from "./loginImage.png";
 import { LoginUser } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -77,9 +78,10 @@ export default function LoginPage() {
                 className='left-container'
                 data-aos="zoom-out-right"
                 style={{
-                    backgroundImage: `url(${imageCover.src})`,
-                    backgroundSize: 'cover',
+                    backgroundImage: !isMobile? `url(${imageCover.src})`:"none",
+                    backgroundSize: 'cover',                
                     backgroundPosition: 'center',
+                    backgroundColor:"#f0eee",
                     boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
                 }}
                 >

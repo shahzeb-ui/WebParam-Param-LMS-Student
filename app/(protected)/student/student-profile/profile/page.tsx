@@ -217,13 +217,13 @@ export default function Profile({ student }: any) {
                             </div>
                         </div>
                     </div>
-                    <div className="rbt-tutor-information-right">
+                    {/* <div className="rbt-tutor-information-right">
                         <div className="tutor-btn">
                             <a className="rbt-btn btn-sm btn-border color-white radius-round-10">
                                 Edit Cover Photo
                             </a>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15" style={{minWidth:'100%'}}>
