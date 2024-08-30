@@ -1,0 +1,11 @@
+.buttonGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media (max-width: 768px) {
+    .buttonGroup {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
