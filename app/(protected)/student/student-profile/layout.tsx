@@ -69,7 +69,7 @@ function StudentInfoLayout({ children }: { children: React.ReactNode }) {
                                         tabIndex={-1}
                                         onClick={() => router.push(`/student/student-profile?tab=${nav.key}`)}
                                     >
-                                        <span className="title">{nav.label}</span>
+                                        <span className="title" style={{ fontSize: '1.5em' }}>{nav.label}</span>
                                     </Link>
                                 </li>
                             ))}
@@ -97,7 +97,7 @@ function StudentInfoLayout({ children }: { children: React.ReactNode }) {
                                         tabIndex={-1}
                                         onClick={() => router.push(`/student/student-profile?tab=${nav.key}`)}
                                     >
-                                        <span className="title">{nav.label}</span>
+                                        <span className="title" style={{ fontSize: '1.5em' }}>{nav.label}</span>
                                     </Link>
                                 </li>
                             ))}
