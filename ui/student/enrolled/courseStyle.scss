@@ -6,3 +6,10 @@
         padding: 10px;
     }
 }
+
+.rbt-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
