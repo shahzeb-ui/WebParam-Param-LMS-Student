@@ -98,7 +98,7 @@ const LogbookList = ({
             </div>
           </div>
         ))}
-      </InfiniteScroll>
+        </InfiniteScroll>
     </div>
   );
 };

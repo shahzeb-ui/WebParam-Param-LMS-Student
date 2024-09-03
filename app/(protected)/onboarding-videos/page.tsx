@@ -148,7 +148,7 @@ function OnboardingVdeos() {
             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
                 <div className="accordion-item card">
                   <h2
-                    className="accordion-header card-header"
+                    className="accordion-header card-header video-header"
                   >
                     <button
                     
@@ -202,7 +202,7 @@ function OnboardingVdeos() {
                                       textWrap: "wrap",
                                     }}
                                   >
-                                    {subTopic.title}
+                                   {subIndex+1}. {subTopic.title.substring(0, 35)}..
                                   </p>
                                 </div>
                                 <div className="course-content-right">
@@ -238,7 +238,7 @@ function OnboardingVdeos() {
                 <div>
                   <div className="content">
                     <div className="section-title">
-                      <h5><u>{currentVideo?.title}</u></h5>
+                      <h5>{currentVideo?.title}</h5>
                     </div>
                     <div className="rbt-button-group">
                       <button
@@ -246,10 +246,8 @@ function OnboardingVdeos() {
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
-                        <span className="btn-icon">
-                          <i className="feather-arrow-left" />
-                        </span>
-                        <span className="btn-text">Previous</span>
+                       
+                        <span className="btn-text btn-prev-text">Previous</span>
                       </button>
                       <button
                         className="rbt-btn icon-hover btn-md"
@@ -257,12 +255,10 @@ function OnboardingVdeos() {
                         disabled={currentIndex > (filteredVideos[0].videos.length - 1)}
                       >
                         <span className="btn-text">Next</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right" />
-                        </span>
+                        
                       </button>
                     </div>
-                    <div className="content-2">
+                    <div className="content-2 mobile-only">
                       <div className="advance-tab-button mb--30">
                         <ul
                           className="nav nav-tabs tab-button-style-2 justify-content-start"
@@ -367,10 +363,10 @@ function OnboardingVdeos() {
               </>
             ) : (
               <div>
-                <SkeletonTheme baseColor="#fff" highlightColor="#EBEBEB">
+                {/* <SkeletonTheme baseColor="#fff" highlightColor="#EBEBEB">
                     <Skeleton width="100%" height="700px" />
                     <p style={{position:'absolute', top:'25%', left:"50%",transform: "translate(-50%, -50%)"}}><i className="bi bi-arrow-left"></i> click video to play</p>
-                </SkeletonTheme>
+                </SkeletonTheme> */}
               </div>
             )}
           </div>

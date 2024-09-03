@@ -5,27 +5,19 @@ import Link from "next/link";
 import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
-import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
+import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
+import Cookies from "universal-cookie";
 import Active from "./active";
 import Enrolled from "./enrolled";
 import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
 import { useRouter, useSearchParams } from "next/navigation";
-import Cookies from "universal-cookie";
-import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [unitStandards, setUnitStandards] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  const [isProgress, setIsProgress] = useState(true);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showAuthor, setShowAuthor] = useState(false);
-  const [courseStyle, setCourseStyle] = useState("two");
   
   const cookies = new Cookies();
 
@@ -56,8 +48,9 @@ const EnrolledCourses = () => {
   const getKnowledgeModules = async (userId:any) => {
     if (userId) {
         const courseId = await getCourseId(userId);
+        debugger
         if (courseId?.data) {
-            const res = await getEnrolledCourse("669f4301cb3eaf57cd1040db");
+            const res = await getEnrolledCourse(courseId.data);
     
             console.log("knowledge modules: ", res?.data.data);
             if (res?.data) {
@@ -68,8 +61,8 @@ const EnrolledCourses = () => {
   }
 
   useEffect(() => {
-    debugger;
-    getKnowledgeModules(user.data.id||user.data.userId);
+    
+    getKnowledgeModules(user?.id||user?.data?.userId);
 
     console.log("knowledge modules:", unitStandards);
   }, []);

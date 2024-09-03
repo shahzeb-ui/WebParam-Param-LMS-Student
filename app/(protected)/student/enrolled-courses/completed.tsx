@@ -54,8 +54,11 @@ export default function Completed() {
   };
 
   useEffect(() => {
-    const courseId = "669f4301cb3eaf57cd1040db";
-    getUnitStandards(courseId);
+    const courseId = process.env.NEXT_PUBLIC_COURSE_ID;
+
+    if (courseId) {
+      getUnitStandards(courseId);
+    }
   }, []);
 
   if (loading) {

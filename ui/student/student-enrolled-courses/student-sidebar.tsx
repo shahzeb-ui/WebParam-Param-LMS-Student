@@ -1,7 +1,8 @@
 "use client";
+import Cookies from "universal-cookie";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import SidebarData from "@/data/dashboard/student/siderbar.json";
-import Cookies from "universal-cookie";
 import { useEffect, useState } from "react";
 
 const StudentDashboardSidebar = () => {
@@ -9,6 +10,14 @@ const StudentDashboardSidebar = () => {
   const user = cookies.get("loggedInUser");
   const path = usePathname();
 
+
+  function handleLogOut() {
+    cookies.remove("loggedInUser");
+    cookies.remove("username");
+    cookies.remove("userEmail")
+    cookies.remove("resetEmail")
+    router.push('/login')
+  }
   const [username, setUsername] = useState<string | null>(null);
   const router = useRouter();
 
@@ -17,18 +26,7 @@ const StudentDashboardSidebar = () => {
     setUsername(storedUsername);
   }, []);
 
-  function handleLogOut() {
-    cookies.remove("loggedInUser");
-     cookies.remove("username");
-     cookies.remove("userEmail")
-     cookies.remove("resetEmail")
-     router.push('/login')
-  }
 
-
-  
-  
-  
   return (
     <>
       <div
@@ -78,11 +76,11 @@ const StudentDashboardSidebar = () => {
                     ))}
                 </ul>
               </nav> */}
-
-              <div className="section-title mt--40 mb--20">
-                <h6 className="rbt-title-style-2">User</h6>
-              </div>
-
+              {SidebarData?.siderbar.length > 6 &&
+                <div className="section-title mt--40 mb--20">
+                  <h6 className="rbt-title-style-2">User</h6>
+                </div>
+              }
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&

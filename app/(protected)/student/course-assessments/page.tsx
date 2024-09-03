@@ -71,7 +71,7 @@ const AssessmentComponent = () => {
     saveStateToLocalStorage();
     setIsInteracted(false);
     setLoading(true);
-    const courseId = "65eebefa793e4ee1a7223a63";
+    const courseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
     const title = answers[currentIndex];
 
     try {

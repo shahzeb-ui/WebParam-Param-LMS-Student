@@ -26,25 +26,12 @@ export default function Active() {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // const handleNext = () => {
-  //   if (endIndex < unitStandards.length) {
-  //     setCurrentPage(currentPage + 1);
-  //   }
-  // };
-
-  // const handlePrevious = () => {
-  //   if (currentPage > 0) {
-  //     setCurrentPage(currentPage - 1);
-  //   }
-  // };
-
   const getUnitStandards = async (courseId: string) => {
     setLoading(true);
     setError(null);
 
     try {
       const data = await getAlltUnitStandards(courseId);
-      // console.log("get data: ", data);
       setUnitStandards(data);
       setLoading(false);
     } catch (error: any) {
@@ -54,8 +41,11 @@ export default function Active() {
   };
 
   useEffect(() => {
-    const courseId = "669f4301cb3eaf57cd1040db";
-    getUnitStandards(courseId);
+    const courseId = process.env.NEXT_PUBLIC_COURSE_ID;
+
+    if (courseId) {
+      getUnitStandards(courseId);
+    }
   }, []);
 
   if (loading) {

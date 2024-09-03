@@ -44,7 +44,7 @@ export default function Enrolled() {
 
     try {
       const data = await getAlltUnitStandards(courseId);
-      // console.log("get data: ", data);
+      console.log("get data: ", data);
       setUnitStandards(data);
       setLoading(false);
     } catch (error: any) {
@@ -54,8 +54,11 @@ export default function Enrolled() {
   };
 
   useEffect(() => {
-    const courseId = "669f4301cb3eaf57cd1040db";
-    getUnitStandards(courseId);
+    const courseId = process.env.NEXT_PUBLIC_COURSE_ID;
+
+    if (courseId) {
+      getUnitStandards(courseId);
+    }
   }, []);
 
   if (loading) {
