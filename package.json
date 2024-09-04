@@ -46,10 +46,8 @@
     "react-scroll": "^1.9.0",
     "react-swipeable": "^7.0.1",
     "react-toastify": "^10.0.5",
-    "react-tsparticles": "^2.12.2",
     "react-youtube": "^10.1.0",
     "sass": "^1.77.4",
-    "tsparticles": "^3.5.0",
     "universal-cookie": "^7.1.4"
   },
   "devDependencies": {
