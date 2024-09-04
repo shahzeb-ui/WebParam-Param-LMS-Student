@@ -14,7 +14,8 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState<notificationType[]>([]);
   const [notification, setNotification] = useState<notificationType | null>(null);
   const [isReadLoader, setIsReadLoader] = useState(false);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(true);
+  const [unreadCount, setUnreadCount] = useState(0);
   const cookies = new Cookies();
 
   const user = cookies.get("loggedInUser");
@@ -27,7 +28,7 @@ export default function Notifications() {
       setLoading(false); // Set loading to false once notifications are fetched
     } catch (error) {
       console.error("Error fetching notifications:", error);
-      setLoading(false); // Ensure loading state is false on error
+      setLoading(false);
     }
   }
 
@@ -40,6 +41,10 @@ export default function Notifications() {
     console.log("response: ", notifications);
   }, [isReadLoader]);
 
+  useEffect(() => {
+    setUnreadCount(notifications.filter((item) => !item.isRead).length);
+  }, [notifications]);
+
   async function handleShowNotification(notif: notificationType) {
     const index = notifications.findIndex((alert) => alert.id === notif.id);
     const noti = notifications.find((alert) => alert.id === notif.id);
@@ -49,8 +54,18 @@ export default function Notifications() {
     setShowNotification(true);
 
     if (noti?.isRead === false) {
-      const markAsRead = await markNotificationRead(notif.id);
-      if (markAsRead.status === 200) {
+      try {
+        const markAsRead = await markNotificationRead(notif.id);
+        if (markAsRead.status === 200) {
+          const updatedNotifications = notifications.map((alert) =>
+            alert.id === notif.id ? { ...alert, isRead: true } : alert
+          );
+          setNotifications(updatedNotifications);
+          setIsReadLoader(false);
+          setUnreadCount(unreadCount - 1);
+        }
+      } catch (error) {
+        console.error("Error marking notification as read:", error);
         setIsReadLoader(false);
       }
     }
@@ -81,8 +96,7 @@ export default function Notifications() {
           </div>
         </div>
       </div>
-      
-    )
+    );
   }
 
   return (
@@ -144,7 +158,7 @@ export default function Notifications() {
                       <th>Message</th>
                       <th>
                         <button type="button" className="btn btn-dark">
-                          Unread <span className="badge bg-light text-dark ms-1">{notifications.filter((item) => item.isRead === false).length}</span>
+                          Unread <span className="badge bg-light text-dark ms-1">{unreadCount}</span>
                         </button>
                       </th>
                     </tr>
