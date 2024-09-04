@@ -8,10 +8,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
 import Confetti from "react-confetti";
 import ErrorPage from "./404";
+import { readUserData } from "@/app/lib/endpoints";
 
 export default function LoginPage() {
   const [isExploding, setIsExploding] = React.useState(false);
   const [email, setEmail] = useState("");
+  const [projectName, setProjectName] = useState("");
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -65,17 +67,20 @@ export default function LoginPage() {
     }
 
     let courseId = hasConstantCourseId ?? "6669f0ff8759b480859c10a7";
+    let studentRegistrationType = 0;
     if (isFreemium && projectId !== "") {
       courseId = projectId;
+      studentRegistrationType = 1;
     }
 
     const payload = {
       courseId,
-      email: email,
+      email,
       phoneNumber: phone,
-      username: username,
-      password: password,
-      confirmPassword: confirmPassword,
+      username,
+      password,
+      confirmPassword,
+      studentRegistrationType,
     };
 
     try {
@@ -131,6 +136,35 @@ export default function LoginPage() {
     }
   }, [phone]);
 
+  useEffect(() => {
+    const getProject = async () => {
+      try {
+        const response = await fetch(
+          `${readUserData}/api/v1/OrganizationProgram/GetOrganizationProgram/${projectId}`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "text/plain",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        console.log("Response status:", response.status);
+
+        const data = await response.json();
+        console.log("Response data:", data);
+        setProjectName(data.data.programTitle);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (isFreemium && projectId !== "") {
+      getProject();
+    }
+  }, []);
+
   if (isFreemium && projectId == "") {
     return <ErrorPage />;
   }
@@ -150,8 +184,18 @@ export default function LoginPage() {
         <Testimonies />
       </div>
       <div className="login-inner" data-aos="zoom-out-left">
-        <h1>Create an account</h1>
-        <p>Start your journey!</p>
+        {projectName ? (
+          <>
+            <h1>{projectName}</h1>
+            <p>Create an account</p>
+          </>
+        ) : (
+          <>
+            <h2>Create an account</h2>
+            <p>Start your journey!</p>
+          </>
+        )}
+
         <form className="col-12" onSubmit={handleSubmit}>
           <div>
             <div className="rbt-form-group mb-5">
