@@ -70,7 +70,7 @@ export default function CompletedAssessment() {
         </div>
       </Modal>
 
-      <table className="rbt-table table table-borderless">
+      <table className="rbt-table table table-borderless" style={{minWidth:'10px'}}>
         <thead>
           <tr>
             <th colSpan={2} className="fontSize12">Assessment (marks)</th>
