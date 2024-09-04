@@ -33,6 +33,11 @@
       "icon": "bi bi-journal-bookmark"
     },
     {
+      "link": "/classes",
+      "text": "Classes",
+      "icon": "bi bi-calendar-event"
+    },
+    {
       "link": "/student/student-profile",
       "text": "My Profile",
       "icon": "feather-user"
