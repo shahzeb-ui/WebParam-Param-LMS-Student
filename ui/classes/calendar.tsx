@@ -3,6 +3,7 @@ import styles from './Calendar.module.css';
 
 const Calendar: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
@@ -17,10 +18,24 @@ const Calendar: React.FC = () => {
       days.push(<div key={`empty-${i}`} className={styles.emptyDay}></div>);
     }
     for (let i = 1; i <= daysInMonth; i++) {
+      const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
       const isToday = i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth() && currentDate.getFullYear() === new Date().getFullYear();
+      const isSelected = selectedDate && i === selectedDate.getDate() && currentDate.getMonth() === selectedDate.getMonth() && currentDate.getFullYear() === selectedDate.getFullYear();
       days.push(
-        <div key={i} className={`${styles.day} ${isToday ? styles.today : ''}`}>
-          <span>{i}</span>
+        <div 
+          key={i} 
+          className={`${styles.day} ${isSelected ? styles.selected : ''}`}
+          onClick={() => handleDateClick(date)}
+        >
+          <span style={{ 
+            color: isSelected ? 'red' : isToday ? 'white' : 'inherit',
+            backgroundColor: isToday ? 'rgb(36, 52, 92)' : 'transparent',
+            padding: isToday ? '2px 6px' : '0',
+            borderRadius: isToday ? '50%' : '0',
+            display: 'inline-block'
+          }}>
+            {i}
+          </span>
           <div className={styles.content}></div>
         </div>
       );
@@ -36,7 +51,7 @@ const Calendar: React.FC = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
-  const handleDateClick = (date) => {
+  const handleDateClick = (date: Date) => {
     setSelectedDate(date);
   };
 
