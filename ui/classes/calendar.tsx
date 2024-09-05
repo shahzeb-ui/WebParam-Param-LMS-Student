@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styles from './Calendar.module.css';
+import DayView from './DayView';
 
 const Calendar: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [view, setView] = useState<'month' | 'day'>('month');
 
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
@@ -53,7 +55,16 @@ const Calendar: React.FC = () => {
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date);
+    setView('day');
   };
+
+  const handleBackToMonth = () => {
+    setView('month');
+  };
+
+  if (view === 'day' && selectedDate) {
+    return <DayView date={selectedDate} onBackClick={handleBackToMonth} />;
+  }
 
   return (
     <div className={styles.calendarWrapper}>

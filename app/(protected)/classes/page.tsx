@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Calendar from "@/ui/classes/calendar";
 import "./classes.scss"; 
 
