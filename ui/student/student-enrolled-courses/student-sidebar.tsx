@@ -65,7 +65,7 @@ const StudentDashboardSidebar = () => {
                 <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">User</h6>
                 </div>
-              )}
+              }
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
