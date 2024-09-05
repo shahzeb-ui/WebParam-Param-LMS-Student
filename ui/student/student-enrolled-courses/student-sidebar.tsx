@@ -9,14 +9,18 @@ const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const path = usePathname();
-
+  const isFreemium =
+    process.env.NEXT_PUBLIC_FREEMIUM &&
+    process.env.NEXT_PUBLIC_FREEMIUM == "true"
+      ? true
+      : false;
 
   function handleLogOut() {
     cookies.remove("loggedInUser");
     cookies.remove("username");
-    cookies.remove("userEmail")
-    cookies.remove("resetEmail")
-    router.push('/login')
+    cookies.remove("userEmail");
+    cookies.remove("resetEmail");
+    router.push("/login");
   }
   const [username, setUsername] = useState<string | null>(null);
   const router = useRouter();
@@ -25,7 +29,6 @@ const StudentDashboardSidebar = () => {
     const storedUsername = cookies.get("username");
     setUsername(storedUsername);
   }, []);
-
 
   return (
     <>
@@ -37,7 +40,9 @@ const StudentDashboardSidebar = () => {
           <div className="content-item-content">
             <div className="rbt-default-sidebar-wrapper">
               <div className="section-title mb--20">
-                <h6 className="rbt-title-style-2">{username ? `Welcome ${username}` : "name surname"}</h6>
+                <h6 className="rbt-title-style-2">
+                  {username ? `Welcome ${username}` : "name surname"}
+                </h6>
               </div>
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
@@ -60,7 +65,7 @@ const StudentDashboardSidebar = () => {
                 <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">User</h6>
                 </div>
-              }
+              )}
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
