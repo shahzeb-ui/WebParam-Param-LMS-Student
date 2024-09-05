@@ -82,7 +82,7 @@
     margin: 0 0 5px 0;
     font-size: 1rem;
     flex-shrink: 0;
-    width: 150px; /* Adjust this value as needed */
+    width: 150px; 
   }
   
   .eventContent p {
@@ -102,7 +102,7 @@
   }
   
   .eventType {
-    margin-left: 20px; /* Adjust this value to move "Online" more to the right */
+    margin-left: 20px; 
     font-style: italic;
     color: #666;
   }
