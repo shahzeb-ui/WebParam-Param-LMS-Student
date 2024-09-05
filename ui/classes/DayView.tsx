@@ -67,19 +67,15 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick }) => {
   return (
     <div className={styles.dayViewWrapper}>
       <div className={styles.header}>
-        <div className={styles.headerLeft}>
-          <button onClick={onBackClick} className={styles.monthButton}>Month</button>
-          <div className={styles.pulledData}>
-            Events: {events.length} | Date: {formatDisplayDate(date)}
-          </div>
-        </div>
+        <button onClick={onBackClick} className={styles.monthButton}>Month</button>
         <h2>{formatDisplayDate(date)}</h2>
       </div>
       <div className={styles.timeSlots}>
         {hours.map(hour => {
           const event = getEventForTime(hour);
+          const eventDuration = event ? parseInt(event.endTime.split(':')[0], 10) - parseInt(event.startTime.split(':')[0], 10) : 0;
           return (
-            <div key={hour} className={styles.timeSlot}>
+            <div key={hour} className={`${styles.timeSlot} ${event ? styles.hasEvent : ''}`} style={{ height: `${eventDuration * 60}px` }}>
               <div className={styles.time}>{`${hour}:00`}</div>
               <div className={styles.event}>
                 {event && (
