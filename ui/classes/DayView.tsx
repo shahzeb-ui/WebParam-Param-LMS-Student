@@ -20,10 +20,22 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick }) => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const response = await fetch('/data/calendar/calendarEvents.json');
-      const data = await response.json();
-      const formattedDate = date.toISOString().split('T')[0];
-      setEvents(data.events.filter((event: Event) => event.date === formattedDate));
+      try {
+        const response = await fetch('/api/calendar/events');
+        if (!response.ok) {
+          throw new Error('Failed to fetch events');
+        }
+        const data = await response.json();
+        console.log('Fetched data:', data);
+        const formattedDate = date.toISOString().split('T')[0];
+        console.log('Formatted date:', formattedDate);
+        const filteredEvents = data.events.filter((event: Event) => event.date === formattedDate);
+        console.log('Filtered events:', filteredEvents);
+        setEvents(filteredEvents);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+        setEvents([]);
+      }
     };
 
     fetchEvents();
