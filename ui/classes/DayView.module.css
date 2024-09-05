@@ -68,27 +68,41 @@
   }
   
   .eventContent {
-    background-color: #e6f3ff;
+    position: relative;
+    z-index: 2;
+    background-color: transparent;
     border-radius: 4px;
     padding: 10px;
     height: 100%;
+    display: flex;
+    align-items: flex-start;
   }
   
   .eventContent h3 {
     margin: 0 0 5px 0;
     font-size: 1rem;
+    flex-shrink: 0;
+    width: 150px; /* Adjust this value as needed */
   }
   
   .eventContent p {
     margin: 0 0 5px 0;
     font-size: 0.9rem;
+    flex-grow: 1;
   }
   
   .eventContent a {
     color: #0066cc;
     text-decoration: none;
+    font-size: 1rem;
   }
   
   .eventContent a:hover {
     text-decoration: underline;
+  }
+  
+  .eventType {
+    margin-left: 20px; /* Adjust this value to move "Online" more to the right */
+    font-style: italic;
+    color: #666;
   }
