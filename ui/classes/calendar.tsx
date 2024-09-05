@@ -63,6 +63,7 @@ const Calendar: React.FC = () => {
   };
 
   if (view === 'day' && selectedDate) {
+    console.log('Rendering DayView with selectedDate:', selectedDate);
     return <DayView date={selectedDate} onBackClick={handleBackToMonth} />;
   }
 

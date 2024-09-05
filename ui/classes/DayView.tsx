@@ -26,9 +26,13 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick }) => {
           throw new Error('Failed to fetch events');
         }
         const data = await response.json();
-        console.log('Fetched data:', data);
-        const formattedDate = date.toISOString().split('T')[0];
-        console.log('Formatted date:', formattedDate);
+        
+        // Adjust the date to UTC
+        const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        const formattedDate = utcDate.toISOString().split('T')[0];
+        
+        console.log('Formatted date for comparison:', formattedDate);
+        
         const filteredEvents = data.events.filter((event: Event) => event.date === formattedDate);
         console.log('Filtered events:', filteredEvents);
         setEvents(filteredEvents);
@@ -41,11 +45,21 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick }) => {
     fetchEvents();
   }, [date]);
 
+  const formatDisplayDate = (date: Date) => {
+    return date.toLocaleDateString('en-ZA', { 
+      weekday: 'short', 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      timeZone: 'Africa/Johannesburg'
+    });
+  };
+
   const hours = Array.from({ length: 10 }, (_, i) => i + 8); // 8 AM to 5 PM
 
   const getEventForTime = (hour: number) => {
     return events.find(event => {
-      const startHour = parseInt(event.startTime.split(':')[0]);
+      const startHour = parseInt(event.startTime.split(':')[0], 10);
       return startHour === hour;
     });
   };
@@ -53,8 +67,13 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick }) => {
   return (
     <div className={styles.dayViewWrapper}>
       <div className={styles.header}>
-        <button onClick={onBackClick} className={styles.monthButton}>Month</button>
-        <h2>{date.toDateString()}</h2>
+        <div className={styles.headerLeft}>
+          <button onClick={onBackClick} className={styles.monthButton}>Month</button>
+          <div className={styles.pulledData}>
+            Events: {events.length} | Date: {formatDisplayDate(date)}
+          </div>
+        </div>
+        <h2>{formatDisplayDate(date)}</h2>
       </div>
       <div className={styles.timeSlots}>
         {hours.map(hour => {
