@@ -61,3 +61,29 @@
     flex-grow: 1;
     padding: 5px 10px;
   }
+  
+  .eventContent {
+    background-color: #e6f3ff;
+    border-radius: 4px;
+    padding: 10px;
+    height: 100%;
+  }
+  
+  .eventContent h3 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+  }
+  
+  .eventContent p {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+  }
+  
+  .eventContent a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  
+  .eventContent a:hover {
+    text-decoration: underline;
+  }

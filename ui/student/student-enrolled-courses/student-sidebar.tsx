@@ -42,7 +42,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(0, 6).map((data: any, index: any) => (
+                    SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => (
                       <li className="nav-item" key={index} role="presentation">
                         <a
                           className={`${path === data.link ? "active" : ""}`}
@@ -56,27 +56,7 @@ const StudentDashboardSidebar = () => {
                 </ul>
               </nav>
 
-              {/* <div className="section-title mt--40 mb--20">
-                <h6 className="rbt-title-style-2">Student</h6>
-              </div>
-
-              <nav className="mainmenu-nav">
-                <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                  {SidebarData &&
-                    SidebarData?.siderbar?.slice(9, 13).map((data: any, index: any) => (
-                      <li key={index}>
-                        <a
-                          href={data.link}
-                          className={`${path === data.link ? "active" : ""}`}
-                        >
-                          <i className={data.icon} />
-                          <span>{data.text}</span>
-                        </a>
-                      </li>
-                    ))}
-                </ul>
-              </nav> */}
-              {SidebarData?.siderbar.length > 6 &&
+              {SidebarData?.siderbar.length > 7 &&
                 <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">User</h6>
                 </div>
@@ -84,7 +64,7 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(6, 11).map((data: any, index: any) => (
+                    SidebarData?.siderbar?.slice(7).map((data: any, index: any) => (
                       <li key={index}>
                         <a
                           href={data.link}

@@ -5,13 +5,11 @@
       "text": "Dashboard",
       "icon": "bi bi-grid-fill"
     },
-
     {
       "link": "/student/enrolled-courses",
       "text": "My Courses",
       "icon": "bi bi-laptop-fill"
     },
-   
     {
       "link": "/student/assessments",
       "text": "Assessments",
@@ -28,14 +26,14 @@
       "icon": "bi bi-journal-bookmark"
     },
     {
-      "link": "/student/Statement",
-      "text": "Statement of record",
-      "icon": "bi bi-journal-bookmark"
-    },
-    {
       "link": "/classes",
       "text": "Classes",
       "icon": "bi bi-calendar-event"
+    },
+    {
+      "link": "/student/Statement",
+      "text": "Statement of record",
+      "icon": "bi bi-journal-bookmark"
     },
     {
       "link": "/student/student-profile",

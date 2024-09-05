@@ -1,5 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './DayView.module.css';
+
+interface Event {
+  title: string;
+  session: string;
+  startTime: string;
+  endTime: string;
+  link: string;
+  date: string;
+}
 
 interface DayViewProps {
   date: Date;
@@ -7,7 +16,27 @@ interface DayViewProps {
 }
 
 const DayView: React.FC<DayViewProps> = ({ date, onBackClick }) => {
+  const [events, setEvents] = useState<Event[]>([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const response = await fetch('/data/calendar/calendarEvents.json');
+      const data = await response.json();
+      const formattedDate = date.toISOString().split('T')[0];
+      setEvents(data.events.filter((event: Event) => event.date === formattedDate));
+    };
+
+    fetchEvents();
+  }, [date]);
+
   const hours = Array.from({ length: 10 }, (_, i) => i + 8); // 8 AM to 5 PM
+
+  const getEventForTime = (hour: number) => {
+    return events.find(event => {
+      const startHour = parseInt(event.startTime.split(':')[0]);
+      return startHour === hour;
+    });
+  };
 
   return (
     <div className={styles.dayViewWrapper}>
@@ -16,12 +45,24 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick }) => {
         <h2>{date.toDateString()}</h2>
       </div>
       <div className={styles.timeSlots}>
-        {hours.map(hour => (
-          <div key={hour} className={styles.timeSlot}>
-            <div className={styles.time}>{`${hour}:00`}</div>
-            <div className={styles.event}></div>
-          </div>
-        ))}
+        {hours.map(hour => {
+          const event = getEventForTime(hour);
+          return (
+            <div key={hour} className={styles.timeSlot}>
+              <div className={styles.time}>{`${hour}:00`}</div>
+              <div className={styles.event}>
+                {event && (
+                  <div className={styles.eventContent}>
+                    <h3>{event.title}</h3>
+                    <p>{event.session}</p>
+                    <p>{`${event.startTime} - ${event.endTime}`}</p>
+                    <a href={event.link} target="_blank" rel="noopener noreferrer">Join Meeting</a>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
