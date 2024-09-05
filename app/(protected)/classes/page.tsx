@@ -8,9 +8,7 @@ import "./classes.scss";
 export default function ClassesPage() {
   const router = useRouter();
 
-  useEffect(() => {
-    // Add any necessary side effects here
-  }, []);
+  
 
   return (
     <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
