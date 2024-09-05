@@ -36,6 +36,10 @@ const Calendar: React.FC = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
+  const handleDateClick = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <div className={styles.calendarWrapper}>
       <div className={styles.header}>
