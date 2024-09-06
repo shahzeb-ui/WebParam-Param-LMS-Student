@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import imageCover from "./404-error.png";
 
 export default function ErrorPage() {
   return (
@@ -7,13 +9,11 @@ export default function ErrorPage() {
         <div className="container">
           <div className="row justify-content-center text-center">
             <div className="col-10">
-              <h1>404!</h1>
-              <h3>Page not found</h3>
-              <p>The page you were looking for could not be found.</p>{" "}
+              <Image src={imageCover} alt="Error" width={500} height={300} />
               <Link
                 href="/"
                 className="rbt-btn"
-                style={{ backgroundColor: "#24345C" }}
+                style={{ backgroundColor: "#24345C", translate: "0px -65px" }}
               >
                 Back To Home
               </Link>
