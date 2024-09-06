@@ -2,7 +2,7 @@
 import "./register.scss";
 import React, { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
-import { LoginUser, registerUser } from "@/app/api/auth/auth";
+import { registerUser } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
@@ -172,7 +172,7 @@ export default function Register() {
   return (
     <div className="register-container">
       <div
-        className="left-container"
+        className="left-container d-md-block d-none"
         data-aos="zoom-out-right"
         style={{
           backgroundColor: "#24345C",
@@ -320,7 +320,9 @@ export default function Register() {
           </div>
           <div className="auth-footer">
             <p>Already have an account? </p>
-            <Link href="/login">Login</Link>
+            <Link style={{ color: "#2597ac" }} href="/login">
+              Login
+            </Link>
           </div>
         </form>
       </div>
