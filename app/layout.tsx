@@ -1,10 +1,8 @@
-// "use client";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import BootstrapClient from "@/ui/bootstrapclient/bootstrap-client";
 import Navbar from "@/ui/navbar/navbar";
-import { usePathname } from "next/navigation";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/scss/bootstrap.scss";
@@ -21,6 +19,7 @@ import "@/public/css/plugins/euclid-circulara.css";
 import "@/public/scss/styles.scss";
 import { UserProvider } from "@/context/user-context/user-context";
 import { LessonProvider } from "@/context/lesson-context/lesson-context";
+import { Provider } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,12 +54,7 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-
+export default function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
 
 
   return (
@@ -68,9 +62,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <UserProvider>
           <LessonProvider>
-          
-              {/* <Navbar /> */}
+            <Provider>
+              <Navbar />
             {children}
+            </Provider>
             <BootstrapClient />
            
             <ToastContainer />

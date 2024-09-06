@@ -217,16 +217,16 @@ export default function Profile({ student }: any) {
                             </div>
                         </div>
                     </div>
-                    <div className="rbt-tutor-information-right">
+                    {/* <div className="rbt-tutor-information-right">
                         <div className="tutor-btn">
                             <a className="rbt-btn btn-sm btn-border color-white radius-round-10">
                                 Edit Cover Photo
                             </a>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15">
+            <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15" style={{minWidth:'100%'}}>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="rbt-form-group">
                         <label htmlFor="firstname">First Name</label>
@@ -385,7 +385,7 @@ export default function Profile({ student }: any) {
                 <div className="col-12">
                     <button
                         className="btn-sm mr--10 hover-icon-reverse w-100 text-light"
-                        style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+                        style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                         type="submit"
                         disabled={isSubmitting}
                     >

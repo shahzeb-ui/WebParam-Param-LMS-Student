@@ -113,6 +113,7 @@ export default function DemocraticLegal({ student }: any) {
     <form
   onSubmit={handleSubmit}
   className="rbt-profile-row rbt-default-form row row--15"
+  style={{minWidth:'100%'}}
 >
   <div className="col-lg-6 col-md-6 col-sm-6 col-12" style={{marginBottom:'15px'}}>
     <div className="rbt-form-group">
@@ -353,7 +354,7 @@ export default function DemocraticLegal({ student }: any) {
       </button> */}
       <button
         className="btn-sm mr--10 hover-icon-reverse w-100"
-        style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+        style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
         type="submit"
         disabled={isSubmitting}
     >
