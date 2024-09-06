@@ -1,0 +1,84 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Loader from "@/ui/loader/loader";
+import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
+import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
+import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
+import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
+import { getProjects } from "@/actions/projects/project-action";
+import ProjectWidget from "@/ui/project/Project";
+import { IProject } from "@/interfaces/project/project";
+
+export default function Enrolled() {
+    
+  const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState<IProject[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const [isProgress, setIsProgress] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [showAuthor, setShowAuthor] = useState(false);
+  const [courseStyle, setCourseStyle] = useState("two");
+
+  const itemsPerPage = 3;
+
+  const getStudentProjects = async (courseId: string) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await getProjects();
+      // console.log("get data: ", data);
+      setProjects(data);
+      setLoading(false);
+    } catch (error: any) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const courseId = "668fcf681a1ce7b0635b61c6";
+    getStudentProjects(courseId);
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  } else {
+  }
+
+
+
+    return (
+        <div
+              className="tab-pane fade active show"
+              id="home-4"
+              role="tabpanel"
+              aria-labelledby="home-tab-4"
+            >
+              <div className="row g-5">
+                {projects?.map((project, index) => (
+                  <div
+                    className="col-lg-4 col-md-6 col-12"
+                    key={`unit-standard-completed-${index}`}
+                  >
+                    <ProjectWidget
+                      data={project}
+                      courseStyle={courseStyle}
+                      isProgress={isProgress}
+                      isCompleted={isCompleted}
+                      showDescription={showDescription}
+                      isEdit={isEdit}
+                      showAuthor={showAuthor}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+    )
+}
