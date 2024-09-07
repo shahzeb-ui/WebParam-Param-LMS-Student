@@ -7,6 +7,7 @@ import imageCover from "./verify.svg";
 import { LoginUser, verifyUserAccount } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
+import { isMobile } from 'react-device-detect';
 
 
 
@@ -84,6 +85,13 @@ export default function VerifyPage() {
             <div 
                 className='left-container'
                 data-aos="zoom-out-right"
+                style={{
+                  backgroundImage: !isMobile? `url(${imageCover.src})`:"none",
+                  backgroundSize: 'cover',                
+                  backgroundPosition: 'center',
+                  backgroundColor:"#f0eee",
+                  boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
+              }}
                 >
                     <div className='verify-card'>
                         <Image src={imageCover.src} alt="verify" width={200} height={200}/>
