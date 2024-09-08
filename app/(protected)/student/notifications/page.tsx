@@ -7,6 +7,7 @@ import { notificationType } from "@/app/Utils/notificationInterface";
 import moment from "moment";
 import Cookies from "universal-cookie";
 import NotificationsSkeleton from "./loading";
+import styles from "../../../../styles/modal/NotificationsModal.module.css"
 
 export default function Notifications() {
   const [showNotification, setShowNotification] = useState(false);
@@ -108,6 +109,7 @@ export default function Notifications() {
         show={showNotification}
         onHide={() => setShowNotification(false)}
         centered
+        contentClassName={styles.customModalContent}
       >
         <Modal.Header className="modal-header">
           <h5 className="modal-title" id="staticBackdropLabel">

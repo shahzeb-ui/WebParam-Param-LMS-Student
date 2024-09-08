@@ -74,7 +74,9 @@ export default function VerifyPage() {
             // const user = await 
             cookies.set("loggedInUser", res?.data);
             localStorage.setItem("loggedInUser", res?.data)
-            router.push('/student/student-profile')
+            const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
+
+            router.push(redirectPath)
         } else {
             setIsSubmitted(false);
             setErrorMessage(true)
