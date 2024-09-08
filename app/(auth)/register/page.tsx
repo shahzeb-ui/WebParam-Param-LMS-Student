@@ -109,7 +109,6 @@ export default function LoginPage() {
                     backgroundColor: '#24345C',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    // boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
                 }}
                 >
              
