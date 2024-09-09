@@ -20,6 +20,7 @@ import { zoomPlugin } from '@react-pdf-viewer/zoom';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
+import { button } from '@nextui-org/react';
 
 const pdfVersion = "2.16.105";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
@@ -56,6 +57,8 @@ const FileUpload: React.FC = () => {
   const freemiumDocuments = ['Identification','Cv','Disability Letter (if applicable)'];
 
   const courseId = cookies.get("courseId");
+
+  let documentinfo = documents.find((doc) => doc.name === selectedDocument);
 
   useEffect(() => {
   if (courseId =='66aa8cab45223bcb337a9643') {
@@ -131,9 +134,11 @@ const FileUpload: React.FC = () => {
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>, type: DocumentType) => {
     event.preventDefault();
-    if (event.dataTransfer.files) {
-      setFiles({ ...files, [type]: event.dataTransfer.files[0] });
-      setSelectedFile({ type, file: event.dataTransfer.files[0] });
+    event.stopPropagation(); // Add this to stop the event from bubbling further
+    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      setFiles({ ...files, [type]: file });
+      setSelectedFile({ type, file });
       setIsUploading(true);
       setDragging({ ...dragging, [type]: false });
     }
@@ -141,15 +146,19 @@ const FileUpload: React.FC = () => {
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>, type: DocumentType) => {
     event.preventDefault();
+    event.stopPropagation(); // Add this to stop the event from bubbling further
     setDragging({ ...dragging, [type]: true });
   };
+  
 
   const handleDragLeave = (event: React.DragEvent<HTMLDivElement>, type: DocumentType) => {
     event.preventDefault();
+    event.stopPropagation(); // Add this to stop the event from bubbling further
     setDragging({ ...dragging, [type]: false });
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e:any) => {
+    e.preventDefault();
     setUpLoadingLoader(true);
     
     if (selectedFile && selectedFile.file) {
@@ -163,10 +172,6 @@ const FileUpload: React.FC = () => {
       } else {
         type = documentsRequired.findIndex(doc => doc.documentName === selectedFile.type);
       }
-
-      // if (type !== undefined) {
-      //   formData.append('Type', type.toString());
-      // }
       formData.append('File', selectedFile.file);
 
       try {
@@ -175,10 +180,11 @@ const FileUpload: React.FC = () => {
             'Content-Type': 'multipart/form-data',
           },
         });
-
         if (response.status === 200) {
           setIsUploaded(true);
-          window.location.reload();
+          router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
+          // window.location.reload();
+          window.location.href = `/student/student-profile?tab=documents&document=${selectedDocument}&action=view`;
         } else {
           alert('File upload failed');
         }
@@ -190,15 +196,19 @@ const FileUpload: React.FC = () => {
         setIsUploading(false);
         setSelectedFile(null);
         setIsUploaded(false);
+        debugger
+        
       }
     }
   };
 
-  const handleChangeDocument = async (document: any) => {
+  const handleChangeDocument = async (e:any) => {
+    e.preventDefault();
+    setUpLoadingLoader(true);
     if (selectedFile && selectedFile.file) {
       const formData = new FormData();
       formData.append('File', selectedFile.file);
-      formData.append('DocumentId', document?.id);
+      formData.append('DocumentId', documentinfo?.id);
 
       try {
         const response = await axios.put(`${writeUserData}/api/v1/Documents/UpdateStudentDocument`, formData, {
@@ -208,8 +218,8 @@ const FileUpload: React.FC = () => {
         });
 
         if (response.status === 200) {
-          setIsUploaded(true);
-          window.location.reload();
+          router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
+
         } else {
           alert('File upload failed');
         }
@@ -221,6 +231,8 @@ const FileUpload: React.FC = () => {
         setIsChangingDoc(false);
         setSelectedFile(null);
         setIsUploaded(false);
+        router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
+        window.location.reload();
       }
     }
   };
@@ -228,45 +240,46 @@ const FileUpload: React.FC = () => {
   useEffect(() => {
     getDocuments();
     console.log('documents:', documents);
-
-    const courseId = cookies.get("courseId");
-
-    if (courseId) {
-      // getDocumentsByCourse(courseId)
-    }
   }, []);
-
-  useEffect(() => {
-    console.log('documents:', documents);
-  }, [documents]);
 
   if (loaded) {
     return <Loading />; // Show loading while documents are being fetched
   }
 
-  const documentinfo = documents.find((doc) => doc.name === selectedDocument);
   
-  console.log('document ',document);
+  
+  console.log('document ',documentinfo);
+
+  // if (documentinfo == null && action == null) {
+  //   documentinfo = null
+  // }
 
 
   return (
 
     <>
+      {action != null && selectedDocument != null && <>
       <div className="top-controlls">
         <h6>Selected Document: {selectedDocument}</h6>
         <div>
         <button 
             type="button" 
             className={`btn btn-outline-dark text-white 
-              ${documentinfo.status === 'Accepted' ? 'bg-success' : 
-                documentinfo.status === 'PendingReview' ? 'bg-warning' : 
-                documentinfo.status === 'Declined' ? 'bg-danger' : ''}`
+              ${documentinfo?.status === 'Accepted' ? 'bg-success' : 
+                documentinfo?.status === 'PendingReview' ? 'bg-warning' : 
+                documentinfo?.status === 'Declined' ? 'bg-danger' : ''}`
             }>
-            {documentinfo.status}
+            {documentinfo?.status ? documentinfo.status : 'Status'}
           </button>
-          <button type="button" className="btn btn-dark btn-reupload" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}>Upload New File</button>
+          <button 
+          type="button" 
+          className="btn btn-dark btn-reupload" 
+          onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}
+          style={{backgroundColor: 'rgb(36, 52, 92)'}}
+          >Change File</button>
         </div>
       </div>
+          </>}
     <section className='documents-container'>
     <div className='document-name-list card'>
       <h5>Documents</h5>
@@ -276,11 +289,11 @@ const FileUpload: React.FC = () => {
 
             yesProgramme.filter(doc => (process.env.NEXT_PUBLIC_IS_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
             const docType = doc.documentName as DocumentType;
-            const matchingDoc = documents.find((doc) => doc.name === docType);
+            const matchingDoc = documents.find((doc) => doc?.name === docType);
 
               console.log('document',matchingDoc);
               return (
-                <li className={`nav-item ${selectedDocument === doc.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc.documentName}&action=view`), viewDocument(matchingDoc.id))}>  
+                <li className={`nav-item ${selectedDocument === doc?.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc.documentName}&action=view`), viewDocument(matchingDoc.id))}>  
                   <div className="icon">
                   <i className="bi bi-file-pdf"></i>
                   </div>
@@ -295,7 +308,7 @@ const FileUpload: React.FC = () => {
             const docType = doc.documentName as DocumentType;
             const matchingDoc = documents.find((doc) => doc.name === docType);
             return (
-              <li className={`nav-item ${selectedDocument === doc.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc.documentName}&action=view`), viewDocument(matchingDoc.id))}>
+              <li className={`nav-item ${selectedDocument === doc?.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc?.documentName}&action=view`), viewDocument(matchingDoc?.id))}>
                   <div className="d-flex align-items-center">
                     <div className="flex-shrink-0">
                     <i className="bi bi-file-pdf"></i>
@@ -304,7 +317,7 @@ const FileUpload: React.FC = () => {
                     <div className="flex-grow-1 ms-3">
                       <span className="d-inline-block link-dark">
                         <h6 className="text-hover-primary mb-0">
-                          {doc.documentName}
+                          {doc?.documentName}
                         </h6>
                       </span>
                     </div>
@@ -319,6 +332,8 @@ const FileUpload: React.FC = () => {
       <div className='document-preview-container'>
         {
         action === 'view' && 
+        <>
+        {documentinfo != undefined||null ?
         <Worker workerUrl={pdfWorkerUrl}>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
             <ZoomOutButton />
@@ -330,14 +345,37 @@ const FileUpload: React.FC = () => {
             plugins={[thumbnailPluginInstance, zoomPluginInstance]}
             defaultScale={.9}  
             />
-        </Worker>}
+        </Worker>
+        :
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>
+          <h5>No document found</h5>
+          <button 
+          type="button" 
+          className="btn btn-dark btn-reupload" 
+          onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}
+          style={{backgroundColor: 'rgb(36, 52, 92)'}}
+          >Upload File</button>
+        </div>
+        }
+        </>}
         {action === 'upload' &&   
           <>
-        {documentinfo.blobUrl ?
-       <div className="upload-container">
-          <h5>Upload File</h5>
+        {documentinfo?.blobUrl ?
+       <div className="upload-container"
+       >
+          <h5>Change File</h5>
           <form onSubmit={handleChangeDocument}>
-            <div>
+            <div 
+            onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
+            onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
+            onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
+            style={{
+              transition: 'all 0.5s ease',
+             backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
+             border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '1px dashed black',
+             boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
+
+           }}>
               <i className="bi bi-file-earmark-text-fill icon-upload"></i>
               <p>Drag and drop your file here</p>
               <span>or</span>
@@ -345,7 +383,7 @@ const FileUpload: React.FC = () => {
                 type="file" 
                 id="file-input" 
                 name='file-input' 
-                onChange={(e) => handleFileChange(e, selectedDocument as DocumentType)} 
+                onChange={(e) => handleFileChange(e, documentinfo  as DocumentType)} 
                 accept=".pdf,.doc,.docx"
                 style={{display: 'none'}}
                 />
@@ -362,14 +400,26 @@ const FileUpload: React.FC = () => {
 
             <div>
               <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
-              <button type="submit" className="btn btn-secondary">Upload</button>
+              <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
+                {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
+              </button>
             </div>
           </form>
        </div>:
-       <div className="upload-container">
-          <h5>Change File</h5>
+       <div className="upload-container"
+       >
+          <h5>Upload File</h5>
           <form onSubmit={handleUpload}>
-            <div>
+            <div
+            onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
+            onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
+            onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
+            style={{
+              transition: 'all 0.5s ease',
+             backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
+             border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '2px dashed black',
+             boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
+           }}>
               <i className="bi bi-file-earmark-text-fill icon-upload"></i>
               <p>Drag and drop your file here</p>
               <span>or</span>
@@ -381,7 +431,7 @@ const FileUpload: React.FC = () => {
                 accept=".pdf,.doc,.docx"
                 style={{display: 'none'}}
                 />
-              <label className="btn btn-dark" htmlFor="file-input" >Choose File</label>
+              <label className="btn" htmlFor="file-input" style={{backgroundColor: 'rgb(36, 52, 92)'}}>Choose File</label>
             </div>
             <div>
               <p>Supported Formats: PDF, DOC, DOCX</p>
@@ -393,8 +443,10 @@ const FileUpload: React.FC = () => {
             </div>
 
             <div>
-              <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
-              <button type="submit" className="btn btn-secondary">Upload</button>
+            <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
+              <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
+                {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
+              </button>
             </div>
           </form>
        </div>}
@@ -407,7 +459,11 @@ const FileUpload: React.FC = () => {
       </div>
     </div>
     <div className='document-upload-container card'>
-      {action === 'view' ? <thumbnailPluginInstance.Thumbnails /> : null}
+      {action === 'view' ? 
+        <>
+         {documentinfo ? <thumbnailPluginInstance.Thumbnails /> : null}
+        </>
+       : null}
     </div>
   </section>
   </>

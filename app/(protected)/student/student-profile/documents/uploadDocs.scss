@@ -157,6 +157,7 @@
 
             & i {
                 transform: scale(2);
+                color: rgb(36, 52, 92);
             }
 
             & > div {
@@ -267,7 +268,7 @@
              
         & .icon-upload {
             font-size: 100px;
-            color: #252525;
+            color: rgb(36, 52, 92);
             margin: 0;
         }
 
@@ -277,10 +278,11 @@
 
         }
 
-        & button {
+        & label {
             width: 100px;
-            height: 40px;
             font-size: 14px;
+            background-color: rgb(36, 52, 92);
+            color: white;
         }
         }
        
