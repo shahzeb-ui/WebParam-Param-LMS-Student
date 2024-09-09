@@ -1,58 +1,52 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Loader from "@/ui/loader/loader";
-import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
-import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
-import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
-import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
-import { getProjects } from "@/actions/projects/project-action";
+import { getProgrammeProjects, getProjectsId } from "@/actions/projects/project-action";
 import ProjectWidget from "@/ui/project/Project";
 import { IProject } from "@/interfaces/project/project";
+import Cookies from "universal-cookie";
 
 export default function Enrolled() {
-    
-  const [currentPage, setCurrentPage] = useState(0);
+  const cookies = new Cookies();
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<IProject[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const [isProgress, setIsProgress] = useState(true);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showAuthor, setShowAuthor] = useState(false);
-  const [courseStyle, setCourseStyle] = useState("two");
+  const loggedInUser = cookies.get("loggedInUser");
+  console.log("loggedInUserId: ", loggedInUser);
 
-  const itemsPerPage = 3;
-
-  const getStudentProjects = async (courseId: string) => {
+  const getStudentProjects = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await getProjects();
-      // console.log("get data: ", data);
-      setProjects(data);
-      setLoading(false);
+      const data = await getProjectsId(loggedInUser?.data?.id||loggedInUser?.userId);
+      console.log("get data: ", data);
+
+      if (data) {
+        const projects: IProject[]|any = await getProgrammeProjects(data?.data);
+        console.log("projects: ", projects?.data);
+        setProjects(projects?.data);
+        setLoading(false);
+      }
     } catch (error: any) {
       setError(error.message);
       setLoading(false);
     }
   };
 
+
   useEffect(() => {
-    const courseId = "668fcf681a1ce7b0635b61c6";
-    getStudentProjects(courseId);
+    
+    getStudentProjects();
   }, []);
 
   if (loading) {
     return <Loader />;
-  } else {
-  }
+  } 
 
-
+  console.log("projects: ", projects);
 
     return (
         <div
@@ -62,22 +56,17 @@ export default function Enrolled() {
               aria-labelledby="home-tab-4"
             >
               <div className="row g-5">
-                {projects?.map((project, index) => (
+                {projects.length > 0 ? projects.map((project, index) => (
                   <div
                     className="col-lg-4 col-md-6 col-12"
                     key={`unit-standard-completed-${index}`}
                   >
                     <ProjectWidget
-                      data={project}
-                      courseStyle={courseStyle}
-                      isProgress={isProgress}
-                      isCompleted={isCompleted}
-                      showDescription={showDescription}
-                      isEdit={isEdit}
-                      showAuthor={showAuthor}
+                      project={project}
+                      index={index}
                     />
                   </div>
-                ))}
+                )) : <div className="text-center text-muted">No projects found</div>}
               </div>
             </div>
     )
