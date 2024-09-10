@@ -108,7 +108,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                           color: '#24345c', 
                           marginTop: '20px', 
                           marginBottom: '20px',
-                          fontSize: '16px'  // Decreased question font size to 16px
+                          fontSize: '16px'  
                         }}>
                           {index + 1}. {item.question}
                         </h4>
@@ -153,7 +153,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                                 </div>
                                 <span style={{ 
                                   color: '#6f7285',
-                                  fontSize: '14px'  // Decreased option font size to 14px
+                                  fontSize: '14px'  
                                 }}>
                                   {option}
                                 </span>
