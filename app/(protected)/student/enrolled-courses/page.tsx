@@ -17,7 +17,6 @@ import Enrolled from "./enrolled";
 import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
 import { useRouter, useSearchParams } from "next/navigation";
-import Active from "./active";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -43,7 +42,7 @@ const EnrolledCourses = () => {
   const tab = searchParams.get("tab");
 
   useEffect(() => {
-    if (tab == null) {
+    if (tab === null) {
       router.push('/student/enrolled-courses?tab=enrolled');
     }
   }, [tab, router]);
