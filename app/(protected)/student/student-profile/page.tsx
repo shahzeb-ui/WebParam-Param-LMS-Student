@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import Profile from './profile/page';
 import { useSearchParams } from 'next/navigation';
 import { getStudentData } from '@/app/api/studentProfile/studentprofile';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function UserProfileContent() {
     const cookies = new Cookies();
@@ -28,6 +30,7 @@ function UserProfileContent() {
 
     useEffect(() => {
         getStudent();
+        AOS.init({ duration: 1000 }); // Initialize AOS
     }, []);
 
     const renderComponent = (tab: string | null) => {
@@ -49,7 +52,11 @@ function UserProfileContent() {
         }
     };
 
-    return renderComponent(tab);
+    return (
+        <div data-aos="fade-left">
+            {renderComponent(tab)}
+        </div>
+    );
 }
 
 export default function UserProfile() {
