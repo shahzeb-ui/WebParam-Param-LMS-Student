@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
+const MultipleChoiceQuestions = ({ setIsInteracted }: any) => {
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>(Array(5).fill(''));
+
   const questions = [
     {
       question: "What is the primary role of a project manager?",
@@ -8,7 +10,7 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
         "To develop software",
         "To design marketing strategies",
         "To oversee and manage project progress",
-        "To manage the company’s finances"
+        "To manage the company's finances"
       ],
       answer: "To oversee and manage project progress"
     },
@@ -54,71 +56,68 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
     }
   ];
 
-  const [selectedAnswers, setSelectedAnswers] = useState(Array(questions.length).fill(null));
-
-  const handleOptionChange = (questionIndex:any, option:any) => {
-    
-
-    if (!setIsInteracted) {
-       setIsInteracted(true); 
-    }
-    const updatedAnswers = [...selectedAnswers];
-    updatedAnswers[questionIndex] = option;
-    setSelectedAnswers(updatedAnswers);
-  };
-
-  const checkAnswers = () => {
-    const correctAnswers = questions.map(q => q.answer);
-    let score = 0;
-    for (let i = 0; i < correctAnswers.length; i++) {
-      if (selectedAnswers[i] === correctAnswers[i]) {
-        score += 1;
-      }
-    }
-    alert(`You scored ${score} out of ${questions.length}`);
+  const handleOptionClick = (questionIndex: number, option: string) => {
+    setIsInteracted(true);
+    const newAnswers = [...selectedAnswers];
+    newAnswers[questionIndex] = option;
+    setSelectedAnswers(newAnswers);
   };
 
   return (
     <div>
       {questions.map((q, index) => (
         <div key={index} className='mt-3' style={{ marginBottom: '30px' }}>
-          <h3 style={{fontSize:'21px'}}>{`${index + 1}. ${q.question}`}</h3>
+          <h3 style={{fontSize:'18px'}}>{`${index + 1}. ${q.question}`}</h3>
           {q.options.map((option, i) => (
-            <div key={i}>
-              <label style={{
-           
-                height: '40px',
+            <button
+              key={i}
+              onClick={() => handleOptionClick(index, option)}
+              style={{
                 display: 'flex',
                 alignItems: 'center',
-                padding: '20px',
+                width: '100%',
+                padding: '10px',
+                margin: '5px 0',
+                border: selectedAnswers[index] === option ? '1px solid rgb(36, 52, 92)' : '1px solid #ccc',
                 borderRadius: '6px',
-                paddingLeft: '30px',
+                background: 'white',
                 cursor: 'pointer',
-                marginTop:'5px',
-                boxShadow:"0px 6px 34px rgba(215, 216, 222, 0.41)"
+                textAlign: 'left'
+              }}
+            >
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                  border: '2px solid rgb(36, 52, 92)',
+                  marginRight: '10px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
                 }}
-                >
-                    
-                <input
-                  type="radio"
-                  name={`question-${index}`}
-                  value={option}
-                  checked={selectedAnswers[index] === option}
-                  onChange={() => handleOptionChange(index, option)}
-                />
-             <small>   {option}</small>
-              </label>
-            </div>
-            
+              >
+                {selectedAnswers[index] === option && (
+                  <div
+                    style={{
+                      width: '12px',
+                      height: '12px',
+                      borderRadius: '50%',
+                      background: 'rgb(36, 52, 92)'
+                    }}
+                  />
+                )}
+              </div>
+              <span style={{ color: 'grey', fontSize: '14px' }}>{option}</span>
+            </button>
           ))}
-        <div className="quize-top-left mt-2">
-            <span>
-                Marks: <strong>5</strong>
+          <div className="quize-top-left mt-2">
+            <span style={{ fontSize: '14px' }}>
+              Marks: <strong>5</strong>
             </span>
-        </div>
+          </div>
         </div>
       ))}
-
     </div>
   );
 };

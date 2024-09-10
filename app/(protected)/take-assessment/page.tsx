@@ -147,7 +147,7 @@ const AssessmentComponent = () => {
                   ) : (
                     <>
                       <div className="quize-top-left">
-                        <span>
+                      <span style={{ fontSize: '14px' }}>
                           Marks: <strong>5</strong>
                         </span>
                       </div>
@@ -159,7 +159,7 @@ const AssessmentComponent = () => {
                 </div>
                 <hr />
                 <div className="rbt-single-quiz">
-                  <h4 style={{ margin:'0 auto', fontSize:'21px'}}>
+                  <h4 style={{ margin: '0 auto', fontSize: '18px', color: 'black' }}>
                     {index + 6}. {item.question}
                   </h4>
                   <div className="row g-3 mt--10">
@@ -168,6 +168,7 @@ const AssessmentComponent = () => {
                       value={answers[index]}
                       onChange={(e) => handleAnswerChange(e, index)}
                       disabled={loading}
+                      style={{ resize: 'none' }}  // Add this line
                     />
                   </div>
                 </div>
@@ -180,11 +181,7 @@ const AssessmentComponent = () => {
                 style={{backgroundColor:'rgb(36, 52, 92) !important'}}
                 type="button"
                 onClick={handleSubmitAssessment}
-                // disabled={
-                //   !isInteracted ||
-                //   loading ||
-                //   answers.some((answer) => answer === "")
-                // }
+                
               >
                 {loading ? (
                   <>
