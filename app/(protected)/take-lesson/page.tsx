@@ -8,12 +8,14 @@ import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
 import Overview from "@/ui/overview/overview";
 import Transcript from "@/ui/transcript/transcript";
 import Link from "next/link";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, Suspense } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
+import { isMobile } from "react-device-detect";
+import { useSearchParams } from "next/navigation";
 
-export default function TakeLesson() {
+function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
   const [knowledgeTopics, setKnowledgeTopics] = useState<any[]>([]);
   const [videoLoader, setVideoLoader] = useState(false);
@@ -28,13 +30,17 @@ export default function TakeLesson() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
+  
 
   const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
+  const searchParams = useSearchParams();
+  const moduleId = searchParams.get("moduleId");
+
   async function fetchKnowledgeTopics() {
     try {
-      const response = await GetKnowledgeTopicsNew(`668fcfad1a1ce7b0635b61c7`);
+      const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
       } else {
@@ -168,7 +174,7 @@ export default function TakeLesson() {
     <div className="rbt-lesson-area bg-color-white">
       <div className="rbt-lesson-content-wrapper">
         {/* Sidebar */}
-        <div className="rbt-lesson-leftsidebar">
+        <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title">
               <h4 className="rbt-title-style-3">Course Content</h4>
@@ -264,13 +270,6 @@ export default function TakeLesson() {
                                   </span>
                                 </div>
                               </li>
-                              {/* <li className="" style={{listStyle:'none'}}>
-                                <div className="course-content-left quiz">
-                                  <i className="feather-file-text" />
-                                  <span className="text">Quiz</span>
-                                </div>
-                              </li>
-                              <hr /> */}
                               </>
                             )
                           )}
@@ -289,45 +288,49 @@ export default function TakeLesson() {
             </div>
           </div>
         </div>
+
+        
         {/* End of Sidebar */}
         <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
           {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
+                <div className="section-title">
+                  <h5>{currentVideo?.title}</h5>
+                </div>
                 <iframe
                   width="100%"
                   height="500px"
                   src={currentVideo?.videoUrl}
                   title="Video player"
+                   scrolling="no"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onEnded={handleVideoEnd}
                 />
                 <div>
                   <div className="content">
+
                     <div className="section-title">
-                      <h5><u>{currentVideo?.title}</u></h5>
+                      <h5>{currentVideo?.title}</h5>
                     </div>
+
                     <div className="rbt-button-group">
                       <button
-                        className="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity"
+                        className="rbt-btn  btn-md bg-primary-opacity"
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
-                        <span className="btn-icon">
-                          <i className="feather-arrow-left" />
-                        </span>
+                        
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
-                        className="rbt-btn icon-hover btn-md"
+                        className="rbt-btn btn-md"
                         onClick={handleNext}
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
                         <span className="btn-text">Next</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right" />
-                        </span>
+                        
                       </button>
                     </div>
                     <div className="content-2">
@@ -393,6 +396,22 @@ export default function TakeLesson() {
                               <span className="title">Notes</span>
                             </Link>
                           </li>
+                          {isMobile && 
+                          <li role="presentation">
+                            <Link
+                              href="#"
+                              className="tab-button"
+                              id="content-tab-4"
+                              data-bs-toggle="tab"
+                              data-bs-target="#content-4"
+                              role="tab"
+                              aria-controls="content-4"
+                              aria-selected="false"
+                            >
+                              <span className="title">Content</span>
+                            </Link>
+                          </li>
+}
                         </ul>
                       </div>
                     </div>
@@ -429,6 +448,132 @@ export default function TakeLesson() {
                       >
                         <Notes />
                       </div>
+                      <div
+                        className="tab-pane fade"
+                        id="content-4"
+                        role="tabpanel"
+                        aria-labelledby="content-tab-4"
+                      >
+
+                        <div id="left-sidebar-" className="rbt-lesson-leftsidebar">
+                          <div className="rbt-course-feature-inner rbt-search-activation">
+                            {/* <div className="section-title">
+                              <h4 className="rbt-title-style-3">Course Content</h4>
+                            </div> */}
+                            <div className="lesson-search-wrapper">
+                              <form action="#" className="rbt-search-style-1">
+                                <input
+                                  className="rbt-search-active"
+                                  type="text"
+                                  placeholder="Search Lesson"
+                                  value={searchQuery}
+                                  onChange={handleSearchChange}
+                                />
+                                <button className="search-btn disabled">
+                                  <i className="feather-search" />
+                                </button>
+                              </form>
+                            </div>
+                            <hr className="mt--10" />
+                           
+                            <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
+                              {!loading ? filteredTopics.map((topic, index) => (
+                                <div className="accordion-item card" key={topic.id}>
+                                  <h2
+                                    className="accordion-header card-header"
+                                    id={`heading${index}`}
+                                  >
+                                    <button
+                                      ref={index === 0 ? firstAccordionButtonRef : null}
+                                      className="accordion-button collapsed"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target={`#collapse${index}`}
+                                      aria-expanded="false"
+                                      aria-controls={`collapse${index}`}
+                                      onClick={() => handleExpandClick(topic.id)}
+                                      style={{fontSize:'16px'}}
+                                    >
+                                     <small> {topic.name}</small>
+                                    </button>
+                                  </h2>
+                                  <div
+                                    id={`collapse${index}`}
+                                    className="accordion-collapse collapse"
+                                    aria-labelledby={`heading${index}`}
+                                    data-bs-parent="#accordionExampleb2"
+                                  >
+                                    <div className="accordion-body card-body">
+                                      {expandedTopics[topic.id] ? (
+                                        <ul style={{marginLeft:'0', paddingLeft:'0'}}>
+                                          {expandedTopics[topic.id].map(
+                                            (subTopic: TopicElement, subIndex) => (
+                                              <>
+                                              <li
+                                                ref={subIndex === 0 ? topicRef : null}
+                                                className="d-flex justify-content-between align-items mt-2"
+                                                key={subIndex}
+                                                onClick={() => handleSubTopicClick(subTopic, subIndex)}
+                                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
+                                              >
+                                                <div
+                                                  className="course-content-left topic_Element_container"
+                                                  style={{
+                                                    overflow: "hidden",
+                                                    display: "flex",
+                                                    gap: "18x",
+                                                    alignItems: "center",
+                                                    width:'100%'
+                                                  }}
+                                                >
+                                                  {currentVideo?.id == subTopic.id ? <i className="bi bi-pause-circle-fill" style={{marginRight:'15px'}}></i>:<i className="feather-play-circle icon" style={{marginRight:'15px'}} />}
+                                                  <p
+                                                    className="topic-Element-Title"
+                                                    style={{
+                                                      fontSize: 13,
+                                                      cursor: "pointer",
+                                                      textDecoration: "none",
+                                                      fontWeight: "bold",
+                                                      whiteSpace: "nowrap",
+                                                      overflow: "hidden",
+                                                      textWrap: "wrap",
+                                                    }}
+                                                  >
+                                                    {subTopic.title}
+                                                  </p>
+                                                </div>
+                                                <div className="course-content-right">
+                                                  <span className="rbt-check ">
+                                                    {checkedSubTopics[subTopic.id] ? (
+                                                      <i className="feather-check" />
+                                                    ) : (
+                                                      <i className="feather-square" />
+                                                    )}
+                                                  </span>
+                                                </div>
+                                              </li>
+                                              </>
+                                            )
+                                          )}
+                                        </ul>
+                                      ) : (
+                                        <div>Loading topics...</div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              )) : (
+                                <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                  <Skeleton count={5} height={40} />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -449,4 +594,12 @@ export default function TakeLesson() {
       </div>
     </div>
   );
+}
+
+export default function TakeLessonContainer() {
+  return (
+    <Suspense fallback={<div>loading</div>}>
+      <TakeLesson />
+    </Suspense>
+  )
 }

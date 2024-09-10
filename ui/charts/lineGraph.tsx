@@ -8,7 +8,7 @@ export default function LineChart() {
   const [chartData, setChartData] = useState({
     series: [{
       name: "Quiz Attempts",
-      data: [10, 41, 35, 51, 49, 62, 40, 91, 48]
+      data: [10, 41, 35, 51, 49, 62, 40, 91, 48, 53, 73, 40]
     }],
     options: {
       chart: {
@@ -20,7 +20,10 @@ export default function LineChart() {
             top: 18,
             left: 7,
             blur: 10,
-            opacity: 0.2
+            opacity: 0.2,
+            sparkline: {
+              enabled: true,
+          }
         },
         zoom: {
           enabled: false
@@ -47,7 +50,7 @@ export default function LineChart() {
         size: 1
       },
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       }
     }
   });

@@ -1,12 +1,13 @@
 import dynamic from 'next/dynamic';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function PieChart() {
-    const rawData = [44, 55, 90, 8, 22, 10, 20, 30, 40, 50, 60, 70];
-    const total = rawData.reduce((acc, value) => acc + value, 0);
-    const percentageData = rawData.map(value => Math.round((value / total) * 100));
-    
+  const rawData = [44, 55, 90, 81, 22, 80, 50, 40, 40, 50, 60, 70];
+  const total = rawData.reduce((acc, value) => acc + value, 0);
+  const percentageData = rawData.map(value => Math.round((value / total) * 100));
+
   const [chartOptions, setChartOptions] = useState({
     series: percentageData,
     options: {
@@ -15,9 +16,11 @@ export default function PieChart() {
         type: 'pie',
       },
       title: {
-        text: 'Classes Attended',
+        text: 'Student Activity',
         style: {
-          fontSize: '20px',
+          fontSize: '14px',
+          textAlign: 'center',
+          margin: '0 auto',
           color: '#333'
         }
       },
@@ -27,20 +30,16 @@ export default function PieChart() {
         breakpoint: 480,
         options: {
           chart: {
-            width: 380
+            width: 320,
+            margin: 0,
           },
-          legend: {
-            position: 'bottom'
-          }
-        },
-        title: {
-            text: 'Classes Attended',
+          title: {
             style: {
               fontSize: '14px',
-              marginLeft: '10px',
-              color: '#333'
+              textAlign: 'center',
             }
           },
+        },
       }]
     }
   });
@@ -59,4 +58,3 @@ export default function PieChart() {
     </div>
   );
 };
-

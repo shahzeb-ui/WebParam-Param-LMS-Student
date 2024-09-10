@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import './navbar.scss'
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
 import Image from "next/image";
 import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
-
-import logo from './logo.jpg';
-import Nav from "./nav";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
 import { usePathname } from "next/navigation";
 
@@ -18,7 +14,6 @@ const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   const pathname = usePathname();
 
   const sections = [
@@ -41,11 +36,11 @@ const Navbar = () => {
       }
     };
 
-    // window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    // return () => {
-    //   window.removeEventListener("scroll", handleScroll);
-    // };
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [currentSection]);
 
   const handleAvatarClick = () => {
@@ -60,40 +55,47 @@ const Navbar = () => {
     setIsDropdownVisible(false);
   };
 
-  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp"].includes(pathname)) {
+  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp", "/testing"].includes(pathname)) {
     return <div></div>;
   } 
-  
 
   return (
     <>
-      <header className="rbt-header" style={{padding:'10px 0'}}>
+      <header className="rbt-header">
         <div className="rbt-sticky-placeholder"></div>
 
-        <div className="rbt-header-wrapper" style={{padding:'10px 0'}}>
+        <div className="rbt-header-wrapper">
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo">
-                  <Image src={process.env.NEXT_PUBLIC_LOGO_URL??''} alt="logo" width={80} height={20} />
+                <Link href="/" className="logo" 
+                style={{
+                  fontFamily:`"League Spartan" sans-serif `,
+                  fontWeight: "900",
+                  color: "rgb(36, 52, 92)",
+                  fontSize: "50px"}}> 
+                  thooto
                 </Link>
               </div>
 
+              {process.env.SHOW_TOP_BANNER &&
+<>
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
-                  <ul className="mainmenu">
+                    <ul className="mainmenu">
                     {sections.map((sec, i) => (
                       <li
                         className={currentSection === sec.id ? "current" : ""}
                         key={i}
                       >
-                        <span aria-disabled style={{cursor:'none', margin:'0 10px', opacity:'.8'}}>{sec.label}</span>
+                        <Link href={sec.link}>{sec.label}</Link>
                       </li>
                     ))}
                   </ul>
+               
                 </nav>
               </div>
-
+            
               <div className="rbt-header-sec-col rbt-header-center d-none d-md-block margin-right-3">
                 <div className="rbt-header-content">
                   <div className="header-info">
@@ -111,10 +113,11 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-
+  
+           
               <div className="header-right d-flex align-items-center mt">
                 <div className="d-none d-md-block me-3">
-                  <span onClick={handleAvatarClick}>
+                  <Link href="#" onClick={handleAvatarClick}>
                     <Image
                       src={User}
                       alt="User Avatar"
@@ -122,25 +125,35 @@ const Navbar = () => {
                       height={40}
                       className="rounded-circle"
                     />
-                  </span>
+                  </Link>
                   {isDropdownVisible && (
                     <div className={styles.dropdownMenu}>
-                      {isDropdownVisible && <Nav />}
+                      <UserStudent closeDropdown={closeDropdown} />
                     </div>
                   )}
                 </div>
 
                 <div
-                  className={`humburger-menu ${isSidebarOpen ? 'active' : ''}`}
+                  className="rbt-offcanvas-trigger d-xl-none"
                   id="rbt-offcanvas-activation"
                   onClick={toggleSidebar}
-                  style={{cursor:'pointer'}}
                 >
+                  <span className="offcanvas-trigger">
+                    <span className="offcanvas-bars">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </span>
+                  </span>
                 </div>
               </div>
+              </>
+            }
+            
             </div>
           </div>
         </div>
+        
       </header>
       <StudentMobileSideBar
         isOpen={isSidebarOpen}

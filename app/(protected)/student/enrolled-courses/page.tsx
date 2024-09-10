@@ -1,10 +1,18 @@
 "use client";
 
-import './course.scss';
-import { Suspense, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
+import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
+import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
+import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
+// import { isMobile } from "react-device-detect";
+import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
+import courseImage from './courseImage.jpeg';
+import Cookies from "universal-cookie";
+import { isMobile } from "react-device-detect";
+import Active from "./active";
 import Enrolled from "./enrolled";
 import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
@@ -14,6 +22,22 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const EnrolledCourses = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [unitStandards, setUnitStandards] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const [isProgress, setIsProgress] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
+  const [showAuthor, setShowAuthor] = useState(false);
+  const [courseStyle, setCourseStyle] = useState("two");
+  
+  const cookies = new Cookies();
+
+  const user = cookies.get("loggedInUser");
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
@@ -30,6 +54,10 @@ const EnrolledCourses = () => {
       duration: 1500,
     });
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div 

@@ -31,13 +31,10 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
           <div className="inner">
             <div className="content-item-content">
               <div className="rbt-default-sidebar-wrapper">
-                <div className="section-title mb--20">
-                  <h6 className="rbt-title-style-2">{username ? `Welcome ${username}` : "name surname"}</h6>
-                </div>
                 <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SidebarData &&
-                      SidebarData.siderbar.slice(0, 8).map((data, index) => (
+                      SidebarData.siderbar.slice(0, 7).map((data, index) => (
                         <li
                           className="nav-item"
                           key={index}
@@ -62,7 +59,7 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
                 <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SidebarData &&
-                      SidebarData.siderbar.slice(8, 11).map((data, index) => (
+                      SidebarData.siderbar.slice(7).map((data, index) => (
                         <li key={index}>
                           <a
                             className={`${path === data.link ? "active" : ""}`}
