@@ -10,21 +10,32 @@ import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
 import { useRouter, useSearchParams } from "next/navigation";
 import Active from "./active";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const EnrolledCourses = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
 
-
   useEffect(() => {
     if (tab == null) {
       router.push('/student/enrolled-courses?tab=enrolled');
     }
-  }, [tab]);
+  }, [tab, router]);
+
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      duration: 1500,
+    });
+  }, []);
 
   return (
-    <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
+    <div 
+      className="rbt-dashboard-content bg-color-white rbt-shadow-box"
+      data-aos="fade-right"
+    >
       <div className="content">
         <div className="section-title">
           <h4 className="get-4-color rbt-title-style-3">
