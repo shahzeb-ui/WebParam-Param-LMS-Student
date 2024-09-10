@@ -1,25 +1,33 @@
 import { readUserData } from "@/app/api/endpoints";
 import { IProject } from "@/interfaces/project/project";
+import axios from "axios";
 
-export const getProjects = async (): Promise<IProject[]> => {
+export const getProjectsId = async (userId: string) => {
     try {
-      const response = await fetch(
-        `${readUserData}/api/v1/OrganizationProgramEnrollment/GetOrganizationProgramEnrollments`,
-        {
-          method: "GET",
-          headers: {
-            Accept: "text/plain",
-          },
-        }
-      );
+      const response = await axios.get(`${readUserData}/api/v1/OrganizationProgramEnrollment/GetUserEnrolledOrganizationProgram/${userId}`);
   
-      if (!response.ok) {
+      if (!response) {
         throw new Error("Failed to fetch logbooks");
       }
   
-      const data = await response.json();
-      console.log("get logbooks data: ", data);
-      return data.data;
+     return response;
+
+    } catch (error) {
+      console.error("Error fetching logbooks:", error);
+      throw error;
+    }
+  };
+  
+
+  export const getProgrammeProjects = async (programmeId: string): Promise<IProject[]> => {
+    try {
+      const response = await axios.get(`${readUserData}/api/v1/OrganizationProgramEnrollment/GetOrganizationProgramEnrollmentsById/${programmeId}`);
+  
+      if (!response) {
+        throw new Error("Failed to fetch logbooks");
+      }
+  
+      return response.data;
     } catch (error) {
       console.error("Error fetching logbooks:", error);
       throw error;

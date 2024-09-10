@@ -10,8 +10,8 @@ const StudentDashboardSidebar = () => {
   const user = cookies.get("loggedInUser");
   const path = usePathname();
   const isFreemium =
-    process.env.NEXT_PUBLIC_FREEMIUM &&
-    process.env.NEXT_PUBLIC_FREEMIUM == "true"
+    process.env.NEXT_PUBLIC_IS_FREEMIUM &&
+    process.env.NEXT_PUBLIC_IS_FREEMIUM == "true"
       ? true
       : false;
 
@@ -47,7 +47,22 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => (
+                    SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => {
+                      const free = isFreemium ? true : false;
+                      console.log(path === '/student/projects?tab=enrolled');
+                      if (free && data.link == "/student/enrolled-courses") {
+                        return  <li className="nav-item" key={index} role="presentation">
+                        <a
+                          href={'/student/projects?tab=enrolled'}
+                          className={`${path == '/student/projects' ? "active" : ""}`} // Apply the active class correctly
+                          style={{color: path == '/student/projects' ? "#2f57ef" : ""}} 
+                        >
+                          <i className={data.icon} />
+                          <span>My Projects</span>
+                        </a>
+                      </li>;
+                      }
+                      return (
                       <li className="nav-item" key={index} role="presentation">
                         <a
                           className={`${path === data.link ? "active" : ""}`}
@@ -57,7 +72,8 @@ const StudentDashboardSidebar = () => {
                           <span>{data.text}</span>
                         </a>
                       </li>
-                    ))}
+                    )
+                    })}
                 </ul>
               </nav>
 

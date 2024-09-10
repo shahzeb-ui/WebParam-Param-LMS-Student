@@ -12,7 +12,6 @@ import { isMobile } from 'react-device-detect';
 
 export default function LoginPage() {
     const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
-debugger;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -55,6 +54,7 @@ debugger;
             if (res) {
                 
                 cookies.set("loggedInUser", res.data);
+                debugger;
                 const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
                 router.push(redirectPath)
             }
