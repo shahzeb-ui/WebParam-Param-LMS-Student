@@ -55,35 +55,24 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
     setSelectedAnswer(null);
   };
 
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!answeredQuestions[next]) {
-      const selected = event.target.value;
-      setSelectedAnswer(selected);
-      setSelectedAnswers((prev) => {
-        const newAnswers = [...prev];
-        newAnswers[next] = selected;
-        return newAnswers;
-      });
+  const handleOptionClick = (questionIndex: number, option: string) => {
+    setSelectedAnswer(option);
+    setSelectedAnswers((prev) => {
+      const newAnswers = [...prev];
+      newAnswers[questionIndex] = option;
+      return newAnswers;
+    });
 
-      const correctAnswer = currentQuiz[next].answer;
-      if (selected === correctAnswer) {
-        setScore(score + 1);
-      }
-
-      setAnsweredQuestions((prev) => {
-        const newAnswered = [...prev];
-        newAnswered[next] = true;
-        return newAnswered;
-      });
-
-      setTimeout(() => {
-        if (next + 1 < currentQuiz.length) {
-          setNext(next + 1);
-        } else {
-          window.location.href = "/take-lesson";
-        }
-      }, 3000);
+    const correctAnswer = currentQuiz[questionIndex].answer;
+    if (option === correctAnswer) {
+      setScore(score + 1);
     }
+
+    setAnsweredQuestions((prev) => {
+      const newAnswered = [...prev];
+      newAnswered[questionIndex] = true;
+      return newAnswered;
+    });
   };
 
   const handleRetake = () => {
@@ -104,12 +93,6 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                         <div className="quize-top-meta">
                             <div className="quize-top-left">
                                 <span>
-                                <i style={{color:"skyblue"}} className="feather-help-circle" />
-                                <small> <b>  Question: </b>{index + 1}/{currentQuiz.length}</small> 
-                                </span>
-                            </div>
-                            <div className="quize-top-left">
-                                <span>
                                 <i style={{color:"limegreen"}} className="feather-award" />
                                 <small>    <b>   Points: </b>{score} </small>
                                 </span>
@@ -121,43 +104,62 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                                 </span>
                             </div>
                         </div>
-                        <hr />
-                        <div className="rbt-single-quiz">
-                          <h4>
-                            {index + 1}. {item.question}
-                          </h4>
-                          <div className="row g-3 mt--10">
-                            {item.options.map((option, optIndex) => (
-                              <div className="col-lg-6" key={optIndex}>
-                                <p className="rbt-checkbox-wrapper mb--5">
-                                  <input
-                                    id={`rbt-checkbox-${index + 1}-${optIndex}`}
-                                    name={`rbt-checkbox-${index + 1}`}
-                                    type="radio"
-                                    value={option}
-                                    checked={selectedAnswer === option}
-                                    onChange={handleOptionChange}
-                                    disabled={answeredQuestions[index]}
-                                  />
-                                  <label
-                                    htmlFor={`rbt-checkbox-${index + 1}-${optIndex}`}
-                                    style={{border:"none",boxShadow:"0px 6px 34px rgba(215, 216, 222, 0.41)", padding:"30px" }}
-                                    className={
-                                      answeredQuestions[index]
-                                        ? option === item.answer
-                                          ? styles.correct
-                                          : selectedAnswers[index] === option
-                                          ? styles.wrong
-                                          : styles.wrong
-                                        : ""
-                                    }
-                                  >
-                                    {option}
-                                  </label>
-                                </p>
-                              </div>
-                            ))}
-                          </div>
+                        <h4 style={{ 
+                          color: '#24345c', 
+                          marginTop: '20px', 
+                          marginBottom: '20px',
+                          fontSize: '16px'  
+                        }}>
+                          {index + 1}. {item.question}
+                        </h4>
+                        <div className="mt--10">
+                          {item.options.map((option, optIndex) => (
+                            <div className="w-100 mb-3" key={optIndex}>
+                              <label
+                                htmlFor={`rbt-checkbox-${index + 1}-${optIndex}`}
+                                style={{
+                                  border: selectedAnswers[index] === option ? '1px solid rgb(36, 52, 92)' : '1px solid #e0e0e0',
+                                  borderRadius: '8px',
+                                  padding: '10px 15px',
+                                  width: '100%',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  cursor: 'pointer'
+                                }}
+                                onClick={() => handleOptionClick(index, option)}
+                              >
+                                <div
+                                  style={{
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    border: '2px solid rgb(36, 52, 92)',
+                                    marginRight: '10px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                  }}
+                                >
+                                  {selectedAnswers[index] === option && (
+                                    <div
+                                      style={{
+                                        width: '12px',
+                                        height: '12px',
+                                        borderRadius: '50%',
+                                        background: 'rgb(36, 52, 92)'
+                                      }}
+                                    />
+                                  )}
+                                </div>
+                                <span style={{ 
+                                  color: '#6f7285',
+                                  fontSize: '14px' 
+                                }}>
+                                  {option}
+                                </span>
+                              </label>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     ))}
@@ -173,8 +175,12 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                   </button>
 
                   <button
-                    className="rbt-btn icon-hover btn-sm"
-                    style={{ width: '150px' }}
+                    className="rbt-btn btn-sm"
+                    style={{ 
+                      width: '150px',
+                      backgroundColor: 'rgb(36, 52, 92) !important',
+                      color: 'white'  
+                    }}
                     id="next-btn"
                     type="button"
                     onClick={() => {setVideoEnded(false), handleNext()}}
