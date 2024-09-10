@@ -295,9 +295,6 @@ function TakeLesson() {
           {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
-                <div className="section-title">
-                  <h5>{currentVideo?.title}</h5>
-                </div>
                 <iframe
                   width="100%"
                   height="500px"

@@ -10,8 +10,8 @@ const StudentDashboardSidebar = () => {
   const user = cookies.get("loggedInUser");
   const path = usePathname();
   const isFreemium =
-    process.env.NEXT_PUBLIC_FREEMIUM &&
-    process.env.NEXT_PUBLIC_FREEMIUM == "true"
+    process.env.NEXT_PUBLIC_IS_FREEMIUM &&
+    process.env.NEXT_PUBLIC_IS_FREEMIUM == "true"
       ? true
       : false;
 

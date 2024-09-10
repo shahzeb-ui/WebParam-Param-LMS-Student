@@ -59,9 +59,9 @@ const InstructorDashboardHeader = () => {
         <h3 className="mb-2">
           <span style={{ fontWeight: '700' }}>{course?.title}</span>
         </h3>
-        <p className="ml-5">
+        {/* <p className="ml-5">
         {course?.id.slice(-4)}
-        </p>
+        </p> */}
       </div>
       <div className="rbt-dashboard-content-wrapper">
       {isMobile&&
