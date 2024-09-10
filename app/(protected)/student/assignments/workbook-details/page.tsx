@@ -64,36 +64,92 @@ const WorkbookPage: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 style={{fontSize:'4rem'}}>{workbook.name}</h1>
       {workbook.questions.map((question, index) => (
         <div key={index}>
-          <p style={{ fontWeight: '800', margin: '25px 0', fontSize:'20px' }}>{question.question}</p>
+          <p style={{ fontWeight: '800', margin: '25px 0', fontSize:'16px' }}>{question.question}</p>
           {question.type === 'multiple-choice' && (
-            <div>
+            <div style={{ maxWidth: '600px', marginLeft: '0' }}>
               {question.options?.map((option, idx) => (
                 <div
                   key={idx}
                   onClick={() => handleOptionClick(index, option)}
                   style={{
+                    display: 'flex',
+                    alignItems: 'center',
                     marginBottom: '8px',
                     padding: '10px',
-                    border: '1.5px solid',
+                    border: '1px solid',
                     borderRadius: '10px',
                     cursor: 'pointer',
-                    borderColor: selectedOptions[index] === option ? 'black' : 'lightgray',
+                    borderColor: selectedOptions[index] === option ? 'rgb(36, 52, 92)' : 'lightgray',
                     fontWeight: selectedOptions[index] === option ? '550' : 'normal',
+                    fontSize: '14px',
                   }}
                 >
+                  <div
+                    style={{
+                      width: '20px',
+                      height: '20px',
+                      borderRadius: '50%',
+                      border: '2px solid rgb(36, 52, 92)', 
+                      marginRight: '10px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {selectedOptions[index] === option && (
+                      <div
+                        style={{
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgb(36, 52, 92)',
+                        }}
+                      />
+                    )}
+                  </div>
                   {option}
                 </div>
               ))}
             </div>
           )}
-          {question.type === 'short-answer' && <textarea rows={4} cols={50} />}
+          {question.type === 'short-answer' && (
+            <textarea 
+              rows={4} 
+              style={{
+                width: '100%',
+                maxWidth: '600px',
+                resize: 'none',
+                padding: '10px',
+                borderRadius: '10px',
+                border: '1px solid lightgray',
+                fontSize: '14px',
+              }}
+            />
+          )}
         </div>
       ))}
-      <div className="rbt-button-group justify-content-end" style={{ margin: '10px 0' }}>
-        <button type="submit" style={{ cursor: 'pointer', marginTop: '16px' }} className="rbt-btn btn-xs bg-primary-opacity radius-round">Submit</button>
+      <div style={{ maxWidth: '600px', textAlign: 'right', marginTop: '20px' }}>
+        <button 
+          type="submit" 
+          className="rbt-btn btn-sm"
+          style={{
+            backgroundColor: 'rgb(36, 52, 92)',
+            color: 'white',
+            cursor: 'pointer',
+            padding: '12px 24px',
+            fontSize: '16px',
+            borderRadius: '5px',
+            border: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minWidth: '120px'  // Adjust this value as needed
+          }}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
