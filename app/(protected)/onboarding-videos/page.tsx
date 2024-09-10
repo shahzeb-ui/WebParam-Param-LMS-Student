@@ -237,7 +237,7 @@ function OnboardingVdeos() {
                    <ResponsiveVideoComponent />
                 <div>
                   <div className="content">
-                    <div className="section-title">
+                    <div style={{marginTop:"15%"}} className="section-title">
                       <h5>{currentVideo?.title}</h5>
                     </div>
                     <div className="rbt-button-group">
