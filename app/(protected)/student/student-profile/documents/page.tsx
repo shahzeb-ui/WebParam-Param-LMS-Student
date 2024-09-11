@@ -330,27 +330,23 @@ const FileUpload: React.FC = () => {
         }
       </ul>
     </div>
-    <div className='document-preview-container card'>
-      <div className='document-preview'>
+    <div className='document-preview card'>
+      <div className='document-preview-container'>
         {
         action === 'view' && 
         <>
         {documentinfo != undefined||null ?
         <Worker workerUrl={pdfWorkerUrl}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-              <ZoomOutButton />
-              <ZoomPopover />
-              <ZoomInButton />
-            </div>
-            <div style={{ width: '100%', maxWidth: '100%', overflowX: 'auto' }}>
-              <Viewer
-                fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
-                plugins={[thumbnailPluginInstance, zoomPluginInstance]}
-                defaultScale={.9}
-              />
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
+            <ZoomOutButton />
+            <ZoomPopover />
+            <ZoomInButton />
           </div>
+          <Viewer
+            fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
+            plugins={[thumbnailPluginInstance, zoomPluginInstance]}
+            defaultScale={.9}  
+            />
         </Worker>
         :
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>
