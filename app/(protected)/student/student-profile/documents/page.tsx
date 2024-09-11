@@ -279,9 +279,9 @@ const FileUpload: React.FC = () => {
       </div>
           </>}
     <section className='documents-container'>
-    <div className='document-name-list card'>
-      <h5>Documents</h5>
-      <ul className="nav nav-segment nav-pills" role="tablist">
+      <div className='document-name-list card'>
+        <h5>Documents</h5>
+        <ul className="nav nav-segment nav-pills" role="tablist">
           {
             courseId =='66aa8cab45223bcb337a9643' ?
 
@@ -324,146 +324,150 @@ const FileUpload: React.FC = () => {
             )
           })
         }
-      </ul>
-    </div>
-    <div className='document-preview card'>
-      <div className='document-preview-container'>
-        {
-        action === 'view' && 
-        <>
-        {documentinfo != undefined||null ?
-        <Worker workerUrl={pdfWorkerUrl}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
-            <ZoomOutButton />
-            <ZoomPopover />
-            <ZoomInButton />
-          </div>
-          <Viewer
-            fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
-            plugins={[thumbnailPluginInstance, zoomPluginInstance]}
-            defaultScale={.9}  
-            />
-        </Worker>
-        :
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>
-          <h5>No document found</h5>
-          <button 
-          type="button" 
-          className="btn btn-dark btn-reupload" 
-          onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}
-          style={{backgroundColor: 'rgb(36, 52, 92)'}}
-          >Upload File</button>
-        </div>
-        }
-        </>}
-        {action === 'upload' &&   
-          <>
-        {documentinfo?.blobUrl ?
-       <div className="upload-container"
-       >
-          <h5>Change File</h5>
-          <form onSubmit={handleChangeDocument}>
-            <div 
-            onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
-            onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
-            onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
-            style={{
-              transition: 'all 0.5s ease',
-             backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
-             border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '1px dashed black',
-             boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
-
-           }}>
-              <i className="bi bi-file-earmark-text-fill icon-upload"></i>
-              <p>Drag and drop your file here</p>
-              <span>or</span>
-              <input 
-                type="file" 
-                id="file-input" 
-                name='file-input' 
-                onChange={(e) => handleFileChange(e, documentinfo  as DocumentType)} 
-                accept=".pdf,.doc,.docx"
-                style={{display: 'none'}}
-                />
-              <label className="btn btn-dark" htmlFor="file-input" >Choose File</label>
-            </div>
-            <div>
-              <p>Supported Formats: PDF, DOC, DOCX</p>
-              <p>Max file size: 4MB</p>
-            </div>
-
-            <div className="file-name">
-                <p>{selectedFile?.file?.name ? selectedFile?.file?.name : 'No file chosen'}</p>
-            </div>
-
-            <div>
-              <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
-              <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
-                {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
-              </button>
-            </div>
-          </form>
-       </div>:
-       <div className="upload-container"
-       >
-          <h5>Upload File</h5>
-          <form onSubmit={handleUpload}>
-            <div
-            onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
-            onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
-            onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
-            style={{
-              transition: 'all 0.5s ease',
-             backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
-             border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '2px dashed black',
-             boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
-           }}>
-              <i className="bi bi-file-earmark-text-fill icon-upload"></i>
-              <p>Drag and drop your file here</p>
-              <span>or</span>
-              <input 
-                type="file" 
-                id="file-input" 
-                name='file-input' 
-                onChange={(e) => handleFileChange(e, selectedDocument as DocumentType)} 
-                accept=".pdf,.doc,.docx"
-                style={{display: 'none'}}
-                />
-              <label className="btn" htmlFor="file-input" style={{backgroundColor: 'rgb(36, 52, 92)'}}>Choose File</label>
-            </div>
-            <div>
-              <p>Supported Formats: PDF, DOC, DOCX</p>
-              <p>Max file size: 4MB</p>
-            </div>
-
-            <div className="file-name">
-                <p>{selectedFile?.file?.name ? selectedFile?.file?.name : 'No file chosen'}</p>
-            </div>
-
-            <div>
-            <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
-              <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
-                {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
-              </button>
-            </div>
-          </form>
-       </div>}
-       </>
-       }
-       {action == null && selectedDocument == null && 
-       <div >
-        <h5>No document selected</h5>
-       </div>}
+        </ul>
       </div>
-    </div>
-    <div className='document-upload-container card'>
-      {action === 'view' ? 
-        <>
-         {documentinfo ? <thumbnailPluginInstance.Thumbnails /> : null}
-        </>
-       : null}
-    </div>
-  </section>
+      <div className='document-preview-container card'>
+        <div className='document-preview'>
+          {
+          action === 'view' && 
+          <>
+          {documentinfo != undefined||null ?
+          <Worker workerUrl={pdfWorkerUrl}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+                <ZoomOutButton />
+                <ZoomPopover />
+                <ZoomInButton />
+              </div>
+              <div style={{ width: '100%', maxWidth: '100%', overflowX: 'auto' }}>
+                <Viewer
+                  fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
+                  plugins={[thumbnailPluginInstance, zoomPluginInstance]}
+                  defaultScale={.9}
+                />
+              </div>
+            </div>
+          </Worker>
+          :
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>
+            <h5>No document found</h5>
+            <button 
+            type="button" 
+            className="btn btn-dark btn-reupload" 
+            onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}
+            style={{backgroundColor: 'rgb(36, 52, 92)'}}
+            >Upload File</button>
+          </div>
+          }
+          </>}
+          {action === 'upload' &&   
+            <>
+          {documentinfo?.blobUrl ?
+         <div className="upload-container"
+         >
+            <h5>Change File</h5>
+            <form onSubmit={handleChangeDocument}>
+              <div 
+              onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
+              onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
+              onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
+              style={{
+                transition: 'all 0.5s ease',
+               backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
+               border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '1px dashed black',
+               boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
+
+             }}>
+                <i className="bi bi-file-earmark-text-fill icon-upload"></i>
+                <p>Drag and drop your file here</p>
+                <span>or</span>
+                <input 
+                  type="file" 
+                  id="file-input" 
+                  name='file-input' 
+                  onChange={(e) => handleFileChange(e, documentinfo  as DocumentType)} 
+                  accept=".pdf,.doc,.docx"
+                  style={{display: 'none'}}
+                  />
+                <label className="btn btn-dark" htmlFor="file-input" >Choose File</label>
+              </div>
+              <div>
+                <p>Supported Formats: PDF, DOC, DOCX</p>
+                <p>Max file size: 4MB</p>
+              </div>
+
+              <div className="file-name">
+                  <p>{selectedFile?.file?.name ? selectedFile?.file?.name : 'No file chosen'}</p>
+              </div>
+
+              <div>
+                <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
+                <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
+                  {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
+                </button>
+              </div>
+            </form>
+         </div>:
+         <div className="upload-container"
+         >
+            <h5>Upload File</h5>
+            <form onSubmit={handleUpload}>
+              <div
+              onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
+              onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
+              onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
+              style={{
+                transition: 'all 0.5s ease',
+               backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
+               border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '2px dashed black',
+               boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
+             }}>
+                <i className="bi bi-file-earmark-text-fill icon-upload"></i>
+                <p>Drag and drop your file here</p>
+                <span>or</span>
+                <input 
+                  type="file" 
+                  id="file-input" 
+                  name='file-input' 
+                  onChange={(e) => handleFileChange(e, selectedDocument as DocumentType)} 
+                  accept=".pdf,.doc,.docx"
+                  style={{display: 'none'}}
+                  />
+                <label className="btn" htmlFor="file-input" style={{backgroundColor: 'rgb(36, 52, 92)'}}>Choose File</label>
+              </div>
+              <div>
+                <p>Supported Formats: PDF, DOC, DOCX</p>
+                <p>Max file size: 4MB</p>
+              </div>
+
+              <div className="file-name">
+                  <p>{selectedFile?.file?.name ? selectedFile?.file?.name : 'No file chosen'}</p>
+              </div>
+
+              <div>
+              <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
+                <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
+                  {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
+                </button>
+              </div>
+            </form>
+         </div>}
+         </>
+         }
+         {action == null && selectedDocument == null && 
+         <div >
+          <h5>No document selected</h5>
+         </div>}
+        </div>
+      </div>
+      <div className='document-upload-container card'>
+        {action === 'view' ? 
+          <>
+           {documentinfo ? <thumbnailPluginInstance.Thumbnails /> : null}
+          </>
+         : null}
+      </div>
+    </section>
   </>
   )
 };
