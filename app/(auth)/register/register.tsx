@@ -8,6 +8,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
+import flagsmith from "flagsmith/isomorphic";
+import { useFlags, useFlagsmith } from "flagsmith/react";
 
 export default function Register() {
   const [isExploding, setIsExploding] = React.useState(false);
@@ -33,12 +35,16 @@ export default function Register() {
   const projectId = searchParams.get("projectId") || "";
 
   const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID ?? "";
-  const isFreemium =
+  const flags = useFlags(["FREEMIUM", "banner_size"]); // only causes re-render if specified flag values / traits change
+  console.log("Flags: ", flags);
+  const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
+
+  /*   const isFreemium =
     process.env.NEXT_PUBLIC_FREEMIUM &&
     process.env.NEXT_PUBLIC_FREEMIUM == "true"
       ? true
       : false;
-
+ */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     debugger;
