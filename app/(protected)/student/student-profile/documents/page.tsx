@@ -22,6 +22,8 @@ import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 import { button } from '@nextui-org/react';
 
+
+
 const pdfVersion = "2.16.105";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
@@ -328,23 +330,27 @@ const FileUpload: React.FC = () => {
         }
       </ul>
     </div>
-    <div className='document-preview card'>
-      <div className='document-preview-container'>
+    <div className='document-preview-container card'>
+      <div className='document-preview'>
         {
         action === 'view' && 
         <>
         {documentinfo != undefined||null ?
         <Worker workerUrl={pdfWorkerUrl}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
-            <ZoomOutButton />
-            <ZoomPopover />
-            <ZoomInButton />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+              <ZoomOutButton />
+              <ZoomPopover />
+              <ZoomInButton />
+            </div>
+            <div style={{ width: '100%', maxWidth: '100%', overflowX: 'auto' }}>
+              <Viewer
+                fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
+                plugins={[thumbnailPluginInstance, zoomPluginInstance]}
+                defaultScale={.9}
+              />
+            </div>
           </div>
-          <Viewer
-            fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
-            plugins={[thumbnailPluginInstance, zoomPluginInstance]}
-            defaultScale={.9}  
-            />
         </Worker>
         :
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>

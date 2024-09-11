@@ -336,3 +336,37 @@
         text-align: center;
     }
 }
+
+@media (max-width: 768px) {
+    .documents-container {
+      flex-direction: column;
+      padding: 10px; // Reduce padding for smaller screens
+    }
+  
+    .document-name-list {
+      width: 100%;
+      margin-bottom: 20px;
+      padding-top: 60px; // Increase top padding to make room for the "Documents" text
+    }
+  
+    .document-name-list h5 {
+      margin-bottom: 15px; // Add space below the "Documents" text
+      position: absolute; // Position the "Documents" text absolutely
+      top: 20px; // Adjust top position as needed
+      left: 20px; // Adjust left position as needed
+    }
+  
+    .document-name-list ul {
+      padding-left: 0;
+      margin-top: 0; // Remove top margin as we've added padding to the container
+    }
+  
+    .document-name-list li {
+      padding: 10px 0;
+    }
+  
+    .document-preview-container,
+    .document-upload-container {
+      width: 100%; // Make these containers full width on mobile
+    }
+}
