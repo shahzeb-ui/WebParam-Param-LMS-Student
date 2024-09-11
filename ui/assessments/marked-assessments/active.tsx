@@ -1,28 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAssessmentContext } from '../(context)/AssessmentContext';
+import { rAssessmentUrl } from '../../../app/lib/endpoints';
 
-const summativeData = [
-  {
-    title: "Introduction to Advanced Project Management",
-    course: "Fundamentals 111",
-    dueDate: "2024-01-01",
-    totalMarks: 50,
-  },
-
-];
-
-const formativeData = [
-  {
-    title: "Introduction to Project Management",
-    course: "Fundamentals 101",
-    dueDate: "2024-01-15",
-    totalMarks: 20,
-  }
-];
+// Define the Assessment interface
+interface Assessment {
+  id: string;
+  state: number;
+  title: string;
+  courseId: string;
+  type: string;
+}
 
 export default function ActiveAssessment() {
   const { assessmentType } = useAssessmentContext();
-  const data = assessmentType === "summative" ? summativeData : formativeData;
+  const [data, setData] = useState<Assessment[]>([]);
+  const [filteredData, setFilteredData] = useState<Assessment[]>([]);
+  const courseId = '6669f0ff8759b480859c10a7';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = `${rAssessmentUrl}/api/v1/assessments/GetNewAssessments/${courseId}`;
+        console.log('Fetching URL:', url);
+        const response = await fetch(url);
+        if (!response.ok) {
+          console.error(`Error fetching assessments: ${response.statusText}`);
+          return;
+        }
+        const result = await response.json();
+        console.log('API response:', result);
+
+        if (result && Array.isArray(result.data)) {
+          setData(result.data);
+        } else {
+          console.error('API response does not contain a data array:', result);
+        }
+      } catch (error) {
+        console.error('Error fetching assessments:', error);
+      }
+    };
+
+    fetchData();
+  }, [courseId]);
+
+  useEffect(() => {
+    const filtered = data.filter(assessment => assessment.type === assessmentType);
+    setFilteredData(filtered);
+  }, [data, assessmentType]);
 
   return (
     <table className="rbt-table table table-borderless">
@@ -35,19 +59,19 @@ export default function ActiveAssessment() {
         </tr>
       </thead>
       <tbody>
-        {data.map((assessment, index) => (
+        {filteredData.map((assessment, index) => (
           <tr key={index}>
             <th>
               <span className="h6 mb--5">{assessment.title}</span>
               <p className="b3">
-                Course: <a href="#">{assessment.course}</a>
+                Course: <a href="#">{assessment.courseId}</a>
               </p>
             </th>
             <td>
-              <p className="b3">{assessment.dueDate}</p>
+              {<p className="b3">{/*assessment.dueDate*/}</p>}
             </td>
             <td>
-              <p className="b3">{assessment.totalMarks}</p>
+              <p className="b3">{/*assessment.totalMarks*/}</p>
             </td>
             <td>
               <div className="rbt-button-group justify-content-end">
