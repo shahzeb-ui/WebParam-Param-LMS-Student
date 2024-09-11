@@ -23,7 +23,7 @@ const StudentDiscussions = () => {
 
       <div className="mb-4">
         <p>
-          How does the use of hooks improve the development process in React?
+         <b> How does the use of hooks improve the development process in React?</b>
         </p>
         <p style={{ marginLeft: "20px" }}>
           <i className="bi bi-reply-fill"></i>
