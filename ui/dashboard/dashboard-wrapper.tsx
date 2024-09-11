@@ -6,13 +6,44 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import { useStore } from "@/stores/useStore";
 
 const InstructorDashboardHeader = () => {
   var t = isBrowser;
-
   const [isEnrolled, setIsEnrolled] = useState<any>();
-  const [courseId, setCourseId] = useState("");
   const [course, setCourse] = useState<any>();
+  const [courseId, setCourseId] = useState<string>('');
+
+  const selectedcourseId = useStore((state:any) => state.courseId);
+  const changeCourseId = useStore((state:any) => state.setCourseId);
+
+
+  const coursesArray = [
+    {
+      courseName: "Contact Centre Manager ",
+      courseId: "66c6f9fe0c2eeac80af3b590"
+    },
+    {
+      courseName: "Electrician", 
+      courseId: "6698edd230068555e54ac58e"
+    },
+    {
+      courseName: "Project Management", 
+      courseId: "668fcf681a1ce7b0635b61c6"
+    },
+    {
+      courseName: "Computer Technician",
+      courseId: "669f4301cb3eaf57cd1040db"
+    },
+    {
+      courseName: "New Venture Creation",
+      courseId: "66bb53af591d6479c2b50573"
+    },
+    {
+      courseName: "Small Retail Business Owner",
+      courseId: "66c6f9be0c2eeac80af3b58e"
+    }
+]
 
   const cookies = new Cookies();
 
@@ -56,12 +87,41 @@ const InstructorDashboardHeader = () => {
   return (
     <>
     <div className="mb-5">
+      {!process.env.NEXT_PUBLIC_DEMO ?
         <h3 className="mb-2">
           <span style={{ fontWeight: '700' }}>{course?.title}</span>
-        </h3>
-        <p className="ml-5">
-        {course?.id.slice(-4)}
-        </p>
+        </h3>:
+        <div style={{ maxWidth: "40rem" }}>
+      {/* Select */}
+          <span className="select-label d-block">Select a course</span>
+
+          <div className="tom-select-custom">
+            <select
+        style={{fontSize: "1.5rem"}}
+          className="js-select form-select tomselected ts-hidden-accessible"
+          autoComplete="off"
+          data-hs-tom-select-options='{
+                        "placeholder": "Select a course...",
+                        "hideSearch": true
+                      }'
+          id="tomselect-1"
+          tabIndex={-1}
+          value={coursesArray.find(course => course.courseId === selectedcourseId)?.courseId}
+          onChange={(e) => {
+            setCourseId(e.target.value);
+            changeCourseId(e.target.value);
+            
+          }}
+        >
+           {coursesArray?.map((course: any) => (
+            <option value={course.courseId}>{course.courseName}</option>
+           ))}
+        </select>
+      
+      </div>
+        {/* End Select */}
+      </div>
+}
       </div>
       <div className="rbt-dashboard-content-wrapper">
       {isMobile&&

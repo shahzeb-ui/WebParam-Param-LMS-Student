@@ -8,16 +8,12 @@ import { useRouter } from "next/navigation";
 import { isMobile } from "react-device-detect";
 
 export default function LoginPage() {
-  const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
-  debugger;
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasError, setHasError] = useState<any>({
-    email: false,
-    password: false,
-  });
+    const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasError, setHasError] = useState<any>({ email: false, password: false });
 
   const cookies = new Cookies();
   const router = useRouter();

@@ -10,8 +10,8 @@ const StudentDashboardSidebar = () => {
   const user = cookies.get("loggedInUser");
   const path = usePathname();
   const isFreemium =
-    process.env.NEXT_PUBLIC_FREEMIUM &&
-    process.env.NEXT_PUBLIC_FREEMIUM == "true"
+    process.env.NEXT_PUBLIC_IS_FREEMIUM &&
+    process.env.NEXT_PUBLIC_IS_FREEMIUM == "true"
       ? true
       : false;
 
@@ -46,56 +46,47 @@ const StudentDashboardSidebar = () => {
               </div>
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                  {isFreemium ? (
-                    SidebarData &&
-                    SidebarData?.siderbar
-                      ?.slice(5, 6)
-                      .map((data: any, index: any) => (
-                        <li
-                          className="nav-item"
-                          key={index}
-                          role="presentation"
+                  {SidebarData &&
+                    SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => {
+                      const free = isFreemium ? true : false;
+                      console.log(path === '/student/projects?tab=enrolled');
+                      if (!free && data.link == "/student/enrolled-courses") {
+                        return  (
+                        <li className="nav-item" key={index} role="presentation">
+                        <a
+                          href={'/student/projects?tab=enrolled'}
+                          className={`${path == '/student/projects' ? "active" : ""}`} // Apply the active class correctly
+                          style={{color: path == '/student/projects' ? "#2f57ef" : ""}} 
                         >
-                          <a
-                            className={`${path === data.link ? "active" : ""}`}
-                            href={data.link}
-                          >
-                            <i className={data.icon} />
-                            <span>{data.text}</span>
-                          </a>
-                        </li>
-                      ))
-                  ) : (
-                    SidebarData &&
-                    SidebarData?.siderbar
-                      ?.slice(0, 6)
-                      .map((data: any, index: any) => (
-                        <li
-                          className="nav-item"
-                          key={index}
-                          role="presentation"
+                          <i className={data.icon} />
+                          <span>My Projects</span>
+                        </a>
+                      </li>);
+                      }
+                      return (
+                      <li className="nav-item" key={index} role="presentation">
+                        <a
+                          className={`${path === data.link ? "active" : ""}`}
+                          href={data.link}
                         >
-                          <a
-                            className={`${path === data.link ? "active" : ""}`}
-                            href={data.link}
-                          >
-                            <i className={data.icon} />
-                            <span>{data.text}</span>
-                          </a>
-                        </li>
-                      ))
-                  )}
+                          <i className={data.icon} />
+                          <span>{data.text}</span>
+                        </a>
+                      </li>
+                    )
+                    })}
                 </ul>
               </nav>
 
-              {/* <div className="section-title mt--40 mb--20">
-                <h6 className="rbt-title-style-2">Student</h6>
-              </div>
-
+              {SidebarData?.siderbar.length > 7 &&
+                <div className="section-title mt--40 mb--20">
+                  <h6 className="rbt-title-style-2">User</h6>
+                </div>
+              }
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(9, 13).map((data: any, index: any) => (
+                    SidebarData?.siderbar?.slice(7).map((data: any, index: any) => (
                       <li key={index}>
                         <a
                           href={data.link}
@@ -106,29 +97,6 @@ const StudentDashboardSidebar = () => {
                         </a>
                       </li>
                     ))}
-                </ul>
-              </nav> */}
-              {SidebarData?.siderbar.length > 6 && (
-                <div className="section-title mt--40 mb--20">
-                  <h6 className="rbt-title-style-2">User</h6>
-                </div>
-              )}
-              <nav className="mainmenu-nav">
-                <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                  {SidebarData &&
-                    SidebarData?.siderbar
-                      ?.slice(6, 11)
-                      .map((data: any, index: any) => (
-                        <li key={index}>
-                          <a
-                            href={data.link}
-                            className={`${path === data.link ? "active" : ""}`}
-                          >
-                            <i className={data.icon} />
-                            <span>{data.text}</span>
-                          </a>
-                        </li>
-                      ))}
                 </ul>
               </nav>
             </div>

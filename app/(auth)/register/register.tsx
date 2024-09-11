@@ -6,7 +6,6 @@ import { registerUser } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
-
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
 
@@ -300,7 +299,6 @@ export default function Register() {
               ) : (
                 "Register"
               )}
-          
             </button>
           </div>
           <div className="auth-footer">
