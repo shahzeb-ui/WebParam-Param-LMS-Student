@@ -6,7 +6,6 @@ import { LoginUser, registerUser } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
-import Confetti from "react-confetti";
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
 
@@ -299,22 +298,6 @@ export default function Register() {
                 <div className="spinner-grow text-light" role="status" />
               ) : (
                 "Register"
-              )}
-              {isExploding && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    width: "100%",
-                    height: "100%",
-                    overflow: "hidden",
-                  }}
-                >
-                  <Confetti width={400} height={50} numberOfPieces={150} />
-                </div>
               )}
             </button>
           </div>

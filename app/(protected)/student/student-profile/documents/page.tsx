@@ -12,7 +12,6 @@ import { getDocumentsByCourseId, getStudentDocuments } from '@/app/api/studentPr
 import { documentsRequired, yesProgramme } from './data';
 import Loading from './loading';
 import { readUserData, writeUserData } from '@/app/lib/endpoints';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
@@ -20,9 +19,8 @@ import { zoomPlugin } from '@react-pdf-viewer/zoom';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
-import { button } from '@nextui-org/react';
 
-const pdfVersion = "2.16.105";
+const pdfVersion = "3.11.174";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
 // Update DocumentType to use the keys from documentsRequired

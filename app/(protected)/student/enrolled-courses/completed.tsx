@@ -7,9 +7,10 @@ import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
 import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
+import { useStore } from "@/stores/useStore";
 
 export default function Completed() {
-    
+  const selectedcourseId = useStore((state:any) => state.courseId);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
@@ -54,9 +55,15 @@ export default function Completed() {
   };
 
   useEffect(() => {
-    const courseId = "668fcf681a1ce7b0635b61c6";
+    if (process.env.NEXT_PUBLIC_DEMO) {
+      const courseId = selectedcourseId;
     getUnitStandards(courseId);
-  }, []);
+    } else {
+      const courseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
+      getUnitStandards(courseId);
+    }
+
+  }, [selectedcourseId]);
 
   if (loading) {
     return <Loader />;
