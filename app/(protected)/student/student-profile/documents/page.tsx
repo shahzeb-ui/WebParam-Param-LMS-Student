@@ -22,7 +22,7 @@ import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 import { button } from '@nextui-org/react';
 
-const pdfVersion = "2.16.105";
+const pdfVersion = "3.11.174";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
 // Update DocumentType to use the keys from documentsRequired
