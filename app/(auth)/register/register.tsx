@@ -86,6 +86,8 @@ export default function Register() {
     try {
       const res = await registerUser(payload);
       setIsLoading(false);
+      debugger;
+
       if (res) {
         if (res?.data.message !== "User exists") {
           setIsExploding(true);
