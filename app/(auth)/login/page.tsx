@@ -54,6 +54,7 @@ export default function LoginPage() {
             if (res) {
                 
                 cookies.set("loggedInUser", res.data);
+                debugger;
                 const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
                 router.push(redirectPath)
             }

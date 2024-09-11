@@ -353,31 +353,31 @@
       width: 100%;
       margin-bottom: 20px;
       padding-top: 60px;
-      padding: 20px; // Increase padding
-      min-height: 300px; // Set a minimum height
+      padding: 20px; 
+      min-height: 300px; 
     }
   
     .document-name-list h5 {
-      margin-bottom: 20px; // Increase margin below the "Documents" text
-      font-size: 18px; // Increase font size
+      margin-bottom: 20px; 
+      font-size: 18px;
     }
   
     .document-name-list ul {
       padding-left: 0;
-      margin-top: 10px; // Add some top margin
+      margin-top: 10px; 
     }
   
     .document-name-list li {
         padding: 10px 0;
-        font-size: 12px; // Decrease font size
-        border: 1px solid rgb(36, 52, 92); // Add border color
-        border-radius: 8px; // Add border radius
-        background-color: transparent; // Set background to transparent
-        margin-bottom: 10px; // Add space between items
+        font-size: 12px;
+        border: 1px solid rgb(36, 52, 92);
+        border-radius: 8px; 
+        background-color: transparent; 
+        margin-bottom: 10px; 
       }
     
       .document-name-list li .document-name {
-        font-size: 14px; // Match the li font size
+        font-size: 14px;
       }
     
     .document-preview-container,
