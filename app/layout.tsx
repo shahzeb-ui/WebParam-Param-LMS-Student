@@ -1,4 +1,3 @@
-"use client";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
@@ -21,13 +20,34 @@ import "@/public/scss/styles.scss";
 import { UserProvider } from "@/context/user-context/user-context";
 import { LessonProvider } from "@/context/lesson-context/lesson-context";
 import { Provider } from "./providers";
-import FlagSmithProvider from "./FlagSmithProvider";
-// import flagsmith from "flagsmith";
-// import { FlagsmithProvider } from "flagsmith/react";
+// import FlagSmithProvider from "./FlagSmithProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
 const APP_NAME = "Thooto";
 const APP_DESCRIPTION = "Supercharge your learning. 🚀🚀";
+
+export const metadata: Metadata = {
+  applicationName: APP_NAME,
+  title: {
+    default: APP_NAME,
+    template: "%s",
+  },
+  description: APP_DESCRIPTION,
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_NAME,
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+  },
+};
 
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
@@ -43,7 +63,9 @@ export default function RootLayout({
           <LessonProvider>
             <Provider>
               <Navbar />
-              <FlagSmithProvider>{children}</FlagSmithProvider>
+              {/* <FlagSmithProvider> */}
+                <>{children}</>
+              {/* </FlagSmithProvider> */}
             </Provider>
             <BootstrapClient />
 
