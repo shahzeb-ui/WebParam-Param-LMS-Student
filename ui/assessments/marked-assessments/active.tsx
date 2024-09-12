@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAssessmentContext } from '../(context)/AssessmentContext';
 import { rAssessmentUrl } from '../../../app/lib/endpoints';
+import Cookies from "universal-cookie";
 
 enum AssessmentType {
   Summative = 0,
@@ -20,7 +21,9 @@ export default function ActiveAssessment() {
   const [data, setData] = useState<Assessment[]>([]);
   const [filteredData, setFilteredData] = useState<Assessment[]>([]);
   const courseId = '6669f0ff8759b480859c10a7';
-  //const courseId = Cookies.get('courseId'); 
+ 
+  // const cookies = new Cookies();
+  // const courseId = cookies.get('courseId'); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +60,7 @@ export default function ActiveAssessment() {
       filtered = data.filter(assessment => assessment.type === AssessmentType.Formative);
     }
     console.log('filtered:', filtered);
+    console.log('courseId :',courseId)
     setFilteredData(filtered);
   }, [data, assessmentType]);
 
