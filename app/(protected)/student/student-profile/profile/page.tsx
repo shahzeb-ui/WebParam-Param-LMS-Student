@@ -10,7 +10,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
-import { readUserData } from '@/app/api/endpoints';
+import { readUserData } from '@/app/lib/endpoints';
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");
