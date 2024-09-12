@@ -35,16 +35,16 @@ export default function Register() {
   const projectId = searchParams.get("projectId") || "";
 
   const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID ?? "";
-  const flags = useFlags(["FREEMIUM", "banner_size"]); // only causes re-render if specified flag values / traits change
-  console.log("Flags: ", flags);
-  const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
+  // const flags = useFlags(["FREEMIUM", "banner_size"]); // only causes re-render if specified flag values / traits change
+  // console.log("Flags: ", flags);
+  // const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
 
-  /*   const isFreemium =
+  const isFreemium =
     process.env.NEXT_PUBLIC_FREEMIUM &&
     process.env.NEXT_PUBLIC_FREEMIUM == "true"
       ? true
       : false;
- */
+ 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     debugger;
