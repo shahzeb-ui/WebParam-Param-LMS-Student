@@ -42,9 +42,7 @@ export default function RootLayout({
           <LessonProvider>
             <Provider>
               <Navbar />
-              <FlagSmithProvider>
-                <>{children}</>
-              </FlagSmithProvider>
+              <FlagSmithProvider>{children}</FlagSmithProvider>
             </Provider>
             <BootstrapClient />
 
