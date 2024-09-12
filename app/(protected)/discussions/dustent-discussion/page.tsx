@@ -1,9 +1,11 @@
 "use client";
 
+import { GetSideBarData } from "@/interfaces/SidebarData";
 import { usePathname } from "next/navigation";
-import SidebarData from "@/data/discussion/discussion-sidebar.json";
+
 
 const DiscussionDashboardSidebar = () => {
+  const SidebarData = GetSideBarData();
   const path = usePathname();
   return (
     <>
@@ -15,7 +17,7 @@ const DiscussionDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.siderbar.slice(0, 8).map((data, index) => (
+                    SidebarData.slice(0, 8).map((data, index) => (
                       <li className="nav-item" key={index} role="presentation">
                         <a
                           className={`${path === data.link ? "active" : ""}`}
@@ -34,7 +36,7 @@ const DiscussionDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.siderbar.slice(8, 10).map((data, index) => (
+                    SidebarData.slice(8, 10).map((data, index) => (
                       <li key={index}>
                         <a
                           href={data.link}
