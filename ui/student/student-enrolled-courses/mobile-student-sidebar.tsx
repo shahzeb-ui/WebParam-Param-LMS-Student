@@ -23,7 +23,7 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
   }, []);
 
   const SidebarData = GetSideBarData();
-
+  const isFreemium = process.env.NEXT_PUBLIC_FREEMIUM && process.env.NEXT_PUBLIC_FREEMIUM == "true" ? true : false;
 
   return (
     <div className={`${styles.sidebar} ${isOpen ? styles.open : ""}`} style={{ width:'100%', position:'fixed', bottom:'0 !important', left:'0 !important', right:'0 !important', marginTop:'75px !important',zIndex:'1000'}}>
@@ -36,7 +36,7 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
                 <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SidebarData &&
-                      SidebarData.slice(0, 7).map((data, index) => (
+                      SidebarData.slice(0, isFreemium?3:8).map((data, index) => (
                         <li
                           className="nav-item"
                           key={index}
@@ -61,7 +61,7 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
                 <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SidebarData &&
-                      SidebarData.slice(7).map((data, index) => (
+                     SidebarData.slice(isFreemium?3:8, isFreemium?5:10).map((data, index) => (
                         <li key={index}>
                           <a
                             className={`${path === data.link ? "active" : ""}`}

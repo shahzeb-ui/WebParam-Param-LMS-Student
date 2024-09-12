@@ -16,7 +16,7 @@ const InstructorDashboardHeader = () => {
 
   const selectedcourseId = useStore((state:any) => state.courseId);
   const changeCourseId = useStore((state:any) => state.setCourseId);
-
+const isFreemium = process.env.NEXT_PUBLIC_FREEMIUM;
 
   const coursesArray = [
     {
@@ -48,7 +48,7 @@ const InstructorDashboardHeader = () => {
   const cookies = new Cookies();
 
   const user = cookies.get("loggedInUser");
-  
+  debugger;
   async function getEnrollment(userId: string) {
     
     try {
@@ -117,8 +117,10 @@ const InstructorDashboardHeader = () => {
         
         </div>
           {/* End Select */}
-        </div>:<h3 className="mb-2">
-          <span style={{ fontWeight: '700' }}>{course?.title}</span>
+        </div>:
+        
+        <h3 className="mb-2">
+          {!isFreemium ? <span style={{ fontWeight: '700' }}>{course?.title}</span>: <span style={{ fontWeight: '700' }}>Wecome back <small>{user?.data?.username}</small></span>}
         </h3>
         
 }

@@ -2,6 +2,7 @@
 const test = "testing";
 const env = process.env.NEXT_PUBLIC_API_ENV == "production" ? "prod" : process.env.NEXT_PUBLIC_API_ENV;
 
+
 // const env = process.env.NEXT_PUBLIC_API_URL;
 
 export const writeUserData = `https://thooto-${env}-be-user-write.azurewebsites.net`;
@@ -28,7 +29,7 @@ export const wAudioGenerateUrl = `https://thooto-${env}-be-audio-generate.azurew
 
 export const wAssessmentUrl =  "https://thooto-development-assessment-write.azurewebsites.net";
 
-export const twAssessmentUrl = `https://thooto-${test}-be-assessment-write.azurewebsites.net`;
+export const twAssessmentUrl = `https://thooto-${test}-assessment-write.azurewebsites.net`;
 
 export const rAssessmentUrl = `https://thooto-${env}-be-assessment-read.azurewebsites.net`;
 
@@ -36,7 +37,7 @@ export const wQuestionUrl = `https://thooto-${env}-be-assessment-write.azurewebs
 
 export const rAggregatorUrl = `https://thooto-${env}-be-api-aggregator.azurewebsites.ne1`;
 
-export const rAggregator = `https://thooto-${test}-be-aggregator.azurewebsites.net`;
+export const rAggregator = `https://thooto-${test}-aggregator.azurewebsites.net`;
 
 export const wRubricUrl = `https://thooto-${env}-be-assessment-write.azurewebsites.net/api/Rubrics`;
 
@@ -48,7 +49,7 @@ export const rOptionUrl = `https://thooto-${env}-be-assessment-read.azurewebsite
 
 export const rKnowledgeModuleUrl = `https://thooto-${env}-be-newcourse-read.azurewebsites.net`;
 
-export const rAnalyticUrl = `https:khumla-${env}-be-activity-read.azurewebsites.net`;
+export const rAnalyticUrl = `https://thooto-${env}-be-activity-read.azurewebsites.net`;
 
 export const getCodesUrl = `https://thooto-${env}-be-user-read.azurewebsites.net`;
 
@@ -60,8 +61,3 @@ export const wLoogBookUrl = `https://thooto-${env}-be-logbook-write.azurewebsite
 
 export const rLoogBookUrl = `https://thooto-${env}-be-logbook-read.azurewebsites.net`;
 
-
-
-export const getnotificationUrl = `https://thooto-${env}-be-notification-read.azurewebsites.net`;
-
-export const notificationWriteUrl = `https://thooto-${env}-be-notification-write.azurewebsites.net`;
