@@ -42,3 +42,4 @@ public/sw.js
 /.env
 /.env
 /.env.development
+/public/sw.js
