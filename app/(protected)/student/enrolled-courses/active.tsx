@@ -7,9 +7,10 @@ import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
 import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
+import { useStore } from "@/stores/useStore";
 
 export default function Active() {
-    
+  const selectedcourseId = useStore((state:any) => state.courseId);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
@@ -25,18 +26,6 @@ export default function Active() {
   const itemsPerPage = 3;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-
-  // const handleNext = () => {
-  //   if (endIndex < unitStandards.length) {
-  //     setCurrentPage(currentPage + 1);
-  //   }
-  // };
-
-  // const handlePrevious = () => {
-  //   if (currentPage > 0) {
-  //     setCurrentPage(currentPage - 1);
-  //   }
-  // };
 
   const getUnitStandards = async (courseId: string) => {
     setLoading(true);
@@ -54,9 +43,15 @@ export default function Active() {
   };
 
   useEffect(() => {
-    const courseId = "668fcf681a1ce7b0635b61c6";
+    if (process.env.NEXT_PUBLIC_DEMO) {
+      const courseId = selectedcourseId;
     getUnitStandards(courseId);
-  }, []);
+    } else {
+      const courseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
+      getUnitStandards(courseId);
+    }
+
+  }, [selectedcourseId]);
 
   if (loading) {
     return <Loader />;

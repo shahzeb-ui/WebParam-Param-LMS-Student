@@ -42,7 +42,6 @@
     "react-apexcharts": "^1.4.1",
     "react-bootstrap": "^2.10.4",
     "react-chartjs-2": "^5.2.0",
-    "react-confetti": "^6.1.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18",
     "react-infinite-scroll-component": "^6.1.0",
@@ -57,7 +56,8 @@
     "react-youtube": "^10.1.0",
     "sass": "^1.77.4",
     "universal-cookie": "^7.1.4",
-    "webpack": "^5.93.0"
+    "webpack": "^5.93.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@capacitor/cli": "^6.0.0",
