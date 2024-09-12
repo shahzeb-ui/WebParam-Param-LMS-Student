@@ -81,7 +81,7 @@ export default function ActiveAssessment() {
             <th>
               <span className="h6 mb--5">{assessment.title}</span>
               <p className="b3">
-                Course: <a href="#">{/*assessment.course*/}</a>
+                Course: <a href="#">{/*assessment.course//this will come form a separate endpoint*/}</a>
               </p>
             </th>
             <td>
