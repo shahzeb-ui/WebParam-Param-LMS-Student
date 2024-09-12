@@ -1,4 +1,3 @@
-"use client";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
@@ -21,8 +20,9 @@ import "@/public/scss/styles.scss";
 import { UserProvider } from "@/context/user-context/user-context";
 import { LessonProvider } from "@/context/lesson-context/lesson-context";
 import { Provider } from "./providers";
-import flagsmith from "flagsmith";
-import { FlagsmithProvider } from "flagsmith/react";
+import FlagSmithProvider from "./FlagSmithProvider";
+// import flagsmith from "flagsmith";
+// import { FlagsmithProvider } from "flagsmith/react";
 const inter = Inter({ subsets: ["latin"] });
 
 const APP_NAME = "Thooto";
@@ -42,14 +42,9 @@ export default function RootLayout({
           <LessonProvider>
             <Provider>
               <Navbar />
-              <FlagsmithProvider
-                options={{
-                  environmentID: "TmQCzVJqriWe9USBFUFLyf",
-                }}
-                flagsmith={flagsmith}
-              >
+              <FlagSmithProvider>
                 <>{children}</>
-              </FlagsmithProvider>
+              </FlagSmithProvider>
             </Provider>
             <BootstrapClient />
 
