@@ -48,7 +48,7 @@ const isFreemium = process.env.NEXT_PUBLIC_FREEMIUM;
   const cookies = new Cookies();
 
   const user = cookies.get("loggedInUser");
-  debugger;
+
   async function getEnrollment(userId: string) {
     
     try {
