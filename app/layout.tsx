@@ -48,7 +48,7 @@ export default function RootLayout({
                 }}
                 flagsmith={flagsmith}
               >
-                {<>children</>}
+                <>{children}</>
               </FlagsmithProvider>
             </Provider>
             <BootstrapClient />
