@@ -8,15 +8,24 @@ import { useRouter } from "next/navigation";
 import { isMobile } from "react-device-detect";
 
 export default function LoginPage() {
-    const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [hasError, setHasError] = useState<any>({ email: false, password: false });
+  const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState<any>({
+    email: false,
+    password: false,
+  });
 
   const cookies = new Cookies();
   const router = useRouter();
+
+  const isFreemium =
+  process.env.NEXT_PUBLIC_FREEMIUM &&
+  process.env.NEXT_PUBLIC_FREEMIUM == "true"
+    ? true
+    : false;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -39,38 +48,39 @@ export default function LoginPage() {
       password,
     };
 
-      try {
-        const res = await LoginUser(payload);
-            setIsLoading(false);
-            
-            if (res == undefined) {
-                setErrorMessage('Incorrect User details');
-                return;
-            }
-            
-            if (res) {
-                
-                cookies.set("loggedInUser", res.data);
-                debugger;
-                const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
-                router.push(redirectPath)
-            }
-        } catch (error: any) {
-            setErrorMessage('Network Error please try again');
-            setIsLoading(false);
-        }
-      
+    try {
+      const res = await LoginUser(payload);
+      setIsLoading(false);
 
-      console.log('Form submitted successfully');
+      if (res == undefined) {
+        setErrorMessage("Incorrect User details");
+        return;
+      }
+
+      if (res) {
+        cookies.set("loggedInUser", res.data);
+        debugger;
+        const redirectPath =
+          process.env.NEXT_PUBLIC_FREEMIUM === "true"
+            ? "/student/projects?tab=enrolled"
+            : "/student/student-profile";
+        router.push(redirectPath);
+      }
+    } catch (error: any) {
+      setErrorMessage("Network Error please try again");
       setIsLoading(false);
     }
-  
-    useEffect(() => {
-      if (email !== '' || password !== '') {
-        setHasError({ email: false, password: false });
-        setErrorMessage('')
-      }
-    }, [email, password]);
+
+    console.log("Form submitted successfully");
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    if (email !== "" || password !== "") {
+      setHasError({ email: false, password: false });
+      setErrorMessage("");
+    }
+  }, [email, password]);
 
   return (
     <div className="login-container">
@@ -158,12 +168,14 @@ export default function LoginPage() {
               )}
             </button>
           </div>
-          <div className="auth-footer">
-            <p>Don&apos;t have an account? </p>
-            <Link style={{ color: "#2597ac" }} href="/register">
-              Register
-            </Link>
-          </div>
+          {!isFreemium && (
+            <div className="auth-footer">
+              <p>Don&apos;t have an account? </p>
+              <Link style={{ color: "#2597ac" }} href="/register">
+                Register
+              </Link>
+            </div>
+          )}
         </form>
       </div>
     </div>
