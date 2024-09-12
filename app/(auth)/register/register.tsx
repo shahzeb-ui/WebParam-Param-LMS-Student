@@ -2,13 +2,14 @@
 import "./register.scss";
 import React, { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
-import { LoginUser, registerUser } from "@/app/api/auth/auth";
+import { registerUser } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
-import Confetti from "react-confetti";
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
+import flagsmith from "flagsmith/isomorphic";
+import { useFlags, useFlagsmith } from "flagsmith/react";
 
 export default function Register() {
   const [isExploding, setIsExploding] = React.useState(false);
@@ -34,12 +35,16 @@ export default function Register() {
   const projectId = searchParams.get("projectId") || "";
 
   const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID ?? "";
-  const isFreemium =
+  const flags = useFlags(["FREEMIUM", "banner_size"]); // only causes re-render if specified flag values / traits change
+  console.log("Flags: ", flags);
+  const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
+
+  /*   const isFreemium =
     process.env.NEXT_PUBLIC_FREEMIUM &&
     process.env.NEXT_PUBLIC_FREEMIUM == "true"
       ? true
       : false;
-
+ */
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     debugger;
@@ -86,6 +91,8 @@ export default function Register() {
     try {
       const res = await registerUser(payload);
       setIsLoading(false);
+      debugger;
+
       if (res) {
         if (res?.data.message !== "User exists") {
           setIsExploding(true);
@@ -172,7 +179,7 @@ export default function Register() {
   return (
     <div className="register-container">
       <div
-        className="left-container"
+        className="left-container d-md-block d-none"
         data-aos="zoom-out-right"
         style={{
           backgroundColor: "#24345C",
@@ -300,27 +307,13 @@ export default function Register() {
               ) : (
                 "Register"
               )}
-              {isExploding && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    width: "100%",
-                    height: "100%",
-                    overflow: "hidden",
-                  }}
-                >
-                  <Confetti width={400} height={50} numberOfPieces={150} />
-                </div>
-              )}
             </button>
           </div>
           <div className="auth-footer">
             <p>Already have an account? </p>
-            <Link href="/login">Login</Link>
+            <Link style={{ color: "#2597ac" }} href="/login">
+              Login
+            </Link>
           </div>
         </form>
       </div>

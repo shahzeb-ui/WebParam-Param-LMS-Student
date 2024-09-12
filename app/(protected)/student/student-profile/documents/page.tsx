@@ -20,9 +20,9 @@ import { zoomPlugin } from '@react-pdf-viewer/zoom';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
-import { button } from '@nextui-org/react';
+import {isMobile} from 'react-device-detect';
 
-const pdfVersion = "2.16.105";
+const pdfVersion = "3.11.174";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
 // Update DocumentType to use the keys from documentsRequired
@@ -250,9 +250,7 @@ const FileUpload: React.FC = () => {
   
   console.log('document ',documentinfo);
 
-  // if (documentinfo == null && action == null) {
-  //   documentinfo = null
-  // }
+  console.log('isMobile', isMobile);
 
 
   return (
@@ -343,7 +341,7 @@ const FileUpload: React.FC = () => {
           <Viewer
             fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
             plugins={[thumbnailPluginInstance, zoomPluginInstance]}
-            defaultScale={.9}  
+            defaultScale={isMobile ? .3 : .9}  
             />
         </Worker>
         :
@@ -453,7 +451,7 @@ const FileUpload: React.FC = () => {
        </>
        }
        {action == null && selectedDocument == null && 
-       <div >
+       <div className='no-document-selected'>
         <h5>No document selected</h5>
        </div>}
       </div>
@@ -471,5 +469,4 @@ const FileUpload: React.FC = () => {
 };
 
 export default FileUpload;
-
 

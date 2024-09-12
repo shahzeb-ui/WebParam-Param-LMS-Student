@@ -50,8 +50,9 @@ const StudentDashboardSidebar = () => {
                     SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => {
                       const free = isFreemium ? true : false;
                       console.log(path === '/student/projects?tab=enrolled');
-                      if (free && data.link == "/student/enrolled-courses") {
-                        return  <li className="nav-item" key={index} role="presentation">
+                      if (!free && data.link == "/student/enrolled-courses") {
+                        return  (
+                        <li className="nav-item" key={index} role="presentation">
                         <a
                           href={'/student/projects?tab=enrolled'}
                           className={`${path == '/student/projects' ? "active" : ""}`} // Apply the active class correctly
@@ -60,7 +61,7 @@ const StudentDashboardSidebar = () => {
                           <i className={data.icon} />
                           <span>My Projects</span>
                         </a>
-                      </li>;
+                      </li>);
                       }
                       return (
                       <li className="nav-item" key={index} role="presentation">
