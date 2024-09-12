@@ -8,10 +8,6 @@ export default async function FlagSmithProvider({
 }: {
   children: React.ReactNode;
 }) {
-  await flagsmith.init({
-    // fetches flags on the server and passes them to the App
-    environmentID: "TmQCzVJqriWe9USBFUFLyf",
-  });
 
   return (
     <FlagsmithProvider
