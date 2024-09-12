@@ -20,6 +20,7 @@ export default function ActiveAssessment() {
   const [data, setData] = useState<Assessment[]>([]);
   const [filteredData, setFilteredData] = useState<Assessment[]>([]);
   const courseId = '6669f0ff8759b480859c10a7';
+  //const courseId = Cookies.get('courseId'); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +40,7 @@ export default function ActiveAssessment() {
       } catch (error) {
         console.error('Error fetching assessments:', error);
       }
-      
+
     };
 
     fetchData();
