@@ -60,3 +60,8 @@ export const wLoogBookUrl = `https://thooto-${env}-be-logbook-write.azurewebsite
 
 export const rLoogBookUrl = `https://thooto-${env}-be-logbook-read.azurewebsites.net`;
 
+
+
+export const getnotificationUrl = `https://thooto-${env}-be-notification-read.azurewebsites.net`;
+
+export const notificationWriteUrl = `https://thooto-${env}-be-notification-write.azurewebsites.net`;

@@ -1,4 +1,6 @@
-import { readUserData } from "@/app/api/endpoints";
+
+
+import { readUserData } from "@/app/lib/endpoints";
 import { IProject } from "@/interfaces/project/project";
 import axios from "axios";
 
