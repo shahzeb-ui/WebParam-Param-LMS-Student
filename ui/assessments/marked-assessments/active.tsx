@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useAssessmentContext } from '../(context)/AssessmentContext';
 import { rAssessmentUrl } from '../../../app/lib/endpoints';
 
-// Define the Assessment interface
+enum AssessmentType {
+  Summative = 0,
+  Formative = 1,
+}
+
 interface Assessment {
   id: string;
   state: number;
   title: string;
   courseId: string;
-  type: string;
+  type: AssessmentType;
 }
 
 export default function ActiveAssessment() {
@@ -20,15 +24,12 @@ export default function ActiveAssessment() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `${rAssessmentUrl}/api/v1/assessments/GetNewAssessments/${courseId}`;
-        console.log('Fetching URL:', url);
-        const response = await fetch(url);
+        const response = await fetch(`${rAssessmentUrl}/api/v1/assessments/GetNewAssessments/${courseId}`);
         if (!response.ok) {
           console.error(`Error fetching assessments: ${response.statusText}`);
           return;
         }
         const result = await response.json();
-        console.log('API response:', result);
 
         if (result && Array.isArray(result.data)) {
           setData(result.data);
@@ -38,15 +39,26 @@ export default function ActiveAssessment() {
       } catch (error) {
         console.error('Error fetching assessments:', error);
       }
+      
     };
 
     fetchData();
   }, [courseId]);
 
   useEffect(() => {
-    const filtered = data.filter(assessment => assessment.type === assessmentType);
+    console.log('data:', data);
+    console.log('assessmentType from context:', assessmentType);
+
+    let filtered: Assessment[] = [];
+    if (assessmentType === "summative") {
+      filtered = data.filter(assessment => assessment.type === AssessmentType.Summative);
+    } else if (assessmentType === "formative") {
+      filtered = data.filter(assessment => assessment.type === AssessmentType.Formative);
+    }
+    console.log('filtered:', filtered);
     setFilteredData(filtered);
   }, [data, assessmentType]);
+
 
   return (
     <table className="rbt-table table table-borderless">
@@ -64,7 +76,7 @@ export default function ActiveAssessment() {
             <th>
               <span className="h6 mb--5">{assessment.title}</span>
               <p className="b3">
-                Course: <a href="#">{assessment.courseId}</a>
+                Course: <a href="#">{/*assessment.course*/}</a>
               </p>
             </th>
             <td>
