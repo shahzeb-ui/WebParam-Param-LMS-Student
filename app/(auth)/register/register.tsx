@@ -8,8 +8,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
-import flagsmith from "flagsmith/isomorphic";
-import { useFlags, useFlagsmith } from "flagsmith/react";
+// import flagsmith from "flagsmith/isomorphic";
+// import { useFlags, useFlagsmith } from "flagsmith/react";
 
 export default function Register() {
   const [isExploding, setIsExploding] = React.useState(false);
