@@ -8,7 +8,6 @@ export default async function FlagSmithProvider({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <FlagsmithProvider
       options={{
