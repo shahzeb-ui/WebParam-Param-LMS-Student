@@ -20,7 +20,7 @@ import "@/public/scss/styles.scss";
 import { UserProvider } from "@/context/user-context/user-context";
 import { LessonProvider } from "@/context/lesson-context/lesson-context";
 import { Provider } from "./providers";
-import FlagSmithProvider from "./FlagSmithProvider";
+// import FlagSmithProvider from "./FlagSmithProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,9 +63,9 @@ export default function RootLayout({
           <LessonProvider>
             <Provider>
               <Navbar />
-              <FlagSmithProvider>
+              {/* <FlagSmithProvider> */}
                 <>{children}</>
-              </FlagSmithProvider>
+              {/* </FlagSmithProvider> */}
             </Provider>
             <BootstrapClient />
 
