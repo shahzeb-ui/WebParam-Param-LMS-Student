@@ -48,9 +48,9 @@ const StudentDashboardSidebar = () => {
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
                     SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => {
-                      const free = isFreemium ? true : false;
+                      
                       console.log(path === '/student/projects?tab=enrolled');
-                      if (!free && data.link == "/student/enrolled-courses") {
+                      if (process.env.NEXT_PUBLIC_IS_FREEMIUM && data.link == "/student/enrolled-courses") {
                         return  (
                         <li className="nav-item" key={index} role="presentation">
                         <a
