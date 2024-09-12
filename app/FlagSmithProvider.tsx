@@ -11,7 +11,6 @@ export default async function FlagSmithProvider({
 
   return (
     <FlagsmithProvider
-      serverState={flagsmith.getState()}
       options={{
         environmentID: "TmQCzVJqriWe9USBFUFLyf",
       }}
