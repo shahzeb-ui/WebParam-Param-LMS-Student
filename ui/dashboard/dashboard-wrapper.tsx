@@ -87,40 +87,40 @@ const InstructorDashboardHeader = () => {
   return (
     <>
     <div className="mb-5">
-      {!process.env.NEXT_PUBLIC_DEMO ?
-        <h3 className="mb-2">
-          <span style={{ fontWeight: '700' }}>{course?.title}</span>
-        </h3>:
+      {process.env.NEXT_PUBLIC_DEMO ?
         <div style={{ maxWidth: "40rem" }}>
-      {/* Select */}
-          <span className="select-label d-block">Select a course</span>
-
-          <div className="tom-select-custom">
-            <select
-        style={{fontSize: "1.5rem"}}
-          className="js-select form-select tomselected ts-hidden-accessible"
-          autoComplete="off"
-          data-hs-tom-select-options='{
-                        "placeholder": "Select a course...",
-                        "hideSearch": true
-                      }'
-          id="tomselect-1"
-          tabIndex={-1}
-          value={coursesArray.find(course => course.courseId === selectedcourseId)?.courseId}
-          onChange={(e) => {
-            setCourseId(e.target.value);
-            changeCourseId(e.target.value);
-            
-          }}
-        >
-           {coursesArray?.map((course: any) => (
-            <option value={course.courseId}>{course.courseName}</option>
-           ))}
-        </select>
-      
-      </div>
-        {/* End Select */}
-      </div>
+        {/* Select */}
+            <span className="select-label d-block">Select a course</span>
+  
+            <div className="tom-select-custom">
+              <select
+          style={{fontSize: "1.5rem"}}
+            className="js-select form-select tomselected ts-hidden-accessible"
+            autoComplete="off"
+            data-hs-tom-select-options='{
+                          "placeholder": "Select a course...",
+                          "hideSearch": true
+                        }'
+            id="tomselect-1"
+            tabIndex={-1}
+            value={coursesArray.find(course => course.courseId === selectedcourseId)?.courseId}
+            onChange={(e) => {
+              setCourseId(e.target.value);
+              changeCourseId(e.target.value);
+              
+            }}
+          >
+             {coursesArray?.map((course: any) => (
+              <option value={course.courseId}>{course.courseName}</option>
+             ))}
+          </select>
+        
+        </div>
+          {/* End Select */}
+        </div>:<h3 className="mb-2">
+          <span style={{ fontWeight: '700' }}>{course?.title}</span>
+        </h3>
+        
 }
       </div>
       <div className="rbt-dashboard-content-wrapper">
