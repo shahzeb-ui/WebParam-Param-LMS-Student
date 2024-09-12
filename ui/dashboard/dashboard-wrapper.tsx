@@ -120,7 +120,7 @@ const isFreemium = process.env.NEXT_PUBLIC_FREEMIUM;
         </div>:
         
         <h3 className="mb-2">
-          {!isFreemium ? <span style={{ fontWeight: '700' }}>{course?.title}</span>: <span style={{ fontWeight: '700' }}>Wecome back <small>{user?.data?.username}</small></span>}
+          {!isFreemium ? <span style={{ fontWeight: '700' }}>{course?.title}</span>: <span style={{ fontWeight: '700' }}><small>Wecome back</small> {user?.data?.username}</span>}
         </h3>
         
 }
