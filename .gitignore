@@ -40,3 +40,6 @@ next-env.d.ts
 public/sw.js
 /.env.development
 /.env
+/.env
+/.env.development
+/public/sw.js

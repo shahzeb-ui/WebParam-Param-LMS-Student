@@ -158,12 +158,12 @@ export default function LoginPage() {
               )}
             </button>
           </div>
-          <div className="auth-footer">
+          {/* <div className="auth-footer">
             <p>Don&apos;t have an account? </p>
             <Link style={{ color: "#2597ac" }} href="/register">
               Register
             </Link>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
