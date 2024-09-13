@@ -13,6 +13,7 @@ type Question = {
   title: string;
   type: string;
   options: Option[];
+  score: string;
 };
 
 type MultipleChoiceQuestionsProps = {
@@ -136,12 +137,11 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
           )}
           <div className="quize-top-left mt-2">
             <span>
-              Marks: <strong>5</strong>
+              Marks: <strong>{q.score}</strong>
             </span>
           </div>
         </div>
       ))}
-      <button onClick={handleSubmitAnswers}>Submit Answers</button>
     </div>
   );
 };

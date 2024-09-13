@@ -11,6 +11,7 @@ type LongAnswerQuestion = {
   id: string;
   title: string;
   type: string;
+  score: string;
 };
 
 const AssessmentComponent = () => {
@@ -20,18 +21,21 @@ const AssessmentComponent = () => {
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const [quizCount, setQuizCount] = useState<number>(0);
 
   const assessmentId = "66e3cbef3e73f6ee989eaf29";
 
   useEffect(() => {
     if (assessmentId) {
-      // Fetch long-answer questions based on assessmentId
+      // Fetch questions based on assessmentId
       fetch(`https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions/GetQuestions/${assessmentId}`)
         .then((response) => response.json())
         .then((data) => {
           if (Array.isArray(data.data)) {
             const longTextQuestions = data.data.filter((question: any) => question.questionType === "Long Text");
+            const quizQuestions = data.data.filter((question: any) => question.questionType === "Quiz");
             setLongQuestions(longTextQuestions);
+            setQuizCount(quizQuestions.length);
             setAnswers(Array(longTextQuestions.length).fill(""));
           } else {
             console.error("Unexpected data format:", data);
@@ -152,28 +156,9 @@ const AssessmentComponent = () => {
             />
             {longQuestions.map((item, index) => (
               <div key={item.id} id={`question-${index + 1}`} className="question">
-                <div className="quize-top-meta">
-                  {index === 0 ? (
-                    <>
-                      {/* Additional meta information for the first question */}
-                    </>
-                  ) : (
-                    <>
-                      <div className="quize-top-left">
-                        <span>
-                          Marks: <strong>5</strong>
-                        </span>
-                      </div>
-                      <div className="quize-top-right">
-                        {/* Additional meta information for other questions */}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <hr />
                 <div className="rbt-single-quiz">
                   <h4 style={{ margin: "0 auto", fontSize: "21px" }}>
-                    {index + 1}. {item.title}
+                    {quizCount + index + 1}. {item.title}
                   </h4>
                   <div className="row g-3 mt--10">
                     <textarea
@@ -182,6 +167,14 @@ const AssessmentComponent = () => {
                       onChange={(e) => handleAnswerChange(e, index)}
                       disabled={loading}
                     />
+                  </div>
+                </div>
+                <hr />
+                <div className="quize-top-meta">
+                  <div className="quize-top-left">
+                    <span>
+                      Marks: <strong>{item.score}</strong>
+                    </span>
                   </div>
                 </div>
               </div>
