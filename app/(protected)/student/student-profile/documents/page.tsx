@@ -12,8 +12,17 @@ import { getDocumentsByCourseId, getStudentDocuments } from '@/app/api/studentPr
 import { documentsRequired, yesProgramme } from './data';
 import Loading from './loading';
 import { readUserData, writeUserData } from '@/app/lib/endpoints';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import { zoomPlugin } from '@react-pdf-viewer/zoom';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
+import '@react-pdf-viewer/zoom/lib/styles/index.css';
+import {isMobile} from 'react-device-detect';
 
-const pdfVersion = "2.16.105";
+const pdfVersion = "3.11.174";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
 // Update DocumentType to use the keys from documentsRequired
@@ -21,6 +30,10 @@ type DocumentType = typeof documentsRequired[number]['documentName'];
 
 const FileUpload: React.FC = () => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
+  const thumbnailPluginInstance = thumbnailPlugin();
+  const zoomPluginInstance = zoomPlugin();
+
+  const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
   const cookies = new Cookies();
 
   const [isUploading, setIsUploading] = useState(false);
@@ -33,10 +46,19 @@ const FileUpload: React.FC = () => {
   const [isChangingDoc, setIsChangingDoc] = useState(false);
   const [loaded, setLoader] = useState(true);
   const [docToChange, setDocToChange] = useState<any>()
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const selectedDocument = searchParams.get('document');
+  const action = searchParams.get('action');
   
   const [files, setFiles] = useState<Record<DocumentType, File | null>>();
 
+  const freemiumDocuments = ['Identification','Cv','Disability Letter (if applicable)'];
+
   const courseId = cookies.get("courseId");
+
+  let documentinfo = documents.find((doc) => doc.name === selectedDocument);
 
   useEffect(() => {
   if (courseId =='66aa8cab45223bcb337a9643') {
@@ -76,7 +98,7 @@ const FileUpload: React.FC = () => {
     setLoader(true);
     try {
       if (user?.data) {
-        const docs = await getStudentDocuments(user?.data?.id || user?.id);
+        const docs = await getStudentDocuments(user?.data.id || user?.id);
 
         if (docs) {
           setDocuments(docs?.data.data);
@@ -92,7 +114,6 @@ const FileUpload: React.FC = () => {
   function viewDocument(docId: string) {
     console.log(docId);
     setDocumentToView(docId);
-    setShowDocumentModal(true);
   }
 
   const [dragging, setDragging] = useState<Record<DocumentType, boolean>>(
@@ -113,9 +134,11 @@ const FileUpload: React.FC = () => {
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>, type: DocumentType) => {
     event.preventDefault();
-    if (event.dataTransfer.files) {
-      setFiles({ ...files, [type]: event.dataTransfer.files[0] });
-      setSelectedFile({ type, file: event.dataTransfer.files[0] });
+    event.stopPropagation(); // Add this to stop the event from bubbling further
+    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      setFiles({ ...files, [type]: file });
+      setSelectedFile({ type, file });
       setIsUploading(true);
       setDragging({ ...dragging, [type]: false });
     }
@@ -123,17 +146,21 @@ const FileUpload: React.FC = () => {
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>, type: DocumentType) => {
     event.preventDefault();
+    event.stopPropagation(); // Add this to stop the event from bubbling further
     setDragging({ ...dragging, [type]: true });
   };
+  
 
   const handleDragLeave = (event: React.DragEvent<HTMLDivElement>, type: DocumentType) => {
     event.preventDefault();
+    event.stopPropagation(); // Add this to stop the event from bubbling further
     setDragging({ ...dragging, [type]: false });
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e:any) => {
+    e.preventDefault();
     setUpLoadingLoader(true);
-    debugger;
+    
     if (selectedFile && selectedFile.file) {
       const formData = new FormData();
       formData.append('UserId', user.data.id);
@@ -145,10 +172,6 @@ const FileUpload: React.FC = () => {
       } else {
         type = documentsRequired.findIndex(doc => doc.documentName === selectedFile.type);
       }
-
-      // if (type !== undefined) {
-      //   formData.append('Type', type.toString());
-      // }
       formData.append('File', selectedFile.file);
 
       try {
@@ -157,10 +180,11 @@ const FileUpload: React.FC = () => {
             'Content-Type': 'multipart/form-data',
           },
         });
-
         if (response.status === 200) {
           setIsUploaded(true);
-          window.location.reload();
+          router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
+          // window.location.reload();
+          window.location.href = `/student/student-profile?tab=documents&document=${selectedDocument}&action=view`;
         } else {
           alert('File upload failed');
         }
@@ -172,15 +196,19 @@ const FileUpload: React.FC = () => {
         setIsUploading(false);
         setSelectedFile(null);
         setIsUploaded(false);
+        debugger
+        
       }
     }
   };
 
-  const handleChangeDocument = async (document: any) => {
+  const handleChangeDocument = async (e:any) => {
+    e.preventDefault();
+    setUpLoadingLoader(true);
     if (selectedFile && selectedFile.file) {
       const formData = new FormData();
       formData.append('File', selectedFile.file);
-      formData.append('DocumentId', document?.id);
+      formData.append('DocumentId', documentinfo?.id);
 
       try {
         const response = await axios.put(`${writeUserData}/api/v1/Documents/UpdateStudentDocument`, formData, {
@@ -190,8 +218,8 @@ const FileUpload: React.FC = () => {
         });
 
         if (response.status === 200) {
-          setIsUploaded(true);
-          window.location.reload();
+          router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
+
         } else {
           alert('File upload failed');
         }
@@ -203,235 +231,242 @@ const FileUpload: React.FC = () => {
         setIsChangingDoc(false);
         setSelectedFile(null);
         setIsUploaded(false);
+        router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
+        window.location.reload();
       }
     }
-  };
-
-  const customModalStyles = {
-    modal: {
-      maxWidth: '50%',
-      width: '50%',
-      borderRadius: '10px',
-      backgroundColor: 'white',
-    },
   };
 
   useEffect(() => {
     getDocuments();
     console.log('documents:', documents);
-
-    const courseId = cookies.get("courseId");
-
-    if (courseId) {
-      getDocumentsByCourse(courseId)
-    }
   }, []);
-
-  useEffect(() => {
-    console.log('documents:', documents);
-  }, [documents]);
 
   if (loaded) {
     return <Loading />; // Show loading while documents are being fetched
   }
 
+  
+  
+  console.log('document ',documentinfo);
+
+  console.log('isMobile', isMobile);
+
 
   return (
+
     <>
-      {/* Modal for uploading new documents */}
-      <Modal show={isUploading} styles={customModalStyles} onHide={() => setIsUploading(false)} centered>
-        {isUploaded ? (
-          <div className='successUpload'>
-            <i className="bi bi-check-circle-fill" />
-            <button onClick={() => setIsUploading(false)}>Close</button>
-          </div>
-        ) : (
-          <div className='modalContainer'>
-            {upLoadingLoader ? (
-              <>
-                <div className="spinner-border text-success" role="status" />
-                <p>Uploading...</p>
-              </>
-            ) : (
-              <>
-                <h4>Confirm upload of the following file:</h4>
-                <p>{selectedFile?.file?.name}</p>
-                <button onClick={handleUpload}>Upload</button>
-              </>
-            )}
-          </div>
-        )}
-      </Modal>
+      {action != null && selectedDocument != null && <>
+      <div className="top-controlls">
+        <h6>Selected Document: {selectedDocument}</h6>
+        <div>
+        <button 
+            type="button" 
+            className={`btn btn-outline-dark text-white 
+              ${documentinfo?.status === 'Accepted' ? 'bg-success' : 
+                documentinfo?.status === 'PendingReview' ? 'bg-warning' : 
+                documentinfo?.status === 'Declined' ? 'bg-danger' : ''}`
+            }>
+            {documentinfo?.status ? documentinfo.status : 'Status'}
+          </button>
+          <button 
+          type="button" 
+          className="btn btn-dark btn-reupload" 
+          onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}
+          style={{backgroundColor: 'rgb(36, 52, 92)'}}
+          >Change File</button>
+        </div>
+      </div>
+          </>}
+    <section className='documents-container'>
+    <div className='document-name-list card'>
+      <h5>Documents</h5>
+      <ul className="nav nav-segment nav-pills" role="tablist">
+          {
+            courseId =='66aa8cab45223bcb337a9643' ?
 
-      {/* Modal for changing existing documents */}
-      <Modal show={isChangingDoc} styles={customModalStyles} onHide={() => setIsChangingDoc(false)} centered>
-        {isUploaded ? (
-          <div className='successUpload'>
-            <i className="bi bi-check-circle-fill" />
-            <button onClick={() => setIsChangingDoc(false)}>Close</button>
-          </div>
-        ) : (
-          <div className='modalContainer'>
-            {upLoadingLoader ? (
-              <>
-                <div className="spinner-border text-success" role="status" />
-                <p>Uploading...</p>
-              </>
-            ) : (
-              <>
-                <h4>Confirm change of the following file:</h4>
-                <p>{selectedFile?.file?.name}</p>
-                <button onClick={() => handleChangeDocument(docToChange)}>Upload</button>
-              </>
-            )}
-          </div>
-        )}
-      </Modal>
+            yesProgramme.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
+            const docType = doc.documentName as DocumentType;
+            const matchingDoc = documents.find((doc) => doc?.name === docType);
 
-      <Modal
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        show={showDocumentModal}
-        onHide={() => setShowDocumentModal(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Document Preview</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Worker workerUrl={pdfWorkerUrl}>
-            <Viewer
-              fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
-              plugins={[defaultLayoutPluginInstance]}
+              console.log('document',matchingDoc);
+              return (
+                <li className={`nav-item ${selectedDocument === doc?.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc.documentName}&action=view`), viewDocument(matchingDoc.id))}>  
+                  <div className="icon">
+                  <i className="bi bi-file-pdf"></i>
+                  </div>
+                  <div className='document-name'>
+                    <p>{doc.documentName}</p>
+                  </div>
+                </li>
+              )
+            })
+          :
+          documentsRequired.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
+            const docType = doc.documentName as DocumentType;
+            const matchingDoc = documents.find((doc) => doc.name === docType);
+            return (
+              <li className={`nav-item ${selectedDocument === doc?.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc?.documentName}&action=view`), viewDocument(matchingDoc?.id))}>
+                  <div className="d-flex align-items-center">
+                    <div className="flex-shrink-0">
+                    <i className="bi bi-file-pdf"></i>
+                    </div>
+
+                    <div className="flex-grow-1 ms-3">
+                      <span className="d-inline-block link-dark">
+                        <h6 className="text-hover-primary mb-0">
+                          {doc?.documentName}
+                        </h6>
+                      </span>
+                    </div>
+                  </div>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </div>
+    <div className='document-preview card'>
+      <div className='document-preview-container'>
+        {
+        action === 'view' && 
+        <>
+        {documentinfo != undefined||null ?
+        <Worker workerUrl={pdfWorkerUrl}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
+            <ZoomOutButton />
+            <ZoomPopover />
+            <ZoomInButton />
+          </div>
+          <Viewer
+            fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
+            plugins={[thumbnailPluginInstance, zoomPluginInstance]}
+            defaultScale={isMobile ? .3 : .9}  
             />
-          </Worker>
-        </Modal.Body>
-      </Modal>
-      <div className="alert alert-warning alert-dismissible fade show" role="alert" style={{width:'80%', margin:'0 auto'}}>
-        <span className="fw-semibold">Attention!</span> Please upload all your documents to proceed.
-        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      <div className="requiredDocs">
-        {courseId =='66aa8cab45223bcb337a9643' ? 
-        
-        yesProgramme.map((doc, index) => {
-          const docType = doc.documentName as DocumentType;
-          const matchingDoc = documents.find((doc) => doc.name === docType);
-
-          return (
-            <div
-              className={`docContainer ${matchingDoc && 'uploaded'} ${dragging[docType] ? 'dragover' : ''}`}
-              key={index}
-              onDrop={(event) => handleDrop(event, docType)}
-              onDragOver={(event) => handleDragOver(event, docType)}
-              onDragLeave={(event) => handleDragLeave(event, docType)}
-            >
-              <h6>{docType.charAt(0).toUpperCase() + docType.slice(1)}</h6>
-              <h3>Drag and drop your file here</h3>
-              <div>
-                {matchingDoc ? (
-                  <i className="bi bi-file-check-fill" style={{ cursor: 'pointer', color:'#dfedfa' }} onClick={() => viewDocument(matchingDoc.id)}></i>
-                ) : (
-                  <i className="bi bi-cloud-arrow-up"></i>
-                )}
-
-                {matchingDoc && (
-                  <span
-                    onClick={() => viewDocument(matchingDoc.id)}
-                    style={{ display: 'block', cursor: 'pointer', fontSize: '12px', marginTop: '10px', textDecoration: 'underline', color: 'green' }}
-                  >
-                    View doc
-                  </span>
-                )}
-              </div>
-              <h5>OR</h5>
-              {files && files[docType] && <p className="fileName">{files[docType]?.name}</p>}
-              <input
-                type="file"
-                name={docType}
-                id={docType}
-                accept="application/pdf"
-                onChange={(event) => {
-                  setSelectedFile({ type: docType, file: event.target.files ? event.target.files[0] : null });
-                  if (matchingDoc) {
-                    setIsChangingDoc(true);
-                    setDocToChange(matchingDoc);
-                  } else {
-                    setIsUploading(true);
-                  }
-                  handleFileChange(event, docType);
-                }}
-              />
-
-              {matchingDoc ? (
-                <label htmlFor={docType} style={{background:'2F4F9E'}}>Change</label>
-              ) : (
-                <label htmlFor={docType}>Browse Files</label>
-              )}
-            </div>
-          );
-        })
+        </Worker>
         :
-        documentsRequired.map((doc, index) => {
-          const docType = doc.documentName as DocumentType;
-          const matchingDoc = documents.find((doc) => doc.name === docType);
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>
+          <h5>No document found</h5>
+          <button 
+          type="button" 
+          className="btn btn-dark btn-reupload" 
+          onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}
+          style={{backgroundColor: 'rgb(36, 52, 92)'}}
+          >Upload File</button>
+        </div>
+        }
+        </>}
+        {action === 'upload' &&   
+          <>
+        {documentinfo?.blobUrl ?
+       <div className="upload-container"
+       >
+          <h5>Change File</h5>
+          <form onSubmit={handleChangeDocument}>
+            <div 
+            onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
+            onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
+            onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
+            style={{
+              transition: 'all 0.5s ease',
+             backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
+             border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '1px dashed black',
+             boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
 
-          return (
-            <div
-              className={`docContainer ${matchingDoc && 'uploaded'} ${dragging[docType] ? 'dragover' : ''}`}
-              key={index}
-              onDrop={(event) => handleDrop(event, docType)}
-              onDragOver={(event) => handleDragOver(event, docType)}
-              onDragLeave={(event) => handleDragLeave(event, docType)}
-            >
-              <h6>{docType.charAt(0).toUpperCase() + docType.slice(1)}</h6>
-              <h3>Drag and drop your file here</h3>
-              <div>
-                {matchingDoc ? (
-                  <i className="bi bi-file-check-fill" style={{ cursor: 'pointer', color:'#dfedfa' }} onClick={() => viewDocument(matchingDoc.id)}></i>
-                ) : (
-                  <i className="bi bi-cloud-arrow-up"></i>
-                )}
-
-                {matchingDoc && (
-                  <span
-                    onClick={() => viewDocument(matchingDoc.id)}
-                    style={{ display: 'block', cursor: 'pointer', fontSize: '12px', marginTop: '10px', textDecoration: 'underline', color: 'green' }}
-                  >
-                    View doc
-                  </span>
-                )}
-              </div>
-              <h5>OR</h5>
-              {files && files[docType] && <p className="fileName">{files[docType]?.name}</p>}
-              <input
-                type="file"
-                name={docType}
-                id={docType}
-                accept="application/pdf"
-                onChange={(event) => {
-                  setSelectedFile({ type: docType, file: event.target.files ? event.target.files[0] : null });
-                  if (matchingDoc) {
-                    setIsChangingDoc(true);
-                    setDocToChange(matchingDoc);
-                  } else {
-                    setIsUploading(true);
-                  }
-                  handleFileChange(event, docType);
-                }}
-              />
-
-              {matchingDoc ? (
-                <label htmlFor={docType} style={{background:'2F4F9E'}}>Change</label>
-              ) : (
-                <label htmlFor={docType}>Browse Files</label>
-              )}
+           }}>
+              <i className="bi bi-file-earmark-text-fill icon-upload"></i>
+              <p>Drag and drop your file here</p>
+              <span>or</span>
+              <input 
+                type="file" 
+                id="file-input" 
+                name='file-input' 
+                onChange={(e) => handleFileChange(e, documentinfo  as DocumentType)} 
+                accept=".pdf,.doc,.docx"
+                style={{display: 'none'}}
+                />
+              <label className="btn btn-dark" htmlFor="file-input" >Choose File</label>
             </div>
-          );
-        })}
+            <div>
+              <p>Supported Formats: PDF, DOC, DOCX</p>
+              <p>Max file size: 4MB</p>
+            </div>
+
+            <div className="file-name">
+                <p>{selectedFile?.file?.name ? selectedFile?.file?.name : 'No file chosen'}</p>
+            </div>
+
+            <div>
+              <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
+              <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
+                {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
+              </button>
+            </div>
+          </form>
+       </div>:
+       <div className="upload-container"
+       >
+          <h5>Upload File</h5>
+          <form onSubmit={handleUpload}>
+            <div
+            onDrop={(e) => handleDrop(e, documentinfo as DocumentType)}
+            onDragOver={(e) => handleDragOver(e, documentinfo as DocumentType)}
+            onDragLeave={(e) => handleDragLeave(e, documentinfo as DocumentType)}
+            style={{
+              transition: 'all 0.5s ease',
+             backgroundColor: dragging[documentinfo as DocumentType] ? 'whitesmoke' : 'transparent',
+             border: dragging[documentinfo as DocumentType] ? '2px dashed grey' : '2px dashed black',
+             boxShadow: dragging[documentinfo as DocumentType] ? '0 0 10px 0 rgba(0, 0, 0, 0.5)' : 'none'
+           }}>
+              <i className="bi bi-file-earmark-text-fill icon-upload"></i>
+              <p>Drag and drop your file here</p>
+              <span>or</span>
+              <input 
+                type="file" 
+                id="file-input" 
+                name='file-input' 
+                onChange={(e) => handleFileChange(e, selectedDocument as DocumentType)} 
+                accept=".pdf,.doc,.docx"
+                style={{display: 'none'}}
+                />
+              <label className="btn" htmlFor="file-input" style={{backgroundColor: 'rgb(36, 52, 92)'}}>Choose File</label>
+            </div>
+            <div>
+              <p>Supported Formats: PDF, DOC, DOCX</p>
+              <p>Max file size: 4MB</p>
+            </div>
+
+            <div className="file-name">
+                <p>{selectedFile?.file?.name ? selectedFile?.file?.name : 'No file chosen'}</p>
+            </div>
+
+            <div>
+            <button type="button" className="btn btn-outline-dark" onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`), setSelectedFile(null))}>Cancel</button>
+              <button type="submit" style={{backgroundColor: 'rgb(36, 52, 92)', border: 'none', borderRadius: '5px'}}>
+                {upLoadingLoader ? <div className="spinner-grow" role="status"></div> : 'Upload'}
+              </button>
+            </div>
+          </form>
+       </div>}
+       </>
+       }
+       {action == null && selectedDocument == null && 
+       <div className='no-document-selected'>
+        <h5>No document selected</h5>
+       </div>}
       </div>
-    </>
-  );
+    </div>
+    <div className='document-upload-container card'>
+      {action === 'view' ? 
+        <>
+         {documentinfo ? <thumbnailPluginInstance.Thumbnails /> : null}
+        </>
+       : null}
+    </div>
+  </section>
+  </>
+  )
 };
 
 export default FileUpload;
+

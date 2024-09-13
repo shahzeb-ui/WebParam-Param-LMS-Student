@@ -83,7 +83,7 @@ export default function RegionalInformation({ student }: any) {
                 id="provinceCode"
                 onChange={(e) => setProvinceCode(e.target.value)}
               >
-                <option value="">select</option>
+                <option value="">Select</option>
                 {codes &&
                   codes[11]?.codes?.map((item: any, index: number) => (
                     <option
@@ -102,6 +102,7 @@ export default function RegionalInformation({ student }: any) {
             style={{ marginBottom: "15px" }}
           >
             <div className="rbt-form-group">
+              <br/>
               <label htmlFor="statsSAAreaCode">STATSSA Area Code</label>
               <input
                 type="text"

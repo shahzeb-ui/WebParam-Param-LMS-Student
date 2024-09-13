@@ -10,8 +10,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
-import { readUserData, writeUserData } from '@/app/lib/endpoints';
-
+import { readUserData } from '@/app/lib/endpoints';
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");
@@ -36,18 +35,18 @@ export default function Profile({ student }: any) {
   const router = useRouter();
 
     useEffect(() => {
-        debugger;
+        
         getUserProfile();
     }, [profilePic]);
 
     async function getInputCodes() {
         const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
-        console.log('codes:', res?.data?.data);
-        setCodes(res?.data?.data);
+        console.log('codes:', res.data.data);
+        setCodes(res.data.data);
     }
     
     useEffect(() => {
-        debugger;
+        
         getUserProfile();
     },[profilePic])
     
@@ -63,7 +62,7 @@ export default function Profile({ student }: any) {
     }, []);
 
   async function getUserProfile() {
-    debugger;
+    
     if (!user?.data?.id && !user?.id) return;
     const res = await getStudentProfile(user.data.id || user.id);
 
@@ -99,7 +98,7 @@ export default function Profile({ student }: any) {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        debugger;
+        
         setIsSubmitting(true);
         const payload = {
             userId: user?.data?.id||user?.id,
@@ -140,7 +139,7 @@ export default function Profile({ student }: any) {
             formData.append('file', file);
 
             try {
-                const response = await axios.post(`${writeUserData}/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
+                const response = await axios.post(`${readUserData}/api/v1/Profile/UploadProfilePicture/${user?.data?.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -218,16 +217,16 @@ export default function Profile({ student }: any) {
                             </div>
                         </div>
                     </div>
-                    <div className="rbt-tutor-information-right">
+                    {/* <div className="rbt-tutor-information-right">
                         <div className="tutor-btn">
                             <a className="rbt-btn btn-sm btn-border color-white radius-round-10">
                                 Edit Cover Photo
                             </a>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15">
+            <form onSubmit={handleSubmit} className="rbt-profile-row rbt-default-form row row--15" style={{minWidth:'100%'}}>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="rbt-form-group">
                         <label htmlFor="firstname">First Name</label>
@@ -350,7 +349,7 @@ export default function Profile({ student }: any) {
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="filter-select rbt-modern-select">
+                    <div className="filter-select rbt-modern-select rbt-form-group">
                         <label htmlFor="gender">Gender</label>
                         <select
                             id="gender"
@@ -370,6 +369,7 @@ export default function Profile({ student }: any) {
                 </div>
                 <div className="col-12">
                     <div className="rbt-form-group">
+                        <br/>
                         <label htmlFor="bio">Biography</label>
                         <textarea
                             name="bio"
@@ -385,7 +385,7 @@ export default function Profile({ student }: any) {
                 <div className="col-12">
                     <button
                         className="btn-sm mr--10 hover-icon-reverse w-100 text-light"
-                        style={{height:'40px', border:'none', backgroundColor:'rgb(36, 52, 92)', borderRadius:'8px  '}}
+                        style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                         type="submit"
                         disabled={isSubmitting}
                     >

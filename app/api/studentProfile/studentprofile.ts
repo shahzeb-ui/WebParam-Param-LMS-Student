@@ -75,9 +75,13 @@ export async function getStudentDocuments(userId:any) {
 
 
 
+
 export async function getDocumentsByCourseId(courseId:any) {
     try {
-        const register = await axios.get(`https://khumla-prod-newcourse-read.azurewebsites.net/api/v1/Document/GetCourseDocuments/66aa8c8245223bcb337a9641`);
+        //TODO: BRAD: Pass in id from env for boundlesss
+        //  const register = await axios.get(`https://khumla-prod-newcourse-read.azurewebsites.net/api/v1/Document/GetCourseDocuments/66aa8c8245223bcb337a9641`);
+
+        const register = await axios.get(`${readUserData}/api/v1/Documents/GetDocuments/${courseId}`);
         return register;
 
     } catch(error: any) {
