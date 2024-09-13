@@ -285,7 +285,7 @@ const FileUpload: React.FC = () => {
           {
             courseId =='66aa8cab45223bcb337a9643' ?
 
-            yesProgramme.filter(doc => (process.env.NEXT_PUBLIC_IS_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
+            yesProgramme.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
             const docType = doc.documentName as DocumentType;
             const matchingDoc = documents.find((doc) => doc?.name === docType);
 
@@ -302,7 +302,7 @@ const FileUpload: React.FC = () => {
               )
             })
           :
-          documentsRequired.filter(doc => (process.env.NEXT_PUBLIC_IS_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
+          documentsRequired.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
             const docType = doc.documentName as DocumentType;
             const matchingDoc = documents.find((doc) => doc.name === docType);
             return (
