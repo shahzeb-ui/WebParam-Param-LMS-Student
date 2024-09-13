@@ -274,8 +274,8 @@ const StudentLogbook = () => {
           {entry.timeRemaining && (
             <span className="text-muted">{entry.timeRemaining}</span>
           )}
-          <span className="text-muted" style={{ fontSize: '1.5rem' }}>
-            <FiClock className="me-1" />
+          <span style={{ fontSize: '1.5rem', color: 'black' }}>
+            <FiClock className="me-1" style={{ color: 'black' }} />
             {entry.createdTime}
           </span>
         </div>
@@ -308,13 +308,12 @@ const StudentLogbook = () => {
                 className="btn me-2"
                 style={{
                   borderColor: selectedRating === "good" ? 'green' : 'rgb(36, 52, 92)',
-                  color: 'rgb(36, 52, 92)'
                 }}
                 disabled={isDisabled}
                 onClick={() => handleRatingClick("good")}
                 data-aos={selectedRating === "good" ? "fade-down" : ""}
               >
-                <i className="bi bi-emoji-smile"></i> Good
+                <i className="bi bi-emoji-smile" style={{ color: 'green' }}></i> Good
               </button>
             )}
             {(!selectedRating || selectedRating === "okay") && (
@@ -322,13 +321,12 @@ const StudentLogbook = () => {
                 className="btn me-2"
                 style={{
                   borderColor: 'rgb(36, 52, 92)',
-                  color: 'rgb(36, 52, 92)'
                 }}
                 disabled={isDisabled}
                 onClick={() => handleRatingClick("okay")}
                 data-aos={selectedRating === "okay" ? "fade-down" : ""}
               >
-                <i className="bi bi-emoji-neutral"></i> Okay
+                <i className="bi bi-emoji-neutral" style={{ color: 'orange' }}></i> Okay
               </button>
             )}
             {(!selectedRating || selectedRating === "bad") && (
@@ -336,13 +334,12 @@ const StudentLogbook = () => {
                 className="btn"
                 style={{
                   borderColor: 'rgb(36, 52, 92)',
-                  color: 'rgb(36, 52, 92)'
                 }}
                 disabled={isDisabled}
                 onClick={() => handleRatingClick("bad")}
                 data-aos={selectedRating === "bad" ? "fade-down" : ""}
               >
-                <i className="bi bi-emoji-frown"></i> Bad
+                <i className="bi bi-emoji-frown" style={{ color: 'red' }}></i> Bad
               </button>
             )}
           </div>
@@ -371,10 +368,8 @@ const StudentLogbook = () => {
                   backgroundImage: 'none', 
                   color: `${showLogbookList ? 'black':'white'}`,
                   border: `${showLogbookList && '1px solid #25355c'}`,
-                  padding: '0.3rem 1rem',  
-                  height: '40px',
-                  
-                  
+                  padding: '0.3rem 1.2rem',  // Increased width
+                  height: '38px',  // Slightly decreased height
                 }}
                 onClick={() => handleCheckin(entry, setEntry, setTimer)}
                 disabled={loading}
