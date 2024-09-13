@@ -1,35 +1,44 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import styles from "@/styles/assessment/assessment.module.css";
-import loaderStyles from "@/ui/loader-ui/loader.module.css";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { submitAssessment } from "@/actions/assessments/assessments-action";
 import MultipleChoice from "../../../take-assessment/multipleChoise";
+import styles from "@/styles/assessment/assessment.module.css";
+import loaderStyles from "@/ui/loader-ui/loader.module.css";
 
 type LongAnswerQuestion = {
   id: string;
-  question: string;
-  type: string; // e.g., "long-answer"
+  title: string;
+  type: string;
 };
 
 const AssessmentComponent = () => {
   const router = useRouter();
-  const { assessmentId } = router.query;
   const [longQuestions, setLongQuestions] = useState<LongAnswerQuestion[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
 
+  const assessmentId = "66e3cbef3e73f6ee989eaf29";
+
   useEffect(() => {
     if (assessmentId) {
       // Fetch long-answer questions based on assessmentId
-      fetch(`/api/assessments/${assessmentId}/long-questions`)
-        .then(response => response.json())
-        .then(data => {
-          setLongQuestions(data);
-          setAnswers(Array(data.length).fill(""));
+      fetch(`https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions/GetQuestions/${assessmentId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (Array.isArray(data.data)) {
+            const longTextQuestions = data.data.filter((question: any) => question.questionType === "Long Text");
+            setLongQuestions(longTextQuestions);
+            setAnswers(Array(longTextQuestions.length).fill(""));
+          } else {
+            console.error("Unexpected data format:", data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching questions:", error);
         });
     }
   }, [assessmentId]);
@@ -75,7 +84,9 @@ const AssessmentComponent = () => {
 
     try {
       const responses = await Promise.all(
-        answers.map((answer) => submitAssessment(answer, assessmentId as string))
+        answers.map((answer) =>
+          submitAssessment(answer, assessmentId as string)
+        )
       );
       console.log("Assessment Submitted:", responses);
 
@@ -162,7 +173,7 @@ const AssessmentComponent = () => {
                 <hr />
                 <div className="rbt-single-quiz">
                   <h4 style={{ margin: "0 auto", fontSize: "21px" }}>
-                    {index + 1}. {item.question}
+                    {index + 1}. {item.title}
                   </h4>
                   <div className="row g-3 mt--10">
                     <textarea
@@ -182,11 +193,6 @@ const AssessmentComponent = () => {
                 style={{ backgroundColor: "rgb(36, 52, 92) !important" }}
                 type="button"
                 onClick={handleSubmitAssessment}
-                // disabled={
-                //   !isInteracted ||
-                //   loading ||
-                //   answers.some((answer) => answer === "")
-                // }
               >
                 {loading ? (
                   <>

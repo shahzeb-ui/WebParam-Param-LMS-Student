@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAssessmentContext } from '../(context)/AssessmentContext';
 import { rAssessmentUrl } from '../../../app/lib/endpoints';
 import Cookies from "universal-cookie";
+import Link from 'next/link';
 
 enum AssessmentType {
   Summative = 0,
@@ -30,8 +31,9 @@ export default function ActiveAssessment() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `https://localhost:58842/api/v1/assessments/GetNewAssessments/${courseId}`
+        //const url = `https://localhost:58842/api/v1/assessments/GetNewAssessments/${courseId}`
         //const url = `${rAssessmentUrl}/api/v1/assessments/GetNewAssessments/${courseId}`;
+        const url = `https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/assessments/GetNewAssessments/${courseId}`
         const response = await fetch(url);
         if (!response.ok) {
           console.error(`Error fetching assessments: ${response.statusText}`);
@@ -101,14 +103,18 @@ export default function ActiveAssessment() {
             </td>
             <td>
               <div className="rbt-button-group justify-content-end">
-                <a
+                <Link
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Start"
-                  //href="/take-assessment"
-                  href={`student/assessments?type=formative&tab=active/assessments/${assessment.id}`}
+                  //href="/take-assessment${assessment.id}"
+                  //href={`/student/assessments/${assessment.id}`}
+                  href={{
+                    pathname: '/student/assessments/assessmentId',
+                    query: { id : `${assessment.id}` },
+                  }}
                 >
                   Start
-                </a>
+                </Link>
               </div>
             </td>
           </tr>

@@ -6,7 +6,7 @@
 // import assessmentData from "@/data/assessment/assessment.json";
 // import { useRouter } from "next/navigation";
 // import { submitAssessment } from "@/actions/assessments/assessments-action";
-// import MultipleChoice from "./multipleChoise";
+// //import MultipleChoice from "./multipleChoise";
 
 // type AssessmentQuestion = {
 //   question: string;

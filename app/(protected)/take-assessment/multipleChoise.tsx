@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 type Option = {
+  id: string;
   label: string;
   questionId: string;
   isCorrect: boolean;
@@ -9,8 +10,8 @@ type Option = {
 
 type Question = {
   id: string;
-  question: string;
-  type: string; // Added type to filter multiple-choice questions
+  title: string;
+  type: string;
   options: Option[];
 };
 
@@ -29,30 +30,47 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
   useEffect(() => {
     const fetchQuestionsAndOptions = async () => {
       try {
+        console.log("Fetching questions for assessmentId:", assessmentId);
+
         // Fetch questions
-        const questionsResponse = await fetch(`/api/assessments/${assessmentId}/questions`);
+        const questionsResponse = await fetch(`https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions/GetQuestions/${assessmentId}`);
         const questionsData = await questionsResponse.json();
+        console.log("Questions data:", questionsData);
 
-        // Fetch options
-        const optionsResponse = await fetch(`/api/assessments/${assessmentId}/options`);
-        const optionsData = await optionsResponse.json();
+        if (Array.isArray(questionsData.data)) {
+          // Filter multiple-choice questions
+          const multipleChoiceQuestions = questionsData.data.filter((question: any) => question.questionType === "Quiz");
+          console.log("Filtered questions:", multipleChoiceQuestions);
 
-        // Filter and map options to their corresponding multiple-choice questions
-        const multipleChoiceQuestions = questionsData
-          .filter((question: any) => question.type === "multiple-choice")
-          .map((question: any) => ({
-            ...question,
-            options: optionsData.filter((option: any) => option.questionId === question.id),
-          }));
+          // Fetch options for each multiple-choice question
+          const questionsWithOptions = await Promise.all(
+            multipleChoiceQuestions.map(async (question: any) => {
+              const optionsResponse = await fetch(`https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Options/GetOptions/${question.id}`);
+              const optionsData = await optionsResponse.json();
+              console.log(`Options data for question ${question.id}:`, optionsData);
 
-        setQuestions(multipleChoiceQuestions);
-        setSelectedAnswers(Array(multipleChoiceQuestions.length).fill(""));
+              return {
+                ...question,
+                options: Array.isArray(optionsData.data) ? optionsData.data : [],
+              };
+            })
+          );
+
+          setQuestions(questionsWithOptions);
+          setSelectedAnswers(Array(questionsWithOptions.length).fill(""));
+        } else {
+          console.error("Unexpected questions data format:", questionsData);
+        }
       } catch (error) {
         console.error("Error fetching questions and options:", error);
       }
     };
 
-    fetchQuestionsAndOptions();
+    if (assessmentId) {
+      fetchQuestionsAndOptions();
+    } else {
+      console.error("assessmentId is not defined");
+    }
   }, [assessmentId]);
 
   const handleOptionChange = (questionIndex: number, optionLabel: string) => {
@@ -65,7 +83,7 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
   const handleSubmitAnswers = async () => {
     try {
       // Submit answers
-      const response = await fetch(`/api/assessments/${assessmentId}/submit`, {
+      const response = await fetch(`https://thooto-dev-be-assessment-write.azurewebsites.net/api/v1/StudentAnswers/AddStudentAnswers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,9 +105,9 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
     <div>
       {questions.map((q, index) => (
         <div key={q.id} style={{ marginBottom: '30px' }}>
-          <h3 style={{ fontSize: '21px' }}>{`${index + 1}. ${q.question}`}</h3>
-          {q.options.map((option) => (
-            <div key={option.label}>
+          <h3 style={{ fontSize: '21px' }}>{`${index + 1}. ${q.title}`}</h3>
+          {Array.isArray(q.options) ? q.options.map((option) => (
+            <div key={option.id}>
               <label
                 style={{
                   border: `${selectedAnswers[index] === option.label ? `2px solid ${process.env.NEXT_PUBLIC_PRIMARY_COLOR ?? 'rgb(36, 52, 92)'}` : '2px solid var(--color-border)'}`,
@@ -113,7 +131,9 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
                 {option.description}
               </label>
             </div>
-          ))}
+          )) : (
+            <p>No options available for this question.</p>
+          )}
           <div className="quize-top-left mt-2">
             <span>
               Marks: <strong>5</strong>
