@@ -1,22 +1,26 @@
-"use client";
-
-import { Metadata } from "next";
-import styles from "./page.module.css";
+'use client'
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";  
-
+import { NextUIProvider } from "@nextui-org/react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import styles from "./page.module.css";
 
 export default function Home() {
   const router = useRouter();
 
-  useEffect(()=>{
-    router.push("/login")
-  },[])
-
-  
+  useEffect(() => {
+    AOS.init({
+      duration: 2000,
+    });
+    router.push("/login");
+  }, [router]);
 
   return (
-  <main className={styles.main}>
-  </main>
+    <NextUIProvider>
+      <main className={styles.main}>
+        {/* Your content here */}
+      </main>
+    </NextUIProvider>
   );
 }

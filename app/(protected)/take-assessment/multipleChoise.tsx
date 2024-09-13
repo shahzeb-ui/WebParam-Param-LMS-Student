@@ -81,12 +81,12 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
   return (
     <div>
       {questions.map((q, index) => (
-        <div key={index} style={{ marginBottom: '30px' }}>
+        <div key={index} className='mt-3' style={{ marginBottom: '30px' }}>
           <h3 style={{fontSize:'21px'}}>{`${index + 1}. ${q.question}`}</h3>
           {q.options.map((option, i) => (
             <div key={i}>
               <label style={{
-                border: `${selectedAnswers[index] === option ? `2px solid ${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`:'2px solid var(--color-border)'}`,
+           
                 height: '40px',
                 display: 'flex',
                 alignItems: 'center',
@@ -94,7 +94,8 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
                 borderRadius: '6px',
                 paddingLeft: '30px',
                 cursor: 'pointer',
-                marginTop:'5px'
+                marginTop:'5px',
+                boxShadow:"0px 6px 34px rgba(215, 216, 222, 0.41)"
                 }}
                 >
                     
@@ -105,7 +106,7 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
                   checked={selectedAnswers[index] === option}
                   onChange={() => handleOptionChange(index, option)}
                 />
-                {option}
+             <small>   {option}</small>
               </label>
             </div>
             

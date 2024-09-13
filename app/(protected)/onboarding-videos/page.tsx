@@ -246,9 +246,7 @@ function OnboardingVdeos() {
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
-                        <span className="btn-icon prev-button">
-                          <i className="feather-arrow-left" />
-                        </span>
+                       
                         <span className="btn-text btn-prev-text">Previous</span>
                       </button>
                       <button
@@ -257,12 +255,10 @@ function OnboardingVdeos() {
                         disabled={currentIndex > (filteredVideos[0].videos.length - 1)}
                       >
                         <span className="btn-text">Next</span>
-                        <span className="btn-icon next-button">
-                          <i className="feather-arrow-right" ></i>
-                        </span>
+                        
                       </button>
                     </div>
-                    <div className="content-2">
+                    <div className="content-2 mobile-only">
                       <div className="advance-tab-button mb--30">
                         <ul
                           className="nav nav-tabs tab-button-style-2 justify-content-start"

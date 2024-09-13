@@ -7,9 +7,10 @@ import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
 import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
+import { useStore } from "@/stores/useStore";
 
 export default function Enrolled() {
-    
+  const selectedcourseId = useStore((state:any) => state.courseId);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
@@ -26,17 +27,6 @@ export default function Enrolled() {
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  // const handleNext = () => {
-  //   if (endIndex < unitStandards.length) {
-  //     setCurrentPage(currentPage + 1);
-  //   }
-  // };
-
-  // const handlePrevious = () => {
-  //   if (currentPage > 0) {
-  //     setCurrentPage(currentPage - 1);
-  //   }
-  // };
 
   const getUnitStandards = async (courseId: string) => {
     setLoading(true);
@@ -44,7 +34,7 @@ export default function Enrolled() {
 
     try {
       const data = await getAlltUnitStandards(courseId);
-      // console.log("get data: ", data);
+      console.log("get data: ", data);
       setUnitStandards(data);
       setLoading(false);
     } catch (error: any) {
@@ -54,9 +44,15 @@ export default function Enrolled() {
   };
 
   useEffect(() => {
-    const courseId = "668fcf681a1ce7b0635b61c6";
+    if (process.env.NEXT_PUBLIC_DEMO) {
+      const courseId = selectedcourseId;
     getUnitStandards(courseId);
-  }, []);
+    } else {
+      const courseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
+      getUnitStandards(courseId);
+    }
+
+  }, [selectedcourseId]);
 
   if (loading) {
     return <Loader />;
