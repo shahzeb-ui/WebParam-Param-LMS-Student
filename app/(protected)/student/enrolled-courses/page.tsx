@@ -17,19 +17,14 @@ import Enrolled from "./enrolled";
 import Completed from "./completed";
 import SoftSkills from "./softSkills/soft-skills";
 import { useRouter, useSearchParams } from "next/navigation";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const EnrolledCourses = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [unitStandards, setUnitStandards] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  const [isProgress, setIsProgress] = useState(true);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showAuthor, setShowAuthor] = useState(false);
-  const [courseStyle, setCourseStyle] = useState("two");
   
   const cookies = new Cookies();
 
@@ -39,57 +34,28 @@ const EnrolledCourses = () => {
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
 
-  const itemsPerPage = 3;
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const getUnitStandards = async (courseId: string) => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const data = await getAlltUnitStandards(courseId);
-      setUnitStandards(data);
-      setLoading(false);
-    } catch (error: any) {
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
-  const getKnowledgeModules = async (userId:any) => {
-    if (userId) {
-        const courseId = await getCourseId(userId);
-        if (courseId?.data) {
-            const res = await getEnrolledCourse(courseId?.data);
-    
-            console.log("knowledge modules: ", res?.data.data);
-            if (res?.data) {
-                setUnitStandards(res.data.data);
-            }
-        }
-    }
-  }
-
   useEffect(() => {
-    
-    getKnowledgeModules(user.data.id||user.data.userId);
-
-    console.log("knowledge modules:", unitStandards);
-  }, []);
-
-  useEffect(() => {
-    if (tab == null) {
+    if (tab === null) {
       router.push('/student/enrolled-courses?tab=enrolled');
     }
-  }, [tab]);
+  }, [tab, router]);
+
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      duration: 1500,
+    });
+  }, []);
 
   if (loading) {
     return <Loader />;
   }
 
   return (
-    <div className="rbt-dashboard-content bg-color-white rbt-shadow-box">
+    <div 
+      className="rbt-dashboard-content bg-color-white rbt-shadow-box"
+      data-aos="fade-right"
+    >
       <div className="content">
         <div className="section-title">
           <h4 className="get-4-color rbt-title-style-3">

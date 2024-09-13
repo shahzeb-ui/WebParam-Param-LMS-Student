@@ -39,10 +39,13 @@ function TakeLesson() {
   const moduleId = searchParams.get("moduleId");
 
   async function fetchKnowledgeTopics() {
+    debugger;
     try {
       const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
+        debugger;
+        response.data.length > 0 &&  handleExpandClick(response.data[0].id);
       } else {
         setError("Failed to load data");
       }
@@ -51,7 +54,8 @@ function TakeLesson() {
       setError(err.message);
     } finally {
       setLoading(false);
-      firstAccordionButtonRef.current?.click();
+     
+      // firstAccordionButtonRef.current?.click();
     }
   }
 
@@ -80,11 +84,13 @@ function TakeLesson() {
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
+    
   }, []);
 
   const handleExpandClick = (topicId: string) => {
     if (!expandedTopics[topicId]) {
       fetchTopics(topicId);
+     
     }
   };
 
@@ -309,18 +315,18 @@ function TakeLesson() {
                 />
                 <div>
                   <div className="content">
+
                     <div className="section-title">
                       <h5>{currentVideo?.title}</h5>
                     </div>
+
                     <div className="rbt-button-group">
                       <button
                         className="rbt-btn  btn-md bg-primary-opacity"
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
-                        <span className="btn-icon">
-                          <i className="feather-arrow-left" />
-                        </span>
+                        
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
@@ -329,9 +335,7 @@ function TakeLesson() {
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
                         <span className="btn-text">Next</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right" />
-                        </span>
+                        
                       </button>
                     </div>
                     <div className="content-2">
