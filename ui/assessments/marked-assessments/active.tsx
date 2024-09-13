@@ -14,6 +14,8 @@ interface Assessment {
   title: string;
   courseId: string;
   type: AssessmentType;
+  dueDate: string;
+  totalMarks: number;
 }
 
 export default function ActiveAssessment() {
@@ -28,7 +30,9 @@ export default function ActiveAssessment() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${rAssessmentUrl}/api/v1/assessments/GetNewAssessments/${courseId}`);
+        const url = `https://localhost:58842/api/v1/assessments/GetNewAssessments/${courseId}`
+        //const url = `${rAssessmentUrl}/api/v1/assessments/GetNewAssessments/${courseId}`;
+        const response = await fetch(url);
         if (!response.ok) {
           console.error(`Error fetching assessments: ${response.statusText}`);
           return;
@@ -64,6 +68,11 @@ export default function ActiveAssessment() {
     setFilteredData(filtered);
   }, [data, assessmentType]);
 
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
+  };
+
 
   return (
     <table className="rbt-table table table-borderless">
@@ -85,10 +94,10 @@ export default function ActiveAssessment() {
               </p>
             </th>
             <td>
-              {<p className="b3">{/*assessment.dueDate*/}</p>}
+              {<p className="b3">{formatDate(assessment.dueDate)}</p>}
             </td>
             <td>
-              <p className="b3">{/*assessment.totalMarks*/}</p>
+              <p className="b3">{assessment.totalMarks}</p>
             </td>
             <td>
               <div className="rbt-button-group justify-content-end">
