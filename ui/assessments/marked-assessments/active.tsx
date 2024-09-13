@@ -70,7 +70,7 @@ export default function ActiveAssessment() {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Format date to YYYY-MM-DD
+    return date.toISOString().split('T')[0];
   };
 
 
@@ -104,7 +104,8 @@ export default function ActiveAssessment() {
                 <a
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Start"
-                  href="/take-assessment"
+                  //href="/take-assessment"
+                  href={`student/assessments?type=formative&tab=active/assessments/${assessment.id}`}
                 >
                   Start
                 </a>
