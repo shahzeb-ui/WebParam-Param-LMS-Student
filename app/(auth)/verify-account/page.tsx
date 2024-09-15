@@ -67,14 +67,16 @@ export default function VerifyPage() {
         }
 
         const res = await verifyUserAccount(payload);
-        debugger;
+        
         if (res) {
             console.log(res);
             setIsSubmitted(false);
             // const user = await 
             cookies.set("loggedInUser", res?.data);
             localStorage.setItem("loggedInUser", res?.data)
-            router.push('/student/student-profile')
+            const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
+
+            router.push(redirectPath)
         } else {
             setIsSubmitted(false);
             setErrorMessage(true)
@@ -89,23 +91,28 @@ export default function VerifyPage() {
                   backgroundImage: !isMobile? `url(${imageCover.src})`:"none",
                   backgroundSize: 'cover',                
                   backgroundPosition: 'center',
-                  backgroundColor:"#f0eee",
+                  filter:"none !important",
+                  backgroundColor:"#24345C;",
                   boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
               }}
                 >
-                    <div className='verify-card'>
+                    {/* <div className='verify-card'>
                         <Image src={imageCover.src} alt="verify" width={200} height={200}/>
                         <p className='text-center'>We sent an OTP to the phone number you provided.
                         Check your inbox and enter the 5 digit code.</p>
-                    </div>
+                    </div> */}
             </div>
-           <div className="login-inner" data-aos="zoom-out-left">
+           <div className="login-inner" style={{filter:"none !important"}} data-aos="zoom-out-left">
            <div className="verify">
-            <h1>Confirm  your Phone Number</h1>
-            <p className='text-center para-text'>We sent an OTP to the phone number you provided.
-            Check your inbox and enter the 5 digit code.</p>
+            <h1 style={{color:"white"}}>Confirm  your Phone Number</h1>
+            {/* <p className='text-center'>We sent an OTP to the phone number you provided.
+            Check your inbox and enter the 5 digit code.</p> */}
+           <small>We sent an OTP to the phone number you provided.
+           Check your inbox and enter the 5 digit code.</small><br/>
             <form onSubmit={handleVerify}>
+           
                 <div className="otpContainer">
+               
                     {inputRefs.map((ref, index) => (
                     <input
                       key={index}
@@ -125,10 +132,12 @@ export default function VerifyPage() {
                         {isSubmitted ? <div className="spinner-grow text-light" role="status" /> : 'Confirm'}
                     </button>
                 </div>
-                <div className="account">
-                    <p>Already have an account?
-                    <Link href='/login'> Log in</Link></p>
-                </div>
+                <div className="auth-footer">
+            <p style={{marginRight:"10px"}}>Already have an account? </p>
+            <Link style={{ color: "#2597ac" }} href="/login">
+              Login
+            </Link>
+          </div>
             </form>
         </div>
             </div>

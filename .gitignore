@@ -38,3 +38,11 @@ next-env.d.ts
 /public/*.map
 /public/sw.js
 public/sw.js
+/.env.development
+/.env
+/.env
+/.env.development
+/public/sw.js
+/.env
+public/sw.js
+public/sw.js

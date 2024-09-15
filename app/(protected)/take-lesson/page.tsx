@@ -31,18 +31,27 @@ function TakeLesson() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
   
+  
 
-  const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
+  // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
   const searchParams = useSearchParams();
   const moduleId = searchParams.get("moduleId");
 
+  const allSubTopics = Object.values(expandedTopics).flat();
+
+  const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
+
+
   async function fetchKnowledgeTopics() {
+    debugger;
     try {
       const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
+        debugger;
+        response.data.length > 0 &&  handleExpandClick(response.data[0].id);
       } else {
         setError("Failed to load data");
       }
@@ -51,8 +60,7 @@ function TakeLesson() {
       setError(err.message);
     } finally {
       setLoading(false);
-      firstAccordionButtonRef.current?.click();
-    }
+      }
   }
 
   async function fetchTopics(topicId: string) {
@@ -77,14 +85,26 @@ function TakeLesson() {
     }
   }
 
+  function setCheckedVideos(){
+    const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
+    watchedVideos.forEach((videoId) => {
+      setCheckedSubTopics((prev) => ({
+        ...prev,
+        [videoId]: true,
+      }));
+    });
+  }
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
+    // setCheckedVideos();
+    
   }, []);
 
   const handleExpandClick = (topicId: string) => {
     if (!expandedTopics[topicId]) {
       fetchTopics(topicId);
+     
     }
   };
 
@@ -110,7 +130,7 @@ function TakeLesson() {
   );
 
   const handlePrevious = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
+
     if (currentIndex > 0) {
       const previousSubTopic = allSubTopics[currentIndex - 1];
       if (previousSubTopic) {
@@ -126,7 +146,7 @@ function TakeLesson() {
   };
 
   const handleNext = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
+  
     if (!videoEnded) {
       setVideoEnded(true); // Show quiz first
       return;
@@ -204,7 +224,7 @@ function TakeLesson() {
                     id={`heading${index}`}
                   >
                     <button
-                      ref={index === 0 ? firstAccordionButtonRef : null}
+                      // ref={index === 0 ? firstAccordionButtonRef : null}
                       className="accordion-button collapsed"
                       type="button"
                       data-bs-toggle="collapse"
@@ -309,18 +329,18 @@ function TakeLesson() {
                 />
                 <div>
                   <div className="content">
+
                     <div className="section-title">
                       <h5>{currentVideo?.title}</h5>
                     </div>
+
                     <div className="rbt-button-group">
                       <button
                         className="rbt-btn  btn-md bg-primary-opacity"
                         onClick={handlePrevious}
                         disabled={currentIndex <= 0}
                       >
-                        <span className="btn-icon">
-                          <i className="feather-arrow-left" />
-                        </span>
+                        
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
@@ -329,9 +349,7 @@ function TakeLesson() {
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
                         <span className="btn-text">Next</span>
-                        <span className="btn-icon">
-                          <i className="feather-arrow-right" />
-                        </span>
+                        
                       </button>
                     </div>
                     <div className="content-2">
@@ -484,7 +502,7 @@ function TakeLesson() {
                                     id={`heading${index}`}
                                   >
                                     <button
-                                      ref={index === 0 ? firstAccordionButtonRef : null}
+                                      // ref={index === 0 ? firstAccordionButtonRef : null}
                                       className="accordion-button collapsed"
                                       type="button"
                                       data-bs-toggle="collapse"
