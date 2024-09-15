@@ -79,10 +79,7 @@ define(['./workbox-1e54d6fe'], (function (workbox) { 'use strict';
    * See https://goo.gl/S9QRab
    */
   workbox.precacheAndRoute([{
-    "url": "/images/offline/nowifi.gif",
-    "revision": "development"
-  }, {
-    "url": "/offline",
+    "url": "/~offline",
     "revision": "development"
   }], {
     "ignoreURLParametersMatching": [/^utm_/, /^fbclid$/, /ts/]
