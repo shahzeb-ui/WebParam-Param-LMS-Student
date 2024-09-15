@@ -25,13 +25,6 @@ const EnrolledCourses = () => {
   const [loading, setLoading] = useState(false);
   const [unitStandards, setUnitStandards] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  const [isProgress, setIsProgress] = useState(true);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showAuthor, setShowAuthor] = useState(false);
-  const [courseStyle, setCourseStyle] = useState("two");
   
   const cookies = new Cookies();
 

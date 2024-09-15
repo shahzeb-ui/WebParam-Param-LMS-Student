@@ -198,7 +198,7 @@ export default function Register() {
           </>
         ) : (
           <>
-            <h2>Create an account</h2>
+            <h2 style={{marginTop:"15%"}}>Create an account</h2>
             <p>Start your journey!</p>
           </>
         )}
