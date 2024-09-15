@@ -37,21 +37,11 @@
     }
   ],
   "FREEMIUM": [
-    {
-      "link": "/student/student-profile",
-      "text": "My Profile",
-      "icon": "feather-user"
-    },
+  
     {
       "link": "/student/notifications",
       "text": "Notifications",
       "icon": "feather-volume-2"
-    },
-
-    {
-      "link": "/",
-      "text": "Logout",
-      "icon": "feather-log-out"
     }
   ],
   "COURSE_ONLY": [

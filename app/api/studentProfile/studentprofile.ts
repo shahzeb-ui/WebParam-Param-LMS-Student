@@ -6,7 +6,7 @@ import axios from "axios";
 export async function StudentProfile(payload: any) {
     try {
         // const register = await axios.put(`${writeUserData}/api/v1/Profile/UpdateProfile`,payload);
-        const res = await PUT(`${writeUserData}/api/v1/Profile/UpdateProfile`, payload);
+        const res = await PUT( payload,`${writeUserData}/api/v1/Profile/UpdateProfile`,);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -16,7 +16,7 @@ export async function StudentProfile(payload: any) {
 export async function updateDemographicsInformation(payload: any) {
     try {
         // const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentDemographicsInformation`,payload);
-        const res = await PUT(`${writeUserData}/api/v1/Student/UpdateStudentDemographicsInformation`, payload);
+        const res = await PUT(payload,`${writeUserData}/api/v1/Student/UpdateStudentDemographicsInformation`, );
         return res;
     } catch (error: any) {
         console.log(error);
@@ -26,7 +26,7 @@ export async function updateDemographicsInformation(payload: any) {
 export async function updateContactInformation(payload: any) {
     try {
         // const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentContactInformation`,payload);
-        const res = await PUT(`${writeUserData}/api/v1/Student/UpdateStudentContactInformation`, payload);
+        const res = await PUT( payload,`${writeUserData}/api/v1/Student/UpdateStudentContactInformation`);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -36,7 +36,7 @@ export async function updateContactInformation(payload: any) {
 export async function updateEmployeeInformation(payload: any) {
     try {
         // const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentEmployeeInformation`,payload);
-        const res = await PUT(`${writeUserData}/api/v1/Student/UpdateStudentEmployeeInformation`, payload);
+        const res = await PUT(payload,`${writeUserData}/api/v1/Student/UpdateStudentEmployeeInformation`);
         return res;
     } catch (error: any) {
         console.log(error);
@@ -46,7 +46,7 @@ export async function updateEmployeeInformation(payload: any) {
 export async function updateRegionalInformation(payload: any) {
     try {
         // const res = await axios.put(`${writeUserData}/api/v1/Student/UpdateStudentRegionalInformation`,payload);
-        const res = await PUT(`${writeUserData}/api/v1/Student/UpdateStudentRegionalInformation`, payload);
+        const res = await PUT( payload,`${writeUserData}/api/v1/Student/UpdateStudentRegionalInformation`,);
         return res;
     } catch (error: any) {
         console.log(error);

@@ -74,6 +74,7 @@ export async function POST(payload: any, url: string): Promise<any> {
 export async function PUT(payload: any, url: string): Promise<any> {
     const trackingId = `${email}-${url}`;
     try {
+        debugger;
         const response = await axios.put(url, payload, {
             headers: {
                 'Content-Type': 'application/json',
