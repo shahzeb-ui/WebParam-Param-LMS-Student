@@ -67,7 +67,7 @@ export default function VerifyPage() {
         }
 
         const res = await verifyUserAccount(payload);
-        debugger;
+        
         if (res) {
             console.log(res);
             setIsSubmitted(false);

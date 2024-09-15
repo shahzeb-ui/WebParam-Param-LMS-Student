@@ -1,9 +1,9 @@
 export function LOG_ERROR(message:string, error: any) {
-    debugger;
+    
     console.log(message,error);
 }
 export function LOG_DIAGNOSTIC(message:string, error: any) {
-    debugger;
+    
     const styles = [
         `background:darkred}`,
         `border-radius: 0.5em`,

@@ -113,7 +113,7 @@ export async function GET(url: string): Promise<any> {
                 'Client-Key': clientKey,
             },
         });
-        debugger;
+        
         var _diag = {
             code: response?.status,
             status:response?.statusText,

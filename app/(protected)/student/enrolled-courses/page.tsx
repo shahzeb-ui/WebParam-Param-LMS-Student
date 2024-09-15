@@ -27,7 +27,7 @@ const EnrolledCourses = () => {
   const [error, setError] = useState<string | null>(null);
   
   const cookies = new Cookies();
-
+const access = process.env.NEXT_PUBLIC_ACCESS??"ALL_ACCESS";
   const user = cookies.get("loggedInUser");
 
   const router = useRouter();
@@ -80,7 +80,7 @@ const EnrolledCourses = () => {
                 <span className="title">Enrolled</span>
               </Link>
             </li>
-            <li role="presentation">
+            <li role="presentation" style={{pointerEvents:access=="COURSE_ONLY"?"none": "auto", opacity: access=="COURSE_ONLY"?"0.2":"1"}}>
               <Link
                 href="#"
                 className={`tab-button ${tab == "active" && "active"} ${styles.tabButton}`}
@@ -95,7 +95,7 @@ const EnrolledCourses = () => {
                 <span className="title">Active</span>
               </Link>
             </li>
-            <li role="presentation">
+            <li role="presentation" style={{pointerEvents:access=="COURSE_ONLY"?"none": "auto", opacity: access=="COURSE_ONLY"?"0.2":"1"}}>
               <Link
                 href="#"
                 className={`tab-button ${tab == "completed" && "active"} ${styles.tabButton}`}
