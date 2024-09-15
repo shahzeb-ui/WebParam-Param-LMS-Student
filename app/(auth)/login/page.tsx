@@ -17,7 +17,7 @@ export default function LoginPage() {
 
   const cookies = new Cookies();
   const router = useRouter();
-  var isFreemium = process.env.NEXT_PUBLIC_FREEMIUM === 'true';
+  var isFreemium = process.env.NEXT_PUBLIC_ACCESS === 'FREEMIUM';
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
