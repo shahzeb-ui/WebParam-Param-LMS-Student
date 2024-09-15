@@ -1,0 +1,77 @@
+[
+  {
+    "question": "What is the primary role of a call center agent?",
+    "options": ["To resolve customer inquiries", "To design marketing strategies", "To manage company finances", "To oversee project progress"],
+    "answer": "To resolve customer inquiries"
+  },
+  {
+    "question": "Which document outlines the protocols and procedures for handling customer calls?",
+    "options": ["Call Script", "Business Plan", "Risk Management Plan", "Stakeholder Analysis"],
+    "answer": "Call Script"
+  },
+  {
+    "question": "What is a call log used for?",
+    "options": ["Tracking customer interactions", "Managing the call center budget", "Scheduling agent shifts", "Conducting risk analysis"],
+    "answer": "Tracking customer interactions"
+  },
+  {
+    "question": "What does the term 'average handle time' (AHT) refer to in a call center?",
+    "options": ["The time it takes to resolve a customer issue", "The average call duration", "The number of calls an agent handles per hour", "The time between customer calls"],
+    "answer": "The average call duration"
+  },
+  {
+    "question": "What is the purpose of a knowledge base in a call center?",
+    "options": ["To store customer contact information", "To provide agents with information to resolve inquiries", "To monitor call quality", "To train new agents"],
+    "answer": "To provide agents with information to resolve inquiries"
+  },
+  {
+    "question": "Which customer service methodology emphasizes quick and effective resolution of customer issues?",
+    "options": ["Six Sigma", "Agile", "First Call Resolution (FCR)", "Lean"],
+    "answer": "First Call Resolution (FCR)"
+  },
+  {
+    "question": "What is the main purpose of a quality assurance (QA) program in a call center?",
+    "options": ["To define the call center budget", "To evaluate and improve call quality", "To schedule agent shifts", "To manage team communication"],
+    "answer": "To evaluate and improve call quality"
+  },
+  {
+    "question": "Which phase of a call center interaction involves determining if the customer's issue was fully resolved and offering additional assistance?",
+    "options": ["Greeting", "Problem Identification", "Issue Resolution", "Call Closure"],
+    "answer": "Call Closure"
+  },
+  {
+    "question": "In the context of call centers, what is a 'service level agreement' (SLA)?",
+    "options": ["A financial report", "A contract that defines the expected service standards", "A team meeting", "A risk management plan"],
+    "answer": "A contract that defines the expected service standards"
+  },
+  {
+    "question": "What is the main focus during the customer interaction phase of a call?",
+    "options": ["Planning call details", "Tracking and managing agent performance", "Resolving the customer's issue", "Defining customer goals"],
+    "answer": "Resolving the customer's issue"
+  },
+  {
+    "question": "What does 'IVR' stand for in a call center?",
+    "options": ["Interactive Voice Response", "Instant Voice Recognition", "Internal Verification Report", "Integrated Value Response"],
+    "answer": "Interactive Voice Response"
+  },
+  {
+    "question": "What is a customer satisfaction survey in a call center context?",
+    "options": ["A tool to measure agent performance", "A feedback tool to assess customer experience", "A method to monitor call center metrics", "A process for training new agents"],
+    "answer": "A feedback tool to assess customer experience"
+  },
+  {
+    "question": "Which tool is commonly used to measure call center efficiency?",
+    "options": ["Earned Value Management (EVM)", "Average Handle Time (AHT)", "SWOT Analysis", "Pareto Chart"],
+    "answer": "Average Handle Time (AHT)"
+  },
+  {
+    "question": "What is a 'key performance indicator' (KPI) in a call center?",
+    "options": ["A significant event in the company", "A metric to evaluate call center performance", "A project risk", "An internal team meeting"],
+    "answer": "A metric to evaluate call center performance"
+  },
+  {
+    "question": "What is the purpose of a call escalation process?",
+    "options": ["To organize the team's workload", "To outline the call center budget", "To manage calls that cannot be resolved by the first agent", "To manage call center risks"],
+    "answer": "To manage calls that cannot be resolved by the first agent"
+  }
+]

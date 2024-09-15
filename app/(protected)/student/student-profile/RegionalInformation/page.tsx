@@ -1,5 +1,6 @@
 "use client";
 import { updateRegionalInformation } from "@/app/api/studentProfile/studentprofile";
+import { GET } from "@/app/lib/api-client";
 import { readUserData } from "@/app/lib/endpoints";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
@@ -11,9 +12,10 @@ export default function RegionalInformation({ student }: any) {
   const [codes, setCodes] = useState<any>();
 
   async function getInputCodes() {
-    const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
-    console.log("codes:", res.data.data);
-    setCodes(res.data.data);
+    // const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+    const res = await GET(`${readUserData}/api/v1/Student/GetCodes`);
+    console.log("codes:", res?.data.data);
+    setCodes(res?.data.data);
   }
 
   useEffect(() => {

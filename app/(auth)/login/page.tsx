@@ -17,6 +17,7 @@ export default function LoginPage() {
 
   const cookies = new Cookies();
   const router = useRouter();
+  var isFreemium = process.env.NEXT_PUBLIC_FREEMIUM === 'true';
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -51,7 +52,7 @@ export default function LoginPage() {
             if (res) {
                 
                 cookies.set("loggedInUser", res.data);
-                debugger;
+                
                 const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
                 router.push(redirectPath)
             }
@@ -158,12 +159,14 @@ export default function LoginPage() {
               )}
             </button>
           </div>
+          {!isFreemium && (
           <div className="auth-footer">
             <p>Don&apos;t have an account? </p>
             <Link style={{ color: "#2597ac" }} href="/register">
               Register
             </Link>
           </div>
+          )}
         </form>
       </div>
     </div>

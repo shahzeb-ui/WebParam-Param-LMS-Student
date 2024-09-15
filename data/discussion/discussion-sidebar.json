@@ -53,11 +53,6 @@
   ],
   "FREEMIUM": [
     {
-      "link": "/student/projects",
-      "text": "My Applications",
-      "icon": "bi bi-laptop-fill"
-    },
-    {
       "link": "/student/student-profile",
       "text": "My Profile",
       "icon": "feather-user"
@@ -68,6 +63,18 @@
       "icon": "feather-volume-2"
     },
 
+    {
+      "link": "/",
+      "text": "Logout",
+      "icon": "feather-log-out"
+    }
+  ],
+  "COURSE_ONLY": [
+    {
+      "link": "/student/enrolled-courses",
+      "text": "My Courses",
+      "icon": "bi bi-laptop-fill"
+    },
     {
       "link": "/",
       "text": "Logout",
