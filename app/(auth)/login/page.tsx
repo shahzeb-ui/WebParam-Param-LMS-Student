@@ -53,7 +53,7 @@ export default function LoginPage() {
                 
                 cookies.set("loggedInUser", res.data);
                 
-                const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
+                const redirectPath = "/student/enrolled-courses?tab=enrolled";
                 router.push(redirectPath)
             }
         } catch (error: any) {
