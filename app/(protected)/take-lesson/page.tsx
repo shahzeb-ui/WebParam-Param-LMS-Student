@@ -387,7 +387,7 @@ function TakeLesson() {
                               <span className="title">Transcript</span>
                             </Link>
                           </li>
-                          <li role="presentation">
+                          {/* <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -400,8 +400,8 @@ function TakeLesson() {
                             >
                               <span className="title">Q&A</span>
                             </Link>
-                          </li>
-                          <li role="presentation">
+                          </li> */}
+                          {/* <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -414,7 +414,7 @@ function TakeLesson() {
                             >
                               <span className="title">Notes</span>
                             </Link>
-                          </li>
+                          </li> */}
                           {isMobile && 
                           <li role="presentation">
                             <Link
