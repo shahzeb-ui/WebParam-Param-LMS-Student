@@ -4,16 +4,14 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import SidebarData from "@/data/dashboard/student/siderbar.json";
 import { useEffect, useState } from "react";
+import { useFlags } from "flagsmith/react";
 
 const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const path = usePathname();
-  const isFreemium =
-    process.env.NEXT_PUBLIC_IS_FREEMIUM &&
-    process.env.NEXT_PUBLIC_IS_FREEMIUM == "true"
-      ? true
-      : false;
+  const flags = useFlags(["FREEMIUM"]);
+  const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
 
   function handleLogOut() {
     cookies.remove("loggedInUser");
@@ -47,56 +45,80 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(0, 7).map((data: any, index: any) => {
-                      
-                      console.log(path === '/student/projects?tab=enrolled');
-                      if (process.env.NEXT_PUBLIC_IS_FREEMIUM && data.link == "/student/enrolled-courses") {
-                        return  (
-                        <li className="nav-item" key={index} role="presentation">
-                        <a
-                          href={'/student/projects?tab=enrolled'}
-                          className={`${path == '/student/projects' ? "active" : ""}`} // Apply the active class correctly
-                          style={{color: path == '/student/projects' ? "#2f57ef" : ""}} 
-                        >
-                          <i className={data.icon} />
-                          <span>My Projects</span>
-                        </a>
-                      </li>);
-                      }
-                      return (
-                      <li className="nav-item" key={index} role="presentation">
-                        <a
-                          className={`${path === data.link ? "active" : ""}`}
-                          href={data.link}
-                        >
-                          <i className={data.icon} />
-                          <span>{data.text}</span>
-                        </a>
-                      </li>
-                    )
-                    })}
+                    SidebarData?.siderbar
+                      ?.slice(0, 7)
+                      .map((data: any, index: any) => {
+                        console.log(path === "/student/projects?tab=enrolled");
+                        if (
+                          isFreemium &&
+                          data.link == "/student/enrolled-courses"
+                        ) {
+                          return (
+                            <li
+                              className="nav-item"
+                              key={index}
+                              role="presentation"
+                            >
+                              <a
+                                href={"/student/projects?tab=enrolled"}
+                                className={`${
+                                  path == "/student/projects" ? "active" : ""
+                                }`} // Apply the active class correctly
+                                style={{
+                                  color:
+                                    path == "/student/projects"
+                                      ? "#2f57ef"
+                                      : "",
+                                }}
+                              >
+                                <i className={data.icon} />
+                                <span>My Projects</span>
+                              </a>
+                            </li>
+                          );
+                        }
+                        return (
+                          <li
+                            className="nav-item"
+                            key={index}
+                            role="presentation"
+                          >
+                            <a
+                              className={`${
+                                path === data.link ? "active" : ""
+                              }`}
+                              href={data.link}
+                            >
+                              <i className={data.icon} />
+                              <span>{data.text}</span>
+                            </a>
+                          </li>
+                        );
+                      })}
                 </ul>
               </nav>
 
-              {SidebarData?.siderbar.length > 7 &&
+              {SidebarData?.siderbar.length > 7 && (
                 <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">User</h6>
                 </div>
-              }
+              )}
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData?.siderbar?.slice(7).map((data: any, index: any) => (
-                      <li key={index}>
-                        <a
-                          href={data.link}
-                          className={`${path === data.link ? "active" : ""}`}
-                        >
-                          <i className={data.icon} />
-                          <span>{data.text}</span>
-                        </a>
-                      </li>
-                    ))}
+                    SidebarData?.siderbar
+                      ?.slice(7)
+                      .map((data: any, index: any) => (
+                        <li key={index}>
+                          <a
+                            href={data.link}
+                            className={`${path === data.link ? "active" : ""}`}
+                          >
+                            <i className={data.icon} />
+                            <span>{data.text}</span>
+                          </a>
+                        </li>
+                      ))}
                 </ul>
               </nav>
             </div>

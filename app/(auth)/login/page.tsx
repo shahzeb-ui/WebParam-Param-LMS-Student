@@ -6,14 +6,24 @@ import { LoginUser } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import { isMobile } from "react-device-detect";
+import { useFlags } from "flagsmith/react";
 
 export default function LoginPage() {
-    const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [hasError, setHasError] = useState<any>({ email: false, password: false });
+  const flags = useFlags(["FREEMIUM", "LOGIN_IMAGE"]);
+  const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
+  const imageCover =
+    flags.LOGIN_IMAGE.enabled && flags.LOGIN_IMAGE.value
+      ? flags.LOGIN_IMAGE.value
+      : "";
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState<any>({
+    email: false,
+    password: false,
+  });
 
   const cookies = new Cookies();
   const router = useRouter();
@@ -39,38 +49,38 @@ export default function LoginPage() {
       password,
     };
 
-      try {
-        const res = await LoginUser(payload);
-            setIsLoading(false);
-            
-            if (res == undefined) {
-                setErrorMessage('Incorrect User details');
-                return;
-            }
-            
-            if (res) {
-                
-                cookies.set("loggedInUser", res.data);
-                debugger;
-                const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
-                router.push(redirectPath)
-            }
-        } catch (error: any) {
-            setErrorMessage('Network Error please try again');
-            setIsLoading(false);
-        }
-      
+    try {
+      const res = await LoginUser(payload);
+      setIsLoading(false);
 
-      console.log('Form submitted successfully');
+      if (res == undefined) {
+        setErrorMessage("Incorrect User details");
+        return;
+      }
+
+      if (res) {
+        cookies.set("loggedInUser", res.data);
+        debugger;
+        const redirectPath = isFreemium
+          ? "/student/projects?tab=enrolled"
+          : "/student/student-profile";
+        router.push(redirectPath);
+      }
+    } catch (error: any) {
+      setErrorMessage("Network Error please try again");
       setIsLoading(false);
     }
-  
-    useEffect(() => {
-      if (email !== '' || password !== '') {
-        setHasError({ email: false, password: false });
-        setErrorMessage('')
-      }
-    }, [email, password]);
+
+    console.log("Form submitted successfully");
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    if (email !== "" || password !== "") {
+      setHasError({ email: false, password: false });
+      setErrorMessage("");
+    }
+  }, [email, password]);
 
   return (
     <div className="login-container">
