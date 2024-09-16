@@ -19,11 +19,12 @@ function UserProfileContent() {
     const [student, setStudent] = useState<any>();
     const tab = searchParams.get('tab') || 'profile';
     const user = cookies.get('loggedInUser');
-    console.log('user:', user);
     const router = useRouter();
 
     async function getStudent() {
-        const res = await getStudentData(user.data.id || user.id);
+        if (!user) return;
+        const res = await getStudentData(user?.data?.id || user?.id);
+        debugger;
         console.log('student:', res.data);
         setStudent(res);
     }

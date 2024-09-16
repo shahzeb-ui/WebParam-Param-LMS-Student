@@ -22,6 +22,7 @@ import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 import {isMobile} from 'react-device-detect';
 
+
 const pdfVersion = "3.11.174";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
 
@@ -183,8 +184,7 @@ const FileUpload: React.FC = () => {
         if (response.status === 200) {
           setIsUploaded(true);
           router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
-          // window.location.reload();
-          window.location.href = `/student/student-profile?tab=documents&document=${selectedDocument}&action=view`;
+        viewDocument(documentinfo?.id)
         } else {
           alert('File upload failed');
         }
@@ -232,7 +232,8 @@ const FileUpload: React.FC = () => {
         setSelectedFile(null);
         setIsUploaded(false);
         router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
-        window.location.reload();
+        viewDocument(documentinfo?.id)
+        // window.location.reload();
       }
     }
   };

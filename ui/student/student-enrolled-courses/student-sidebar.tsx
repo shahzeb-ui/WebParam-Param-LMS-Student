@@ -1,9 +1,9 @@
 "use client";
 import Cookies from "universal-cookie";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GetSideBarData } from "@/interfaces/SidebarData";
+import Link from "next/link";
 
 const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
@@ -52,25 +52,25 @@ const StudentDashboardSidebar = () => {
                       if (process.env.NEXT_PUBLIC_FREEMIUM && data.link == "/student/enrolled-courses") {
                         return  (
                         <li className="nav-item" key={index} role="presentation">
-                        <a
+                        <Link
                           href={'/student/projects?tab=enrolled'}
                           className={`${path == '/student/projects' ? "active" : ""}`}
                           style={{color: path == '/student/projects' ? "#2f57ef" : ""}} 
                         >
                           <i className={data.icon} />
                           <span>My Projects</span>
-                        </a>
+                        </Link>
                       </li>);
                       }
                       return (
                       <li className="nav-item" key={index} role="presentation">
-                        <a
+                        <Link
+                          href={data.link}  
                           className={`${path === data.link ? "active" : ""}`}
-                          href={data.link}
                         >
                           <i className={data.icon} />
                           <span>{data.text}</span>
-                        </a>
+                        </Link>
                       </li>
                     )
                     })}
@@ -85,14 +85,13 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   <li>
-                    <a
-                    onClick={handleLogOut}
+                    <Link
                       href={'/student/student-profile'}
                       className={`${path === '/student/student-profile' ? "active" : ""}`}
                     >
                       <i className="feather-user" />
                       <span>My Profile</span>
-                    </a>
+                    </Link>
                   </li>
                   {SidebarData &&
                   
@@ -100,26 +99,26 @@ const StudentDashboardSidebar = () => {
                       // if logout, attach the logout function to the link
                       if (data.text == "Logout") {
                         return  <li key={index}>
-                        <a
+                        <Link
                         onClick={handleLogOut}
                           href={data.link}
                           className={`${path === data.link ? "active" : ""}`}
                         >
                           <i className={data.icon} />
                           <span>{data.text}</span>
-                        </a>
+                        </Link>
                       </li>;
                       }
 
                       return (
                       <li key={index}>
-                        <a
+                        <Link
                           href={data.link}
                           className={`${path === data.link ? "active" : ""}`}
                         >
                           <i className={data.icon} />
                           <span>{data.text}</span>
-                        </a>
+                        </Link>
                       </li>
                     )
                     })}

@@ -23,9 +23,24 @@ const InstructorDashboardHeader = () => {
     { courseName: "Computer Technician", courseId: "669f4301cb3eaf57cd1040db" },
     { courseName: "New Venture Creation", courseId: "66bb53af591d6479c2b50573" },
     { courseName: "Small Retail Business Owner", courseId: "66c6f9be0c2eeac80af3b58e" }
+    
   ];
 
-  console.log("courseId f: ", coursesArray.find(course => course.courseId === courseId)?.courseName);
+  async function getCourse(courseId: string) {
+    
+    const res = await axios.get(`${rCourseUrl}/api/v1/Courses/GetCourseNew/${courseId}`);
+
+    if (res) {
+      setCourse(res.data.data);
+    }
+  }
+
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_DEMO) {
+      const courseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
+      getCourse(courseId);
+    }
+  }, [courseId]);
 
   useEffect(() => {
     const modalOpened = localStorage.getItem("modalOpened");
@@ -116,7 +131,7 @@ const InstructorDashboardHeader = () => {
           <div
             className="rbt-shadow-box"
             style={{
-              backgroundImage: `url(${process.env.NEXT_PUBLIC_BANNER_URL ?? ""})`,
+              backgroundImage: `url(${process.env.NEXT_PUBLIC_FREEMIUM  ? process.env.NEXT_PUBLIC_THOOTO_BANNER_URL:process.env.NEXT_PUBLIC_BANNER_URL})`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
@@ -125,14 +140,42 @@ const InstructorDashboardHeader = () => {
           />
         ) : (
           <div
-            className="height-350 rbt-shadow-box"
+            className="height-350 rbt-shadow-box progress-status-wrapper"
             style={{
-              backgroundImage: `url(${process.env.NEXT_PUBLIC_BANNER_URL ?? ""})`,
+              backgroundImage: `url(${process.env.NEXT_PUBLIC_FREEMIUM  ? process.env.NEXT_PUBLIC_THOOTO_BANNER_URL:process.env.NEXT_PUBLIC_BANNER_URL})`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              backgroundPosition: 'center',
+              
             }}
-          />
+          >
+            <div className="rbt-dashboard-content rbt-shadow-box progress-status">
+                  <div className="progress-status-left border-warning">
+                    <h4>66%</h4>
+                    <p>Completed</p>
+                  </div>
+                  <div className="progress-status-right">
+                    <h4>Profile Completion</h4>
+                    <div className="progress-bar-container">
+                      <div className="progress-item">
+                        <h6>Biography:</h6><span className="progress-percentage text-success">100%</span>
+                      </div>
+                      <div className="progress-item">
+                        <h6>Demographics:</h6><span className="progress-percentage text-warning">60%</span>
+                      </div>
+                      <div className="progress-item">
+                        <h6>Contacts:</h6><span className="progress-percentage text-success">80%</span>
+                      </div>
+                      <div className="progress-item">
+                        <h6>Employment:</h6><span className="progress-percentage text-danger">30%</span>
+                      </div>
+                      <div className="progress-item">
+                        <h6>Documents:</h6><span className="progress-percentage text-warning">60%</span>
+                      </div>
+                    </div>
+                  </div>  
+                </div>
+          </div>
         )}
 
         <div className="rbt-tutor-information">
