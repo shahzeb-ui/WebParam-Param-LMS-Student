@@ -1,6 +1,12 @@
-// "use client";
+"use client";
 
-// import { useState, useEffect } from "react";
+import React from 'react';
+
+const TakeAssessmentPage = () => {
+  return (
+    <div>
+      {
+        // import { useState, useEffect } from "react";
 // import styles from "@/styles/assessment/assessment.module.css";
 // import loaderStyles from "@/ui/loader-ui/loader.module.css";
 // import assessmentData from "@/data/assessment/assessment.json";
@@ -208,3 +214,9 @@
 // };
 
 // export default AssessmentComponent;
+      }
+    </div>
+  );
+};
+
+export default TakeAssessmentPage;
