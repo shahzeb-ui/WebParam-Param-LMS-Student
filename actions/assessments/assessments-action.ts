@@ -1,23 +1,61 @@
-import { wAssessmentUrl } from "@/app/lib/endpoints";
+import { wStudentAnswersThootoUrl } from "@/app/lib/endpoints";
 import {
   AssessmentResponse,
 } from "@/interfaces/assessments/assessments-interface";
 
+type StudentAnswer = {
+  questionId: string;
+  description: string;
+  questionType: string;
+  options: Array<{
+    label: string;
+    questionId: string;
+    isCorrect: boolean;
+    description: string;
+    id: string;
+  }>;
+  studentMultipleChoiceAnswer: Array<{
+    label: string;
+    questionId: string;
+    isCorrect: boolean;
+    description: string;
+    id: string;
+  }>;
+  studentLongTextAnswer: string;
+  rubrics: Array<{
+    label: string;
+    description: string;
+    questionId: string;
+    id: string;
+    facilitatorScore: number;
+    moderatorScore: number;
+  }>;
+  moderatorFeedBack: string;
+  score: number;
+};
+
+type AssessmentSubmission = {
+  assessmentId: string;
+  assessmentName: string;
+  userId: string;
+  answers: StudentAnswer[];
+  fileUrl: string;
+};
+
 export const submitAssessment = async (
-  title: string,
-  courseId: string
+  submission: AssessmentSubmission
 ): Promise<AssessmentResponse> => {
   try {
-    console.log("Submitting assessment:", { title, courseId });
+    console.log("Submitting assessment:", submission);
     const response = await fetch(
-      `${wAssessmentUrl}/Assessments/AddNewAssessment`,
+      `${wStudentAnswersThootoUrl}/AddStudentAnswers`,
       {
         method: "POST",
         headers: {
-          Accept: "text/plain",
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, courseId }),
+        body: JSON.stringify([submission]),
       }
     );
 

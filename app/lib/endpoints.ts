@@ -88,3 +88,10 @@ export const rNotificationUrl = process.env.NEXT_PUBLIC_NOTIFICATION_READ_URL;
 export const wNotificationUrl = process.env.NEXT_PUBLIC_NOTIFICATION_WRITE_URL;
 export const wLoogBookUrl = process.env.NEXT_PUBLIC_LOGBOOK_WRITE_URL;
 export const rLoogBookUrl = process.env.NEXT_PUBLIC_LOGBOOK_READ_URL;
+
+// New endpoints
+export const rAssessmentThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net`;
+export const wAssessmentThootoUrl = `https://thooto-dev-be-assessment-write.azurewebsites.net`;
+export const rQuestionsThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions`;
+export const rOptionsThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Options`;
+export const wStudentAnswersThootoUrl = `https://thooto-dev-be-assessment-write.azurewebsites.net/api/v1/StudentAnswers`;
