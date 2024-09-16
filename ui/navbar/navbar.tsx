@@ -71,7 +71,7 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo" 
+                <Link href="/student/enrolled-courses?tab=enrolled" className="logo" 
                 style={{
                   fontFamily:`"League Spartan" sans-serif `,
                   fontWeight: "900",
