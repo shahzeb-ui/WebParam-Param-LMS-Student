@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { submitAssessment } from "@/actions/assessments/assessments-action";
+import { submitAssessmentAnswers } from "@/actions/assessments/assessments-action";
 import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
@@ -116,7 +116,7 @@ const AssessmentComponent = () => {
     };
 
     try {
-      const response = await submitAssessment(submission);
+      const response = await submitAssessmentAnswers(submission);
       console.log("Assessment Submitted:", response);
 
       console.log("All questions answered. Assessment completed.");
@@ -210,7 +210,7 @@ const AssessmentComponent = () => {
             <div className={styles.buttonWrapper}>
               <button
                 className="rbt-btn btn-sm"
-                style={{ backgroundColor: "rgb(36, 52, 92) !important" }}
+                style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                 type="button"
                 onClick={handleSubmitAssessment}
               >
