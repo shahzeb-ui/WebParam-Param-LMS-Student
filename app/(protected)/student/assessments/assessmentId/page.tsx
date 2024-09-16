@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect ,Suspense} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { submitAssessmentAnswers } from "@/actions/assessments/assessments-action";
 import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
@@ -231,4 +231,12 @@ const AssessmentComponent = () => {
   );
 };
 
-export default AssessmentComponent;
+//export default AssessmentComponent;
+export default function TakeAssessmentComponent() {
+
+  return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <AssessmentComponent/>
+      </Suspense>
+  );
+}
