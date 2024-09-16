@@ -46,12 +46,6 @@
       "link": "/student/notifications",
       "text": "Notifications",
       "icon": "feather-volume-2"
-    },
-
-    {
-      "link": "/",
-      "text": "Logout",
-      "icon": "feather-log-out"
     }
   ],
   "COURSE_ONLY": [
@@ -60,11 +54,7 @@
       "text": "My Courses",
       "icon": "bi bi-laptop-fill"
     },
-    {
-      "link": "/",
-      "text": "Logout",
-      "icon": "feather-log-out"
-    }
+    
   ]
 
 }
