@@ -1,4 +1,5 @@
 "use client";
+import "./auth.scss";
 import flagsmith from "flagsmith";
 import { FlagsmithProvider } from "flagsmith/react";
 
