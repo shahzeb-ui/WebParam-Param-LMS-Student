@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { rQuestionsThootoUrl, rOptionsThootoUrl} from '../../lib/endpoints';
 
 type Option = {
   id: string;
@@ -19,34 +20,37 @@ type Question = {
 type MultipleChoiceQuestionsProps = {
   assessmentId: string;
   setIsInteracted: (interacted: boolean) => void;
+  submitMultipleChoice: boolean;
+  setSubmitMultipleChoice: (submit: boolean) => void;
+  setMultipleChoiceAnswers: (answers: any[]) => void;
 };
 
 const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
   assessmentId,
   setIsInteracted,
+  submitMultipleChoice,
+  setSubmitMultipleChoice,
+  setMultipleChoiceAnswers,
 }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<Option[]>([]);
 
   useEffect(() => {
     const fetchQuestionsAndOptions = async () => {
       try {
         console.log("Fetching questions for assessmentId:", assessmentId);
 
-        // Fetch questions
-        const questionsResponse = await fetch(`https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions/GetQuestions/${assessmentId}`);
+        const questionsResponse =  await fetch(`${rQuestionsThootoUrl}/GetQuestions/${assessmentId}`);
         const questionsData = await questionsResponse.json();
         console.log("Questions data:", questionsData);
 
         if (Array.isArray(questionsData.data)) {
-          // Filter multiple-choice questions
           const multipleChoiceQuestions = questionsData.data.filter((question: any) => question.questionType === "Quiz");
           console.log("Filtered questions:", multipleChoiceQuestions);
 
-          // Fetch options for each multiple-choice question
           const questionsWithOptions = await Promise.all(
             multipleChoiceQuestions.map(async (question: any) => {
-              const optionsResponse = await fetch(`https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Options/GetOptions/${question.id}`);
+              const optionsResponse = await fetch(`${rOptionsThootoUrl}/GetOptions/${question.id}`);
               const optionsData = await optionsResponse.json();
               console.log(`Options data for question ${question.id}:`, optionsData);
 
@@ -58,7 +62,7 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
           );
 
           setQuestions(questionsWithOptions);
-          setSelectedAnswers(Array(questionsWithOptions.length).fill(""));
+          setSelectedAnswers(Array(questionsWithOptions.length).fill(null));
         } else {
           console.error("Unexpected questions data format:", questionsData);
         }
@@ -74,32 +78,34 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
     }
   }, [assessmentId]);
 
-  const handleOptionChange = (questionIndex: number, optionLabel: string) => {
+  useEffect(() => {
+    if (submitMultipleChoice) {
+      handleSubmitAnswers();
+      setSubmitMultipleChoice(false);
+    }
+  }, [submitMultipleChoice]);
+
+  const handleOptionChange = (questionIndex: number, option: Option) => {
     const updatedAnswers = [...selectedAnswers];
-    updatedAnswers[questionIndex] = optionLabel;
+    updatedAnswers[questionIndex] = option;
     setSelectedAnswers(updatedAnswers);
     setIsInteracted(true);
   };
 
-  const handleSubmitAnswers = async () => {
-    try {
-      // Submit answers
-      const response = await fetch(`https://thooto-dev-be-assessment-write.azurewebsites.net/api/v1/StudentAnswers/AddStudentAnswers`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ answers: selectedAnswers }),
-      });
+  const handleSubmitAnswers = () => {
+    const answers = questions.map((question, index) => ({
+      questionId: question.id,
+      description: question.title,
+      questionType: question.type,
+      options: question.options,
+      studentMultipleChoiceAnswer: selectedAnswers[index] ? [selectedAnswers[index]] : [],
+      studentLongTextAnswer: "",
+      rubrics: [],
+      moderatorFeedBack: "",
+      score: 0,
+    }));
 
-      if (response.ok) {
-        console.log("Answers submitted successfully");
-      } else {
-        console.error("Error submitting answers:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error submitting answers:", error);
-    }
+    setMultipleChoiceAnswers(answers);
   };
 
   return (
@@ -111,7 +117,7 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
             <div key={option.id}>
               <label
                 style={{
-                  border: `${selectedAnswers[index] === option.label ? `2px solid ${process.env.NEXT_PUBLIC_PRIMARY_COLOR ?? 'rgb(36, 52, 92)'}` : '2px solid var(--color-border)'}`,
+                  border: `${selectedAnswers[index]?.id === option.id ? `2px solid ${process.env.NEXT_PUBLIC_PRIMARY_COLOR ?? 'rgb(36, 52, 92)'}` : '2px solid var(--color-border)'}`,
                   height: '40px',
                   display: 'flex',
                   alignItems: 'center',
@@ -126,8 +132,8 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
                   type="radio"
                   name={`question-${index}`}
                   value={option.label}
-                  checked={selectedAnswers[index] === option.label}
-                  onChange={() => handleOptionChange(index, option.label)}
+                  checked={selectedAnswers[index]?.id === option.id}
+                  onChange={() => handleOptionChange(index, option)}
                 />
                 {option.description}
               </label>

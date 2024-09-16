@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { submitAssessment } from "@/actions/assessments/assessments-action";
-import MultipleChoice from "../../../take-assessment/multipleChoise";
+import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
+import {rAssessmentThootoUrl} from '../../../../../app/lib/endpoints'
 
 type LongAnswerQuestion = {
   id: string;
@@ -16,19 +17,24 @@ type LongAnswerQuestion = {
 
 const AssessmentComponent = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [longQuestions, setLongQuestions] = useState<LongAnswerQuestion[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [quizCount, setQuizCount] = useState<number>(0);
+  const [submitMultipleChoice, setSubmitMultipleChoice] = useState<boolean>(false);
+  const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
 
-  const assessmentId = "66e3cbef3e73f6ee989eaf29";
+  const assessmentId = searchParams.get('id');
+  const userId = "userId"; 
+  const assessmentName = "assessmentName"; 
 
   useEffect(() => {
     if (assessmentId) {
-      // Fetch questions based on assessmentId
-      fetch(`https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions/GetQuestions/${assessmentId}`)
+      fetch(`${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`)
         .then((response) => response.json())
         .then((data) => {
           if (Array.isArray(data.data)) {
@@ -86,24 +92,40 @@ const AssessmentComponent = () => {
     setIsInteracted(false);
     setLoading(true);
 
-    try {
-      const responses = await Promise.all(
-        answers.map((answer) =>
-          submitAssessment(answer, assessmentId as string)
-        )
-      );
-      console.log("Assessment Submitted:", responses);
+    setSubmitMultipleChoice(true);
 
-      // Handle assessment completion
+    const submission = {
+      assessmentId: assessmentId as string,
+      assessmentName,
+      userId,
+      answers: [
+        ...multipleChoiceAnswers,
+        ...longQuestions.map((question, index) => ({
+          questionId: question.id,
+          description: question.title,
+          questionType: question.type,
+          options: [], 
+          studentMultipleChoiceAnswer: [], 
+          studentLongTextAnswer: answers[index],
+          rubrics: [], 
+          moderatorFeedBack: "",
+          score: 0,
+        })),
+      ],
+      fileUrl: "",
+    };
+
+    try {
+      const response = await submitAssessment(submission);
+      console.log("Assessment Submitted:", response);
+
       console.log("All questions answered. Assessment completed.");
-      // Clear local storage and reset answers
+
       localStorage.removeItem("assessmentState");
       setAnswers(Array(longQuestions.length).fill(""));
       setTimeRemaining(null); // Reset the timer
 
-      setTimeout(() => {
-        router.push("/student/assessments?tab=completed");
-      }, 2000);
+      router.back();
     } catch (error) {
       console.error("Error submitting assessment:", error);
     } finally {
@@ -150,10 +172,15 @@ const AssessmentComponent = () => {
                 </div>
               </>
             </div>
-            <MultipleChoice
-              assessmentId={assessmentId as string}
-              setIsInteracted={setIsInteracted}
-            />
+            {assessmentId && (
+              <MultipleChoiceQuestions
+                assessmentId={assessmentId}
+                setIsInteracted={setIsInteracted}
+                submitMultipleChoice={submitMultipleChoice}
+                setSubmitMultipleChoice={setSubmitMultipleChoice}
+                setMultipleChoiceAnswers={setMultipleChoiceAnswers}
+              />
+            )}
             {longQuestions.map((item, index) => (
               <div key={item.id} id={`question-${index + 1}`} className="question">
                 <div className="rbt-single-quiz">
