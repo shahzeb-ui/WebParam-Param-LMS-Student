@@ -126,7 +126,7 @@ const InstructorDashboardHeader = () => {
       )}
 
       {/* Course title display */}
-      <div className="mb-5">
+      <div className="mb-5" style={{marginTop:"-7%"}}>
         {process.env.NEXT_PUBLIC_DEMO ? (
           <div style={{ maxWidth: "40rem" }}>
             <span className="select-label d-block">Select a course</span>

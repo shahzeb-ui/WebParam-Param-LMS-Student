@@ -31,12 +31,18 @@ function TakeLesson() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
   
+  
 
-  const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
+  // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
   const searchParams = useSearchParams();
   const moduleId = searchParams.get("moduleId");
+
+  const allSubTopics = Object.values(expandedTopics).flat();
+
+  const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
+
 
   async function fetchKnowledgeTopics() {
     debugger;
@@ -54,9 +60,7 @@ function TakeLesson() {
       setError(err.message);
     } finally {
       setLoading(false);
-     
-      // firstAccordionButtonRef.current?.click();
-    }
+      }
   }
 
   async function fetchTopics(topicId: string) {
@@ -81,9 +85,19 @@ function TakeLesson() {
     }
   }
 
+  function setCheckedVideos(){
+    const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
+    watchedVideos.forEach((videoId) => {
+      setCheckedSubTopics((prev) => ({
+        ...prev,
+        [videoId]: true,
+      }));
+    });
+  }
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
+    // setCheckedVideos();
     
   }, []);
 
@@ -116,7 +130,7 @@ function TakeLesson() {
   );
 
   const handlePrevious = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
+
     if (currentIndex > 0) {
       const previousSubTopic = allSubTopics[currentIndex - 1];
       if (previousSubTopic) {
@@ -132,7 +146,7 @@ function TakeLesson() {
   };
 
   const handleNext = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
+  
     if (!videoEnded) {
       setVideoEnded(true); // Show quiz first
       return;
@@ -210,7 +224,7 @@ function TakeLesson() {
                     id={`heading${index}`}
                   >
                     <button
-                      ref={index === 0 ? firstAccordionButtonRef : null}
+                      // ref={index === 0 ? firstAccordionButtonRef : null}
                       className="accordion-button collapsed"
                       type="button"
                       data-bs-toggle="collapse"
@@ -373,7 +387,7 @@ function TakeLesson() {
                               <span className="title">Transcript</span>
                             </Link>
                           </li>
-                          <li role="presentation">
+                          {/* <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -386,8 +400,8 @@ function TakeLesson() {
                             >
                               <span className="title">Q&A</span>
                             </Link>
-                          </li>
-                          <li role="presentation">
+                          </li> */}
+                          {/* <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -400,7 +414,7 @@ function TakeLesson() {
                             >
                               <span className="title">Notes</span>
                             </Link>
-                          </li>
+                          </li> */}
                           {isMobile && 
                           <li role="presentation">
                             <Link
@@ -488,7 +502,7 @@ function TakeLesson() {
                                     id={`heading${index}`}
                                   >
                                     <button
-                                      ref={index === 0 ? firstAccordionButtonRef : null}
+                                      // ref={index === 0 ? firstAccordionButtonRef : null}
                                       className="accordion-button collapsed"
                                       type="button"
                                       data-bs-toggle="collapse"

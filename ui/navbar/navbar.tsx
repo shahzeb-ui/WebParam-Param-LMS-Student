@@ -60,6 +60,8 @@ const Navbar = () => {
     return <div></div>;
   } 
 
+  const showBanner = process.env.NEXT_PUBLIC_SHOW_TOP_BANNER ;
+
   return (
     <>
       <header className="rbt-header">
@@ -69,7 +71,7 @@ const Navbar = () => {
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
               <div className="header-left">
-                <Link href="/" className="logo" 
+                <Link href="/student/enrolled-courses?tab=enrolled" className="logo" 
                 style={{
                   fontFamily:`"League Spartan" sans-serif `,
                   fontWeight: "900",
@@ -79,7 +81,7 @@ const Navbar = () => {
                 </Link>
               </div>
 
-              {process.env.SHOW_TOP_BANNER &&
+              {showBanner &&
               <>
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
@@ -119,7 +121,7 @@ const Navbar = () => {
   
            
                 <div className="header-right d-flex align-items-center mt">
-              {process.env.SHOW_TOP_BANNER && 
+              {showBanner && 
                 <div className="d-none d-md-block me-3">
                   <Link href="#" onClick={handleAvatarClick}>
                     <Image

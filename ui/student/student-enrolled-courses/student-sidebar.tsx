@@ -77,25 +77,35 @@ const StudentDashboardSidebar = () => {
                 </ul>
               </nav>
 
-              {SidebarData?.length > (process.env.NEXT_PUBLIC_FREEMIUM?3:7) &&
                 <div className="section-title mt--40 mb--20">
                   <h6 className="rbt-title-style-2">User</h6>
                 </div>
-              }
+              
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   <li>
-                    <Link
+                    <a
+                  
                       href={'/student/student-profile'}
                       className={`${path === '/student/student-profile' ? "active" : ""}`}
                     >
                       <i className="feather-user" />
                       <span>My Profile</span>
-                    </Link>
+                    </a>
                   </li>
-                  {SidebarData &&
+                  <li>
+                    <a
+                    onClick={handleLogOut}
+                      href={'/'}
+                      className={`${path === '/' ? "active" : ""}`}
+                    >
+                      <i className="feather-log-out" />
+                      <span>Logout</span>
+                    </a>
+                  </li>
+                  {/* {SidebarData &&
                   
-                    SidebarData?.slice(7).map((data: any, index: any) => {
+                    SidebarData?.slice(-1).map((data: any, index: any) => {
                       // if logout, attach the logout function to the link
                       if (data.text == "Logout") {
                         return  <li key={index}>
@@ -121,7 +131,7 @@ const StudentDashboardSidebar = () => {
                         </Link>
                       </li>
                     )
-                    })}
+                    })} */}
                 </ul>
               </nav>
             </div>

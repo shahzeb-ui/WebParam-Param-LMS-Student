@@ -53,10 +53,10 @@ const UnitStandardWidget: React.FC<Props> = ({
 
 
     // Set a random number when the component mounts
-    
     const generateRandomVideoCount = () => {
-      return Math.floor(Math.random() * (40 - 10 + 1)) + 10;
+      return Math.floor(Math.random() * (50 - 10 + 1)) + 10;
     };
+
 
   // const handleClick = (id: string) => {
   //   setId(id);

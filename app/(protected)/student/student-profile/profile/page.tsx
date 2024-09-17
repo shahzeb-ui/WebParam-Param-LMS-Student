@@ -11,6 +11,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
 import { readUserData } from '@/app/lib/endpoints';
+import { GET } from '@/app/lib/api-client';
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");
@@ -40,9 +41,10 @@ export default function Profile({ student }: any) {
     }, [profilePic]);
 
     async function getInputCodes() {
-        const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
-        console.log('codes:', res.data.data);
-        setCodes(res.data.data);
+        // const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+        const res = await GET(`${readUserData}/api/v1/Student/GetCodes`);
+        console.log('codes:', res?.data.data);
+        setCodes(res?.data.data);
     }
     
     useEffect(() => {

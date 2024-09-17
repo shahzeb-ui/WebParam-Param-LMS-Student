@@ -6,6 +6,7 @@ import { preferredOccupations, sector } from "./data";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { readUserData } from "@/app/lib/endpoints";
+import { GET } from "@/app/lib/api-client";
 
 export default function EmploymentInformation({ student }: any) {
   const cookies = new Cookies();
@@ -22,7 +23,8 @@ export default function EmploymentInformation({ student }: any) {
   const [codes, setCodes] = useState<any>()
 
   async function getInputCodes() {
-    const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+    // const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+    const res = await GET(`${readUserData}/api/v1/Student/GetCodes`);
 
     console.log('codes:', res?.data?.data);
     setCodes(res?.data?.data)

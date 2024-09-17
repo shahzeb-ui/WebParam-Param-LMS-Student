@@ -47,7 +47,7 @@ export default function Register() {
  
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    debugger;
+    
     setIsLoading(true);
 
     const newHasError = {
@@ -91,7 +91,7 @@ export default function Register() {
     try {
       const res = await registerUser(payload);
       setIsLoading(false);
-      debugger;
+      
 
       if (res) {
         if (res?.data.message !== "User exists") {
@@ -198,7 +198,7 @@ export default function Register() {
           </>
         ) : (
           <>
-            <h2>Create an account</h2>
+            <h2 style={{marginTop:"15%"}}>Create an account</h2>
             <p>Start your journey!</p>
           </>
         )}
