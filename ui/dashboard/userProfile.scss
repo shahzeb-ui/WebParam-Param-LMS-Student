@@ -7,7 +7,6 @@
 
 .progress-status {
     position: relative;
-    // padding: 20px;
     border-radius: 15px;
     width: 50%;
     height: 80%;
@@ -16,7 +15,9 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
     border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
     animation: float 6s ease-in-out infinite; /* Floating animation */
+    
   }
+
   
   /* Keyframes for floating effect */
   @keyframes float {
@@ -98,3 +99,112 @@
       }
 }
   
+
+.info-button-container {
+    bottom: 10px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Glass blur effect */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    overflow: hidden;
+    width: 100% !important;
+    height: 100% !important;
+   
+    // animation: float 6s ease-in-out infinite; /* Floating animation */
+  }
+
+  .progress-status-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    bottom: 10px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Glass blur effect */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    z-index: 1000;
+
+  }
+
+  .mobile-progress-status {
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Glass blur effect */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+    display: flex;
+    gap: 5px;
+
+    &-left {
+        border: 10px solid red;
+        // border-radius: 50%;
+        display: flex;
+        width: 40% !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+
+        & * {
+            margin: 0 !important;
+        }
+
+        & p {
+            font-size: 9px;
+        }
+    }
+
+    &-right {
+        width: 60% !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        
+        & * {
+            margin: 0 !important;
+            font-size: 6px;
+        }
+
+        & > h4 {
+            font-size: 12px;
+        }
+
+        & > div {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            align-items: center;
+            gap: 5px;
+
+            & > div {
+                border: 1px solid lightgrey;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 12px;
+                padding: 2px;
+
+                & * {
+                    margin: 0 !important;
+                }
+
+                & > h6 {
+                    font-size: 7px;
+                    line-height: 20px;
+                }
+            }
+        }
+
+    }
+  }

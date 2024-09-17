@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, AnimatePresence } from "framer-motion"
 import { rCourseUrl } from "@/app/lib/endpoints";
 import "./userProfile.scss";
 import axios from "axios";
@@ -8,13 +9,17 @@ import Cookies from "universal-cookie";
 import { isBrowser, isMobile } from 'react-device-detect';
 import { Modal } from 'react-responsive-modal';
 import { useCourseId } from "@/context/courseId-context/courseId-context";
+import { usePathname } from "next/navigation";
 
 const InstructorDashboardHeader = () => {
   const { courseId, setCourseId } = useCourseId();
   const [course, setCourse] = useState<any>();
   const [open, setOpen] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const cookies = new Cookies();
+  const pathname = usePathname();
 
   const coursesArray = [
     { courseName: "Contact Centre Manager", courseId: "66c6f9fe0c2eeac80af3b590" },
@@ -126,7 +131,7 @@ const InstructorDashboardHeader = () => {
       </div>
 
       {/* Responsive course banner */}
-      <div className="rbt-dashboard-content-wrapper">
+      <div className="rbt-dashboard-content-wrapper banner-wrapper">
         {isMobile ? (
           <div
             className="rbt-shadow-box"
@@ -135,12 +140,66 @@ const InstructorDashboardHeader = () => {
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              height: '175px'
+              height: '175px',
+              position: 'relative'
             }}
-          />
+          >
+            <AnimatePresence>
+              {pathname === "/student/student-profile" && isClicked &&
+                <div className="info-button-container">
+            <motion.div
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             exit={{ opacity: 0 }} 
+             transition={{ duration: 1 }}
+             className="rbt-dashboard-content rbt-shadow-box mobile-progress-status" style={{display:`${isHovered ? 'flex !important' : 'none !important'}`}}>
+                  <div className="mobile-progress-status-left border-warning">
+                    <h4>66%</h4>
+                    <p>Completed</p>
+                  </div>
+                  <div className="mobile-progress-status-right">
+                    <h4>Profile Completion</h4>
+
+                    <div className="mobile-progress-bar-container">
+                      <div className="mobile-progress-item">
+                        <h6>Biography:</h6><span className="progress-percentage text-success">100%</span>
+                      </div>
+                      <div className="mobile-progress-item">
+                        <h6>Demographics:</h6><span className="progress-percentage text-warning">60%</span>
+                      </div>
+                      <div className="mobile-progress-item">
+                        <h6>Contacts:</h6><span className="progress-percentage text-success">80%</span>
+                      </div>
+                      <div className="mobile-progress-item">
+                        <h6>Employment:</h6><span className="progress-percentage text-danger">30%</span>
+                      </div>
+                      <div className="mobile-progress-item">
+                        <h6>Documents:</h6><span className="progress-percentage text-warning">60%</span>
+                      </div>
+                    </div>
+                  </div>  
+                </motion.div>
+                </div>
+              }
+
+               
+              <button type="button" 
+              className="btn btn-primary progress-status-button" 
+              style={{overflow:"hidden", color:"#24345c"}} 
+              onClick={()=>setIsClicked(!isClicked)}>
+                {isClicked ? <i className="bi bi-x-circle-fill text-danger" style={{fontSize:"1.5rem"}}/>:<i className="bi bi-info-circle-fill" style={{color:"#24345c"}} />}
+
+                {isClicked ? "" : "My Progress"}
+                </button>
+                 {/* } */}
+            </AnimatePresence>
+          </div>
         ) : (
+          <AnimatePresence>
           <div
             className="height-350 rbt-shadow-box progress-status-wrapper"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}  
             style={{
               backgroundImage: `url(${process.env.NEXT_PUBLIC_FREEMIUM  ? process.env.NEXT_PUBLIC_THOOTO_BANNER_URL:process.env.NEXT_PUBLIC_BANNER_URL})`,
               backgroundRepeat: 'no-repeat',
@@ -149,7 +208,15 @@ const InstructorDashboardHeader = () => {
               
             }}
           >
-            <div className="rbt-dashboard-content rbt-shadow-box progress-status">
+            {pathname === "/student/student-profile" && isHovered ?
+            <motion.div
+            // onMouseEnter={() => setIsHovered(true)}
+            // onMouseLeave={() => setIsHovered(false)}
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             exit={{ opacity: 0 }} 
+             transition={{ duration: 1 }}
+             className="rbt-dashboard-content rbt-shadow-box progress-status" style={{display:`${isHovered ? 'flex !important' : 'none !important'}`}}>
                   <div className="progress-status-left border-warning">
                     <h4>66%</h4>
                     <p>Completed</p>
@@ -174,8 +241,14 @@ const InstructorDashboardHeader = () => {
                       </div>
                     </div>
                   </div>  
-                </div>
+                </motion.div>
+                :
+                <div className="progress-status-left border-warning">
+                   {pathname === "/student/student-profile" ? <i className="bi bi-info-circle-fill progress-status"></i> : null}
+                  </div>
+                }
           </div>
+          </AnimatePresence>
         )}
 
         <div className="rbt-tutor-information">
