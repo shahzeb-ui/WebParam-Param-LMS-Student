@@ -74,7 +74,7 @@ export default function ActiveAssessment() {
 
 
   return (
-    <table className="rbt-table table table-borderless">
+    <table className="rbt-table table table-borderless" style={{minWidth:'10px'}}>
       <thead>
         <tr>
           <th>Assessment Name</th>

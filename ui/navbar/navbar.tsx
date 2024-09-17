@@ -1,5 +1,6 @@
 "use client";
 
+import "./navbar.scss";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Link as ScrollLink } from "react-scroll";
@@ -8,11 +9,13 @@ import User from "@/avator/user.png";
 import UserStudent from "@/ui/user/user-dropdown";
 import styles from "@/styles/side-bar/profile-nav-bar.module.css";
 import StudentMobileSideBar from "../student/student-enrolled-courses/mobile-student-sidebar";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [currentSection, setCurrentSection] = useState("home");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathname = usePathname();
 
   const sections = [
     { id: "dashboard", label: "Dashboard", link: "/student/dashboard" },
@@ -53,6 +56,10 @@ const Navbar = () => {
     setIsDropdownVisible(false);
   };
 
+  if (["/register", "/login", "/verify-account", "/forgot-password", "/forgot-password/otp", "/testing"].includes(pathname)) {
+    return <div></div>;
+  } 
+
   return (
     <>
       <header className="rbt-header">
@@ -72,6 +79,8 @@ const Navbar = () => {
                 </Link>
               </div>
 
+              {process.env.SHOW_TOP_BANNER &&
+              <>
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
                     <ul className="mainmenu">
@@ -105,9 +114,12 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-            
+              </>
+              }
+  
            
-              <div className="header-right d-flex align-items-center mt">
+                <div className="header-right d-flex align-items-center mt">
+              {process.env.SHOW_TOP_BANNER && 
                 <div className="d-none d-md-block me-3">
                   <Link href="#" onClick={handleAvatarClick}>
                     <Image
@@ -124,25 +136,22 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-
+                }
+              
                 <div
-                  className="rbt-offcanvas-trigger d-xl-none"
+                  className={`humburger-menu ${isSidebarOpen ? "active" : ""}`}
                   id="rbt-offcanvas-activation"
                   onClick={toggleSidebar}
                 >
-                  <span className="offcanvas-trigger">
-                    <span className="offcanvas-bars">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </span>
-                  </span>
+                {/* hmamburger menu will be added with before and after psuedo classes */}
                 </div>
               </div>
+            
             
             </div>
           </div>
         </div>
+        
       </header>
       <StudentMobileSideBar
         isOpen={isSidebarOpen}
