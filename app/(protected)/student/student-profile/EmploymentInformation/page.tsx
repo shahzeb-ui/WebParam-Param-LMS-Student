@@ -61,6 +61,7 @@ export default function EmploymentInformation({ student }: any) {
       if (res) {
         console.log('response', res);
         setIsSubmitting(false);
+        calculateEmploymentPercentage();
         router.push('/student/student-profile?tab=documents')
       }
       
@@ -68,7 +69,23 @@ export default function EmploymentInformation({ student }: any) {
 
   useEffect(() => {
     getInputCodes();
+    calculateEmploymentPercentage();
   }, [])
+
+  const calculateEmploymentPercentage = () => {
+    const fields = [
+      employmentStatus,
+      sarsTaxNumber,
+      selectedSector,
+      preferedOccupation,
+      referalCompany,
+    ];
+
+    const totalFields = fields.length;
+    const emptyFields = fields.filter(field => field).length;
+    const percentage = (emptyFields / totalFields) * 100;
+    localStorage.setItem('employmentPercentage', percentage.toString());
+  };
 
   return (
     <div

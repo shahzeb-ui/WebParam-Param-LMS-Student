@@ -52,10 +52,12 @@ export default function DemocraticLegal({ student }: any) {
 
   useEffect(() => {
     setStudentContactInformation(student);
+    calculateDemographicLegalPercentage();
   }, [student]);
 
   useEffect(() => {
     getInputCodes();
+    calculateDemographicLegalPercentage();
   }, []);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -85,6 +87,7 @@ export default function DemocraticLegal({ student }: any) {
       if (res) {
         console.log('response', res);
         setIsSubmitting(false);
+        calculateDemographicLegalPercentage();
         router.push('/student/student-profile?tab=ContactInformation')
       }
   }
@@ -100,6 +103,33 @@ export default function DemocraticLegal({ student }: any) {
     'Mpumalanga': statsSAAreaCodeOptions.filter((option) => option.value.startsWith('MP')),
     'Limpopo': statsSAAreaCodeOptions.filter((option) => option.value.startsWith('LIM')),
   };
+
+  const calculateDemographicLegalPercentage = () => {
+    const fields = [
+      equityCode,
+      nationalityCode,
+      homeLanguageCode,
+      immigrantStatus,
+      popiActAgree,
+      popiActDate,
+      citizenStatusCode,
+      socioeconomicCode,
+      disabilityCode,
+      disabilityRating,
+      provinceCode,
+      statsSAAreaCode
+    ];
+
+    const totalFields = fields.length;
+    
+    // Filter the fields that are empty (empty strings, null, or undefined)
+    const emptyFields = fields.filter(field => field).length;
+    
+    // Calculate percentage of empty fields
+    const percentage = (emptyFields / totalFields) * 100;
+    
+    localStorage.setItem('demographicLegalPercentage', percentage.toString());
+};
 
 
   return (

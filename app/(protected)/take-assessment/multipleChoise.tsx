@@ -75,7 +75,6 @@ const MultipleChoiceQuestions = ({setIsInteracted}:any) => {
         score += 1;
       }
     }
-    alert(`You scored ${score} out of ${questions.length}`);
   };
 
   return (

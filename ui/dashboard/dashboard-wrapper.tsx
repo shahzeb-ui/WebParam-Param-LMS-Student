@@ -17,7 +17,11 @@ const InstructorDashboardHeader = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isClicked, setIsClicked] = useState<boolean>(false);
-
+  const [biographyPercentage, setBiographyPercentage] = useState<string>("");
+  const [contactInformationPercentage, setContactInformationPercentage] = useState<string>("");
+  const [employmentPercentage, setEmploymentPercentage] = useState<string>("");
+  const [documentsPercentage, setDocumentsPercentage] = useState<string>("");
+  const [demographicLegalPercentage, setDemographicLegalPercentage] = useState<string>("");
   const cookies = new Cookies();
   const pathname = usePathname();
 
@@ -54,6 +58,29 @@ const InstructorDashboardHeader = () => {
     }
     setOpen(true);
     localStorage.setItem("modalOpened", "true");
+  }, []);
+
+  useEffect(() => {
+    const biography = localStorage.getItem("Biography");
+    const contactInformationPercentage = localStorage.getItem("contactInformationPercentage");
+    const demographicLegalPercentage = localStorage.getItem("demographicLegalPercentage");
+    const employmentPercentage = localStorage.getItem("employmentPercentage");
+    const documentsPercentage = localStorage.getItem("documentsPercentage");
+    if (biography) {
+      setBiographyPercentage(biography);
+    }
+    if (contactInformationPercentage) {
+      setContactInformationPercentage(contactInformationPercentage);
+    }
+    if (demographicLegalPercentage) {
+      setDemographicLegalPercentage(demographicLegalPercentage);
+    }
+    if (employmentPercentage) {
+      setEmploymentPercentage(employmentPercentage);
+    }
+    if (documentsPercentage) {
+      setDocumentsPercentage(documentsPercentage);
+    }
   }, []);
 
   return (
@@ -183,14 +210,14 @@ const InstructorDashboardHeader = () => {
               }
 
                
-              <button type="button" 
-              className="btn btn-primary progress-status-button" 
-              style={{overflow:"hidden", color:"#24345c"}} 
-              onClick={()=>setIsClicked(!isClicked)}>
+              {pathname === "/student/student-profile" && <button type="button" 
+                className="btn btn-primary progress-status-button" 
+                style={{overflow:"hidden", color:"#24345c"}} 
+                onClick={()=>setIsClicked(!isClicked)}>
                 {isClicked ? <i className="bi bi-x-circle-fill text-danger" style={{fontSize:"1.5rem"}}/>:<i className="bi bi-info-circle-fill" style={{color:"#24345c"}} />}
 
                 {isClicked ? "" : "My Progress"}
-                </button>
+                </button>}
                  {/* } */}
             </AnimatePresence>
           </div>
@@ -225,19 +252,19 @@ const InstructorDashboardHeader = () => {
                     <h4>Profile Completion</h4>
                     <div className="progress-bar-container">
                       <div className="progress-item">
-                        <h6>Biography:</h6><span className="progress-percentage text-success">100%</span>
+                        <h6>Biography:</h6><span className="progress-percentage text-success">{biographyPercentage}%</span>
                       </div>
                       <div className="progress-item">
-                        <h6>Demographics:</h6><span className="progress-percentage text-warning">60%</span>
+                        <h6>Demographics:</h6><span className="progress-percentage text-warning">{demographicLegalPercentage}%</span>
                       </div>
                       <div className="progress-item">
-                        <h6>Contacts:</h6><span className="progress-percentage text-success">80%</span>
+                        <h6>Contacts:</h6><span className="progress-percentage text-success">{contactInformationPercentage}%</span>
                       </div>
                       <div className="progress-item">
-                        <h6>Employment:</h6><span className="progress-percentage text-danger">30%</span>
+                        <h6>Employment:</h6><span className="progress-percentage text-danger">{employmentPercentage}%</span>
                       </div>
                       <div className="progress-item">
-                        <h6>Documents:</h6><span className="progress-percentage text-warning">60%</span>
+                        <h6>Documents:</h6><span className="progress-percentage text-warning">{documentsPercentage}%</span>
                       </div>
                     </div>
                   </div>  
