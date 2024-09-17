@@ -4,3 +4,10 @@
     background-position: center;
     background-size: cover;
 }
+
+.custom-modal {
+
+    @media (max-width: 568px) {
+        margin-top: 45% !important;
+    }
+}
