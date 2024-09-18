@@ -12,6 +12,7 @@ import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
 import { readUserData } from '@/app/lib/endpoints';
 import { GET } from '@/app/lib/api-client';
+import MaintenanceModal from '@/app/(protected)/banners/MaintanceModal';
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");
