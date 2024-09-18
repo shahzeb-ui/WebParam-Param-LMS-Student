@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { readUserData } from "@/app/lib/endpoints";
 import { GET } from "@/app/lib/api-client";
-import { useProgressContext } from "@/context/progess-card-context/progress-context";
+import { useProgressContext } from "@/context/progress-card-context/progress-context";
 
 export default function EmploymentInformation({ student }: any) {
   const cookies = new Cookies();

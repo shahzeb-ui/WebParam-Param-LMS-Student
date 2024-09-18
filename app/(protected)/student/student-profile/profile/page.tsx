@@ -12,7 +12,7 @@ import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
 import { readUserData } from '@/app/lib/endpoints';
 import { GET } from '@/app/lib/api-client';
-import { useProgressContext } from '@/context/progess-card-context/progress-context';
+import { useProgressContext } from "@/context/progress-card-context/progress-context";
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");

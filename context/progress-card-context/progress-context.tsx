@@ -22,21 +22,26 @@ interface ProgressProviderProps {
 }
 
 export const ProgressContextProvider = ({ children }: ProgressProviderProps) => {
-  const [biographyPercentage, setBiographyPercentage] = useState<number>(() => {
-    return Number(localStorage.getItem("Biography")) || 0;
-  });
-  const [contactInformationPercentage, setContactInformationPercentage] = useState<number>(() => {
-    return Number(localStorage.getItem("contactInformationPercentage")) || 0;
-  });
-  const [employmentPercentage, setEmploymentPercentage] = useState<number>(() => {
-    return Number(localStorage.getItem("employmentPercentage")) || 0;
-  });
-  const [documentsPercentage, setDocumentsPercentage] = useState<number>(() => {
-    return Number(localStorage.getItem("documentsPercentage")) || 0;
-  });
-  const [demographicLegalPercentage, setDemographicLegalPercentage] = useState<number>(() => {
-    return Number(localStorage.getItem("demographicLegalPercentage")) || 0;
-  });
+  const [biographyPercentage, setBiographyPercentage] = useState<number>(0);
+  const [contactInformationPercentage, setContactInformationPercentage] = useState<number>(0);
+  const [employmentPercentage, setEmploymentPercentage] = useState<number>(0);
+  const [documentsPercentage, setDocumentsPercentage] = useState<number>(0);
+  const [demographicLegalPercentage, setDemographicLegalPercentage] = useState<number>(0);
+
+  useEffect(() => {
+    // Retrieve and set initial values from localStorage on the client side
+    const biography = localStorage.getItem("Biography");
+    const contactInformation = localStorage.getItem("contactInformationPercentage");
+    const demographicLegal = localStorage.getItem("demographicLegalPercentage");
+    const employment = localStorage.getItem("employmentPercentage");
+    const documents = localStorage.getItem("documentsPercentage");
+
+    if (biography) setBiographyPercentage(Number(biography));
+    if (contactInformation) setContactInformationPercentage(Number(contactInformation));
+    if (demographicLegal) setDemographicLegalPercentage(Number(demographicLegal));
+    if (employment) setEmploymentPercentage(Number(employment));
+    if (documents) setDocumentsPercentage(Number(documents));
+  }, []);
 
   // Effect to persist values to localStorage whenever they change
   useEffect(() => {
@@ -58,45 +63,6 @@ export const ProgressContextProvider = ({ children }: ProgressProviderProps) => 
   useEffect(() => {
     localStorage.setItem("demographicLegalPercentage", demographicLegalPercentage.toString());
   }, [demographicLegalPercentage]);
-
-  useEffect(() => {
-    // Function to update state from localStorage
-    const updatePercentages = () => {
-      const biography = localStorage.getItem("Biography");
-      const contactInformation = localStorage.getItem("contactInformationPercentage");
-      const demographicLegal = localStorage.getItem("demographicLegalPercentage");
-      const employment = localStorage.getItem("employmentPercentage");
-      const documents = localStorage.getItem("documentsPercentage");
-
-      if (biography) setBiographyPercentage(Number(biography));
-      if (contactInformation) setContactInformationPercentage(Number(contactInformation));
-      if (demographicLegal) setDemographicLegalPercentage(Number(demographicLegal));
-      if (employment) setEmploymentPercentage(Number(employment));
-      if (documents) setDocumentsPercentage(Number(documents));
-    };
-
-    // Initial update on component mount
-    updatePercentages();
-
-    // Listen for changes to localStorage
-    const handleStorageChange = (e: StorageEvent) => {
-      if (
-        e.key === "Biography" ||
-        e.key === "contactInformationPercentage" ||
-        e.key === "demographicLegalPercentage" ||
-        e.key === "employmentPercentage" ||
-        e.key === "documentsPercentage"
-      ) {
-        updatePercentages();
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange); // Clean up listener on component unmount
-    };
-  }, []);
 
   return (
     <ProgressContext.Provider

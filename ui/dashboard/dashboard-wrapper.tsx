@@ -11,7 +11,8 @@ import { Modal } from 'react-responsive-modal';
 import { useCourseId } from "@/context/courseId-context/courseId-context";
 import { usePathname } from "next/navigation";
 import { GET } from "@/app/lib/api-client";
-import { useProgressContext } from "@/context/progess-card-context/progress-context"; // Import ProgressContext
+import { useProgressContext } from "@/context/progress-card-context/progress-context";
+
 
 const InstructorDashboardHeader = () => {
   const { courseId, setCourseId } = useCourseId();

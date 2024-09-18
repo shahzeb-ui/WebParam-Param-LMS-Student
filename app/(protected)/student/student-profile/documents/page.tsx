@@ -22,7 +22,7 @@ import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 import {isMobile} from 'react-device-detect';
 import { GET, GET_DOCUMENT, POST, POST_MULTIPART, PUT, PUT_MULTIPART } from '@/app/lib/api-client';
-import { useProgressContext } from '@/context/progess-card-context/progress-context';
+import { useProgressContext } from "@/context/progress-card-context/progress-context";
 
 
 const pdfVersion = "3.11.174";
