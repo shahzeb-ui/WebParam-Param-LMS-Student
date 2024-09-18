@@ -7,10 +7,12 @@ import { statsSAAreaCodeOptions } from "./data";
 import { useRouter } from "next/navigation";
 import { readUserData } from "@/app/lib/endpoints";
 import { GET } from "@/app/lib/api-client";
+import { useProgressContext } from "@/context/progess-card-context/progress-context";
 
 export default function DemocraticLegal({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
+  const {setDemographicLegalPercentage} = useProgressContext(); // Use context values
 
   const [equityCode, setEquityCode] = useState('');
   const [nationalityCode, setNationalityCode] = useState('');
@@ -129,8 +131,10 @@ export default function DemocraticLegal({ student }: any) {
     
     // Calculate percentage of empty fields
     const percentage = (emptyFields / totalFields) * 100;
-    
-    localStorage.setItem('demographicLegalPercentage', percentage.toString());
+    if (typeof window !== "undefined") {
+      localStorage.setItem('demographicLegalPercentage', percentage.toString());
+      setDemographicLegalPercentage(percentage);
+    }
 };
 
 

@@ -4,11 +4,13 @@ import { FormEvent, useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { relationshipOptions } from "./data";
 import { useRouter } from "next/navigation";
+import { useProgressContext } from "@/context/progess-card-context/progress-context";
 
 export default function ContactInformation({student}:any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const router = useRouter();
+  const {setContactInformationPercentage} = useProgressContext();
 
   const [homeAddress1, setHomeAddress1] = useState('');
   const [postalAddress1, setPostalAddress1] = useState('');
@@ -107,8 +109,10 @@ export default function ContactInformation({student}:any) {
       
       // Calculate percentage of empty fields
       const percentage = (emptyFields / totalFields) * 100;
-      
-      localStorage.setItem('contactInformationPercentage', percentage.toString());
+      if (typeof window !== "undefined") {
+        localStorage.setItem('contactInformationPercentage', percentage.toString());
+        setContactInformationPercentage(percentage);
+      }
   };
 
 

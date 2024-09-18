@@ -12,6 +12,7 @@ import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
 import { readUserData } from '@/app/lib/endpoints';
 import { GET } from '@/app/lib/api-client';
+import { useProgressContext } from '@/context/progess-card-context/progress-context';
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");
@@ -34,6 +35,7 @@ export default function Profile({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const router = useRouter();
+  const { setBiographyPercentage } = useProgressContext();
 
     useEffect(() => {
         
@@ -186,7 +188,10 @@ export default function Profile({ student }: any) {
         // Calculate percentage of empty fields
         const percentage = (emptyFields / totalFields) * 100;
         
-        localStorage.setItem('Biography', percentage.toString());
+        if (typeof window !== "undefined") {
+            localStorage.setItem('Biography', percentage.toString());
+            setBiographyPercentage(percentage);
+        }
     };
 
     return (

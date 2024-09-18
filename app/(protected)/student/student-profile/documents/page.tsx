@@ -21,6 +21,8 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 import {isMobile} from 'react-device-detect';
+import { GET, GET_DOCUMENT, POST, POST_MULTIPART, PUT, PUT_MULTIPART } from '@/app/lib/api-client';
+import { useProgressContext } from '@/context/progess-card-context/progress-context';
 
 
 const pdfVersion = "3.11.174";
@@ -33,10 +35,11 @@ const FileUpload: React.FC = () => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   const thumbnailPluginInstance = thumbnailPlugin();
   const zoomPluginInstance = zoomPlugin();
+  const { setDocumentsPercentage } = useProgressContext();
 
   const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
   const cookies = new Cookies();
-
+  const [documentUrl, setDocumentUrl] = useState<any>()
   const [isUploading, setIsUploading] = useState(false);
   const [upLoadingLoader, setUpLoadingLoader] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -61,6 +64,13 @@ const FileUpload: React.FC = () => {
 
   let documentinfo = documents.find((doc) => doc.name === selectedDocument);
 
+   // Use effect to fetch document after documentToView is updated
+    useEffect(() => {
+      if (documentToView) {
+          fetchDocument();
+      }
+    }, [documentToView]);
+
   useEffect(() => {
   if (courseId =='66aa8cab45223bcb337a9643') {
       setFiles(
@@ -79,21 +89,28 @@ const FileUpload: React.FC = () => {
   }
   },[])
 
+  const calculateDocumentsPercentage = () => {
+    const fields = [
+      documents
+    ];
+
+    const totalFields = fields.length;
+    
+    // Filter the fields that are empty (empty strings, null, or undefined)
+    const emptyFields = fields.filter((field:any) => field.blobUrl).length;
+    
+    // Calculate percentage of empty fields
+    const percentage = (emptyFields / totalFields) * 100;
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem('documentsPercentage', percentage.toString());
+      setDocumentsPercentage(percentage);
+    }
+};
+
 
   const user = cookies.get('loggedInUser');
 
-  async function getDocumentsByCourse(courseId: string) {
-    try {
-      const response = await getDocumentsByCourseId(courseId);
-      if (response?.data?.data) {
-        console.log('Documents by course:', response.data.data);
-        return response.data.data; // Return documents data if needed elsewhere
-      }
-    } catch (error) {
-      console.error('Error fetching documents by course:', error);
-    }
-    return [];
-  }
 
   async function getDocuments() {
     setLoader(true);
@@ -103,6 +120,7 @@ const FileUpload: React.FC = () => {
 
         if (docs) {
           setDocuments(docs?.data.data);
+          calculateDocumentsPercentage();
         }
       }
     } catch (error) {
@@ -115,6 +133,8 @@ const FileUpload: React.FC = () => {
   function viewDocument(docId: string) {
     console.log(docId);
     setDocumentToView(docId);
+    console.log('documentToView',documentToView);
+    fetchDocument();
   }
 
   const [dragging, setDragging] = useState<Record<DocumentType, boolean>>(
@@ -176,15 +196,11 @@ const FileUpload: React.FC = () => {
       formData.append('File', selectedFile.file);
 
       try {
-        const response = await axios.post(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        const response = await POST_MULTIPART(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData);
         if (response.status === 200) {
           setIsUploaded(true);
           router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
-        viewDocument(documentinfo?.id)
+        viewDocument(response.data.data.id)
         } else {
           alert('File upload failed');
         }
@@ -211,11 +227,7 @@ const FileUpload: React.FC = () => {
       formData.append('DocumentId', documentinfo?.id);
 
       try {
-        const response = await axios.put(`${writeUserData}/api/v1/Documents/UpdateStudentDocument`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        const response = await PUT_MULTIPART(formData, `${writeUserData}/api/v1/Documents/UpdateStudentDocument`);
 
         if (response.status === 200) {
           router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
@@ -240,6 +252,7 @@ const FileUpload: React.FC = () => {
 
   useEffect(() => {
     getDocuments();
+    calculateDocumentsPercentage();
     console.log('documents:', documents);
   }, []);
 
@@ -247,11 +260,22 @@ const FileUpload: React.FC = () => {
     return <Loading />; // Show loading while documents are being fetched
   }
 
-  
-  
-  console.log('document ',documentinfo);
+ 
 
-  console.log('isMobile', isMobile);
+
+  async function fetchDocument() {
+    try {
+      const response = await GET_DOCUMENT(`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`);
+  
+      if (response) {
+        const blob = response.data; // Get the blob data from the response
+        const fileUrl = URL.createObjectURL(blob); // Create a URL for the blob
+        setDocumentUrl(fileUrl); // Set the blob URL to the documentUrl state
+      }
+    } catch (error) {
+      console.error('Failed to fetch document:', error);
+    }
+  }
 
 
   return (
@@ -339,11 +363,13 @@ const FileUpload: React.FC = () => {
             <ZoomPopover />
             <ZoomInButton />
           </div>
+        {documentUrl &&
           <Viewer
-            fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
+            fileUrl= {`${documentUrl}`}
             plugins={[thumbnailPluginInstance, zoomPluginInstance]}
             defaultScale={isMobile ? .3 : .9}  
             />
+          }
         </Worker>
         :
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%'}}>
