@@ -49,7 +49,8 @@ const FileUpload: React.FC = () => {
   const [documentToView, setDocumentToView] = useState('');
   const [isChangingDoc, setIsChangingDoc] = useState(false);
   const [loaded, setLoader] = useState(true);
-  const [docToChange, setDocToChange] = useState<any>()
+  const [docsProgress, setDocsProgress] = useState([]);
+  const [totalDocs, setTotalDocs] = useState(0);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -63,6 +64,13 @@ const FileUpload: React.FC = () => {
   const courseId = cookies.get("courseId");
 
   let documentinfo = documents.find((doc) => doc.name === selectedDocument);
+
+  useEffect(() => {
+    // check if the view is set to view and if the documentUrl is not set
+    if (action === 'view' && !documentUrl) {
+      router.push(`/student/student-profile?tab=documents`)
+    }
+  },[documents])
 
    // Use effect to fetch document after documentToView is updated
     useEffect(() => {
@@ -90,23 +98,26 @@ const FileUpload: React.FC = () => {
   },[])
 
   const calculateDocumentsPercentage = () => {
-    const fields = [
-      documents
-    ];
-
-    const totalFields = fields.length;
-    
-    // Filter the fields that are empty (empty strings, null, or undefined)
-    const emptyFields = fields.filter((field:any) => field.blobUrl).length;
-    
-    // Calculate percentage of empty fields
-    const percentage = (emptyFields / totalFields) * 100;
-
+    // Filter documents that have a `blobUrl` value
+    if (documents.length > 0) {
+      const documentsWithBlob = documents.filter((document) => document.blobUrl);
+      console.log('documentsWithBlob',documentsWithBlob, documents);
+  
+    // Calculate percentage
+    const totalDocuments = documents.length;
+    const uploadedDocuments = documentsWithBlob.length;
+    const percentage = (uploadedDocuments / totalDocuments) * 100;
+  
+    // Store the count of uploaded documents and the percentage in localStorage
     if (typeof window !== "undefined") {
+      localStorage.setItem('uploadedDocumentsCount', uploadedDocuments.toString());
       localStorage.setItem('documentsPercentage', percentage.toString());
+  
+      // Optionally update any other state/context with the percentage
       setDocumentsPercentage(percentage);
     }
-};
+  }
+  }
 
 
   const user = cookies.get('loggedInUser');
@@ -200,7 +211,8 @@ const FileUpload: React.FC = () => {
         if (response.status === 200) {
           setIsUploaded(true);
           router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
-        viewDocument(response.data.data.id)
+          viewDocument(response.data.data.id)
+          calculateDocumentsPercentage()
         } else {
           alert('File upload failed');
         }
@@ -254,6 +266,7 @@ const FileUpload: React.FC = () => {
     getDocuments();
     calculateDocumentsPercentage();
     console.log('documents:', documents);
+    debugger
   }, []);
 
   if (loaded) {
@@ -276,6 +289,8 @@ const FileUpload: React.FC = () => {
       console.error('Failed to fetch document:', error);
     }
   }
+
+  alert
 
 
   return (
@@ -313,10 +328,13 @@ const FileUpload: React.FC = () => {
             yesProgramme.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
             const docType = doc.documentName as DocumentType;
             const matchingDoc = documents.find((doc) => doc?.name === docType);
+            // alert(setTotalDocs(state => state++));
 
               console.log('document',matchingDoc);
               return (
-                <li className={`nav-item ${selectedDocument === doc?.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc.documentName}&action=view`), viewDocument(matchingDoc.id))}>  
+                <li className={`nav-item ${selectedDocument === doc?.documentName ? 'active' : ''}`}
+                 role="presentation" key={index}
+                  onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc.documentName}&action=view`), viewDocument(matchingDoc.id))}>  
                   <div className="icon">
                   <i className="bi bi-file-pdf"></i>
                   </div>
@@ -330,6 +348,8 @@ const FileUpload: React.FC = () => {
           documentsRequired.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
             const docType = doc.documentName as DocumentType;
             const matchingDoc = documents.find((doc) => doc.name === docType);
+            // alert(setTotalDocs(state => state++));
+
             return (
               <li className={`nav-item ${selectedDocument === doc?.documentName ? 'active' : ''}`} role="presentation" key={index} onClick={() => (router.push(`/student/student-profile?tab=documents&document=${doc?.documentName}&action=view`), viewDocument(matchingDoc?.id))}>
                   <div className="d-flex align-items-center">
