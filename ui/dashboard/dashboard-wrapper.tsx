@@ -41,7 +41,7 @@ const InstructorDashboardHeader = () => {
       {/* Modal for course selection */}
       {process.env.NEXT_PUBLIC_DEMO && (
         <Modal 
-          open={open} 
+          open={!open} 
           onClose={() => setOpen(false)} 
           center 
           blockScroll={true}
@@ -49,8 +49,9 @@ const InstructorDashboardHeader = () => {
           closeOnOverlayClick={false}
           styles={{
             overlay: { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-            modal: { width: '30%', height: '30%', borderRadius: '10px' },
+            modal: { width: '30%', height: '30%', borderRadius: '10px', minWidth: '300px' },
           }}
+          classNames={{ modal: 'custom-modal' }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <h4 className="mb-4">Select a course</h4>
