@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { readUserData } from "@/app/lib/endpoints";
 import { GET } from "@/app/lib/api-client";
+import { useProgressContext } from "@/context/progress-card-context/progress-context";
 
 export default function EmploymentInformation({ student }: any) {
   const cookies = new Cookies();
@@ -21,6 +22,7 @@ export default function EmploymentInformation({ student }: any) {
   const [preferedOccupation, setPreferedOccupation] = useState('');
   const [referalCompany, setReferalCompany] = useState('');
   const [codes, setCodes] = useState<any>()
+  const { setEmploymentPercentage } = useProgressContext();
 
   async function getInputCodes() {
     // const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
@@ -63,6 +65,7 @@ export default function EmploymentInformation({ student }: any) {
       if (res) {
         console.log('response', res);
         setIsSubmitting(false);
+        calculateEmploymentPercentage();
         router.push('/student/student-profile?tab=documents')
       }
       
@@ -70,7 +73,27 @@ export default function EmploymentInformation({ student }: any) {
 
   useEffect(() => {
     getInputCodes();
+    calculateEmploymentPercentage();
   }, [])
+
+  const calculateEmploymentPercentage = () => {
+    const fields = [
+      employmentStatus,
+      sarsTaxNumber,
+      selectedSector,
+      preferedOccupation,
+      referalCompany,
+    ];
+
+    const totalFields = fields.length;
+    const emptyFields = fields.filter(field => field).length;
+    const percentage = (emptyFields / totalFields) * 100;
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem('employmentPercentage', percentage.toString());
+      setEmploymentPercentage(percentage);
+    }
+  };
 
   return (
     <div
@@ -192,7 +215,7 @@ export default function EmploymentInformation({ student }: any) {
           disabled={isSubmitting}
       >
           <span className="icon-reverse-wrapper">
-              <span className="btn-text text-light">Proceed</span>
+              <span className="btn-text text-light">Save & Proceed</span>
               <span className="btn-icon text-light">
                   <i className="feather-arrow-right" />
               </span>
