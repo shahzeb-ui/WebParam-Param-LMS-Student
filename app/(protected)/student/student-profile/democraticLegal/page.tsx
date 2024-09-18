@@ -6,10 +6,13 @@ import Cookies from "universal-cookie";
 import { statsSAAreaCodeOptions } from "./data";
 import { useRouter } from "next/navigation";
 import { readUserData } from "@/app/lib/endpoints";
+import { GET } from "@/app/lib/api-client";
+import { useProgressContext } from "@/context/progress-card-context/progress-context";
 
 export default function DemocraticLegal({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
+  const {setDemographicLegalPercentage} = useProgressContext(); // Use context values
 
   const [equityCode, setEquityCode] = useState('');
   const [nationalityCode, setNationalityCode] = useState('');
@@ -28,10 +31,11 @@ export default function DemocraticLegal({ student }: any) {
   const router = useRouter();
 
   async function getInputCodes() {
-    const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+    // const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+    const res = await GET(`${readUserData}/api/v1/Student/GetCodes`);
 
-    console.log("codes:", res.data.data);
-    setCodes(res.data.data);
+    console.log("codes:", res?.data.data);
+    setCodes(res?.data.data);
   }
 
   function setStudentContactInformation(student: any) {
@@ -52,10 +56,12 @@ export default function DemocraticLegal({ student }: any) {
 
   useEffect(() => {
     setStudentContactInformation(student);
+    calculateDemographicLegalPercentage();
   }, [student]);
 
   useEffect(() => {
     getInputCodes();
+    calculateDemographicLegalPercentage();
   }, []);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -85,6 +91,7 @@ export default function DemocraticLegal({ student }: any) {
       if (res) {
         console.log('response', res);
         setIsSubmitting(false);
+        calculateDemographicLegalPercentage();
         router.push('/student/student-profile?tab=ContactInformation')
       }
   }
@@ -100,6 +107,35 @@ export default function DemocraticLegal({ student }: any) {
     'Mpumalanga': statsSAAreaCodeOptions.filter((option) => option.value.startsWith('MP')),
     'Limpopo': statsSAAreaCodeOptions.filter((option) => option.value.startsWith('LIM')),
   };
+
+  const calculateDemographicLegalPercentage = () => {
+    const fields = [
+      equityCode,
+      nationalityCode,
+      homeLanguageCode,
+      immigrantStatus,
+      popiActAgree,
+      popiActDate,
+      citizenStatusCode,
+      socioeconomicCode,
+      disabilityCode,
+      disabilityRating,
+      provinceCode,
+      statsSAAreaCode
+    ];
+
+    const totalFields = fields.length;
+    
+    // Filter the fields that are empty (empty strings, null, or undefined)
+    const emptyFields = fields.filter(field => field).length;
+    
+    // Calculate percentage of empty fields
+    const percentage = (emptyFields / totalFields) * 100;
+    if (typeof window !== "undefined") {
+      localStorage.setItem('demographicLegalPercentage', percentage.toString());
+      setDemographicLegalPercentage(percentage);
+    }
+};
 
 
   return (
@@ -359,7 +395,7 @@ export default function DemocraticLegal({ student }: any) {
         disabled={isSubmitting}
     >
         <span className="icon-reverse-wrapper">
-            <span className="btn-text text-light">Proceed</span>
+            <span className="btn-text text-light">Save & Proceed</span>
             <span className="btn-icon text-light">
                 <i className="feather-arrow-right" />
             </span>

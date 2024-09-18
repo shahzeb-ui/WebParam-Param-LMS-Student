@@ -50,57 +50,19 @@ const UnitStandardWidget: React.FC<Props> = ({
   const [randomNumber, setRandomNumber] = useState<number>(0);
   const [randomVideoCount, setRandomVideoCount] = useState<number>(0);
 
-  // Function to generate a random number between 20 and 30
-  const generateRandomNumber = () => {
-    return Math.floor(Math.random() * (300 - 200 + 1)) + 200;
-  };
 
-  useEffect(() => {
-    const calculateDiscount = () => {
-      const discount =
-        course.coursePrice > 0
-          ? ((course.coursePrice - course.offerPrice) / course.coursePrice) *
-            100
-          : 0;
-      setDiscountPercentage(discount.toFixed(0));
-    };
-
-    const calculateTotalReviews = () => {
-      const total =
-        course.reviews.oneStar +
-        course.reviews.twoStar +
-        course.reviews.threeStar +
-        course.reviews.fourStar +
-        course.reviews.fiveStar;
-      setTotalReviews(total);
-    };
-
-    const calculateRating = () => {
-      setRating(Math.round(course.rating.average));
-    };
 
     // Set a random number when the component mounts
-    
-    calculateDiscount();
-    calculateTotalReviews();
-    calculateRating();
-  }, [course]);
+    const generateRandomVideoCount = () => {
+      return Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+    };
 
-  const handleClick = (id: string) => {
-    setId(id);
-    console.log(id);
-    navigateToLesson();
-  };
 
-  const generateRandomVideoCount = () => {
-    return Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-  };
-
-  useEffect(() => {
-    setRandomNumber(generateRandomNumber());
-    setRandomVideoCount(generateRandomVideoCount())
-
-  }, [])
+  // const handleClick = (id: string) => {
+  //   setId(id);
+  //   console.log(id);
+  //   navigateToLesson();
+  // };
 
   return (
     <>
@@ -147,11 +109,11 @@ const UnitStandardWidget: React.FC<Props> = ({
           <ul className="rbt-meta mt-3">
             <li>
               <i className="feather-book" />
-              KM{randomNumber}
+              {data?.moduleCode}
             </li>
             <li>
               <i className="bi bi-play-circle-fill" />
-              {randomVideoCount} Videos
+              {generateRandomVideoCount()} Videos
             </li>
           </ul>
 
