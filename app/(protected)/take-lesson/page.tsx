@@ -31,18 +31,27 @@ function TakeLesson() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
   
+  
 
-  const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
+  // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
   const searchParams = useSearchParams();
   const moduleId = searchParams.get("moduleId");
 
+  const allSubTopics = Object.values(expandedTopics).flat();
+
+  const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
+
+
   async function fetchKnowledgeTopics() {
+    debugger;
     try {
       const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
+        debugger;
+        response.data.length > 0 &&  handleExpandClick(response.data[0].id);
       } else {
         setError("Failed to load data");
       }
@@ -51,8 +60,7 @@ function TakeLesson() {
       setError(err.message);
     } finally {
       setLoading(false);
-      firstAccordionButtonRef.current?.click();
-    }
+      }
   }
 
   async function fetchTopics(topicId: string) {
@@ -77,14 +85,26 @@ function TakeLesson() {
     }
   }
 
+  function setCheckedVideos(){
+    const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
+    watchedVideos.forEach((videoId) => {
+      setCheckedSubTopics((prev) => ({
+        ...prev,
+        [videoId]: true,
+      }));
+    });
+  }
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
+    // setCheckedVideos();
+    
   }, []);
 
   const handleExpandClick = (topicId: string) => {
     if (!expandedTopics[topicId]) {
       fetchTopics(topicId);
+     
     }
   };
 
@@ -110,7 +130,7 @@ function TakeLesson() {
   );
 
   const handlePrevious = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
+
     if (currentIndex > 0) {
       const previousSubTopic = allSubTopics[currentIndex - 1];
       if (previousSubTopic) {
@@ -126,7 +146,7 @@ function TakeLesson() {
   };
 
   const handleNext = () => {
-    const allSubTopics = Object.values(expandedTopics).flat();
+  
     if (!videoEnded) {
       setVideoEnded(true); // Show quiz first
       return;
@@ -174,6 +194,8 @@ function TakeLesson() {
     <div className="rbt-lesson-area bg-color-white">
       <div className="rbt-lesson-content-wrapper">
         {/* Sidebar */}
+
+        
         <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title">
@@ -202,7 +224,7 @@ function TakeLesson() {
                     id={`heading${index}`}
                   >
                     <button
-                      ref={index === 0 ? firstAccordionButtonRef : null}
+                      // ref={index === 0 ? firstAccordionButtonRef : null}
                       className="accordion-button collapsed"
                       type="button"
                       data-bs-toggle="collapse"
@@ -322,7 +344,7 @@ function TakeLesson() {
                         <span className="btn-text">Previous</span>
                       </button>
                       <button
-                        className="rbt-btn btn-md"
+                        className="rbt-btn  btn-md"
                         onClick={handleNext}
                         disabled={currentIndex > (filteredTopics.length - 1)}
                       >
@@ -365,7 +387,7 @@ function TakeLesson() {
                               <span className="title">Transcript</span>
                             </Link>
                           </li>
-                          <li role="presentation">
+                          {/* <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -378,8 +400,8 @@ function TakeLesson() {
                             >
                               <span className="title">Q&A</span>
                             </Link>
-                          </li>
-                          <li role="presentation">
+                          </li> */}
+                          {/* <li role="presentation">
                             <Link
                               href="#"
                               className="tab-button"
@@ -392,7 +414,7 @@ function TakeLesson() {
                             >
                               <span className="title">Notes</span>
                             </Link>
-                          </li>
+                          </li> */}
                           {isMobile && 
                           <li role="presentation">
                             <Link
@@ -445,19 +467,19 @@ function TakeLesson() {
                       >
                         <Notes />
                       </div>
+                  
                       <div
                         className="tab-pane fade"
                         id="content-4"
                         role="tabpanel"
                         aria-labelledby="content-tab-4"
                       >
-
-                        <div id="left-sidebar-" className="rbt-lesson-leftsidebar">
+                        <div className="rbt-lesson-leftsidebar">
                           <div className="rbt-course-feature-inner rbt-search-activation">
                             {/* <div className="section-title">
                               <h4 className="rbt-title-style-3">Course Content</h4>
                             </div> */}
-                            <div className="lesson-search-wrapper">
+                            {/* <div className="lesson-search-wrapper">
                               <form action="#" className="rbt-search-style-1">
                                 <input
                                   className="rbt-search-active"
@@ -470,9 +492,8 @@ function TakeLesson() {
                                   <i className="feather-search" />
                                 </button>
                               </form>
-                            </div>
-                            <hr className="mt--10" />
-                           
+                            </div> */}
+                            {/* <hr className="" /> */}
                             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
                               {!loading ? filteredTopics.map((topic, index) => (
                                 <div className="accordion-item card" key={topic.id}>
@@ -481,7 +502,7 @@ function TakeLesson() {
                                     id={`heading${index}`}
                                   >
                                     <button
-                                      ref={index === 0 ? firstAccordionButtonRef : null}
+                                      // ref={index === 0 ? firstAccordionButtonRef : null}
                                       className="accordion-button collapsed"
                                       type="button"
                                       data-bs-toggle="collapse"
@@ -567,9 +588,6 @@ function TakeLesson() {
                             </div>
                           </div>
                         </div>
-
-
-
                       </div>
                     </div>
                   </div>

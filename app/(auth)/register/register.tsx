@@ -8,8 +8,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
-import flagsmith from "flagsmith/isomorphic";
-import { useFlags, useFlagsmith } from "flagsmith/react";
+// import flagsmith from "flagsmith/isomorphic";
+// import { useFlags, useFlagsmith } from "flagsmith/react";
 
 export default function Register() {
   const [isExploding, setIsExploding] = React.useState(false);
@@ -35,19 +35,19 @@ export default function Register() {
   const projectId = searchParams.get("projectId") || "";
 
   const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID ?? "";
-  const flags = useFlags(["FREEMIUM", "banner_size"]); // only causes re-render if specified flag values / traits change
-  console.log("Flags: ", flags);
-  const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
+  // const flags = useFlags(["FREEMIUM", "banner_size"]); // only causes re-render if specified flag values / traits change
+  // console.log("Flags: ", flags);
+  // const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
 
-  /*   const isFreemium =
+  const isFreemium =
     process.env.NEXT_PUBLIC_FREEMIUM &&
     process.env.NEXT_PUBLIC_FREEMIUM == "true"
       ? true
       : false;
- */
+ 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    debugger;
+    
     setIsLoading(true);
 
     const newHasError = {
@@ -91,6 +91,8 @@ export default function Register() {
     try {
       const res = await registerUser(payload);
       setIsLoading(false);
+      
+
       if (res) {
         if (res?.data.message !== "User exists") {
           setIsExploding(true);
@@ -196,7 +198,7 @@ export default function Register() {
           </>
         ) : (
           <>
-            <h2>Create an account</h2>
+            <h2 style={{marginTop:"15%"}}>Create an account</h2>
             <p>Start your journey!</p>
           </>
         )}

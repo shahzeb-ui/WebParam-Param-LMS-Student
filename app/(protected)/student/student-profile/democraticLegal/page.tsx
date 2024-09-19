@@ -6,6 +6,7 @@ import Cookies from "universal-cookie";
 import { statsSAAreaCodeOptions } from "./data";
 import { useRouter } from "next/navigation";
 import { readUserData } from "@/app/lib/endpoints";
+import { GET } from "@/app/lib/api-client";
 
 export default function DemocraticLegal({ student }: any) {
   const cookies = new Cookies();
@@ -28,10 +29,11 @@ export default function DemocraticLegal({ student }: any) {
   const router = useRouter();
 
   async function getInputCodes() {
-    const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+    // const res = await axios.get(`${readUserData}/api/v1/Student/GetCodes`);
+    const res = await GET(`${readUserData}/api/v1/Student/GetCodes`);
 
-    console.log("codes:", res.data.data);
-    setCodes(res.data.data);
+    console.log("codes:", res?.data.data);
+    setCodes(res?.data.data);
   }
 
   function setStudentContactInformation(student: any) {

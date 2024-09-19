@@ -12,6 +12,7 @@ import { getDocumentsByCourseId, getStudentDocuments } from '@/app/api/studentPr
 import { documentsRequired, yesProgramme } from './data';
 import Loading from './loading';
 import { readUserData, writeUserData } from '@/app/lib/endpoints';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
@@ -19,6 +20,7 @@ import { zoomPlugin } from '@react-pdf-viewer/zoom';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/thumbnail/lib/styles/index.css';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
+import {isMobile} from 'react-device-detect';
 
 const pdfVersion = "3.11.174";
 const pdfWorkerUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfVersion}/pdf.worker.js`;
@@ -248,9 +250,7 @@ const FileUpload: React.FC = () => {
   
   console.log('document ',documentinfo);
 
-  // if (documentinfo == null && action == null) {
-  //   documentinfo = null
-  // }
+  console.log('isMobile', isMobile);
 
 
   return (
@@ -285,7 +285,7 @@ const FileUpload: React.FC = () => {
           {
             courseId =='66aa8cab45223bcb337a9643' ?
 
-            yesProgramme.filter(doc => (process.env.NEXT_PUBLIC_IS_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
+            yesProgramme.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
             const docType = doc.documentName as DocumentType;
             const matchingDoc = documents.find((doc) => doc?.name === docType);
 
@@ -302,7 +302,7 @@ const FileUpload: React.FC = () => {
               )
             })
           :
-          documentsRequired.filter(doc => (process.env.NEXT_PUBLIC_IS_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
+          documentsRequired.filter(doc => (process.env.NEXT_PUBLIC_FREEMIUM ? freemiumDocuments.includes(doc.documentName):true)).map((doc, index) => {
             const docType = doc.documentName as DocumentType;
             const matchingDoc = documents.find((doc) => doc.name === docType);
             return (
@@ -341,7 +341,7 @@ const FileUpload: React.FC = () => {
           <Viewer
             fileUrl={`${readUserData}/api/v1/Documents/PreviewDocument/${documentToView}`}
             plugins={[thumbnailPluginInstance, zoomPluginInstance]}
-            defaultScale={.9}  
+            defaultScale={isMobile ? .3 : .9}  
             />
         </Worker>
         :
@@ -451,7 +451,7 @@ const FileUpload: React.FC = () => {
        </>
        }
        {action == null && selectedDocument == null && 
-       <div >
+       <div className='no-document-selected'>
         <h5>No document selected</h5>
        </div>}
       </div>
@@ -469,5 +469,4 @@ const FileUpload: React.FC = () => {
 };
 
 export default FileUpload;
-
 

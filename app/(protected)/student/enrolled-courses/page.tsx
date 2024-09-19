@@ -25,16 +25,9 @@ const EnrolledCourses = () => {
   const [loading, setLoading] = useState(false);
   const [unitStandards, setUnitStandards] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  const [isProgress, setIsProgress] = useState(true);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showAuthor, setShowAuthor] = useState(false);
-  const [courseStyle, setCourseStyle] = useState("two");
   
   const cookies = new Cookies();
-
+const access = process.env.NEXT_PUBLIC_ACCESS??"ALL_ACCESS";
   const user = cookies.get("loggedInUser");
 
   const router = useRouter();
@@ -87,7 +80,7 @@ const EnrolledCourses = () => {
                 <span className="title">Enrolled</span>
               </Link>
             </li>
-            <li role="presentation">
+            <li role="presentation" style={{pointerEvents:access=="COURSE_ONLY"?"none": "auto", opacity: access=="COURSE_ONLY"?"0.2":"1"}}>
               <Link
                 href="#"
                 className={`tab-button ${tab == "active" && "active"} ${styles.tabButton}`}
@@ -102,7 +95,7 @@ const EnrolledCourses = () => {
                 <span className="title">Active</span>
               </Link>
             </li>
-            <li role="presentation">
+            <li role="presentation" style={{pointerEvents:access=="COURSE_ONLY"?"none": "auto", opacity: access=="COURSE_ONLY"?"0.2":"1"}}>
               <Link
                 href="#"
                 className={`tab-button ${tab == "completed" && "active"} ${styles.tabButton}`}
@@ -117,7 +110,7 @@ const EnrolledCourses = () => {
                 <span className="title">Completed</span>
               </Link>
             </li>
-            <li role="presentation">
+            <li role="presentation"  style={{pointerEvents:access=="COURSE_ONLY"?"none": "auto", opacity: access=="COURSE_ONLY"?"0.2":"1"}}>
               <Link
                 href="#"
                 className={`tab-button ${tab == "softSkills" && "active"} ${styles.tabButton}`}

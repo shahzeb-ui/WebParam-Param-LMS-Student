@@ -30,7 +30,7 @@ function UserProfileContent() {
 
     useEffect(() => {
         getStudent();
-        AOS.init({ duration: 1000 }); // Initialize AOS
+        AOS.init({ duration: 1500 , once: true}); // Initialize AOS
     }, []);
 
     const renderComponent = (tab: string | null) => {
