@@ -103,13 +103,13 @@
   }
 
   .primaryButton {
-    background-color: rgb(36, 52, 92);
+    background-color: rgb(36, 52, 92) !important;
     color: white;
     border: none;
   }
 
   .secondaryButton {
     background-color: transparent;
-    color: rgb(36, 52, 92);
-    border: 1px solid rgb(36, 52, 92);
+    color: rgb(36, 52, 92) !important;
+    border: 1px solid rgb(36, 52, 92) !important;
   }
