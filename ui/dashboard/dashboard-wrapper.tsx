@@ -8,10 +8,8 @@ import Cookies from "universal-cookie";
 import { isBrowser, isMobile } from "react-device-detect";
 import { useStore } from "@/stores/useStore";
 import { useFlags } from "flagsmith/react";
-import { useFlags } from "flagsmith/react";
 
 const InstructorDashboardHeader = () => {
-  var t = isBrowser;
   const [isEnrolled, setIsEnrolled] = useState<any>();
   const [course, setCourse] = useState<any>();
   const [courseId, setCourseId] = useState<string>('');
@@ -52,8 +50,6 @@ const InstructorDashboardHeader = () => {
 
   const cookies = new Cookies();
 
-  const user = cookies.get("loggedInUser");
-
   async function getEnrollment(userId: string) {
     try {
       const res = await axios.get(
@@ -64,13 +60,10 @@ const InstructorDashboardHeader = () => {
         console.log("enrollment id: ", res.data.data.course);
         cookies.set("courseId", res.data.data.course);
         setCourseId(res.data.data.course);
-
-        return;
       }
     } catch (error: any) {
       console.log("error with enrollment:", error);
     }
-    return null;
   }
 
   async function getCourse(courseId: string) {
@@ -80,26 +73,23 @@ const InstructorDashboardHeader = () => {
 
     if (res) {
       setCourse(res.data.data);
-      console.log("Courses", res.data.data)
+      console.log("Courses", res.data.data);
     }
   }
 
   useEffect(() => {
-
     if (flagSmithCourseId) {
-      getCourse(`${flagSmithCourseId}`);
-
+      getCourse(flagSmithCourseId.toString());
     }
-  }, []);
+  }, [flagSmithCourseId]);
 
   return (
     <>
-    <div className="mb-5">
-      {demo ?
-        <div style={{ maxWidth: "40rem" }}>
-        {/* Select */}
+      <div className="mb-5">
+        {demo ? (
+          <div style={{ maxWidth: "40rem" }}>
+            {/* Select */}
             <span className="select-label d-block">Select a course</span>
-
             <div className="tom-select-custom">
               <select
                 style={{ fontSize: "1.5rem" }}
@@ -111,18 +101,14 @@ const InstructorDashboardHeader = () => {
                         }'
                 id="tomselect-1"
                 tabIndex={-1}
-                value={
-                  coursesArray.find(
-                    (course) => course.courseId === selectedcourseId
-                  )?.courseId
-                }
+                value={coursesArray.find(course => course.courseId === selectedcourseId)?.courseId}
                 onChange={(e) => {
                   setCourseId(e.target.value);
                   changeCourseId(e.target.value);
                 }}
               >
-                {coursesArray?.map((course: any) => (
-                  <option value={course.courseId}>{course.courseName}</option>
+                {coursesArray.map((course) => (
+                  <option key={course.courseId} value={course.courseId}>{course.courseName}</option>
                 ))}
               </select>
             </div>
@@ -135,27 +121,24 @@ const InstructorDashboardHeader = () => {
         )}
       </div>
       <div className="rbt-dashboard-content-wrapper">
-      {isMobile&&
-        <div className="rbt-shadow-box" 
-        style={{
-          backgroundImage: `url(${banner??""})`,
-          backgroundRepeat:'no-repeat',
-          backgroundSize:'cover',
-          backgroundPosition:'center',
-          height: '175px'
-        }} />
-      }
-
-      {!isMobile&&
-        <div className="height-350 rbt-shadow-box" 
-        style={{
-          backgroundImage: `url(${banner??""})`,
-          backgroundRepeat:'no-repeat',
-          backgroundSize:'cover',
-          backgroundPosition:'center'
-        }} />
-      }
-    
+        {isMobile ? (
+          <div className="rbt-shadow-box" 
+            style={{
+              backgroundImage: `url(${banner ?? ""})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              height: '175px'
+            }} />
+        ) : (
+          <div className="height-350 rbt-shadow-box" 
+            style={{
+              backgroundImage: `url(${banner ?? ""})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }} />
+        )}
         <div className="rbt-tutor-information">
           <div className="rbt-tutor-information-left">
             <div className="thumbnail rbt-avatars size-lg"></div>
