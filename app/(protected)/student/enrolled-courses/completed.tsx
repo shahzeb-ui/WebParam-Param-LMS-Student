@@ -8,6 +8,7 @@ import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standard
 import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
 import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
 import { useStore } from "@/stores/useStore";
+import { useFlags } from "flagsmith/react";
 
 export default function Completed() {
   const selectedcourseId = useStore((state:any) => state.courseId);
@@ -22,6 +23,9 @@ export default function Completed() {
   const [showDescription, setShowDescription] = useState(false);
   const [showAuthor, setShowAuthor] = useState(false);
   const [courseStyle, setCourseStyle] = useState("two");
+  const flags = useFlags(["next_public_course_id","next_public_demo"]); 
+  const demo = flags.next_public_demo.value ?? "";
+  const hasConstantCourseId = flags.next_public_course_id.value ?? "";
 
   const itemsPerPage = 3;
   const startIndex = currentPage * itemsPerPage;
@@ -55,11 +59,11 @@ export default function Completed() {
   };
 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_DEMO) {
+    if (process.env.demo) {
       const courseId = selectedcourseId;
     getUnitStandards(courseId);
     } else {
-      const courseId = process.env.NEXT_PUBLIC_COURSE_ID??"";
+      const courseId = hasConstantCourseId.toString() ??"";
       getUnitStandards(courseId);
     }
 

@@ -33,10 +33,31 @@ export default function Register() {
   const searchParams = useSearchParams();
   const projectId = searchParams.get("projectId") || "";
 
-  const hasConstantCourseId = process.env.NEXT_PUBLIC_COURSE_ID ?? "";
-  const flags = useFlags(["FREEMIUM", "banner_size"]); // only causes re-render if specified flag values / traits change
-  console.log("Flags: ", flags);
-  const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
+
+  const flags = useFlags([
+    "next_public_user",
+    "freemium",
+    "next_public_api_env",
+    "next_public_sitetagline",
+    "next_public_sitename",
+    "next_public_clientkey",
+    "next_public_access",
+    "next_public_demo",
+    "next_public_freemium",
+    "next_public_course_id",
+    "show_top_banner",
+    "next_public_document_border_color",
+    "next_public_document_bg_color",
+    "next_public_primary_color",
+    "next_public_favicon_url",
+    "next_public_banner_url",
+    "next_public_logo_url",
+    "next_public_login_image"
+  ]);
+
+
+  const hasConstantCourseId = flags.next_public_course_id.value ?? "";
+  const isFreemium = flags.next_public_freemium.enabled && flags.next_public_freemium.value == true;
 
   // const isFreemium =
   //   process.env.NEXT_PUBLIC_FREEMIUM &&
@@ -170,6 +191,30 @@ export default function Register() {
       getProject();
     }
   }, []);
+
+  useEffect(() => {
+    const flagsData = {
+      next_public_user: flags.next_public_user.value,
+      freemium: flags.freemium.value,
+      next_public_api_env: flags.next_public_api_env.value,
+      next_public_sitetagline: flags.next_public_sitetagline.value,
+      next_public_sitename: flags.next_public_sitename.value,
+      next_public_clientkey: flags.next_public_clientkey.value,
+      next_public_access: flags.next_public_access.value,
+      next_public_demo: flags.next_public_demo.value,
+      next_public_freemium: flags.next_public_freemium.value,
+      next_public_course_id: flags.next_public_course_id.value,
+      show_top_banner: flags.show_top_banner.value,
+      next_public_document_border_color: flags.next_public_document_border_color.value,
+      next_public_document_bg_color: flags.next_public_document_bg_color.value,
+      next_public_primary_color: flags.next_public_primary_color.value,
+      next_public_favicon_url: flags.next_public_favicon_url.value,
+      next_public_banner_url: flags.next_public_banner_url.value,
+      next_public_logo_url: flags.next_public_logo_url.value,
+      next_public_login_image: flags.next_public_login_image.value
+    };
+    localStorage.setItem('flagsData', JSON.stringify(flagsData));
+  }, [flags]);
 
   if (isFreemium && projectId == "") {
     return <ErrorPage />;

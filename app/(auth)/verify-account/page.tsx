@@ -8,6 +8,7 @@ import { LoginUser, verifyUserAccount } from '@/app/api/auth/auth';
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/navigation';
 import { isMobile } from 'react-device-detect';
+import { useFlags } from 'flagsmith/react';
 
 
 
@@ -15,6 +16,10 @@ export default function VerifyPage() {
     const [otpValues, setOtpValues] = useState(['', '', '', '', '']);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
+    const flags = useFlags(["next_public_freemium"]);
+
+    const isFreemium = flags.next_public_freemium.value;
+  
     const[otp, setOtp] = useState<Number>(0);
     const inputRefs = [
         useRef<HTMLInputElement>(null),
@@ -74,7 +79,7 @@ export default function VerifyPage() {
             // const user = await 
             cookies.set("loggedInUser", res?.data);
             localStorage.setItem("loggedInUser", res?.data)
-            const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
+            const redirectPath = isFreemium ? "/student/projects?tab=enrolled" : "/student/student-profile";
 
             router.push(redirectPath)
         } else {

@@ -6,14 +6,41 @@ import { LoginUser } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import { isMobile } from "react-device-detect";
+import { useFlags } from "flagsmith/react";
+import { isBoolean } from "util";
 
 export default function LoginPage() {
-    const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [hasError, setHasError] = useState<any>({ email: false, password: false });
+  const flags = useFlags([
+    "next_public_user",
+    "freemium",
+    "next_public_api_env",
+    "next_public_sitetagline",
+    "next_public_sitename",
+    "next_public_clientkey",
+    "next_public_access",
+    "next_public_demo",
+    "next_public_freemium",
+    "next_public_course_id",
+    "show_top_banner",
+    "next_public_document_border_color",
+    "next_public_document_bg_color",
+    "next_public_primary_color",
+    "next_public_favicon_url",
+    "next_public_banner_url",
+    "next_public_logo_url",
+    "next_public_login_image"
+  ]);
+  const imageCover = flags.next_public_login_image.value;
+  const topBanner = flags.show_top_banner.value;
+  const isFreemium = flags.next_public_freemium.value;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState<any>({
+    email: false,
+    password: false,
+  });
 
   const cookies = new Cookies();
   const router = useRouter();
@@ -39,38 +66,65 @@ export default function LoginPage() {
       password,
     };
 
-      try {
-        const res = await LoginUser(payload);
-            setIsLoading(false);
-            
-            if (res == undefined) {
-                setErrorMessage('Incorrect User details');
-                return;
-            }
-            
-            if (res) {
-                
-                cookies.set("loggedInUser", res.data);
-                debugger;
-                const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
-                router.push(redirectPath)
-            }
-        } catch (error: any) {
-            setErrorMessage('Network Error please try again');
-            setIsLoading(false);
-        }
-      
+    try {
+      const res = await LoginUser(payload);
+      setIsLoading(false);
 
-      console.log('Form submitted successfully');
+      if (res == undefined) {
+        setErrorMessage("Incorrect User details");
+        return;
+      }
+
+      if (res) {
+        cookies.set("loggedInUser", res.data);
+        debugger;
+        const redirectPath =
+        isFreemium 
+            ? "/student/projects?tab=enrolled"
+            : "/student/student-profile";
+        router.push(redirectPath);
+      }
+    } catch (error: any) {
+      setErrorMessage("Network Error please try again");
       setIsLoading(false);
     }
-  
-    useEffect(() => {
-      if (email !== '' || password !== '') {
-        setHasError({ email: false, password: false });
-        setErrorMessage('')
-      }
-    }, [email, password]);
+
+    console.log("Form submitted successfully");
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    const flagsData = {
+      next_public_user: flags.next_public_user.value,
+      freemium: flags.freemium.value,
+      next_public_api_env: flags.next_public_api_env.value,
+      next_public_sitetagline: flags.next_public_sitetagline.value,
+      next_public_sitename: flags.next_public_sitename.value,
+      next_public_clientkey: flags.next_public_clientkey.value,
+      next_public_access: flags.next_public_access.value,
+      next_public_demo: flags.next_public_demo.value,
+      next_public_freemium: flags.next_public_freemium.value,
+      next_public_course_id: flags.next_public_course_id.value,
+      show_top_banner: flags.show_top_banner.value,
+      next_public_document_border_color: flags.next_public_document_border_color.value,
+      next_public_document_bg_color: flags.next_public_document_bg_color.value,
+      next_public_primary_color: flags.next_public_primary_color.value,
+      next_public_favicon_url: flags.next_public_favicon_url.value,
+      next_public_banner_url: flags.next_public_banner_url.value,
+      next_public_logo_url: flags.next_public_logo_url.value,
+      next_public_login_image: flags.next_public_login_image.value
+    };
+    localStorage.setItem('flagsData', JSON.stringify(flagsData));
+    
+  }, [flags]);
+
+  useEffect(() => {
+    if (email !== "" || password !== "") {
+      setHasError({ email: false, password: false });
+      setErrorMessage("");
+    }
+    localStorage.setItem("show_top_banner",JSON.stringify(topBanner))
+  }, [email, password]);
 
   return (
     <div className="login-container">

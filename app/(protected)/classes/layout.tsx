@@ -1,14 +1,41 @@
+"use client"
 import StudentDashboardSidebar from "@/ui/student/student-enrolled-courses/student-sidebar";
 import styles from "@/styles/side-bar/side-bar-hide.module.css";
 import InstructorDashboardHeader from "@/ui/dashboard/dashboard-wrapper";
+import flagsmith from "flagsmith";
+import { FlagsmithProvider } from "flagsmith/react";
+import { useEffect, useState } from "react";
+
 
 export default function ClassesLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [flagsLoaded, setFlagsLoaded] = useState(false);
+
+
+  useEffect(() => {
+    flagsmith.init({
+      environmentID: "GTGFWiyEFuVDfna2gjdqQC",
+      onChange: () => {
+        console.log("Flags updated", flagsmith.getAllFlags());
+        setFlagsLoaded(true);
+      },
+      onError: (error) => {
+        console.error("Error loading flags", error);
+        setFlagsLoaded(true);
+      },
+    });
+  }, []);
   return (
     <>
+      <FlagsmithProvider
+      options={{
+        environmentID: "GTGFWiyEFuVDfna2gjdqQC",
+      }}
+      flagsmith={flagsmith}
+    >
       <div className="rbt-page-banner-wrapper">
         {/* <div className="rbt-banner-image custom-banner" /> */}
       </div>
@@ -28,6 +55,7 @@ export default function ClassesLayout({
           </div>
         </div>
       </div>
+      </FlagsmithProvider>
     </>
   );
 }

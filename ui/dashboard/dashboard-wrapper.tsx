@@ -7,12 +7,17 @@ import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import { useStore } from "@/stores/useStore";
+import { useFlags } from "flagsmith/react";
 
 const InstructorDashboardHeader = () => {
   var t = isBrowser;
   const [isEnrolled, setIsEnrolled] = useState<any>();
   const [course, setCourse] = useState<any>();
   const [courseId, setCourseId] = useState<string>('');
+  const flags = useFlags(["next_public_banner_url","next_public_course_id","next_public_demo"]);
+  const banner = flags.next_public_banner_url.value;
+  const flagSmithCourseId = flags.next_public_course_id.value;
+  const demo = flags.next_public_demo.value ?? "";
 
   const selectedcourseId = useStore((state:any) => state.courseId);
   const changeCourseId = useStore((state:any) => state.setCourseId);
@@ -73,13 +78,15 @@ const InstructorDashboardHeader = () => {
 
     if (res) {
       setCourse(res.data.data);
+      console.log("Courses", res.data.data)
     }
   }
 
   useEffect(() => {
-    const course_Id = process.env.NEXT_PUBLIC_COURSE_ID;
-    if (course_Id) {
-      getCourse(`${course_Id}`);
+
+    if (flagSmithCourseId) {
+      getCourse(`${flagSmithCourseId}`);
+
     }
   }, []);
 
@@ -87,7 +94,7 @@ const InstructorDashboardHeader = () => {
   return (
     <>
     <div className="mb-5">
-      {process.env.NEXT_PUBLIC_DEMO ?
+      {demo ?
         <div style={{ maxWidth: "40rem" }}>
         {/* Select */}
             <span className="select-label d-block">Select a course</span>
@@ -127,7 +134,7 @@ const InstructorDashboardHeader = () => {
       {isMobile&&
         <div className="rbt-shadow-box" 
         style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_BANNER_URL??""})`,
+          backgroundImage: `url(${banner??""})`,
           backgroundRepeat:'no-repeat',
           backgroundSize:'cover',
           backgroundPosition:'center',
@@ -138,7 +145,7 @@ const InstructorDashboardHeader = () => {
       {!isMobile&&
         <div className="height-350 rbt-shadow-box" 
         style={{
-          backgroundImage: `url(${process.env.NEXT_PUBLIC_BANNER_URL??""})`,
+          backgroundImage: `url(${banner??""})`,
           backgroundRepeat:'no-repeat',
           backgroundSize:'cover',
           backgroundPosition:'center'

@@ -16,6 +16,7 @@ const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const [topBanner, setTopBanner] = useState<boolean>(false);
 
   const sections = [
     { id: "dashboard", label: "Dashboard", link: "/student/dashboard" },
@@ -23,6 +24,9 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
+    const banner = JSON.parse(localStorage.getItem("show_top_banner") || "false"); // Ensure a string is passed
+    setTopBanner(banner);
+    console.log("Banner", topBanner)
     const sectionIds = ["dashboard", "course", "progress"];
 
     const handleScroll = () => {
@@ -79,7 +83,7 @@ const Navbar = () => {
                 </Link>
               </div>
 
-              {process.env.SHOW_TOP_BANNER &&
+              {topBanner &&
               <>
               <div className="rbt-main-navigation d-none d-xl-block">
                 <nav className="mainmenu-nav onepagenav">
@@ -119,7 +123,7 @@ const Navbar = () => {
   
            
                 <div className="header-right d-flex align-items-center mt">
-              {process.env.SHOW_TOP_BANNER && 
+              {topBanner && 
                 <div className="d-none d-md-block me-3">
                   <Link href="#" onClick={handleAvatarClick}>
                     <Image
@@ -143,7 +147,6 @@ const Navbar = () => {
                   id="rbt-offcanvas-activation"
                   onClick={toggleSidebar}
                 >
-                {/* hmamburger menu will be added with before and after psuedo classes */}
                 </div>
               </div>
             

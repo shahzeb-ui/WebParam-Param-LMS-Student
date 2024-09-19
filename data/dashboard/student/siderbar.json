@@ -49,6 +49,11 @@
       "link": "/",
       "text": "Logout",
       "icon": "feather-log-out"
+    },
+    {
+      "link": "/",
+      "text": "FlagSmith Settings",
+      "icon": "feather-settings"
     }
   ]
 }
