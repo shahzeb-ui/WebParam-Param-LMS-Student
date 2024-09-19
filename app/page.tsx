@@ -7,7 +7,6 @@ import "aos/dist/aos.css";
 import styles from "./page.module.css";
 import { CourseIdProvider } from "@/context/courseId-context/courseId-context";
 import Banner from "../ui/maintenance/Banner";
-import MaintenanceModal from "../ui/maintenance/MaintenanceModal";
 import { useDeploymentTime } from "./Utils/useDeploymentTime";
 
 export default function Home() {
@@ -31,13 +30,11 @@ export default function Home() {
 
   }, [router, checkDeploymentTime, initialized]);
 
-
   return (
     <NextUIProvider>
       <CourseIdProvider>
         <Banner />
         <main className={styles.main}>
-          {showBanner ? <MaintenanceModal /> : null}
           {/* Your other content here */}
         </main>
       </CourseIdProvider>

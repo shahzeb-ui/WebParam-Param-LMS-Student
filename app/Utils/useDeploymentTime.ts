@@ -6,8 +6,15 @@ interface DeploymentSlot {
   endTime: string;
 }
 
-export const useDeploymentTime = () => {
+interface UseDeploymentTimeReturn {
+  showBanner: boolean;
+  endTime?: string;
+  checkDeploymentTime: () => boolean;
+}
+
+export const useDeploymentTime = (): UseDeploymentTimeReturn => {
   const [showBanner, setShowBanner] = useState(false);
+  const [currentEndTime, setCurrentEndTime] = useState<string | undefined>(undefined);
 
   const checkDeploymentTime = () => {
     const currentTime = new Date();
@@ -18,16 +25,18 @@ export const useDeploymentTime = () => {
       const [endHour, endMinute] = slot.endTime.split(':').map(Number);
       
       const startDate = new Date(currentTime);
-      startDate.setHours(startHour, startMinute, 0);
+      startDate.setHours(startHour, startMinute, 0, 0);
       
       const endDate = new Date(currentTime);
-      endDate.setHours(endHour, endMinute, 0);
+      endDate.setHours(endHour, endMinute, 0, 0);
       
       if (currentTime >= startDate && currentTime <= endDate) {
+        setCurrentEndTime(slot.endTime);
         return true;
       }
     }
     
+    setCurrentEndTime(undefined);
     return false;
   };
 
@@ -42,5 +51,5 @@ export const useDeploymentTime = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return { showBanner, checkDeploymentTime };
+  return { showBanner, endTime: currentEndTime, checkDeploymentTime };
 };
