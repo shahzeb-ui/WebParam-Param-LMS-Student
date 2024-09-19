@@ -13,6 +13,7 @@ import { Modal } from 'react-bootstrap';
 import { readUserData } from '@/app/lib/endpoints';
 import { GET } from '@/app/lib/api-client';
 import MaintenanceModal from '@/ui/banner/MaintanceModal';
+import { useProgressContext } from '@/context/progress-card-context/progress-context';
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");
