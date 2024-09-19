@@ -23,7 +23,7 @@ const AssessmentComponent = () => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(3600); // Set initial time limit to 1 hour (3600 seconds)
   const [quizCount, setQuizCount] = useState<number>(0);
   const [submitMultipleChoice, setSubmitMultipleChoice] = useState<boolean>(false);
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
@@ -73,9 +73,15 @@ const AssessmentComponent = () => {
     let timer: NodeJS.Timeout;
     if (isInteracted && timeRemaining !== null) {
       timer = setInterval(() => {
-        setTimeRemaining((prevTime) =>
-          prevTime !== null ? prevTime - 1 : null
-        );
+        setTimeRemaining((prevTime) => {
+          if (prevTime !== null && prevTime > 0) {
+            return prevTime - 1;
+          } else {
+            clearInterval(timer);
+            handleSubmitAssessment(); // Automatically submit the assessment when time runs out
+            return null;
+          }
+        });
       }, 1000);
     }
     return () => clearInterval(timer);
@@ -90,7 +96,7 @@ const AssessmentComponent = () => {
     setAnswers(newAnswers);
     if (!isInteracted) {
       setIsInteracted(true);
-      setTimeRemaining(3600);
+      setTimeRemaining(3600); // Start the timer when the user interacts for the first time
     }
   };
 
@@ -106,15 +112,15 @@ const AssessmentComponent = () => {
       assessmentName,
       userId,
       answers: [
-        ...multipleChoiceAnswers,
+        ...multipleChoiceAnswers, // Ensure multiple choice answers are included
         ...longQuestions.map((question, index) => ({
           questionId: question.id,
           description: question.title,
           questionType: question.type,
-          options: [], 
-          studentMultipleChoiceAnswer: [], 
+          options: [],
+          studentMultipleChoiceAnswer: [],
           studentLongTextAnswer: answers[index],
-          rubrics: [], 
+          rubrics: [],
           moderatorFeedBack: "",
           score: 0,
         })),
@@ -220,6 +226,7 @@ const AssessmentComponent = () => {
                 style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                 type="button"
                 onClick={handleSubmitAssessment}
+                disabled={loading}
               >
                 {loading ? (
                   <>
