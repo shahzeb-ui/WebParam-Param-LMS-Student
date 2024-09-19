@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect ,Suspense} from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { submitAssessmentAnswers } from "@/actions/assessments/assessments-action";
 import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
-import {rAssessmentThootoUrl} from '../../../../../app/lib/endpoints'
+import { rAssessmentThootoUrl } from '../../../../../app/lib/endpoints';
 
 type LongAnswerQuestion = {
   id: string;
@@ -31,10 +31,17 @@ const AssessmentComponent = () => {
   const assessmentId = searchParams.get('id');
   const userId = "userId"; 
   const assessmentName = "assessmentName"; 
+  const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
 
   useEffect(() => {
-    if (assessmentId) {
-      fetch(`${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`)
+    if (assessmentId && clientKey) {
+      fetch(`${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`, {
+        headers: {
+          'Client-Key': clientKey,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           if (Array.isArray(data.data)) {
@@ -51,7 +58,7 @@ const AssessmentComponent = () => {
           console.error("Error fetching questions:", error);
         });
     }
-  }, [assessmentId]);
+  }, [assessmentId, clientKey]);
 
   useEffect(() => {
     const savedState = JSON.parse(
@@ -231,12 +238,10 @@ const AssessmentComponent = () => {
   );
 };
 
-//export default AssessmentComponent;
 export default function TakeAssessmentComponent() {
-
   return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <AssessmentComponent/>
-      </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <AssessmentComponent />
+    </Suspense>
   );
 }

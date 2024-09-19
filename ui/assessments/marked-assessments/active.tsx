@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAssessmentContext } from '../(context)/AssessmentContext';
-import { rAssessmentUrl } from '../../../app/lib/endpoints';
-import Cookies from "universal-cookie";
-import Link from 'next/link';
 import { rAssessmentThootoUrl } from '../../../app/lib/endpoints';
+import Link from 'next/link';
 
 enum AssessmentType {
   Summative = 0,
@@ -25,17 +23,30 @@ export default function ActiveAssessment() {
   const [data, setData] = useState<Assessment[]>([]);
   const [filteredData, setFilteredData] = useState<Assessment[]>([]);
   const courseId = '6669f0ff8759b480859c10a7';
- 
+  const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!clientKey) {
+        console.error('Client key is not defined');
+        return;
+      }
+
       try {
-        const url =`${rAssessmentThootoUrl}/api/v1/assessments/GetNewAssessments/${courseId}`;
-        const response = await fetch(url);
+        const url = `${rAssessmentThootoUrl}/api/v1/assessments/GetNewAssessments/${courseId}?clientKey=${clientKey}`;
+        const response = await fetch(url, {
+          headers: {
+            'Client-Key': clientKey,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+
         if (!response.ok) {
           console.error(`Error fetching assessments: ${response.statusText}`);
           return;
         }
+
         const result = await response.json();
 
         if (result && Array.isArray(result.data)) {
@@ -46,11 +57,10 @@ export default function ActiveAssessment() {
       } catch (error) {
         console.error('Error fetching assessments:', error);
       }
-
     };
 
     fetchData();
-  }, [courseId]);
+  }, [courseId, clientKey]);
 
   useEffect(() => {
     console.log('data:', data);
@@ -63,7 +73,7 @@ export default function ActiveAssessment() {
       filtered = data.filter(assessment => assessment.type === AssessmentType.Formative);
     }
     console.log('filtered:', filtered);
-    console.log('courseId :',courseId)
+    console.log('courseId :', courseId);
     setFilteredData(filtered);
   }, [data, assessmentType]);
 
@@ -72,9 +82,8 @@ export default function ActiveAssessment() {
     return date.toISOString().split('T')[0];
   };
 
-
   return (
-    <table className="rbt-table table table-borderless" style={{minWidth:'10px'}}>
+    <table className="rbt-table table table-borderless" style={{ minWidth: '10px' }}>
       <thead>
         <tr>
           <th>Assessment Name</th>
@@ -105,7 +114,7 @@ export default function ActiveAssessment() {
                   title="Start"
                   href={{
                     pathname: '/student/assessments/assessmentId',
-                    query: { id : `${assessment.id}` },
+                    query: { id: `${assessment.id}` },
                   }}
                 >
                   Start

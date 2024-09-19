@@ -1,13 +1,11 @@
-import { wAssessmentUrl } from "@/app/lib/endpoints";
-import { wStudentAnswersThootoUrl } from "@/app/lib/endpoints";
-import {
-  AssessmentResponse,
-} from "@/interfaces/assessments/assessments-interface";
+import { wAssessmentUrl, wStudentAnswersThootoUrl } from "@/app/lib/endpoints";
+import { AssessmentResponse } from "@/interfaces/assessments/assessments-interface";
 
 export const submitAssessment = async (
   title: string,
   courseId: string
 ): Promise<AssessmentResponse> => {
+  const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
   try {
     console.log("Submitting assessment:", { title, courseId });
     const response = await fetch(
@@ -17,7 +15,8 @@ export const submitAssessment = async (
         headers: {
           Accept: "text/plain",
           "Content-Type": "application/json",
-        },
+          'Client-Key': clientKey || '',
+        } as HeadersInit,
         body: JSON.stringify({ title, courseId }),
       }
     );
@@ -79,6 +78,7 @@ type AssessmentSubmission = {
 export const submitAssessmentAnswers = async (
   submission: AssessmentSubmission
 ): Promise<AssessmentResponse> => {
+  const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
   try {
     console.log("Submitting assessment:", submission);
     const response = await fetch(
@@ -88,7 +88,8 @@ export const submitAssessmentAnswers = async (
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-        },
+          'Client-Key': clientKey || '',
+        } as HeadersInit,
         body: JSON.stringify([submission]),
       }
     );
