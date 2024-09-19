@@ -46,3 +46,70 @@
     25% { transform: translateX(-3px); }
     75% { transform: translateX(3px); }
   }
+
+  .iconWrapper {
+    animation: buzz 0.3s infinite alternate;
+  }
+
+  .clockIcon {
+    color: rgb(36, 52, 92);
+  }
+
+  @keyframes buzz {
+    0% {
+      transform: translateX(-1px) rotate(-1deg);
+    }
+    100% {
+      transform: translateX(1px) rotate(1deg);
+    }
+  }
+
+  .countdownTitle {
+    font-size: 1rem;
+    color: rgb(36, 52, 92);
+  }
+
+  .countdownWrapper {
+    border: 2px solid rgb(36, 52, 92);
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  .countdownTimer {
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(36, 52, 92);
+    animation: pulse 1s infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+
+  .button {
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 120px;
+    border-radius: 4px;
+  }
+
+  .primaryButton {
+    background-color: rgb(36, 52, 92);
+    color: white;
+    border: none;
+  }
+
+  .secondaryButton {
+    background-color: transparent;
+    color: rgb(36, 52, 92);
+    border: 1px solid rgb(36, 52, 92);
+  }

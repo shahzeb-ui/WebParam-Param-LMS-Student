@@ -4,7 +4,7 @@ import StudentDashboardSidebar from "@/ui/student/student-enrolled-courses/stude
 import styles from "@/styles/side-bar/side-bar-hide.module.css";
 import InstructorDashboardHeader from "@/ui/dashboard/dashboard-wrapper";
 import { CourseIdProvider } from "@/context/courseId-context/courseId-context";
-import MaintenanceModal from '@/app/(protected)/banners/MaintanceModal';
+import MaintenanceModal from '@/ui/banner/MaintanceModal';
 import { useState, useEffect } from 'react';
 
 export default function StudentLayout({
