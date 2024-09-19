@@ -6,6 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import styles from "./page.module.css";
 import { CourseIdProvider } from "@/context/courseId-context/courseId-context";
+import Maintenance from "./maintenance";
 import Banner from "../ui/maintenance/Banner";
 import { useDeploymentTime } from "./Utils/useDeploymentTime";
 
@@ -19,6 +20,10 @@ export default function Home() {
       duration: 2000,
     });
 
+    if (process.env.NEXT_PUBLIC_KILLSWITCH !== '001') {
+      router.push("/login");
+    }
+
     if (!initialized) {
       setInitialized(true);
       return;
@@ -29,6 +34,10 @@ export default function Home() {
     }
 
   }, [router, checkDeploymentTime, initialized]);
+
+  if (process.env.NEXT_PUBLIC_KILLSWITCH === '001') {
+    return <Maintenance />;
+  }
 
   return (
     <NextUIProvider>
