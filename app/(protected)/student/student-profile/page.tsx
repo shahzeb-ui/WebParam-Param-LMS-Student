@@ -2,7 +2,6 @@
 import { useEffect, Suspense, useState } from 'react';
 import Documents from './documents/page';
 import EmploymentInformation from './EmploymentInformation/page';
-import RegionalInformation from './RegionalInformation/page';
 import DemocraticLegal from './democraticLegal/page';
 import ContactInformation from './ContactInformation/page';
 import Cookies from 'universal-cookie';
@@ -19,11 +18,12 @@ function UserProfileContent() {
     const [student, setStudent] = useState<any>();
     const tab = searchParams.get('tab') || 'profile';
     const user = cookies.get('loggedInUser');
-    console.log('user:', user);
     const router = useRouter();
 
     async function getStudent() {
-        const res = await getStudentData(user.data.id || user.id);
+        if (!user) return;
+        const res = await getStudentData(user?.data?.id || user?.id);
+        debugger;
         console.log('student:', res.data);
         setStudent(res);
     }
@@ -33,6 +33,7 @@ function UserProfileContent() {
         AOS.init({ duration: 1500 , once: true}); // Initialize AOS
     }, []);
 
+
     const renderComponent = (tab: string | null) => {
         switch (tab) {
             case 'profile':
@@ -41,8 +42,6 @@ function UserProfileContent() {
                 return <DemocraticLegal student={student} />;
             case 'ContactInformation':
                 return <ContactInformation student={student} />;
-            case 'RegionalInformation':
-                return <RegionalInformation student={student} />;
             case 'EmploymentInformation':
                 return <EmploymentInformation student={student} />;
             case 'documents':
