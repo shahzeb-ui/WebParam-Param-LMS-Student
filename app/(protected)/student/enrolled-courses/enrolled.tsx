@@ -15,7 +15,6 @@ export default function Enrolled() {
   const [loading, setLoading] = useState(true);
   const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const flags = useFlags(["DEMO", "COURSE_ID"]);
 
   const [isProgress, setIsProgress] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -48,22 +47,11 @@ export default function Enrolled() {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
     if (demo) {
-=======
-    if (flags.DEMO.enabled && flags.DEMO.value == true) {
->>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
       const courseId = selectedcourseId;
       getUnitStandards(courseId);
     } else {
-<<<<<<< HEAD
       const courseId = hasConstantCourseId.toString() ??"";
-=======
-      const courseId =
-        flags.COURSE_ID.enabled && flags.COURSE_ID.value
-          ? (flags.COURSE_ID.value as string)
-          : "";
->>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
       getUnitStandards(courseId);
     }
   }, [selectedcourseId]);

@@ -4,35 +4,6 @@ import Image from "next/image";
 import React, { ChangeEvent, useRef, useState } from "react";
 import Link from "next/link";
 import imageCover from "./verify.svg";
-<<<<<<< HEAD
-import { LoginUser, verifyUserAccount } from '@/app/api/auth/auth';
-import Cookies from 'universal-cookie';
-import { useRouter } from 'next/navigation';
-import { isMobile } from 'react-device-detect';
-import { useFlags } from 'flagsmith/react';
-
-
-
-export default function VerifyPage() {
-    const [otpValues, setOtpValues] = useState(['', '', '', '', '']);
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(false);
-    const flags = useFlags(["next_public_freemium"]);
-
-    const isFreemium = flags.next_public_freemium.value;
-  
-    const[otp, setOtp] = useState<Number>(0);
-    const inputRefs = [
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null),
-        useRef<HTMLInputElement>(null),
-    ];
-    
-    const cookies = new Cookies();
-    const router = useRouter();
-=======
 import { LoginUser, verifyUserAccount } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
@@ -53,7 +24,6 @@ export default function VerifyPage() {
   ];
   const flags = useFlags(["FREEMIUM"]);
   const isFreemium = flags.FREEMIUM.enabled && flags.FREEMIUM.value == true;
->>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
 
   const cookies = new Cookies();
   const router = useRouter();
@@ -65,22 +35,10 @@ export default function VerifyPage() {
     const value = e.target.value;
     setErrorMessage(false);
 
-<<<<<<< HEAD
-        const res = await verifyUserAccount(payload);
-        debugger;
-        if (res) {
-            console.log(res);
-            setIsSubmitted(false);
-            // const user = await 
-            cookies.set("loggedInUser", res?.data);
-            localStorage.setItem("loggedInUser", res?.data)
-            const redirectPath = isFreemium ? "/student/projects?tab=enrolled" : "/student/student-profile";
-=======
     if (/^[0-9]$/.test(value)) {
       const newOtpValues = [...otpValues];
       newOtpValues[index] = value;
       setOtpValues(newOtpValues);
->>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
 
       if (index <= 5) {
         inputRefs[index + 1]?.current && inputRefs[index + 1].current?.focus();
