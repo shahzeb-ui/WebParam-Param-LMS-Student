@@ -23,11 +23,6 @@ export default function Home() {
     if (process.env.NEXT_PUBLIC_KILLSWITCH !== '001') {
       router.push("/login");
     }
-  }, [router]);
-
-  if (process.env.NEXT_PUBLIC_KILLSWITCH === '001') {
-    return <Maintenance />;
-  }
 
     if (!initialized) {
       setInitialized(true);
@@ -40,13 +35,15 @@ export default function Home() {
 
   }, [router, checkDeploymentTime, initialized]);
 
+  if (process.env.NEXT_PUBLIC_KILLSWITCH === '001') {
+    return <Maintenance />;
+  }
+
   return (
     <NextUIProvider>
       <CourseIdProvider>
         <Banner />
         <main className={styles.main}>
-          {/* Your content here */}
-        </main>
           {/* Your other content here */}
         </main>
       </CourseIdProvider>
