@@ -37,8 +37,12 @@ export default function Profile({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const router = useRouter();
+<<<<<<< HEAD
   const flags = useFlags(["next_public_primary_color"]);
   const primary_color = flags.next_public_primary_color.value;
+=======
+  const flags = useFlags(["PRIMARY_COLOR"]);
+>>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
 
   useEffect(() => {
     getUserProfile();
@@ -425,7 +429,15 @@ export default function Profile({ student }: any) {
               style={{
                 height: "40px",
                 border: "none",
+<<<<<<< HEAD
                 backgroundColor: `${primary_color ?? "rgb(36, 52, 92)"}`,
+=======
+                backgroundColor: `${
+                  flags.PRIMARY_COLOR.enabled && flags.PRIMARY_COLOR.value
+                    ? flags.PRIMARY_COLOR.value
+                    : "rgb(36, 52, 92)"
+                }`,
+>>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
                 borderRadius: "8px  ",
               }}
               type="submit"

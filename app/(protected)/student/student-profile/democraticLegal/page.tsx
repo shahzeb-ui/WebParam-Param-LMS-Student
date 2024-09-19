@@ -11,6 +11,7 @@ import { useFlags } from "flagsmith/react";
 export default function DemocraticLegal({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
+  const flags = useFlags(["PRIMARY_COLOR"]);
 
   const [equityCode, setEquityCode] = useState("");
   const [nationalityCode, setNationalityCode] = useState("");
@@ -449,7 +450,15 @@ export default function DemocraticLegal({ student }: any) {
                 style={{
                   height: "40px",
                   border: "none",
+<<<<<<< HEAD
                   backgroundColor: `${primary_color ?? "rgb(36, 52, 92)"}`,
+=======
+                  backgroundColor: `${
+                    flags.PRIMARY_COLOR.enabled && flags.PRIMARY_COLOR.value
+                      ? flags.PRIMARY_COLOR.value
+                      : "rgb(36, 52, 92)"
+                  }`,
+>>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
                   borderRadius: "8px  ",
                 }}
                 type="submit"

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
 import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
@@ -11,11 +10,12 @@ import { useStore } from "@/stores/useStore";
 import { useFlags } from "flagsmith/react";
 
 export default function Enrolled() {
-  const selectedcourseId = useStore((state:any) => state.courseId);
+  const selectedcourseId = useStore((state: any) => state.courseId);
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [unitStandards, setUnitStandards] = useState<UnitStandardData[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const flags = useFlags(["DEMO", "COURSE_ID"]);
 
   const [isProgress, setIsProgress] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -31,7 +31,6 @@ export default function Enrolled() {
   const itemsPerPage = 3;
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-
 
   const getUnitStandards = async (courseId: string) => {
     setLoading(true);
@@ -49,14 +48,24 @@ export default function Enrolled() {
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     if (demo) {
+=======
+    if (flags.DEMO.enabled && flags.DEMO.value == true) {
+>>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
       const courseId = selectedcourseId;
-    getUnitStandards(courseId);
+      getUnitStandards(courseId);
     } else {
+<<<<<<< HEAD
       const courseId = hasConstantCourseId.toString() ??"";
+=======
+      const courseId =
+        flags.COURSE_ID.enabled && flags.COURSE_ID.value
+          ? (flags.COURSE_ID.value as string)
+          : "";
+>>>>>>> de4b2dc2974964e29b806230ab9034390cc676ed
       getUnitStandards(courseId);
     }
-
   }, [selectedcourseId]);
 
   if (loading) {
@@ -64,33 +73,31 @@ export default function Enrolled() {
   } else {
   }
 
-
-
-    return (
-        <div
-              className="tab-pane fade active show"
-              id="home-4"
-              role="tabpanel"
-              aria-labelledby="home-tab-4"
-            >
-              <div className="row g-5">
-                {unitStandards?.map((standard, index) => (
-                  <div
-                    className="col-lg-4 col-md-6 col-12"
-                    key={`unit-standard-completed-${index}`}
-                  >
-                    <UnitStandardWidget
-                      data={standard}
-                      courseStyle={courseStyle}
-                      isProgress={isProgress}
-                      isCompleted={isCompleted}
-                      showDescription={showDescription}
-                      isEdit={isEdit}
-                      showAuthor={showAuthor}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-    )
+  return (
+    <div
+      className="tab-pane fade active show"
+      id="home-4"
+      role="tabpanel"
+      aria-labelledby="home-tab-4"
+    >
+      <div className="row g-5">
+        {unitStandards?.map((standard, index) => (
+          <div
+            className="col-lg-4 col-md-6 col-12"
+            key={`unit-standard-completed-${index}`}
+          >
+            <UnitStandardWidget
+              data={standard}
+              courseStyle={courseStyle}
+              isProgress={isProgress}
+              isCompleted={isCompleted}
+              showDescription={showDescription}
+              isEdit={isEdit}
+              showAuthor={showAuthor}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
