@@ -34,7 +34,10 @@ export default function StudentLayout({
                 <div className={`col-lg-3 ${styles.sidebarHiddenOnMobile}`}>
                   <StudentDashboardSidebar />
                 </div>
-                <div className="col-lg-9">{children}</div>
+                <div className="col-lg-9">
+                
+                  {children}
+                </div>
               </div>
             </div>
           </div>

@@ -6,6 +6,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import styles from "./page.module.css";
 import { CourseIdProvider } from "@/context/courseId-context/courseId-context";
+import { ProgressContextProvider } from "@/context/progress-card-context/progress-context";
+
 
 export default function Home() {
   const router = useRouter();
