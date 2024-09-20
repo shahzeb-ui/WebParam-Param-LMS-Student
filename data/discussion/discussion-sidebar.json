@@ -31,42 +31,17 @@
       "icon": "bi bi-calendar-event"
     },
     {
-      "link": "/student/student-profile",
-      "text": "My Profile",
-      "icon": "feather-user"
-    },
-    {
       "link": "/student/notifications",
       "text": "Notifications",
       "icon": "feather-volume-2"
-    },
-    {
-      "link": "#",
-      "text": "Settings",
-      "icon": "feather-settings"
-    },
-    {
-      "link": "/",
-      "text": "Logout",
-      "icon": "feather-log-out"
     }
   ],
   "FREEMIUM": [
-    {
-      "link": "/student/student-profile",
-      "text": "My Profile",
-      "icon": "feather-user"
-    },
+  
     {
       "link": "/student/notifications",
       "text": "Notifications",
       "icon": "feather-volume-2"
-    },
-
-    {
-      "link": "/",
-      "text": "Logout",
-      "icon": "feather-log-out"
     }
   ],
   "COURSE_ONLY": [
@@ -74,12 +49,8 @@
       "link": "/student/enrolled-courses",
       "text": "My Courses",
       "icon": "bi bi-laptop-fill"
-    },
-    {
-      "link": "/",
-      "text": "Logout",
-      "icon": "feather-log-out"
     }
+    
   ]
 
 }

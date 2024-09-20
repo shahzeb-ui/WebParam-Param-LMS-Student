@@ -17,7 +17,7 @@ export default function LoginPage() {
 
   const cookies = new Cookies();
   const router = useRouter();
-  var isFreemium = process.env.NEXT_PUBLIC_FREEMIUM === 'true';
+  var isFreemium = process.env.NEXT_PUBLIC_ACCESS === 'FREEMIUM';
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -53,7 +53,7 @@ export default function LoginPage() {
                 
                 cookies.set("loggedInUser", res.data);
                 
-                const redirectPath = process.env.NEXT_PUBLIC_FREEMIUM === 'true' ? "/student/projects?tab=enrolled" : "/student/student-profile";
+                const redirectPath = "/student/enrolled-courses?tab=enrolled";
                 router.push(redirectPath)
             }
         } catch (error: any) {
@@ -79,7 +79,7 @@ export default function LoginPage() {
         className="left-container d-md-block d-none"
         data-aos="zoom-out-right"
         style={{
-          backgroundImage: !isMobile ? `url(${imageCover})` : "none",
+          backgroundImage: `url(${imageCover})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           boxShadow: "inset 0 0 100px rgba(0,0,0,0.5)",

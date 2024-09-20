@@ -4,12 +4,8 @@ import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
-import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
-import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
-import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
 // import { isMobile } from "react-device-detect";
-import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
-import courseImage from './courseImage.jpeg';
+
 import Cookies from "universal-cookie";
 import { isMobile } from "react-device-detect";
 import Active from "./active";
@@ -110,7 +106,7 @@ const access = process.env.NEXT_PUBLIC_ACCESS??"ALL_ACCESS";
                 <span className="title">Completed</span>
               </Link>
             </li>
-            <li role="presentation">
+            <li role="presentation"  style={{pointerEvents:access=="COURSE_ONLY"?"none": "auto", opacity: access=="COURSE_ONLY"?"0.2":"1"}}>
               <Link
                 href="#"
                 className={`tab-button ${tab == "softSkills" && "active"} ${styles.tabButton}`}
