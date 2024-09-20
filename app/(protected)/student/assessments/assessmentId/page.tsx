@@ -23,7 +23,7 @@ const AssessmentComponent = () => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(3600); // Set initial time limit to 1 hour (3600 seconds)
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(3600);
   const [quizCount, setQuizCount] = useState<number>(0);
   const [submitMultipleChoice, setSubmitMultipleChoice] = useState<boolean>(false);
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
@@ -78,7 +78,7 @@ const AssessmentComponent = () => {
             return prevTime - 1;
           } else {
             clearInterval(timer);
-            handleSubmitAssessment(); // Automatically submit the assessment when time runs out
+            handleSubmitAssessment();
             return null;
           }
         });
@@ -96,7 +96,7 @@ const AssessmentComponent = () => {
     setAnswers(newAnswers);
     if (!isInteracted) {
       setIsInteracted(true);
-      setTimeRemaining(3600); // Start the timer when the user interacts for the first time
+      setTimeRemaining(3600);
     }
   };
 
@@ -112,7 +112,7 @@ const AssessmentComponent = () => {
       assessmentName,
       userId,
       answers: [
-        ...multipleChoiceAnswers, // Ensure multiple choice answers are included
+        ...multipleChoiceAnswers,
         ...longQuestions.map((question, index) => ({
           questionId: question.id,
           description: question.title,
@@ -136,7 +136,7 @@ const AssessmentComponent = () => {
 
       localStorage.removeItem("assessmentState");
       setAnswers(Array(longQuestions.length).fill(""));
-      setTimeRemaining(null); // Reset the timer
+      setTimeRemaining(null);
 
       router.back();
     } catch (error) {
