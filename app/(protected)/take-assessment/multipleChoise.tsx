@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { rQuestionsThootoUrl, rOptionsThootoUrl} from '../../lib/endpoints';
+import { rQuestionsThootoUrl, rOptionsThootoUrl } from '../../lib/endpoints';
 
 type Option = {
   id: string;
@@ -34,13 +36,20 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
 }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [selectedAnswers, setSelectedAnswers] = useState<Option[]>([]);
+  const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
 
   useEffect(() => {
     const fetchQuestionsAndOptions = async () => {
       try {
         console.log("Fetching questions for assessmentId:", assessmentId);
 
-        const questionsResponse =  await fetch(`${rQuestionsThootoUrl}/GetQuestions/${assessmentId}`);
+        const questionsResponse = await fetch(`${rQuestionsThootoUrl}/GetQuestions/${assessmentId}`, {
+          headers: {
+            'Client-Key': clientKey || '',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          } as HeadersInit,
+        });
         const questionsData = await questionsResponse.json();
         console.log("Questions data:", questionsData);
 
@@ -50,7 +59,13 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
 
           const questionsWithOptions = await Promise.all(
             multipleChoiceQuestions.map(async (question: any) => {
-              const optionsResponse = await fetch(`${rOptionsThootoUrl}/GetOptions/${question.id}`);
+              const optionsResponse = await fetch(`${rOptionsThootoUrl}/GetOptions/${question.id}`, {
+                headers: {
+                  'Client-Key': clientKey || '',
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                } as HeadersInit,
+              });
               const optionsData = await optionsResponse.json();
               console.log(`Options data for question ${question.id}:`, optionsData);
 
@@ -76,7 +91,7 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
     } else {
       console.error("assessmentId is not defined");
     }
-  }, [assessmentId]);
+  }, [assessmentId, clientKey]);
 
   useEffect(() => {
     if (submitMultipleChoice) {

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect ,Suspense} from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { submitAssessmentAnswers } from "@/actions/assessments/assessments-action";
 import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
-import {rAssessmentThootoUrl} from '../../../../../app/lib/endpoints'
+import { rAssessmentThootoUrl } from '../../../../../app/lib/endpoints';
 
 type LongAnswerQuestion = {
   id: string;
@@ -23,7 +23,7 @@ const AssessmentComponent = () => {
   const [answers, setAnswers] = useState<string[]>([]);
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(3600);
   const [quizCount, setQuizCount] = useState<number>(0);
   const [submitMultipleChoice, setSubmitMultipleChoice] = useState<boolean>(false);
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
@@ -31,10 +31,17 @@ const AssessmentComponent = () => {
   const assessmentId = searchParams.get('id');
   const userId = "userId"; 
   const assessmentName = "assessmentName"; 
+  const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
 
   useEffect(() => {
-    if (assessmentId) {
-      fetch(`${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`)
+    if (assessmentId && clientKey) {
+      fetch(`${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`, {
+        headers: {
+          'Client-Key': clientKey,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           if (Array.isArray(data.data)) {
@@ -51,7 +58,7 @@ const AssessmentComponent = () => {
           console.error("Error fetching questions:", error);
         });
     }
-  }, [assessmentId]);
+  }, [assessmentId, clientKey]);
 
   useEffect(() => {
     const savedState = JSON.parse(
@@ -66,9 +73,15 @@ const AssessmentComponent = () => {
     let timer: NodeJS.Timeout;
     if (isInteracted && timeRemaining !== null) {
       timer = setInterval(() => {
-        setTimeRemaining((prevTime) =>
-          prevTime !== null ? prevTime - 1 : null
-        );
+        setTimeRemaining((prevTime) => {
+          if (prevTime !== null && prevTime > 0) {
+            return prevTime - 1;
+          } else {
+            clearInterval(timer);
+            handleSubmitAssessment();
+            return null;
+          }
+        });
       }, 1000);
     }
     return () => clearInterval(timer);
@@ -104,10 +117,10 @@ const AssessmentComponent = () => {
           questionId: question.id,
           description: question.title,
           questionType: question.type,
-          options: [], 
-          studentMultipleChoiceAnswer: [], 
+          options: [],
+          studentMultipleChoiceAnswer: [],
           studentLongTextAnswer: answers[index],
-          rubrics: [], 
+          rubrics: [],
           moderatorFeedBack: "",
           score: 0,
         })),
@@ -123,7 +136,7 @@ const AssessmentComponent = () => {
 
       localStorage.removeItem("assessmentState");
       setAnswers(Array(longQuestions.length).fill(""));
-      setTimeRemaining(null); // Reset the timer
+      setTimeRemaining(null);
 
       router.back();
     } catch (error) {
@@ -213,6 +226,7 @@ const AssessmentComponent = () => {
                 style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                 type="button"
                 onClick={handleSubmitAssessment}
+                disabled={loading}
               >
                 {loading ? (
                   <>
@@ -231,12 +245,10 @@ const AssessmentComponent = () => {
   );
 };
 
-//export default AssessmentComponent;
 export default function TakeAssessmentComponent() {
-
   return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <AssessmentComponent/>
-      </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      <AssessmentComponent />
+    </Suspense>
   );
 }
