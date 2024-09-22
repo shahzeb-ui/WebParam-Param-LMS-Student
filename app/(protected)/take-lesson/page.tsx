@@ -45,12 +45,12 @@ function TakeLesson() {
 
 
   async function fetchKnowledgeTopics() {
-    debugger;
+    
     try {
       const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
-        debugger;
+        
         response.data.length > 0 &&  handleExpandClick(response.data[0].id);
       } else {
         setError("Failed to load data");
