@@ -52,9 +52,14 @@ export default function LoginPage() {
             if (res) {
                 
                 cookies.set("loggedInUser", res.data);
-                
+                if(process.env.FREEMIUM){
+                  const redirectPath = "/student/projects";
+                  router.push(redirectPath)
+                }else{
                 const redirectPath = "/student/enrolled-courses?tab=enrolled";
                 router.push(redirectPath)
+                }
+                
             }
         } catch (error: any) {
             setErrorMessage('Network Error please try again');
