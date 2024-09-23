@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Testimonies from "./testimonies";
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
+import { GET } from "@/app/lib/api-client";
 // import flagsmith from "flagsmith/isomorphic";
 // import { useFlags, useFlagsmith } from "flagsmith/react";
 
@@ -146,20 +147,12 @@ export default function Register() {
   useEffect(() => {
     const getProject = async () => {
       try {
-        const response = await fetch(
-          `${readUserData}/api/v1/OrganizationProgram/GetOrganizationProgram/${projectId}`,
-          {
-            method: "GET",
-            headers: {
-              Accept: "text/plain",
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await GET(  `${readUserData}/api/v1/OrganizationProgram/GetOrganizationProgram/${projectId}`);
 
         console.log("Response status:", response.status);
 
-        const data = await response.json();
+        const data = response.data;
+        debugger;
         console.log("Response data:", data);
         setProjectName(data.data.programTitle);
       } catch (error) {

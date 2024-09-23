@@ -5,6 +5,7 @@ const env = process.env.NEXT_PUBLIC_API_ENV == "production" ? "prod" : process.e
 
 // const env = process.env.NEXT_PUBLIC_API_URL;
 
+// const env = "prod"
 
 export const writeUserData = `https://thooto-${env}-be-user-write.azurewebsites.net`;
 
@@ -62,3 +63,10 @@ export const wLoogBookUrl = `https://thooto-${env}-be-logbook-write.azurewebsite
 
 export const rLoogBookUrl = `https://thooto-${env}-be-logbook-read.azurewebsites.net`;
 
+
+// New endpoints
+export const rAssessmentThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net`;
+export const wAssessmentThootoUrl = `https://thooto-dev-be-assessment-write.azurewebsites.net`;
+export const rQuestionsThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions`;
+export const rOptionsThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Options`;
+export const wStudentAnswersThootoUrl = `https://thooto-dev-be-assessment-write.azurewebsites.net/api/v1/StudentAnswers`;
