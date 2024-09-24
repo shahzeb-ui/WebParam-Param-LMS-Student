@@ -23,7 +23,7 @@ export default function Enrolled() {
     try {
       const data = await getProjectsId(loggedInUser?.data?.id||loggedInUser?.userId);
 
-      debugger;
+      
 
       if (data) {
         const projects: IProject[]|any = await getProgrammeProjects(data?.data);

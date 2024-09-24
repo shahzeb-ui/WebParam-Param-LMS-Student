@@ -50,9 +50,10 @@ export default function LoginPage() {
             }
             
             if (res) {
-                
+              
                 cookies.set("loggedInUser", res.data);
-                if(process.env.FREEMIUM){
+               
+                if(process.env.NEXT_PUBLIC_FREEMIUM){
                   const redirectPath = "/student/projects";
                   router.push(redirectPath)
                 }else{
