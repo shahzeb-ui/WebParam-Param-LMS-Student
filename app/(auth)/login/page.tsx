@@ -75,7 +75,7 @@ export default function LoginPage() {
         className="left-container d-md-block d-none"
         data-aos="zoom-out-right"
         style={{
-          backgroundImage: !isMobile ? `url(${imageCover})` : "none",
+          backgroundImage: `url(${imageCover})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           boxShadow: "inset 0 0 100px rgba(0,0,0,0.5)",
