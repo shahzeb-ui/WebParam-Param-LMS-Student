@@ -208,24 +208,23 @@ const FileUpload: React.FC = () => {
 
       try {
         const response = await POST_MULTIPART(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData);
+        
         if (response.status === 200) {
           setIsUploaded(true);
-          router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
+          router.push(`/student/student-profile?tab=documents`);
           viewDocument(response.data.data.id)
           calculateDocumentsPercentage()
-        } else {
-          alert('File upload failed');
-        }
+        
+        } 
       } catch (error) {
         console.error('Error uploading file:', error);
-        alert('File upload failed');
       } finally {
         setUpLoadingLoader(false);
         setIsUploading(false);
         setSelectedFile(null);
         setIsUploaded(false);
-        debugger
-        
+        router.push(`/student/student-profile?tab=documents`);
+        window.location.reload();
       }
     }
   };
@@ -245,11 +244,11 @@ const FileUpload: React.FC = () => {
           router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
 
         } else {
-          alert('File upload failed');
+          // alert('File upload failed');
         }
       } catch (error) {
         console.error('Error uploading file:', error);
-        alert('File upload failed');
+        // alert('File upload failed');
       } finally {
         setUpLoadingLoader(false);
         setIsChangingDoc(false);
@@ -257,7 +256,6 @@ const FileUpload: React.FC = () => {
         setIsUploaded(false);
         router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
         viewDocument(documentinfo?.id)
-        // window.location.reload();
       }
     }
   };
@@ -266,14 +264,12 @@ const FileUpload: React.FC = () => {
     getDocuments();
     calculateDocumentsPercentage();
     console.log('documents:', documents);
-    debugger
+    router.push(`/student/student-profile?tab=documents`);
   }, []);
 
   if (loaded) {
     return <Loading />; // Show loading while documents are being fetched
   }
-
- 
 
 
   async function fetchDocument() {
@@ -289,8 +285,6 @@ const FileUpload: React.FC = () => {
       console.error('Failed to fetch document:', error);
     }
   }
-
-  alert
 
 
   return (
@@ -309,7 +303,7 @@ const FileUpload: React.FC = () => {
             }>
             {documentinfo?.status ? documentinfo.status : 'Status'}
           </button>
-          <button 
+           <button 
           type="button" 
           className="btn btn-dark btn-reupload" 
           onClick={() => (router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=upload`), setIsChangingDoc(!isChangingDoc))}

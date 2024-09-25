@@ -96,7 +96,6 @@ export default function Register() {
 
       if (res) {
         if (res?.data.message !== "User exists") {
-          setIsExploding(true);
           cookies.set("userEmail", payload.email);
           cookies.set("userPhone", payload.phoneNumber);
           if (hasConstantCourseId != "") {
@@ -105,7 +104,6 @@ export default function Register() {
 
           setTimeout(() => {
             router.push("/verify-account");
-            setIsExploding(false);
           }, 2000);
         } else {
           setErrorMessage(res?.data?.message);
@@ -283,7 +281,7 @@ export default function Register() {
           </div>
 
           {errorMessage && (
-            <span className="errorMessage">Incorrect User details</span>
+            <span className="errorMessage">{errorMessage}</span>
           )}
           <div className="form-submit-group">
             <button
