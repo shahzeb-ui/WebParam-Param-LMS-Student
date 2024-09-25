@@ -155,7 +155,7 @@ export default function VerifyPage() {
                     </button>
                 </div>
                 <div className="auth-footer">
-            <p style={{marginRight:"10px"}}> <small>Didn't receive a message?</small></p>
+            <p style={{marginRight:"10px"}}> <small>Didn&#39;t receive a message?</small></p>
            
               <p style={{cursor: resending?"none":"pointer", color:resending?"grey":"", pointerEvents:resending?"none":"all"}}  onClick={()=>resend()}><b> {resending?"Sending SMS..": "Resend SMS"} </b></p>
           
