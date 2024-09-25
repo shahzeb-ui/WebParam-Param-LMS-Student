@@ -72,7 +72,7 @@ export default function VerifyPage() {
         if(res.status ==200 ){
           setTimeout(()=>{
             setResending(false);
-          },5000)
+          },10000)
         }else{
           setResending(false)
         }
