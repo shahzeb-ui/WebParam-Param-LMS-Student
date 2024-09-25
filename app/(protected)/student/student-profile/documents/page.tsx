@@ -214,11 +214,11 @@ const FileUpload: React.FC = () => {
           viewDocument(response.data.data.id)
           calculateDocumentsPercentage()
         } else {
-          alert('File upload failed');
+          // alert('File upload failed');
         }
       } catch (error) {
         console.error('Error uploading file:', error);
-        alert('File upload failed');
+        // alert('File upload failed');
       } finally {
         setUpLoadingLoader(false);
         setIsUploading(false);
@@ -245,11 +245,11 @@ const FileUpload: React.FC = () => {
           router.push(`/student/student-profile?tab=documents&document=${selectedDocument}&action=view`);
 
         } else {
-          alert('File upload failed');
+          // alert('File upload failed');
         }
       } catch (error) {
         console.error('Error uploading file:', error);
-        alert('File upload failed');
+        // alert('File upload failed');
       } finally {
         setUpLoadingLoader(false);
         setIsChangingDoc(false);
