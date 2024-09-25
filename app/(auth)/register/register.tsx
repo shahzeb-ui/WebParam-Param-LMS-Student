@@ -98,7 +98,7 @@ export default function Register() {
         if (res?.data.message !== "User exists") {
           setIsExploding(true);
           cookies.set("userEmail", payload.email);
-
+          cookies.set("userPhone", payload.phoneNumber);
           if (hasConstantCourseId != "") {
             cookies.set("courseId", payload.courseId);
           }
