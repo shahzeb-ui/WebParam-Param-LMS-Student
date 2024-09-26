@@ -423,7 +423,7 @@ const FileUpload: React.FC = () => {
                 id="file-input" 
                 name='file-input' 
                 onChange={(e) => handleFileChange(e, documentinfo  as DocumentType)} 
-                accept=".pdf,.doc,.docx"
+                accept=".pdf"
                 style={{display: 'none'}}
                 />
               <label className="btn btn-dark" htmlFor="file-input" >Choose File</label>
@@ -467,7 +467,7 @@ const FileUpload: React.FC = () => {
                 id="file-input" 
                 name='file-input' 
                 onChange={(e) => handleFileChange(e, selectedDocument as DocumentType)} 
-                accept=".pdf,.doc,.docx"
+                accept=".pdf"
                 style={{display: 'none'}}
                 />
               <label className="btn" htmlFor="file-input" style={{backgroundColor: 'rgb(36, 52, 92)'}}>Choose File</label>
