@@ -1,0 +1,68 @@
+.reset-password-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+
+    & .left-container {
+        height: 100%;
+        width: 50%;
+    }
+
+    & .reset-password-inner {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @media (max-width: 768px) {
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        & form {
+            width: 50%;
+
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.reset-otp-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+
+    & .left-container {
+        height: 100%;
+        width: 50%;
+    }
+
+    & .reset-otp-inner {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @media (max-width: 768px) {
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        & form {
+            width: 50%;
+            margin: 0 auto;
+
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+        }
+    }
+}
