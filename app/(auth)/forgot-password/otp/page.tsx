@@ -11,6 +11,8 @@ export default function Otp(){
     const [retypePassword, setRetypePassword] = useState('');
     const router = useRouter();
 
+    const resetEmail = cookies.get('resetEmail');
+
 
     async function handleOtpSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -22,7 +24,7 @@ export default function Otp(){
 
         const payload = {
             otp: otp,
-            email: 'bradleysaint45@gmail.com',
+            email: resetEmail,
             password: retypePassword
         };
 

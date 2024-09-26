@@ -54,7 +54,7 @@ export async function LoginUser(payload:any) {
 
 export async function sendOtp(payload:any) {
     try {
-        // const sendOtp = await axios.post(`${writeUserData}/api/v1/Users/SendResetPasswordOtp`, payload);
+     
         const sendOtp = await POST(payload, `${writeUserData}/api/v1/Users/SendResetPasswordOtp`);
         return sendOtp;
     } catch(error: any) {
@@ -64,7 +64,7 @@ export async function sendOtp(payload:any) {
 
 export async function verifyOtp(payload:any) {
     try {
-        // const verifyOtp = await axios.put(`${writeUserData}/api/v1/Users/ResetPassword`, payload);
+     
         const verifyOtp = await PUT(payload, `${writeUserData}/api/v1/Users/ResetPassword`);
         return verifyOtp;
     } catch(error: any) {
