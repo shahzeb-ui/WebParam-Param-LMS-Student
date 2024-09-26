@@ -1,7 +1,7 @@
 "use client";
 
 import "./lesson.scss";
-import { GetKnowledgeTopicsNew, getTopics } from "@/app/api/lesson/lessonEndpoint";
+import { GetKnowledgeTopicsNew, getTopics, GetVideosWatched, PostVideoWatched } from "@/app/api/lesson/lessonEndpoint";
 import { TopicElement } from "@/interfaces/pharaphase/paraphase-d";
 import Notes from "@/ui/lesson/notes/notes";
 import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
@@ -14,6 +14,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
 import { isMobile } from "react-device-detect";
 import { useSearchParams } from "next/navigation";
+import Cookies from "universal-cookie";
 
 function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -30,8 +31,11 @@ function TakeLesson() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
+  const [videosWatched, setVideosWatched] = useState<any[]>([]);
+
   
-  
+  const cookies = new Cookies();
+  const loggedInUser = cookies.get("loggedInUser");
 
   // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
@@ -94,12 +98,39 @@ function TakeLesson() {
       }));
     });
   }
+
+  async function trackVideoWatched(){
+    const payload = {
+      UserId: loggedInUser?.data?.id||loggedInUser?.userId,
+      ElementId: currentVideo.id,
+      TopicId: currentVideo.topicId,
+      TotalVideoTime: 1,
+      TimeSpent: 1
+    }
+    const res = await PostVideoWatched(payload);
+    debugger
+    console.log("trackVideoWatched", res);
+  }
+
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
     // setCheckedVideos();
-    
   }, []);
+
+  useEffect(() => {
+    console.log("currentVideo", currentVideo);
+    debugger;
+    if(currentVideo){
+      getWatchedVideos();
+    }
+  }, [currentVideo]);
+
+  async function getWatchedVideos(){
+    const res = await GetVideosWatched(loggedInUser?.data?.id||loggedInUser?.userId, currentVideo?.topicId);
+    setVideosWatched(res);
+    debugger;
+  }
 
   const handleExpandClick = (topicId: string) => {
     if (!expandedTopics[topicId]) {
@@ -345,8 +376,9 @@ function TakeLesson() {
                       </button>
                       <button
                         className="rbt-btn  btn-md"
-                        onClick={handleNext}
+                        onClick={() => {handleNext(); trackVideoWatched()}}
                         disabled={currentIndex > (filteredTopics.length - 1)}
+
                       >
                         <span className="btn-text">Next</span>
                         

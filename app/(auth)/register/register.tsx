@@ -290,7 +290,7 @@ export default function Register() {
           </div>
 
           {errorMessage && (
-            <span className="errorMessage">Incorrect User details</span>
+            <span className="errorMessage">{errorMessage}</span>
           )}
           <div className="form-submit-group">
             <button
