@@ -1,6 +1,5 @@
 import { GET, POST } from "@/app/lib/api-client";
-import { rActivityUrl, rCourseUrl } from "@/app/lib/endpoints";
-import axios from "axios";
+import { rActivityUrl, rCourseUrl, wActivityUrl } from "@/app/lib/endpoints";
 
 export async function GetKnowledgeTopicsNew(moduleId:any) {
     try {
@@ -26,10 +25,10 @@ export async function getTopics(topicId:string) {
 
 export async function PostVideoWatched(payload:any) {
     try {
-        const res = await POST(`${rActivityUrl}/api/v1/VideoWatched/TrackVideoWatched`, payload);
+        const res = await POST(payload, `${wActivityUrl}/api/v1/videoswatched/trackvideowatched`);
         console.log(" topics: ",res)
         debugger;
-        return res?.data;
+        return res;
     } catch (error:any) {
         console.log("error: ", error)
     }

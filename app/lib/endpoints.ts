@@ -51,7 +51,9 @@ export const rKnowledgeModuleUrl = `https://thooto-${env}-be-newcourse-read.azur
 
 export const rAnalyticUrl = `https://thooto-${env}-be-activity-read.azurewebsites.net`;
 
-export const rActivityUrl = `https://thooto-${env}-activity-read.azurewebsites.net`;
+export const rActivityUrl = `https://thooto-${env}-be-activity-read.azurewebsites.net`;
+
+export const wActivityUrl = `https://thooto-${env}-be-activity-write.azurewebsites.net`;
 
 export const getCodesUrl = `https://thooto-${env}-be-user-read.azurewebsites.net`;
 

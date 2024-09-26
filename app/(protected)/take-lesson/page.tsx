@@ -103,10 +103,11 @@ function TakeLesson() {
       UserId: loggedInUser?.data?.id||loggedInUser?.userId,
       ElementId: currentVideo.id,
       TopicId: currentVideo.topicId,
-      TotalVideoTime: 1,
-      TimeSpent: 1
+      TotalVideoTime: 320,
+      TimeSpent: 320
     }
     const res = await PostVideoWatched(payload);
+    // const res = await getTopics(currentVideo?.topicId);
     debugger
     console.log("trackVideoWatched", res);
   }
@@ -375,7 +376,7 @@ function TakeLesson() {
                       </button>
                       <button
                         className="rbt-btn  btn-md"
-                        onClick={() => {handleNext(); trackVideoWatched()}}
+                        onClick={() => {trackVideoWatched();handleNext()}}
                         disabled={currentIndex > (filteredTopics.length - 1)}
 
                       >
