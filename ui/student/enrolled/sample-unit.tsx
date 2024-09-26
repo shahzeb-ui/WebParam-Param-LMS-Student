@@ -137,6 +137,7 @@ const UnitStandardWidget: React.FC<Props> = ({
               <div className="rbt-card-bottom">
                 <button
                   className={`bi bi-play rbt-btn bg-primary-opacity w-100 text-center continue-watching`}
+                  style={{padding:'0 !important'}}
                 >
                   <Link href={{
                     pathname: '/take-lesson',

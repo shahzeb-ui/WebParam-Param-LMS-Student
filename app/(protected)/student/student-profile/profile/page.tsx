@@ -12,6 +12,8 @@ import Cookies from 'universal-cookie';
 import { Modal } from 'react-bootstrap';
 import { readUserData } from '@/app/lib/endpoints';
 import { GET } from '@/app/lib/api-client';
+import MaintenanceModal from '@/ui/banner/MaintanceModal';
+import { useProgressContext } from '@/context/progress-card-context/progress-context';
 
 export default function Profile({ student }: any) {
   const [firstName, setFirstName] = useState("");
@@ -34,6 +36,7 @@ export default function Profile({ student }: any) {
   const cookies = new Cookies();
   const user = cookies.get("loggedInUser");
   const router = useRouter();
+  const { setBiographyPercentage } = useProgressContext();
 
     useEffect(() => {
         
@@ -57,6 +60,7 @@ export default function Profile({ student }: any) {
         getUserProfile();
         setProvince(student?.data?.country)
         getInputCodes();
+        calculateEmptyFieldsPercentage();
 
         if (user) {
             setEmail(user?.data?.email)
@@ -73,7 +77,6 @@ export default function Profile({ student }: any) {
             setFirstName(res.data.data.firstName);
             setSurname(res.data.data.surname);
             setIdNumber(res.data.data.idNumber);
-            // setEmail(res.data.data.email);
             setGender(res.data.data.gender);
             setDateOfBirth(dob);
             setCountry(res.data.data.country);
@@ -120,6 +123,7 @@ export default function Profile({ student }: any) {
         const res = await StudentProfile(payload);
 
         if (res) {
+            calculateEmptyFieldsPercentage();
             router.push('/student/student-profile?tab=democraticLegal')
         }
         console.log(res);
@@ -161,6 +165,34 @@ export default function Profile({ student }: any) {
         const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
         const day = String(today.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
+    };
+
+    const calculateEmptyFieldsPercentage = () => {
+        const fields = [
+            firstName,
+            surname,
+            idNumber,
+            gender,
+            dateOfBirth,
+            country,
+            city,
+            province,
+            phoneNumber,
+            bio
+        ];
+    
+        const totalFields = fields.length;
+        
+        // Filter the fields that are empty (empty strings, null, or undefined)
+        const emptyFields = fields.filter(field => field).length;
+        
+        // Calculate percentage of empty fields
+        const percentage = (emptyFields / totalFields) * 100;
+        
+        if (typeof window !== "undefined") {
+            localStorage.setItem('Biography', percentage.toString());
+            setBiographyPercentage(percentage);
+        }
     };
 
     return (
@@ -360,7 +392,7 @@ export default function Profile({ student }: any) {
                             required
                             onChange={(e) => setGender(e.target.value)}
                             className="w-100">                                
-                            <option value={""} >select</option>
+                            <option value={""} >Select</option>
                             {
                             codes && codes[4]?.codes?.map((item:any, index:number) => (
                                 <option key={index} value={`${item.code}`} className="text-dark">{item.description}</option>
@@ -392,7 +424,7 @@ export default function Profile({ student }: any) {
                         disabled={isSubmitting}
                     >
                         <span className="icon-reverse-wrapper">
-                            <span className="btn-text text-light">Proceed</span>
+                            <span className="btn-text text-light">Save & Proceed</span>
                             <span className="btn-icon">
                                 <i className="feather-arrow-right" />
                             </span>

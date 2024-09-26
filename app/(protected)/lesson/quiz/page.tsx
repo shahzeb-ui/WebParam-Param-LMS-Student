@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import quizData from "@/data/quiz/quiz-callcenter.json";
 import styles from "@/styles/quiz/quiz.module.css";
+import { useRouter } from "next/navigation";
 import './quiz.scss'
 
 type QuizQuestion = {
@@ -22,6 +23,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
     Array(quizData.length).fill(null)
   );
   const [currentQuiz, setCurrentQuiz] = useState<QuizQuestion[]>([]);
+  const router = useRouter(); 
 
   useEffect(() => {
     initializeQuiz();
@@ -80,7 +82,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
         if (next + 1 < currentQuiz.length) {
           setNext(next + 1);
         } else {
-          window.location.href = "/take-lesson";
+          handleNext()
         }
       }, 3000);
     }

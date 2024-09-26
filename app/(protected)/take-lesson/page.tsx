@@ -14,6 +14,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
 import { isMobile } from "react-device-detect";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";  
 import Cookies from "universal-cookie";
 
 function TakeLesson() {
@@ -31,11 +32,9 @@ function TakeLesson() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
-  const [videosWatched, setVideosWatched] = useState<any[]>([]);
-
-  
   const cookies = new Cookies();
-  const loggedInUser = cookies.get("loggedInUser");
+  const loggedInUser = cookies.get('loggedInUser');
+  const router = useRouter();  
 
   // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
@@ -49,12 +48,12 @@ function TakeLesson() {
 
 
   async function fetchKnowledgeTopics() {
-    debugger;
+    
     try {
       const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
-        debugger;
+        
         response.data.length > 0 &&  handleExpandClick(response.data[0].id);
       } else {
         setError("Failed to load data");
@@ -128,14 +127,13 @@ function TakeLesson() {
 
   async function getWatchedVideos(){
     const res = await GetVideosWatched(loggedInUser?.data?.id||loggedInUser?.userId, currentVideo?.topicId);
-    setVideosWatched(res);
+    // setVideosWatched(res);
     debugger;
   }
 
   const handleExpandClick = (topicId: string) => {
     if (!expandedTopics[topicId]) {
       fetchTopics(topicId);
-     
     }
   };
 
@@ -229,8 +227,9 @@ function TakeLesson() {
         
         <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
-            <div className="section-title">
+            <div className="section-title" style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0 5px'}}>
               <h4 className="rbt-title-style-3">Course Content</h4>
+              <button className="rbt-btn btn-md bg-primary-opacity" onClick={() => router.back()}>Back</button>
             </div>
             <div className="lesson-search-wrapper">
               <form action="#" className="rbt-search-style-1">

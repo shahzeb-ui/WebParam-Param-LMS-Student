@@ -1,9 +1,9 @@
 "use client";
 import Cookies from "universal-cookie";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GetSideBarData } from "@/interfaces/SidebarData";
+import Link from "next/link";
 
 const StudentDashboardSidebar = () => {
   const cookies = new Cookies();
@@ -46,31 +46,17 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.slice(0, process.env.NEXT_PUBLIC_FREEMIUM?3:8).map((data: any, index: any) => {
-                      
-                      // if freemium, show projects instead of enrolled courses
-                      if (process.env.NEXT_PUBLIC_FREEMIUM && data.link == "/student/enrolled-courses") {
-                        return  (
-                        <li className="nav-item" key={index} role="presentation">
-                        <a
-                          href={'/student/projects?tab=enrolled'}
-                          className={`${path == '/student/projects' ? "active" : ""}`}
-                          style={{color: path == '/student/projects' ? "#2f57ef" : ""}} 
-                        >
-                          <i className={data.icon} />
-                          <span>My Projects</span>
-                        </a>
-                      </li>);
-                      }
+                    SidebarData.slice(0, process.env.NEXT_PUBLIC_FREEMIUM?3:2).map((data: any, index: any) => {
+
                       return (
                       <li className="nav-item" key={index} role="presentation">
-                        <a
+                        <Link
+                          href={data.link}  
                           className={`${path === data.link ? "active" : ""}`}
-                          href={data.link}
                         >
                           <i className={data.icon} />
                           <span>{data.text}</span>
-                        </a>
+                        </Link>
                       </li>
                     )
                     })}
@@ -109,26 +95,26 @@ const StudentDashboardSidebar = () => {
                       // if logout, attach the logout function to the link
                       if (data.text == "Logout") {
                         return  <li key={index}>
-                        <a
+                        <Link
                         onClick={handleLogOut}
                           href={data.link}
                           className={`${path === data.link ? "active" : ""}`}
                         >
                           <i className={data.icon} />
                           <span>{data.text}</span>
-                        </a>
+                        </Link>
                       </li>;
                       }
 
                       return (
                       <li key={index}>
-                        <a
+                        <Link
                           href={data.link}
                           className={`${path === data.link ? "active" : ""}`}
                         >
                           <i className={data.icon} />
                           <span>{data.text}</span>
-                        </a>
+                        </Link>
                       </li>
                     )
                     })} */}

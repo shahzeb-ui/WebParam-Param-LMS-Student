@@ -28,6 +28,7 @@ export async function PostVideoWatched(payload:any) {
     try {
         const res = await POST(`${rActivityUrl}/api/v1/VideoWatched/TrackVideoWatched`, payload);
         console.log(" topics: ",res)
+        debugger;
         return res?.data;
     } catch (error:any) {
         console.log("error: ", error)
