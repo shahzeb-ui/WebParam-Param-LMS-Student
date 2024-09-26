@@ -429,7 +429,7 @@ const FileUpload: React.FC = () => {
               <label className="btn btn-dark" htmlFor="file-input" >Choose File</label>
             </div>
             <div>
-              <p>Supported Formats: PDF, DOC, DOCX</p>
+              <p>Supported Formats: PDF</p>
               <p>Max file size: 4MB</p>
             </div>
 
@@ -473,7 +473,7 @@ const FileUpload: React.FC = () => {
               <label className="btn" htmlFor="file-input" style={{backgroundColor: 'rgb(36, 52, 92)'}}>Choose File</label>
             </div>
             <div>
-              <p>Supported Formats: PDF, DOC, DOCX</p>
+              <p>Supported Formats: PDF</p>
               <p>Max file size: 4MB</p>
             </div>
 
