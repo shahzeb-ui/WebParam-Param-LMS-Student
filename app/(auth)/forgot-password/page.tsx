@@ -66,7 +66,7 @@ export default function SendResetEmail() {
                     </div>
                 </div>
                 <div className="col-12 mt--10">
-                    <div className="rbt-form-group" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <div className="button-container" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                         <button 
                         type="submit"
                         className="btn text-light"
@@ -78,7 +78,7 @@ export default function SendResetEmail() {
                         >
                             Send Reset Email
                         </button>
-                        <Link href={'/login'} className="" style={{marginLeft: '50px', color: '#24345C', textDecoration: 'underline', cursor: 'pointer'}}>
+                        <Link href={'/login'} className="" style={{color: '#24345C', textDecoration: 'underline', cursor: 'pointer'}}>
                             Back to login
                         </Link>
                     </div>
