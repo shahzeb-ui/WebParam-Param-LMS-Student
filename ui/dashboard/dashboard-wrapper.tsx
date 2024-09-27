@@ -179,7 +179,7 @@ const InstructorDashboardHeader = () => {
               position: 'relative'
             }}
           >
-            <AnimatePresence>
+            {/* <AnimatePresence>
               {pathname === "/student/student-profile" && isClicked &&
                 <div className="info-button-container">
                   <motion.div
@@ -224,7 +224,7 @@ const InstructorDashboardHeader = () => {
                 {isClicked ? <i className="bi bi-x-circle-fill text-danger" style={{ fontSize: "1.5rem" }} /> : <i className="bi bi-info-circle-fill" style={{ color: "#24345c" }} />}
                 {isClicked ? "" : "My Progress"}
               </button>}
-            </AnimatePresence>
+            </AnimatePresence> */}
           </div>
         ) : (
           <AnimatePresence>
@@ -239,7 +239,7 @@ const InstructorDashboardHeader = () => {
                 backgroundPosition: 'center',
               }}
             >
-              {pathname === "/student/student-profile" && isHovered &&
+              {/* {pathname === "/student/student-profile" && isHovered &&
                 <motion.div
                   className="rbt-dashboard-content progress-status"
                   initial={{ opacity: 0 }}
@@ -272,7 +272,7 @@ const InstructorDashboardHeader = () => {
                     </div>
                   </div>
                 </motion.div>
-              }
+              } */}
             </div>
           </AnimatePresence>
         )}
