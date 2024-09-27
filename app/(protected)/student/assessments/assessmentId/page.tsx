@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { submitAssessmentAnswers } from "@/actions/assessments/assessments-action";
 import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
+import WarningModal from "../(components)/WarningModal"; 
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
 import { rAssessmentThootoUrl } from '../../../../../app/lib/endpoints';
@@ -27,6 +28,7 @@ const AssessmentComponent = () => {
   const [quizCount, setQuizCount] = useState<number>(0);
   const [submitMultipleChoice, setSubmitMultipleChoice] = useState<boolean>(false);
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
+  const [showWarning, setShowWarning] = useState<boolean>(true);
 
   const assessmentId = searchParams.get('id');
   const userId = "userId"; 
@@ -161,89 +163,97 @@ const AssessmentComponent = () => {
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
+  const handleWarningConfirm = () => {
+    setShowWarning(false);
+  };
+
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
-      <div className="inner" style={{ margin: "0 auto" }}>
-        <div className="content">
-          <div className="quiz-form-wrapper">
-            <div className="quize-top-meta">
-              <>
-                <div className="quize-top-left">
-                  <span>
-                    Total Marks: <strong>50</strong>
-                  </span>
-                </div>
-                <div className="quize-top-right">
-                  <span>
-                    Time remaining:{" "}
-                    <strong>
-                      {timeRemaining !== null
-                        ? formatTime(timeRemaining)
-                        : "No Limit"}
-                    </strong>
-                  </span>
-                </div>
-              </>
-            </div>
-            {assessmentId && (
-              <MultipleChoiceQuestions
-                assessmentId={assessmentId}
-                setIsInteracted={setIsInteracted}
-                submitMultipleChoice={submitMultipleChoice}
-                setSubmitMultipleChoice={setSubmitMultipleChoice}
-                setMultipleChoiceAnswers={setMultipleChoiceAnswers}
-              />
-            )}
-            {longQuestions.map((item, index) => (
-              <div key={item.id} id={`question-${index + 1}`} className="question">
-                <div className="rbt-single-quiz">
-                  <h4 style={{ margin: "0 auto", fontSize: "21px" }}>
-                    {quizCount + index + 1}. {item.title}
-                  </h4>
-                  <div className="row g-3 mt--10">
-                    <textarea
-                      className={styles.textArea}
-                      value={answers[index]}
-                      onChange={(e) => handleAnswerChange(e, index)}
-                      disabled={loading}
-                    />
-                  </div>
-                </div>
-                <hr />
-                <div className="quize-top-meta">
+      {showWarning && <WarningModal show={showWarning} onHide={() => setShowWarning(false)} onConfirm={handleWarningConfirm} />}
+      {!showWarning && (
+        <div className="inner" style={{ margin: "0 auto" }}>
+          <div className="content">
+            <div className="quiz-form-wrapper">
+              <div className="quize-top-meta">
+                <>
                   <div className="quize-top-left">
                     <span>
-                      Marks: <strong>{item.score}</strong>
+                      Total Marks: <strong>50</strong>
                     </span>
                   </div>
-                </div>
+                  <div className="quize-top-right">
+                    <span>
+                      Time remaining:{" "}
+                      <strong>
+                        {timeRemaining !== null
+                          ? formatTime(timeRemaining)
+                          : "No Limit"}
+                      </strong>
+                    </span>
+                  </div>
+                </>
               </div>
-            ))}
+              {assessmentId && (
+                <MultipleChoiceQuestions
+                  assessmentId={assessmentId}
+                  setIsInteracted={setIsInteracted}
+                  submitMultipleChoice={submitMultipleChoice}
+                  setSubmitMultipleChoice={setSubmitMultipleChoice}
+                  setMultipleChoiceAnswers={setMultipleChoiceAnswers}
+                />
+              )}
+              {longQuestions.map((item, index) => (
+                <div key={item.id} id={`question-${index + 1}`} className="question">
+                  <div className="rbt-single-quiz">
+                    <h4 style={{ margin: "0 auto", fontSize: "21px" }}>
+                      {quizCount + index + 1}. {item.title}
+                    </h4>
+                    <div className="row g-3 mt--10">
+                      <textarea
+                        className={styles.textArea}
+                        value={answers[index]}
+                        onChange={(e) => handleAnswerChange(e, index)}
+                        disabled={loading}
+                      />
+                    </div>
+                  </div>
+                  <hr />
+                  <div className="quize-top-meta">
+                    <div className="quize-top-left">
+                      <span>
+                        Marks: <strong>{item.score}</strong>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
 
-            <div className={styles.buttonWrapper}>
-              <button
-                className="rbt-btn btn-sm"
-                style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
-                type="button"
-                onClick={handleSubmitAssessment}
-                disabled={loading}
-              >
-                {loading ? (
-                  <>
-                    <span className={loaderStyles.loaderButton}></span>
-                    Submit Assessment
-                  </>
-                ) : (
-                  "Submit Assessment"
-                )}
-              </button>
+              <div className={styles.buttonWrapper}>
+                <button
+                  className="rbt-btn btn-sm"
+                  style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
+                  type="button"
+                  onClick={handleSubmitAssessment}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className={loaderStyles.loaderButton}></span>
+                      Submit Assessment
+                    </>
+                  ) : (
+                    "Submit Assessment"
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
+
 
 export default function TakeAssessmentComponent() {
   return (
