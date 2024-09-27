@@ -114,7 +114,7 @@ export default function Profile({ student }: any) {
             dateOfBirth,
             country,
             city,
-            email,
+            email: user?.data?.email,
             province,
             phoneNumber,
             bio,

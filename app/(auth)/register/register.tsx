@@ -152,7 +152,7 @@ export default function Register() {
         console.log("Response status:", response.status);
 
         const data = response.data;
-        debugger;
+        
         console.log("Response data:", data);
         setProjectName(data.data.programTitle);
       } catch (error) {
