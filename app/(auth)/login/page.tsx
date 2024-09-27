@@ -51,10 +51,24 @@ export default function LoginPage() {
             
             if (res) {
                 
-                cookies.set("loggedInUser", res.data);
-                
-                const redirectPath = "/student/enrolled-courses?tab=enrolled";
-                router.push(redirectPath)
+              console.log("Login response:", res); // Debugging: Log the response
+
+              const userId = res.data.data.id;//the problem its here
+              console.log("User ID:", userId); // Debugging: Log the user ID
+      
+              const options = {
+                path: '/',
+                sameSite: 'strict' as 'strict',
+                secure: process.env.NEXT_PUBLIC_API_ENV === 'production', // Set secure flag based on custom environment variable
+              };
+      
+              cookies.set("loggedInUser", res.data, options);
+              cookies.set("userID", userId, options);
+      
+              console.log("Cookies set:", cookies.getAll()); // Debugging: Log all cookies
+      
+              const redirectPath = "/student/enrolled-courses?tab=enrolled";
+              router.push(redirectPath);
             }
         } catch (error: any) {
             setErrorMessage('Network Error please try again');
