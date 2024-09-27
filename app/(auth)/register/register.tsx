@@ -9,6 +9,7 @@ import Testimonies from "./testimonies";
 import ErrorPage from "./404";
 import { readUserData } from "@/app/lib/endpoints";
 import { GET } from "@/app/lib/api-client";
+import RegisterProjectModal from "@/ui/register/RegisterProjectModal";
 // import flagsmith from "flagsmith/isomorphic";
 // import { useFlags, useFlagsmith } from "flagsmith/react";
 
@@ -22,6 +23,9 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showRegisterProjectModal, setShowRegisterProjectModal] =
+    useState(false);
+
   const [hasError, setHasError] = useState<any>({
     email: false,
     password: false,
@@ -45,10 +49,10 @@ export default function Register() {
     process.env.NEXT_PUBLIC_FREEMIUM == "true"
       ? true
       : false;
- 
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    
+
     setIsLoading(true);
 
     const newHasError = {
@@ -92,7 +96,6 @@ export default function Register() {
     try {
       const res = await registerUser(payload);
       setIsLoading(false);
-      
 
       if (res) {
         if (res?.data.message !== "User exists") {
@@ -108,7 +111,8 @@ export default function Register() {
             setIsExploding(false);
           }, 2000);
         } else {
-          setErrorMessage(res?.data?.message);
+          setShowRegisterProjectModal(true);
+          // setErrorMessage(res?.data?.message);
         }
       }
     } catch (error: any) {
@@ -147,7 +151,9 @@ export default function Register() {
   useEffect(() => {
     const getProject = async () => {
       try {
-        const response = await GET(  `${readUserData}/api/v1/OrganizationProgram/GetOrganizationProgram/${projectId}`);
+        const response = await GET(
+          `${readUserData}/api/v1/OrganizationProgram/GetOrganizationProgram/${projectId}`
+        );
 
         console.log("Response status:", response.status);
 
@@ -165,12 +171,22 @@ export default function Register() {
     }
   }, []);
 
+  const loggedInUser = cookies.get("loggedInUser");
+  if (loggedInUser) {
+    setShowRegisterProjectModal(true);
+  }
+
   if (isFreemium && projectId == "") {
     return <ErrorPage />;
   }
 
   return (
     <div className="register-container">
+      <RegisterProjectModal
+        show={showRegisterProjectModal}
+        onHide={() => setShowRegisterProjectModal(false)}
+      />
+
       <div
         className="left-container d-md-block d-none"
         data-aos="zoom-out-right"
@@ -191,7 +207,7 @@ export default function Register() {
           </>
         ) : (
           <>
-            <h2 style={{marginTop:"15%"}}>Create an account</h2>
+            <h2 style={{ marginTop: "15%" }}>Create an account</h2>
             <p>Start your journey!</p>
           </>
         )}
