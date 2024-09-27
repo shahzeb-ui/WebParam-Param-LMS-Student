@@ -44,14 +44,6 @@ const UnitStandardWidget: React.FC<Props> = ({
     enrolledStudent: "0",
   };
 
-  const [discountPercentage, setDiscountPercentage] = useState<string>("");
-  const [totalReviews, setTotalReviews] = useState<number>(0);
-  const [rating, setRating] = useState<number>(0);
-  const [randomNumber, setRandomNumber] = useState<number>(0);
-  const [randomVideoCount, setRandomVideoCount] = useState<number>(0);
-
-
-
     // Set a random number when the component mounts
     const generateRandomVideoCount = () => {
       return Math.floor(Math.random() * (50 - 10 + 1)) + 10;

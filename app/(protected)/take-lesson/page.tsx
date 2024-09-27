@@ -32,6 +32,7 @@ function TakeLesson() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
+  const [videosWatched, setVideosWatched] = useState<any[]>([]);
   const cookies = new Cookies();
   const loggedInUser = cookies.get('loggedInUser');
   const router = useRouter();  
@@ -107,7 +108,6 @@ function TakeLesson() {
       TimeSpent: 320
     }
     const res = await PostVideoWatched(payload);
-    // const res = await getTopics(currentVideo?.topicId);
     debugger
     console.log("trackVideoWatched", res);
   }
@@ -128,8 +128,11 @@ function TakeLesson() {
 
   async function getWatchedVideos(){
     const res = await GetVideosWatched(loggedInUser?.data?.id||loggedInUser?.userId, currentVideo?.topicId);
-    // setVideosWatched(res);
+    
     debugger;
+    if (res.data) {
+      setVideosWatched(res.data);
+    }
   }
 
   const handleExpandClick = (topicId: string) => {
@@ -199,6 +202,10 @@ function TakeLesson() {
   const handleVideoEnd = () => {
     setVideoEnded(true);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentVideo]);
 
   if (error) return (
     <div className="error-area">
@@ -278,14 +285,18 @@ function TakeLesson() {
                       {expandedTopics[topic.id] ? (
                         <ul style={{marginLeft:'0', paddingLeft:'0'}}>
                           {expandedTopics[topic.id].map(
-                            (subTopic: TopicElement, subIndex) => (
+                            (subTopic: TopicElement, subIndex) => {
+
+                              console.log("videosWatched", subTopic, videosWatched);
+                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+                              return (
                               <>
                               <li
                                 ref={subIndex === 0 ? topicRef : null}
                                 className="d-flex justify-content-between align-items mt-2"
                                 key={subIndex}
                                 onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
+                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}`, }}
                               >
                                 <div
                                   className="course-content-left topic_Element_container"
@@ -315,16 +326,14 @@ function TakeLesson() {
                                 </div>
                                 <div className="course-content-right">
                                   <span className="rbt-check ">
-                                    {checkedSubTopics[subTopic.id] ? (
+                                    {isWatched && (
                                       <i className="feather-check" />
-                                    ) : (
-                                      <i className="feather-square" />
                                     )}
                                   </span>
                                 </div>
                               </li>
-                              </>
-                            )
+                              </>)
+                              }
                           )}
                         </ul>
                       ) : (
@@ -344,7 +353,7 @@ function TakeLesson() {
 
         
         {/* End of Sidebar */}
-        <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
+        <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video" id="lesson-video">
           {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
@@ -353,7 +362,7 @@ function TakeLesson() {
                   height="500px"
                   src={currentVideo?.videoUrl}
                   title="Video player"
-                   scrolling="no"
+                  
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onEnded={handleVideoEnd}
@@ -566,6 +575,7 @@ function TakeLesson() {
                                                 onClick={() => handleSubTopicClick(subTopic, subIndex)}
                                                 style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
                                               >
+                                        
                                                 <div
                                                   className="course-content-left topic_Element_container"
                                                   style={{

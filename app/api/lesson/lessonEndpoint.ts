@@ -28,7 +28,7 @@ export async function PostVideoWatched(payload:any) {
         const res = await POST(payload, `${wActivityUrl}/api/v1/videoswatched/trackvideowatched`);
         console.log(" topics: ",res)
         debugger;
-        return res;
+        return res.data;
     } catch (error:any) {
         console.log("error: ", error)
     }
