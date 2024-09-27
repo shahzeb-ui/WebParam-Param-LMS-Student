@@ -51,21 +51,21 @@ export default function LoginPage() {
             
             if (res) {
                 
-              console.log("Login response:", res); // Debugging: Log the response
+              console.log("Login response:", res);
 
-              const userId = res.data.data.id;//the problem its here
-              console.log("User ID:", userId); // Debugging: Log the user ID
+              const userId = res.data.data.id;
+              console.log("User ID:", userId);
       
               const options = {
                 path: '/',
                 sameSite: 'strict' as 'strict',
-                secure: process.env.NEXT_PUBLIC_API_ENV === 'production', // Set secure flag based on custom environment variable
+                secure: process.env.NEXT_PUBLIC_API_ENV === 'production',
               };
       
               cookies.set("loggedInUser", res.data, options);
               cookies.set("userID", userId, options);
       
-              console.log("Cookies set:", cookies.getAll()); // Debugging: Log all cookies
+              console.log("Cookies set:", cookies.getAll());
       
               const redirectPath = "/student/enrolled-courses?tab=enrolled";
               router.push(redirectPath);

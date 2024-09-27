@@ -43,11 +43,10 @@ const Calendar: React.FC = () => {
         });
 
         const rawText = await response.text();
-        console.log("Raw Response Text:", rawText); // Debugging: Log the raw response text
+        setCourseId(rawText);
 
-        setCourseId(rawText); // Use the raw response text directly as courseId
       } catch (error) {
-        console.error("Error fetching courseId:", error); // Debugging: Log any errors
+        console.error("Error fetching courseId:", error);
       }
     };
 
@@ -69,11 +68,10 @@ const Calendar: React.FC = () => {
         });
 
         const data = await response.json();
-        console.log("Fetch ClassSessions Response:", data); // Debugging: Log the response
-
         setClassSessions(data.data);
+        
       } catch (error) {
-        console.error("Error fetching class sessions:", error); // Debugging: Log any errors
+        console.error("Error fetching class sessions:", error);
       }
     };
 
