@@ -110,7 +110,7 @@ const FileUpload: React.FC = () => {
     });
 
     // const response = await POST_MULTIPART(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData);
-
+    debugger;
         if (response.status === 200) {
           setIsUploaded(true);
           window.location.reload();
@@ -118,6 +118,7 @@ const FileUpload: React.FC = () => {
           alert('File upload failed');
         }
       } catch (error) {
+        debugger;
         console.error('Error uploading file:', error);
         alert('File upload failed');
       } finally {

@@ -90,6 +90,8 @@ const InstructorDashboardHeader = () => {
     localStorage.setItem("modalOpened", "true");
   }, []);
 
+  const bg = process.env.NEXT_PUBLIC_BANNER_URL;
+  debugger;
   return (
     <>
       {/* Modal for course selection */}
@@ -169,9 +171,9 @@ const InstructorDashboardHeader = () => {
       <div className="rbt-dashboard-content-wrapper banner-wrapper">
         {isMobile ? (
           <div
-            className="rbt-shadow-box"
+            className=""
             style={{
-              backgroundImage: `url(${process.env.NEXT_PUBLIC_FREEMIUM ? process.env.NEXT_PUBLIC_THOOTO_BANNER_URL : process.env.NEXT_PUBLIC_BANNER_URL})`,
+              backgroundImage: `url(${process.env.NEXT_PUBLIC_BANNER_URL})`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
@@ -185,7 +187,7 @@ const InstructorDashboardHeader = () => {
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    exit={{ opacity:1 }}
                     transition={{ duration: 1 }}
                     className="rbt-dashboard-content rbt-shadow-box mobile-progress-status"
                   >
@@ -229,11 +231,11 @@ const InstructorDashboardHeader = () => {
         ) : (
           <AnimatePresence>
             <div
-              className="height-350 rbt-shadow-box progress-status-wrapper"
+              className="height-350 progress-status-wrapper"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               style={{
-                backgroundImage: `url(${process.env.NEXT_PUBLIC_FREEMIUM ? process.env.NEXT_PUBLIC_THOOTO_BANNER_URL : process.env.NEXT_PUBLIC_BANNER_URL})`,
+                backgroundImage: `url(${ process.env.NEXT_PUBLIC_BANNER_URL})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -244,7 +246,7 @@ const InstructorDashboardHeader = () => {
                   className="rbt-dashboard-content progress-status"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  exit={{ opacity: 1 }}
                   transition={{ duration: 1 }}
                 >
                   <div className={`progress-status-left ${getBorderClass(overallPercentage)}`}>
