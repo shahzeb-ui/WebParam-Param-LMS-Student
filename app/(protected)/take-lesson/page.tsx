@@ -99,7 +99,7 @@ function TakeLesson() {
       TotalVideoTime: totalWatchTime,
       TimeSpent: timeSpent,
     };
-    debugger;
+    
   
     try {
       const res = await PostVideoWatched(payload);
@@ -153,7 +153,7 @@ function TakeLesson() {
     setCurrentIndex(index);
     setVideoEnded(false); // Reset videoEnded state when a new video is selected
     setVideoLoader(false);
-    setExpandedTopicId(subTopic.id);
+    // setExpandedTopicId(subTopic.id);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -207,6 +207,7 @@ function TakeLesson() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log("expanded topics:", filteredTopics.some(topic => topic));
   }, [currentVideo]);
 
   if (error) return (
@@ -239,7 +240,7 @@ function TakeLesson() {
           <div className="rbt-course-feature-inner rbt-search-activation">
             <div className="section-title" style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0 5px'}}>
               <h4 className="rbt-title-style-3">Course Content</h4>
-              <button className="rbt-btn btn-md bg-primary-opacity" onClick={() => router.back()}>Back</button>
+              <button className="rbt-btn btn-md bg-primary-opacity" onClick={() => router.push('/student/enrolled-courses')}>Back</button>
             </div>
             <div className="lesson-search-wrapper">
               <form action="#" className="rbt-search-style-1">
@@ -537,97 +538,96 @@ function TakeLesson() {
                             {/* <hr className="" /> */}
                             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
                             {!loading ? (
-  filteredTopics.map((topic, index) => (
-    <div className="accordion-item card" key={topic.id}>
-      <h2 className="accordion-header card-header" id={`heading${index}`}>
-        <button
-          className="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target={`#collapse${index}`}
-          aria-expanded="false"
-          aria-controls={`collapse${index}`}
-          onClick={() => handleExpandClick(topic.id)}
-          style={{ fontSize: '16px' }}
-        >
-          {topic.name}
-        </button>
-      </h2>
-      <div
-        id={`collapse${index}`}
-        className="accordion-collapse collapse"
-        aria-labelledby={`heading${index}`}
-        data-bs-parent="#accordionExampleb2"
-      >
-        <div className="accordion-body card-body">
-          {expandedTopics[topic.id] ? (
-            <ul style={{ marginLeft: '0', paddingLeft: '0' }}>
-              {expandedTopics[topic.id].map((subTopic: TopicElement, subIndex) => {
-               
-                const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+                                filteredTopics.map((topic, index) => (
+                                  <div className="accordion-item card" key={topic.id}>
+                                    <h2 className="accordion-header card-header" id={`heading${index}`}>
+                                      <button
+                                        className="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target={`#collapse${index}`}
+                                        aria-expanded="false"
+                                        aria-controls={`collapse${index}`}
+                                        onClick={() => handleExpandClick(topic.id)}
+                                        style={{ fontSize: '16px' }}
+                                      >
+                                        {topic.name}
+                                      </button>
+                                    </h2>
+                                    <div
+                                      id={`collapse${index}`}
+                                      className="accordion-collapse collapse"
+                                      aria-labelledby={`heading${index}`}
+                                      data-bs-parent="#accordionExampleb2"
+                                    >
+                                      <div className="accordion-body card-body">
+                                        {expandedTopics[topic.id] ? (
+                                          <ul style={{ marginLeft: '0', paddingLeft: '0' }}>
+                                            {expandedTopics[topic.id].map((subTopic: TopicElement, subIndex) => {
+                                            
+                                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
 
-                return (
-                  <li
-                    ref={subIndex === 0 ? topicRef : null}
-                    className="d-flex justify-content-between align-items mt-2"
-                    key={subTopic.id} // Use subTopic.id for uniqueness
-                    onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                    style={{ 
-                      color: checkedSubTopics[subTopic.id] || isWatched ? 'rgb(47, 87, 239)' : '#000' // Fallback to black or any color of your choice
-                    }}
-                  >
-                    <div
-                      className="course-content-left topic_Element_container"
-                      style={{
-                        overflow: "hidden",
-                        display: "flex",
-                        gap: "18px", // Corrected from "18x" to "18px"
-                        alignItems: "center",
-                        width: '100%'
-                      }}
-                    >
-                      {currentVideo?.id === subTopic.id ? (
-                        <i className="bi bi-pause-circle-fill" style={{ marginRight: '15px' }}></i>
-                      ) : (
-                        <i className="feather-play-circle icon" style={{ marginRight: '15px' }} />
-                      )}
-                      <p
-                        className="topic-Element-Title"
-                        style={{
-                          fontSize: 13,
-                          cursor: "pointer",
-                          textDecoration: "none",
-                          fontWeight: "bold",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis", // Added textOverflow for better text handling
-                        }}
-                      >
-                        {subTopic.title}
-                      </p>
-                    </div>
-                    <div className="course-content-right">
-                      <span className="rbt-check">
-                        {isWatched && <i className="feather-check" />}
-                      </span>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : (
-            <div>Loading topics...</div>
-          )}
-        </div>
-      </div>
-    </div>
-  ))
-) : (
-  <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-    <Skeleton count={5} height={40} />
-  </div>
-)}
-
+                                              return (
+                                                <li
+                                                  ref={subIndex === 0 ? topicRef : null}
+                                                  className="d-flex justify-content-between align-items mt-2"
+                                                  key={subTopic.id} // Use subTopic.id for uniqueness
+                                                  onClick={() => handleSubTopicClick(subTopic, subIndex)}
+                                                  style={{ 
+                                                    color: checkedSubTopics[subTopic.id] || isWatched ? 'rgb(47, 87, 239)' : '#000' // Fallback to black or any color of your choice
+                                                  }}
+                                                >
+                                                  <div
+                                                    className="course-content-left topic_Element_container"
+                                                    style={{
+                                                      overflow: "hidden",
+                                                      display: "flex",
+                                                      gap: "18px", // Corrected from "18x" to "18px"
+                                                      alignItems: "center",
+                                                      width: '100%'
+                                                    }}
+                                                  >
+                                                    {currentVideo?.id === subTopic.id ? (
+                                                      <i className="bi bi-pause-circle-fill" style={{ marginRight: '15px' }}></i>
+                                                    ) : (
+                                                      <i className="feather-play-circle icon" style={{ marginRight: '15px' }} />
+                                                    )}
+                                                    <p
+                                                      className="topic-Element-Title"
+                                                      style={{
+                                                        fontSize: 13,
+                                                        cursor: "pointer",
+                                                        textDecoration: "none",
+                                                        fontWeight: "bold",
+                                                        whiteSpace: "nowrap",
+                                                        overflow: "hidden",
+                                                        textOverflow: "ellipsis", // Added textOverflow for better text handling
+                                                      }}
+                                                    >
+                                                      {subTopic.title}
+                                                    </p>
+                                                  </div>
+                                                  <div className="course-content-right">
+                                                    <span className="rbt-check">
+                                                      {isWatched && <i className="feather-check" />}
+                                                    </span>
+                                                  </div>
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        ) : (
+                                          <div>Loading topics...</div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))
+                              ) : (
+                                <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                  <Skeleton count={5} height={40} />
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>

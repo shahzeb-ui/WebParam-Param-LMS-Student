@@ -16,6 +16,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
+  const [timeRemaining, setTimeRemaining] = useState<number>(600/60); 
   const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
     Array(quizData.length).fill(false)
   );
@@ -34,16 +35,20 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   }, [next, selectedAnswers]);
 
   useEffect(() => {
-    localStorage.setItem(
-      "quizState",
-      JSON.stringify({
-        next,
-        score,
-        answeredQuestions,
-        selectedAnswers,
-      })
-    );
-  }, [next, score, answeredQuestions, selectedAnswers]);
+    let interval: NodeJS.Timeout | null = null;
+
+    if (timeRemaining > 0 && selectedAnswers.some(answer => answer !== null)) {
+      interval = setInterval(() => {
+        setTimeRemaining(prevTime => prevTime - 1);
+      }, 60000); // Count down by one minute
+    } else if (timeRemaining === 0) {
+      handleNext(); // Handle end of quiz
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [timeRemaining, selectedAnswers]);
 
   const initializeQuiz = () => {
     const shuffledQuestions = quizData.sort(() => 0.5 - Math.random());
@@ -113,13 +118,13 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                             <div className="quize-top-left">
                                 <span>
                                 <i style={{color:"limegreen"}} className="feather-award" />
-                                <small>    <b>   Points: </b>{score} </small>
+                                <small><b>   Points: </b>{score} </small>
                                 </span>
                             </div>
                             <div className="quize-top-right">
                                 <span>
                                 <i style={{color:"orange"}} className="feather-clock" />
-                                <small>       <b>    Time remaining: </b> No Limit </small>
+                                <small><b>Time remaining: </b>{timeRemaining.toFixed(2)} minutes</small>
                                 </span>
                             </div>
                         </div>
