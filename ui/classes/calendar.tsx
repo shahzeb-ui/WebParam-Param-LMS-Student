@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import styles from './Calendar.module.css';
 import DayView from './DayView';
-import {rCourseUrl} from '../../app/lib/endpoints';
-import {rLoogBookUrl} from '../../app/lib/endpoints';
+import { GET } from '../../app/lib/api-client';
 
 interface ClassSession {
   id: string;
@@ -37,16 +36,11 @@ const Calendar: React.FC = () => {
       if (!userID) return;
 
       try {
-        const response = await fetch(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`, {
-          method: 'GET',
-          headers: {
-            'Client-Key': 'ec51852d24b1450faff0a868e84d05e5'
-          }
-        });
-
-        const rawText = await response.text();
-        setCourseId(rawText);
-
+        const response = await GET(`https://thooto-dev-be-newcourse-read.azurewebsites.net/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`);
+        if (response) {
+          const rawText = response.data;
+          setCourseId(rawText.trim());
+        }
       } catch (error) {
         console.error("Error fetching courseId:", error);
       }
@@ -55,23 +49,16 @@ const Calendar: React.FC = () => {
     fetchCourseId();
   }, [userID]);
 
-  console.log("CourseID :", courseId)
-
   useEffect(() => {
     const fetchClassSessions = async () => {
       if (!courseId) return;
 
       try {
-        const response = await fetch(`${rLoogBookUrl}/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`, {
-          method: 'GET',
-          headers: {
-            'Client-Key': 'ec51852d24b1450faff0a868e84d05e5'
-          }
-        });
-
-        const data = await response.json();
-        setClassSessions(data.data);
-        
+        const response = await GET(`https://thooto-dev-be-logbook-read.azurewebsites.net/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`);
+        if (response) {
+          const data = response.data;
+          setClassSessions(data.data);
+        }
       } catch (error) {
         console.error("Error fetching class sessions:", error);
       }
