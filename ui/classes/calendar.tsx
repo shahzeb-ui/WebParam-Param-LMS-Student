@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import styles from './Calendar.module.css';
 import DayView from './DayView';
+import {rCourseUrl} from '../../app/lib/endpoints';
+import {rLoogBookUrl} from '../../app/lib/endpoints';
 
 interface ClassSession {
   id: string;
@@ -35,7 +37,7 @@ const Calendar: React.FC = () => {
       if (!userID) return;
 
       try {
-        const response = await fetch(`https://thooto-dev-be-newcourse-read.azurewebsites.net/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`, {
+        const response = await fetch(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`, {
           method: 'GET',
           headers: {
             'Client-Key': 'ec51852d24b1450faff0a868e84d05e5'
@@ -60,7 +62,7 @@ const Calendar: React.FC = () => {
       if (!courseId) return;
 
       try {
-        const response = await fetch(`https://thooto-dev-be-logbook-read.azurewebsites.net/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`, {
+        const response = await fetch(`${rLoogBookUrl}/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`, {
           method: 'GET',
           headers: {
             'Client-Key': 'ec51852d24b1450faff0a868e84d05e5'
