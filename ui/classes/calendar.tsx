@@ -29,6 +29,7 @@ const Calendar: React.FC = () => {
   const [courseId, setCourseId] = useState<string | null>(null);
 
   const cookies = new Cookies();
+  
   const userID = cookies.get('userID');
 
   useEffect(() => {
