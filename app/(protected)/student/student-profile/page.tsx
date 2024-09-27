@@ -23,7 +23,7 @@ function UserProfileContent() {
     async function getStudent() {
         if (!user) return;
         const res = await getStudentData(user?.data?.id || user?.id);
-        debugger;
+        
         console.log('student:', res.data);
         setStudent(res);
     }

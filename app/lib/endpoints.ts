@@ -5,8 +5,6 @@ const env = process.env.NEXT_PUBLIC_API_ENV == "production" ? "prod" : process.e
 
 // const env = process.env.NEXT_PUBLIC_API_URL;
 
-// const env = "prod"
-
 export const writeUserData = `https://thooto-${env}-be-user-write.azurewebsites.net`;
 
 export const readUserData = `https://thooto-${env}-be-user-read.azurewebsites.net`;
@@ -52,6 +50,10 @@ export const rOptionUrl = `https://thooto-${env}-be-assessment-read.azurewebsite
 export const rKnowledgeModuleUrl = `https://thooto-${env}-be-newcourse-read.azurewebsites.net`;
 
 export const rAnalyticUrl = `https://thooto-${env}-be-activity-read.azurewebsites.net`;
+
+export const rActivityUrl = `https://thooto-${env}-be-activity-read.azurewebsites.net`;
+
+export const wActivityUrl = `https://thooto-${env}-be-activity-write.azurewebsites.net`;
 
 export const getCodesUrl = `https://thooto-${env}-be-user-read.azurewebsites.net`;
 

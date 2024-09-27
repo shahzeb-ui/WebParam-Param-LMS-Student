@@ -1,7 +1,7 @@
 "use client";
 
 import "./lesson.scss";
-import { GetKnowledgeTopicsNew, getTopics } from "@/app/api/lesson/lessonEndpoint";
+import { GetKnowledgeTopicsNew, getTopics, GetVideosWatched, PostVideoWatched } from "@/app/api/lesson/lessonEndpoint";
 import { TopicElement } from "@/interfaces/pharaphase/paraphase-d";
 import Notes from "@/ui/lesson/notes/notes";
 import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
@@ -14,6 +14,8 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
 import { isMobile } from "react-device-detect";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";  
+import Cookies from "universal-cookie";
 
 function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -30,8 +32,11 @@ function TakeLesson() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [videoEnded, setVideoEnded] = useState<boolean>(false);
-  
-  
+  const [videosWatched, setVideosWatched] = useState<any[]>([]);
+  const [expandedTopicId, setExpandedTopicId] = useState<any>();
+  const cookies = new Cookies();
+  const loggedInUser = cookies.get('loggedInUser');
+  const router = useRouter();  
 
   // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
@@ -41,16 +46,14 @@ function TakeLesson() {
 
   const allSubTopics = Object.values(expandedTopics).flat();
 
-  const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
-
 
   async function fetchKnowledgeTopics() {
-    debugger;
+    
     try {
       const response = await GetKnowledgeTopicsNew(moduleId);
       if (!response.error) {
         setKnowledgeTopics(response.data);
-        debugger;
+        
         response.data.length > 0 &&  handleExpandClick(response.data[0].id);
       } else {
         setError("Failed to load data");
@@ -85,26 +88,57 @@ function TakeLesson() {
     }
   }
 
-  function setCheckedVideos(){
-    const watchedVideos:string[] = ["66c7132d0c2eeac80af3b61c","66c7132d0c2eeac80af3b61d","66c7132d0c2eeac80af3b61e" ];
-    watchedVideos.forEach((videoId) => {
-      setCheckedSubTopics((prev) => ({
-        ...prev,
-        [videoId]: true,
-      }));
-    });
+  async function trackVideoWatched() {
+
+    const totalWatchTime = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
+    const timeSpent = totalWatchTime + Math.floor(Math.random() * 100); // Ensure timeSpent is always higher than totalWatchTime
+    const payload = {
+      UserId: loggedInUser?.data?.id || loggedInUser?.userId,
+      ElementId: currentVideo.id,
+      TopicId: currentVideo.topicId,
+      TotalVideoTime: totalWatchTime,
+      TimeSpent: timeSpent,
+    };
+    
+  
+    try {
+      const res = await PostVideoWatched(payload);
+      return res.data
+    } catch (error) {
+      console.error("Error tracking video watched:", error);
+    }
   }
+  
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
-    // setCheckedVideos();
-    
   }, []);
+  
+  useEffect(() => {
+    if (currentVideo?.topicId) {
+      getWatchedVideos();
+    }
+  }, [currentVideo?.topicId]);
+  
+  async function getWatchedVideos() {
+    try {
+      const res = await GetVideosWatched(
+        loggedInUser?.data?.id || loggedInUser?.userId,
+        currentVideo?.topicId
+      );
+      console.log("Videos watched:", res.data);
+      if (res.data) {
+        setVideosWatched(res.data);
+      }
+    } catch (error) {
+      console.error("Error fetching watched videos:", error);
+    }
+  }
+  
 
   const handleExpandClick = (topicId: string) => {
     if (!expandedTopics[topicId]) {
       fetchTopics(topicId);
-     
     }
   };
 
@@ -119,6 +153,7 @@ function TakeLesson() {
     setCurrentIndex(index);
     setVideoEnded(false); // Reset videoEnded state when a new video is selected
     setVideoLoader(false);
+    // setExpandedTopicId(subTopic.id);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,6 +205,11 @@ function TakeLesson() {
     setVideoEnded(true);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    console.log("expanded topics:", filteredTopics.some(topic => topic));
+  }, [currentVideo]);
+
   if (error) return (
     <div className="error-area">
       <div className="container">
@@ -198,8 +238,9 @@ function TakeLesson() {
         
         <div id="sidebar-desktop" className="rbt-lesson-leftsidebar">
           <div className="rbt-course-feature-inner rbt-search-activation">
-            <div className="section-title">
+            <div className="section-title" style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0 5px'}}>
               <h4 className="rbt-title-style-3">Course Content</h4>
+              <button className="rbt-btn btn-md bg-primary-opacity" onClick={() => router.push('/student/enrolled-courses')}>Back</button>
             </div>
             <div className="lesson-search-wrapper">
               <form action="#" className="rbt-search-style-1">
@@ -247,14 +288,17 @@ function TakeLesson() {
                       {expandedTopics[topic.id] ? (
                         <ul style={{marginLeft:'0', paddingLeft:'0'}}>
                           {expandedTopics[topic.id].map(
-                            (subTopic: TopicElement, subIndex) => (
-                              <>
+                            (subTopic: TopicElement, subIndex) => {
+
+                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+
+                              return (
                               <li
                                 ref={subIndex === 0 ? topicRef : null}
                                 className="d-flex justify-content-between align-items mt-2"
                                 key={subIndex}
                                 onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
+                                style={{ color: `${currentVideo?.id == subTopic.id || isWatched ? 'rgb(47, 87, 239)' : null}`, }}
                               >
                                 <div
                                   className="course-content-left topic_Element_container"
@@ -284,16 +328,13 @@ function TakeLesson() {
                                 </div>
                                 <div className="course-content-right">
                                   <span className="rbt-check ">
-                                    {checkedSubTopics[subTopic.id] ? (
+                                    {isWatched && (
                                       <i className="feather-check" />
-                                    ) : (
-                                      <i className="feather-square" />
                                     )}
                                   </span>
                                 </div>
-                              </li>
-                              </>
-                            )
+                              </li>)
+                              }
                           )}
                         </ul>
                       ) : (
@@ -313,7 +354,7 @@ function TakeLesson() {
 
         
         {/* End of Sidebar */}
-        <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
+        <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video" id="lesson-video">
           {!videoEnded ? <div className="inner">
             {!videoLoader ? (
               <>
@@ -322,7 +363,7 @@ function TakeLesson() {
                   height="500px"
                   src={currentVideo?.videoUrl}
                   title="Video player"
-                   scrolling="no"
+                  
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onEnded={handleVideoEnd}
@@ -345,8 +386,9 @@ function TakeLesson() {
                       </button>
                       <button
                         className="rbt-btn  btn-md"
-                        onClick={handleNext}
+                        onClick={() => {trackVideoWatched();handleNext()}}
                         disabled={currentIndex > (filteredTopics.length - 1)}
+
                       >
                         <span className="btn-text">Next</span>
                         
@@ -495,92 +537,93 @@ function TakeLesson() {
                             </div> */}
                             {/* <hr className="" /> */}
                             <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
-                              {!loading ? filteredTopics.map((topic, index) => (
-                                <div className="accordion-item card" key={topic.id}>
-                                  <h2
-                                    className="accordion-header card-header"
-                                    id={`heading${index}`}
-                                  >
-                                    <button
-                                      // ref={index === 0 ? firstAccordionButtonRef : null}
-                                      className="accordion-button collapsed"
-                                      type="button"
-                                      data-bs-toggle="collapse"
-                                      data-bs-target={`#collapse${index}`}
-                                      aria-expanded="false"
-                                      aria-controls={`collapse${index}`}
-                                      onClick={() => handleExpandClick(topic.id)}
-                                      style={{fontSize:'16px'}}
+                            {!loading ? (
+                                filteredTopics.map((topic, index) => (
+                                  <div className="accordion-item card" key={topic.id}>
+                                    <h2 className="accordion-header card-header" id={`heading${index}`}>
+                                      <button
+                                        className="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target={`#collapse${index}`}
+                                        aria-expanded="false"
+                                        aria-controls={`collapse${index}`}
+                                        onClick={() => handleExpandClick(topic.id)}
+                                        style={{ fontSize: '16px' }}
+                                      >
+                                        {topic.name}
+                                      </button>
+                                    </h2>
+                                    <div
+                                      id={`collapse${index}`}
+                                      className="accordion-collapse collapse"
+                                      aria-labelledby={`heading${index}`}
+                                      data-bs-parent="#accordionExampleb2"
                                     >
-                                     <small> {topic.name}</small>
-                                    </button>
-                                  </h2>
-                                  <div
-                                    id={`collapse${index}`}
-                                    className="accordion-collapse collapse"
-                                    aria-labelledby={`heading${index}`}
-                                    data-bs-parent="#accordionExampleb2"
-                                  >
-                                    <div className="accordion-body card-body">
-                                      {expandedTopics[topic.id] ? (
-                                        <ul style={{marginLeft:'0', paddingLeft:'0'}}>
-                                          {expandedTopics[topic.id].map(
-                                            (subTopic: TopicElement, subIndex) => (
-                                              <>
-                                              <li
-                                                ref={subIndex === 0 ? topicRef : null}
-                                                className="d-flex justify-content-between align-items mt-2"
-                                                key={subIndex}
-                                                onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                                style={{ color: `${checkedSubTopics[subTopic.id] && 'rgb(47, 87, 239)'}` }}
-                                              >
-                                                <div
-                                                  className="course-content-left topic_Element_container"
-                                                  style={{
-                                                    overflow: "hidden",
-                                                    display: "flex",
-                                                    gap: "18x",
-                                                    alignItems: "center",
-                                                    width:'100%'
+                                      <div className="accordion-body card-body">
+                                        {expandedTopics[topic.id] ? (
+                                          <ul style={{ marginLeft: '0', paddingLeft: '0' }}>
+                                            {expandedTopics[topic.id].map((subTopic: TopicElement, subIndex) => {
+                                            
+                                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+
+                                              return (
+                                                <li
+                                                  ref={subIndex === 0 ? topicRef : null}
+                                                  className="d-flex justify-content-between align-items mt-2"
+                                                  key={subTopic.id} // Use subTopic.id for uniqueness
+                                                  onClick={() => handleSubTopicClick(subTopic, subIndex)}
+                                                  style={{ 
+                                                    color: checkedSubTopics[subTopic.id] || isWatched ? 'rgb(47, 87, 239)' : '#000' // Fallback to black or any color of your choice
                                                   }}
                                                 >
-                                                  {currentVideo?.id == subTopic.id ? <i className="bi bi-pause-circle-fill" style={{marginRight:'15px'}}></i>:<i className="feather-play-circle icon" style={{marginRight:'15px'}} />}
-                                                  <p
-                                                    className="topic-Element-Title"
+                                                  <div
+                                                    className="course-content-left topic_Element_container"
                                                     style={{
-                                                      fontSize: 13,
-                                                      cursor: "pointer",
-                                                      textDecoration: "none",
-                                                      fontWeight: "bold",
-                                                      whiteSpace: "nowrap",
                                                       overflow: "hidden",
-                                                      textWrap: "wrap",
+                                                      display: "flex",
+                                                      gap: "18px", // Corrected from "18x" to "18px"
+                                                      alignItems: "center",
+                                                      width: '100%'
                                                     }}
                                                   >
-                                                    {subTopic.title}
-                                                  </p>
-                                                </div>
-                                                <div className="course-content-right">
-                                                  <span className="rbt-check ">
-                                                    {checkedSubTopics[subTopic.id] ? (
-                                                      <i className="feather-check" />
+                                                    {currentVideo?.id === subTopic.id ? (
+                                                      <i className="bi bi-pause-circle-fill" style={{ marginRight: '15px' }}></i>
                                                     ) : (
-                                                      <i className="feather-square" />
+                                                      <i className="feather-play-circle icon" style={{ marginRight: '15px' }} />
                                                     )}
-                                                  </span>
-                                                </div>
-                                              </li>
-                                              </>
-                                            )
-                                          )}
-                                        </ul>
-                                      ) : (
-                                        <div>Loading topics...</div>
-                                      )}
+                                                    <p
+                                                      className="topic-Element-Title"
+                                                      style={{
+                                                        fontSize: 13,
+                                                        cursor: "pointer",
+                                                        textDecoration: "none",
+                                                        fontWeight: "bold",
+                                                        whiteSpace: "nowrap",
+                                                        overflow: "hidden",
+                                                        textOverflow: "ellipsis", // Added textOverflow for better text handling
+                                                      }}
+                                                    >
+                                                      {subTopic.title}
+                                                    </p>
+                                                  </div>
+                                                  <div className="course-content-right">
+                                                    <span className="rbt-check">
+                                                      {isWatched && <i className="feather-check" />}
+                                                    </span>
+                                                  </div>
+                                                </li>
+                                              );
+                                            })}
+                                          </ul>
+                                        ) : (
+                                          <div>Loading topics...</div>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              )) : (
+                                ))
+                              ) : (
                                 <div className="rbt-accordion-style rbt-accordion-02 for-right-content accordion" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                   <Skeleton count={5} height={40} />
                                 </div>
