@@ -1,11 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Cookies from 'universal-cookie';
 import styles from './Calendar.module.css';
 import DayView from './DayView';
+import {rCourseUrl} from '../../app/lib/endpoints';
+import {rLoogBookUrl} from '../../app/lib/endpoints';
+
+interface ClassSession {
+  id: string;
+  state: number;
+  createdAt: string;
+  modifiedAt: string;
+  sessionType: number;
+  classLink: string;
+  date: string;
+  title: string;
+  courseId: string;
+  moduleId: string;
+  classDuration: string;
+  startingTime: string;
+  adminId: string;
+  location: string;
+}
 
 const Calendar: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [view, setView] = useState<'month' | 'day'>('month');
+  const [classSessions, setClassSessions] = useState<ClassSession[]>([]);
+  const [courseId, setCourseId] = useState<string | null>(null);
+
+  const cookies = new Cookies();
+  const userID = cookies.get('userID');
+
+  useEffect(() => {
+    const fetchCourseId = async () => {
+      if (!userID) return;
+
+      try {
+        const response = await fetch(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`, {
+          method: 'GET',
+          headers: {
+            'Client-Key': 'ec51852d24b1450faff0a868e84d05e5'
+          }
+        });
+
+        const rawText = await response.text();
+        setCourseId(rawText);
+
+      } catch (error) {
+        console.error("Error fetching courseId:", error);
+      }
+    };
+
+    fetchCourseId();
+  }, [userID]);
+
+  console.log("CourseID :", courseId)
+
+  useEffect(() => {
+    const fetchClassSessions = async () => {
+      if (!courseId) return;
+
+      try {
+        const response = await fetch(`${rLoogBookUrl}/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`, {
+          method: 'GET',
+          headers: {
+            'Client-Key': 'ec51852d24b1450faff0a868e84d05e5'
+          }
+        });
+
+        const data = await response.json();
+        setClassSessions(data.data);
+        
+      } catch (error) {
+        console.error("Error fetching class sessions:", error);
+      }
+    };
+
+    fetchClassSessions();
+  }, [courseId]);
 
   const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
@@ -23,6 +96,8 @@ const Calendar: React.FC = () => {
       const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
       const isToday = i === new Date().getDate() && currentDate.getMonth() === new Date().getMonth() && currentDate.getFullYear() === new Date().getFullYear();
       const isSelected = selectedDate && i === selectedDate.getDate() && currentDate.getMonth() === selectedDate.getMonth() && currentDate.getFullYear() === selectedDate.getFullYear();
+      const classesOnThisDay = classSessions.filter(session => new Date(session.date).toDateString() === date.toDateString());
+
       days.push(
         <div 
           key={i} 
@@ -38,7 +113,13 @@ const Calendar: React.FC = () => {
           }}>
             {i}
           </span>
-          <div className={styles.content}></div>
+          <div className={styles.content}>
+            {classesOnThisDay.map(session => (
+              <div key={session.id} className={styles.classSession}>
+                {session.title}
+              </div>
+            ))}
+          </div>
         </div>
       );
     }
@@ -63,8 +144,8 @@ const Calendar: React.FC = () => {
   };
 
   if (view === 'day' && selectedDate) {
-    console.log('Rendering DayView with selectedDate:', selectedDate);
-    return <DayView date={selectedDate} onBackClick={handleBackToMonth} />;
+    const classesOnSelectedDate = classSessions.filter(session => new Date(session.date).toDateString() === selectedDate.toDateString());
+    return <DayView date={selectedDate} onBackClick={handleBackToMonth} classSessions={classesOnSelectedDate} />;
   }
 
   return (

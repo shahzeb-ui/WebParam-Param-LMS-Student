@@ -40,34 +40,52 @@ export default function LoginPage() {
       password,
     };
 
-    try {
-      const res = await LoginUser(payload);
-      setIsLoading(false);
+      try {
+        const res = await LoginUser(payload);
+            setIsLoading(false);
+            
+            if (res == undefined) {
+                setErrorMessage('Incorrect User details');
+                return;
+            }
+            
+            if (res) {
+                
+              console.log("Login response:", res);
 
-      if (res == undefined) {
-        setErrorMessage("Incorrect User details");
-        return;
-      }
+              const userId = res.data.data.id;
+              console.log("User ID:", userId);
+      
+              const options = {
+                path: '/',
+                sameSite: 'strict' as 'strict',
+                secure: process.env.NEXT_PUBLIC_API_ENV === 'production',
+              };
+      
+              cookies.set("loggedInUser", res.data, options);
+              cookies.set("userID", userId, options);
+      
+              console.log("Cookies set:", cookies.getAll());
+      
+              const redirectPath = "/student/enrolled-courses?tab=enrolled";
+              router.push(redirectPath);
+            }
+        } catch (error: any) {
+            setErrorMessage('Network Error please try again');
+            setIsLoading(false);
+        }
+      
 
-      if (res) {
-        cookies.set("loggedInUser", res.data);
-        router.push("/student/student-profile");
-      }
-    } catch (error: any) {
-      setErrorMessage("Network Error please try again");
+      console.log('Form submitted successfully');
       setIsLoading(false);
     }
-
-    console.log("Form submitted successfully");
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    if (email !== "" || password !== "") {
-      setHasError({ email: false, password: false });
-      setErrorMessage("");
-    }
-  }, [email, password]);
+  
+    useEffect(() => {
+      if (email !== '' || password !== '') {
+        setHasError({ email: false, password: false });
+        setErrorMessage('')
+      }
+    }, [email, password]);
 
   return (
     <div className="login-container">
