@@ -66,19 +66,14 @@ export default function LoginPage() {
               cookies.set("userID", userId, options);
       
               console.log("Cookies set:", cookies.getAll());
-      
-              const redirectPath = "/student/enrolled-courses?tab=enrolled";
-              router.push(redirectPath);
               
-                cookies.set("loggedInUser", res.data);
-               
-                if(process.env.NEXT_PUBLIC_FREEMIUM){
-                  const redirectPath = "/student/projects";
-                  router.push(redirectPath)
-                }else{
-                const redirectPath = "/student/enrolled-courses?tab=enrolled";
+              if(process.env.NEXT_PUBLIC_FREEMIUM){
+                const redirectPath = "/student/projects";
                 router.push(redirectPath)
-                }
+              }else{
+              const redirectPath = "/student/enrolled-courses?tab=enrolled";
+              router.push(redirectPath)
+              }
                 
             }
         } catch (error: any) {
