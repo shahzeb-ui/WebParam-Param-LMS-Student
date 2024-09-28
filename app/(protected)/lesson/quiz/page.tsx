@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import quizData from "@/data/quiz/quiz-callcenter.json";
+import { accountingQuiz } from "@/data/quiz/accounting";
 import styles from "@/styles/quiz/quiz.module.css";
 import { useRouter } from "next/navigation";
 import './quiz.scss'
@@ -51,7 +52,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   }, [timeRemaining, selectedAnswers]);
 
   const initializeQuiz = () => {
-    const shuffledQuestions = quizData.sort(() => 0.5 - Math.random());
+    const shuffledQuestions = accountingQuiz.sort(() => 0.5 - Math.random());
     const selectedQuestions = shuffledQuestions.slice(0, 10);
     setCurrentQuiz(selectedQuestions);
 
@@ -96,6 +97,8 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   const handleRetake = () => {
     initializeQuiz();
   };
+
+  // console.log("accountingData", accountingData)
 
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
