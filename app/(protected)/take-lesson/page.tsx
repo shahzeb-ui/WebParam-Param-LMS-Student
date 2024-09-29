@@ -92,18 +92,30 @@ function TakeLesson() {
 
     const totalWatchTime = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
     const timeSpent = totalWatchTime + Math.floor(Math.random() * 100); // Ensure timeSpent is always higher than totalWatchTime
+
+    const topicElement = knowledgeTopics.find(topic => topic.id === currentVideo.topicId);
+
     const payload = {
       UserId: loggedInUser?.data?.id || loggedInUser?.userId,
       ElementId: currentVideo.id,
       TopicId: currentVideo.topicId,
       TotalVideoTime: totalWatchTime,
       TimeSpent: timeSpent,
+      courseId: process.env.NEXT_PUBLIC_COURSE_ID||cookies.get('courseId'),
+      videoTitle: currentVideo?.title,
+      topicTitle: topicElement?.name,
+      IsCompleted: true
     };
     
   
     try {
       const res = await PostVideoWatched(payload);
-      return res.data
+
+      if (res?.data) {
+        setVideosWatched((prev) => [...prev, res.data]);
+        updateVideoWatched(res.data);
+      }
+      return res?.data
     } catch (error) {
       console.error("Error tracking video watched:", error);
     }
@@ -112,6 +124,7 @@ function TakeLesson() {
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
+  
   }, []);
   
   useEffect(() => {
@@ -119,6 +132,16 @@ function TakeLesson() {
       getWatchedVideos();
     }
   }, [currentVideo?.topicId]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    console.log("expanded topics:", filteredTopics.some(topic => topic));
+  }, [currentVideo]);
+
+  function updateVideoWatched(payload: any) {
+    videosWatched.push(payload);
+    localStorage.setItem("videosWatched", JSON.stringify(videosWatched));
+  }
   
   async function getWatchedVideos() {
     try {
@@ -165,9 +188,8 @@ function TakeLesson() {
   );
 
   const handlePrevious = () => {
-
     if (currentIndex > 0) {
-      const previousSubTopic = allSubTopics[currentIndex - 1];
+      const previousSubTopic = expandedTopics[currentVideo.topicId][currentIndex - 1];
       if (previousSubTopic) {
         setCurrentVideo(previousSubTopic);
         setCheckedSubTopics((prev) => ({
@@ -181,22 +203,26 @@ function TakeLesson() {
   };
 
   const handleNext = () => {
+    console.log("Current index before next:", currentIndex);  // Debugging log
   
     if (!videoEnded) {
       setVideoEnded(true); // Show quiz first
       return;
     }
   
-    if (currentIndex < allSubTopics.length - 1) {
-      const nextSubTopic = allSubTopics[currentIndex + 1];
+    const currentTopicSubTopics = expandedTopics[currentVideo.topicId];
+    if (currentIndex < currentTopicSubTopics.length - 1) {
+      const nextIndex = currentIndex + 1;
+      console.log("Navigating to next index:", nextIndex);  // Debugging log
+      const nextSubTopic = currentTopicSubTopics[nextIndex];
       if (nextSubTopic) {
         setCurrentVideo(nextSubTopic);
         setCheckedSubTopics((prev) => ({
           ...prev,
           [nextSubTopic.id]: true,
         }));
-        setCurrentIndex(currentIndex + 1);
-        setVideoEnded(false); // Reset videoEnded state for the next video
+        setCurrentIndex(nextIndex);
+        setVideoEnded(false);
       }
     }
   };
@@ -205,10 +231,7 @@ function TakeLesson() {
     setVideoEnded(true);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    console.log("expanded topics:", filteredTopics.some(topic => topic));
-  }, [currentVideo]);
+ 
 
   if (error) return (
     <div className="error-area">
@@ -229,6 +252,8 @@ function TakeLesson() {
       </div>
     </div>
   );
+
+  console.log(`topics:`,expandedTopics)
 
   return (
     <div className="rbt-lesson-area bg-color-white">
@@ -290,15 +315,18 @@ function TakeLesson() {
                           {expandedTopics[topic.id].map(
                             (subTopic: TopicElement, subIndex) => {
 
-                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+                              const isWatched = videosWatched.find(video => video?.elementId == subTopic.id);
+
+                              console.log(`videos Watched:`,)
+                              console.log(`is watched item:`,currentVideo, subTopic);
 
                               return (
                               <li
                                 ref={subIndex === 0 ? topicRef : null}
                                 className="d-flex justify-content-between align-items mt-2"
-                                key={subIndex}
+                                key={topic.id}
                                 onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                style={{ color: `${currentVideo?.id == subTopic.id || isWatched ? 'rgb(47, 87, 239)' : null}`, }}
+                                style={{ color: `${currentVideo?.id == subTopic.id || isWatched?.elementId == subTopic.id ? 'rgb(47, 87, 239)' : null}`, }}
                               >
                                 <div
                                   className="course-content-left topic_Element_container"
@@ -328,7 +356,7 @@ function TakeLesson() {
                                 </div>
                                 <div className="course-content-right">
                                   <span className="rbt-check ">
-                                    {isWatched && (
+                                    {currentVideo?.id === subTopic?.id || isWatched?.elementId == subTopic.id && (
                                       <i className="feather-check" />
                                     )}
                                   </span>
