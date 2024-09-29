@@ -97,7 +97,7 @@ export default function Register() {
       if (res) {
         if (res?.data.message !== "User exists") {
           cookies.set("userEmail", payload.email);
-
+          cookies.set("userPhone", payload.phoneNumber);
           if (hasConstantCourseId != "") {
             cookies.set("courseId", payload.courseId);
           }
@@ -138,7 +138,9 @@ export default function Register() {
 
   useEffect(() => {
     if (phone && !phone.startsWith("+27")) {
-      setPhone(`+27${phone}`);
+      const _formatted = phone.substring(1,phone.length);
+      
+      setPhone(`+27${_formatted}`);
     }
   }, [phone]);
 
@@ -228,6 +230,7 @@ export default function Register() {
               <input
                 type="text"
                 name="phone"
+                maxLength={12}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Enter Phone Number *"
