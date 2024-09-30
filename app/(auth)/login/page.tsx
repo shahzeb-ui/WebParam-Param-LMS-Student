@@ -51,10 +51,7 @@ export default function LoginPage() {
             
             if (res) {
                 
-              console.log("Login response:", res);
-
               const userId = res.data.data.id;
-              console.log("User ID:", userId);
       
               const options = {
                 path: '/',
@@ -64,8 +61,6 @@ export default function LoginPage() {
       
               cookies.set("loggedInUser", res.data, options);
               cookies.set("userID", userId, options);
-      
-              console.log("Cookies set:", cookies.getAll());
               
               if(process.env.NEXT_PUBLIC_FREEMIUM){
                 const redirectPath = "/student/projects";
