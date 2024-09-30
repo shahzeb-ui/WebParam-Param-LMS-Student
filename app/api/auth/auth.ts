@@ -17,7 +17,6 @@ export async function registerUser(payload:any) {
 
 export async function verifyUserAccount(payload:any) {
     try {
-        // const verify = await axios.post(`${writeUserData}/api/v1/Users/VerifyOTP`, payload);
         const verify = await POST(payload, `${writeUserData}/api/v1/Users/VerifyOTP`);
         return verify;
 
@@ -30,8 +29,8 @@ export async function verifyUserAccount(payload:any) {
 
 export async function ResendSMS(payload:any) {
     try {
-        // const verify = await axios.post(`${writeUserData}/api/v1/Users/VerifyOTP`, payload);
         const verify = await POST(payload, `${writeUserData}/api/v1/Users/ReSendOTP`);
+        debugger;
         return verify;
 
     } catch(error: any) {
@@ -42,8 +41,8 @@ export async function ResendSMS(payload:any) {
 
 export async function LoginUser(payload:any) {
     try {
-        // const register = await axios.post(`${writeUserData}/api/v1/Users/Login`, payload).then(data => {return data});
        const res =  await POST(payload, `${writeUserData}/api/v1/Users/Login`);
+       debugger;
         return res;
 
     } catch(error: any) {

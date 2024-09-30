@@ -412,7 +412,7 @@ function TakeLesson() {
                       <button
                         className="rbt-btn  btn-md"
                         onClick={() => {trackVideoWatched();handleNext()}}
-                        disabled={currentIndex > (filteredTopics.length - 1)}
+                        disabled={currentIndex > expandedTopics[currentVideo?.topicId]?.length - 1}
 
                       >
                         <span className="btn-text">Next</span>
