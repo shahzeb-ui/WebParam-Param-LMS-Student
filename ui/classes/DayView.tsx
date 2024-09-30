@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import Cookies from 'universal-cookie';
 import styles from './DayView.module.css';
+import { POST } from '../../app/lib/api-client';
+import {wLoogBookUrl} from '../../app/lib/endpoints';
 
 interface ClassSession {
   id: string;
@@ -26,6 +29,8 @@ interface DayViewProps {
 
 const DayView: React.FC<DayViewProps> = ({ date, onBackClick, classSessions }) => {
   const [events, setEvents] = useState<ClassSession[]>([]);
+  const cookies = new Cookies();
+  const userID = cookies.get('userID');
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -47,6 +52,21 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick, classSessions }) =
 
     fetchEvents();
   }, [date, classSessions]);
+
+  const handleJoinClass = async (classId: string) => {
+    try {
+      const trackResponse = await POST({
+        studentId: userID,
+        classSessionId: classId
+      }, `${wLoogBookUrl}/api/v1/ClassAttendance/TrackStudentLinkClick`);
+
+      if (trackResponse) {
+        console.log("Track Response:", trackResponse);
+      }
+    } catch (error) {
+      console.error("Error handling join class:", error);
+    }
+  };
 
   const formatDisplayDate = (date: Date) => {
     return date.toLocaleDateString('en-ZA', { 
@@ -86,7 +106,7 @@ const DayView: React.FC<DayViewProps> = ({ date, onBackClick, classSessions }) =
                     <h3>{event.title}</h3>
                     <p>{event.moduleId}</p>
                     <p>{`${event.startingTime} - ${eventDuration} hours`}</p>
-                    <a href={event.classLink} target="_blank" rel="noopener noreferrer">Join Meeting</a>
+                    <a href={event.classLink} target="_blank" rel="noopener noreferrer" onClick={() => handleJoinClass(event.id)}>Join Meeting</a>
                   </div>
                 )}
               </div>
