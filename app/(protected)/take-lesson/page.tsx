@@ -188,7 +188,7 @@ function TakeLesson() {
   );
 
   const handlePrevious = () => {
-    if (currentIndex > 0) {
+    if (currentIndex >= 0) {
       const previousSubTopic = expandedTopics[currentVideo.topicId][currentIndex - 1];
       if (previousSubTopic) {
         setCurrentVideo(previousSubTopic);
@@ -211,7 +211,7 @@ function TakeLesson() {
     }
   
     const currentTopicSubTopics = expandedTopics[currentVideo.topicId];
-    if (currentIndex < currentTopicSubTopics.length - 1) {
+    if (currentIndex <= currentTopicSubTopics.length - 1) {
       const nextIndex = currentIndex + 1;
       console.log("Navigating to next index:", nextIndex);  // Debugging log
       const nextSubTopic = currentTopicSubTopics[nextIndex];
@@ -316,9 +316,6 @@ function TakeLesson() {
                             (subTopic: TopicElement, subIndex) => {
 
                               const isWatched = videosWatched.find(video => video?.elementId == subTopic.id);
-
-                              console.log(`videos Watched:`,)
-                              console.log(`is watched item:`,currentVideo, subTopic);
 
                               return (
                               <li
@@ -599,7 +596,7 @@ function TakeLesson() {
                                                 <li
                                                   ref={subIndex === 0 ? topicRef : null}
                                                   className="d-flex justify-content-between align-items mt-2"
-                                                  key={subTopic.id} // Use subTopic.id for uniqueness
+                                                  key={topic.id} // Use subTopic.id for uniqueness
                                                   onClick={() => handleSubTopicClick(subTopic, subIndex)}
                                                   style={{ 
                                                     color: checkedSubTopics[subTopic.id] || isWatched ? 'rgb(47, 87, 239)' : '#000' // Fallback to black or any color of your choice
