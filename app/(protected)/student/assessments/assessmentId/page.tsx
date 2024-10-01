@@ -7,7 +7,7 @@ import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
 import WarningModal from "../(components)/WarningModal"; 
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
-import { rAssessmentThootoUrl} from '../../../../../app/lib/endpoints';
+import { rAssessmentThootoUrl, rQuestionsThootoUrl, rOptionsThootoUrl } from '../../../../../app/lib/endpoints';
 import Cookies from "universal-cookie";
 
 type LongAnswerQuestion = {
@@ -17,6 +17,23 @@ type LongAnswerQuestion = {
   questionType: string;
   score: string;
   rubrics: any[];
+};
+
+type Option = {
+  id: string;
+  label: string;
+  questionId: string;
+  isCorrect: boolean;
+  description: string;
+};
+
+type Question = {
+  id: string;
+  title: string;
+  description: string;
+  questionType: string;
+  options: Option[];
+  score: string;
 };
 
 const AssessmentComponent = () => {
@@ -32,6 +49,8 @@ const AssessmentComponent = () => {
   const [submitMultipleChoice, setSubmitMultipleChoice] = useState<boolean>(false);
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
   const [showWarning, setShowWarning] = useState<boolean>(true);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<Option[]>([]);
 
   const cookies = new Cookies();
   const userId = cookies.get('userID');
@@ -74,9 +93,29 @@ const AssessmentComponent = () => {
               })
             );
 
+            // Fetch options for quiz questions
+            const quizQuestionsWithOptions = await Promise.all(
+              quizQuestions.map(async (question: any) => {
+                const optionsResponse = await fetch(`${rOptionsThootoUrl}/GetOptions/${question.id}`, {
+                  headers: {
+                    'Client-Key': clientKey,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                });
+                const optionsData = await optionsResponse.json();
+                return {
+                  ...question,
+                  options: Array.isArray(optionsData.data) ? optionsData.data : [],
+                };
+              })
+            );
+
             setLongQuestions(longTextQuestionsWithRubrics);
-            setQuizCount(quizQuestions.length);
+            setQuestions(quizQuestionsWithOptions);
+            setQuizCount(quizQuestionsWithOptions.length);
             setAnswers(Array(longTextQuestionsWithRubrics.length).fill(""));
+            setSelectedAnswers(Array(quizQuestionsWithOptions.length).fill(null));
           } else {
             console.error("Unexpected data format:", data);
           }
@@ -127,19 +166,34 @@ const AssessmentComponent = () => {
     }
   };
 
+  const handleOptionChange = (questionIndex: number, option: Option) => {
+    const updatedAnswers = [...selectedAnswers];
+    updatedAnswers[questionIndex] = option;
+    setSelectedAnswers(updatedAnswers);
+    setIsInteracted(true);
+  };
+
   const handleSubmitAssessment = async () => {
     saveStateToLocalStorage();
     setIsInteracted(false);
     setLoading(true);
-
-    setSubmitMultipleChoice(true);
 
     const submission = {
       assessmentId: assessmentId as string,
       assessmentName,
       userId,
       answers: [
-        ...multipleChoiceAnswers,
+        ...questions.map((question, index) => ({
+          questionId: question.id,
+          description: question.title,
+          questionType: question.questionType,
+          options: question.options,
+          studentMultipleChoiceAnswer: selectedAnswers[index] ? [selectedAnswers[index]] : [],
+          studentLongTextAnswer: "",
+          rubrics: [],
+          moderatorFeedBack: "",
+          score: 0,
+        })),
         ...longQuestions.map((question, index) => ({
           questionId: question.id,
           description: question.description,
@@ -220,11 +274,9 @@ const AssessmentComponent = () => {
               </div>
               {assessmentId && (
                 <MultipleChoiceQuestions
-                  assessmentId={assessmentId}
-                  setIsInteracted={setIsInteracted}
-                  submitMultipleChoice={submitMultipleChoice}
-                  setSubmitMultipleChoice={setSubmitMultipleChoice}
-                  setMultipleChoiceAnswers={setMultipleChoiceAnswers}
+                  questions={questions}
+                  selectedAnswers={selectedAnswers}
+                  handleOptionChange={handleOptionChange}
                 />
               )}
               {longQuestions.map((item, index) => (
@@ -258,7 +310,6 @@ const AssessmentComponent = () => {
                   className="rbt-btn btn-sm"
                   style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                   type="button"
-
                   onClick={handleSubmitAssessment}
                   disabled={loading}
                 >
@@ -270,21 +321,15 @@ const AssessmentComponent = () => {
                   ) : (
                     "Submit Assessment"
                   )}
-
                 </button>
               </div>
             </div>
           </div>
-
         </div>
-
       )}
     </div>
   );
-
 };
-
-
 
 export default function TakeAssessmentComponent() {
   return (
