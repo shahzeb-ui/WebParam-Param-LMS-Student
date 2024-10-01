@@ -8,6 +8,7 @@ import WarningModal from "../(components)/WarningModal";
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
 import { rAssessmentThootoUrl } from '../../../../../app/lib/endpoints';
+import Cookies from "universal-cookie";
 
 type LongAnswerQuestion = {
   id: string;
@@ -30,10 +31,14 @@ const AssessmentComponent = () => {
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
   const [showWarning, setShowWarning] = useState<boolean>(true);
 
+  const cookies = new Cookies();
+
   const assessmentId = searchParams.get('id');
-  const userId = "userId"; 
-  const assessmentName = "assessmentName"; 
+  const userId = cookies.get("userId");
+  const assessmentName = searchParams.get('title') ?? "Default Assessment Name"; 
+  
   const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
+  
 
   useEffect(() => {
     if (assessmentId && clientKey) {

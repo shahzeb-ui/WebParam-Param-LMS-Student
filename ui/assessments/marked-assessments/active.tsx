@@ -114,7 +114,7 @@ export default function ActiveAssessment() {
                   title="Start"
                   href={{
                     pathname: '/student/assessments/assessmentId',
-                    query: { id: `${assessment.id}` },
+                    query: { id: `${assessment.id}`, title: `${assessment.title}`},
                   }}
                 >
                   Start
