@@ -13,6 +13,7 @@ import Cookies from "universal-cookie";
 type LongAnswerQuestion = {
   id: string;
   title: string;
+  description: string;
   type: string;
   score: string;
 };
@@ -32,14 +33,13 @@ const AssessmentComponent = () => {
   const [showWarning, setShowWarning] = useState<boolean>(true);
 
   const cookies = new Cookies();
+  const userId = cookies.get('userID');
 
   const assessmentId = searchParams.get('id');
-  const userId = cookies.get("userId");
   const assessmentName = searchParams.get('title') ?? "Default Assessment Name"; 
   
   const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
   
-
   useEffect(() => {
     if (assessmentId && clientKey) {
       fetch(`${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`, {
@@ -211,7 +211,7 @@ const AssessmentComponent = () => {
                 <div key={item.id} id={`question-${index + 1}`} className="question">
                   <div className="rbt-single-quiz">
                     <h4 style={{ margin: "0 auto", fontSize: "21px" }}>
-                      {quizCount + index + 1}. {item.title}
+                      {quizCount + index + 1}. {item.description}
                     </h4>
                     <div className="row g-3 mt--10">
                       <textarea

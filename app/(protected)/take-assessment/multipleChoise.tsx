@@ -14,6 +14,7 @@ type Option = {
 type Question = {
   id: string;
   title: string;
+  description: string;
   type: string;
   options: Option[];
   score: string;
@@ -127,7 +128,7 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
     <div>
       {questions.map((q, index) => (
         <div key={q.id} style={{ marginBottom: '30px' }}>
-          <h3 style={{ fontSize: '21px' }}>{`${index + 1}. ${q.title}`}</h3>
+          <h3 style={{ fontSize: '21px' }}>{`${index + 1}. ${q.description}`}</h3>
           {Array.isArray(q.options) ? q.options.map((option) => (
             <div key={option.id}>
               <label
