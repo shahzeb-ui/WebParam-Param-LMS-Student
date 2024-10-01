@@ -14,7 +14,7 @@ type LongAnswerQuestion = {
   id: string;
   title: string;
   description: string;
-  type: string;
+  questionType: string;
   score: string;
   rubrics: any[];
 };
@@ -142,8 +142,8 @@ const AssessmentComponent = () => {
         ...multipleChoiceAnswers,
         ...longQuestions.map((question, index) => ({
           questionId: question.id,
-          description: question.title,
-          questionType: question.type,
+          description: question.description,
+          questionType: question.questionType,
           options: [],
           studentMultipleChoiceAnswer: [],
           studentLongTextAnswer: answers[index],

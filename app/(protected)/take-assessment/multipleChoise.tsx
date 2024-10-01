@@ -15,7 +15,7 @@ type Question = {
   id: string;
   title: string;
   description: string;
-  type: string;
+  questionType: string;
   options: Option[];
   score: string;
 };
@@ -112,7 +112,7 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
     const answers = questions.map((question, index) => ({
       questionId: question.id,
       description: question.title,
-      questionType: question.type,
+      questionType: question.questionType,
       options: question.options,
       studentMultipleChoiceAnswer: selectedAnswers[index] ? [selectedAnswers[index]] : [],
       studentLongTextAnswer: "",
@@ -122,6 +122,7 @@ const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
     }));
 
     setMultipleChoiceAnswers(answers);
+    console.log("Multiple Choice Answers:", answers); // Log the answers
   };
 
   return (
