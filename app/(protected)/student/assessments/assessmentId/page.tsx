@@ -7,7 +7,7 @@ import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
 import WarningModal from "../(components)/WarningModal"; 
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
-import { rAssessmentThootoUrl } from '../../../../../app/lib/endpoints';
+import { rAssessmentThootoUrl} from '../../../../../app/lib/endpoints';
 import Cookies from "universal-cookie";
 
 type LongAnswerQuestion = {
@@ -16,6 +16,7 @@ type LongAnswerQuestion = {
   description: string;
   type: string;
   score: string;
+  rubrics: any[];
 };
 
 const AssessmentComponent = () => {
@@ -50,13 +51,32 @@ const AssessmentComponent = () => {
         },
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then(async (data) => {
           if (Array.isArray(data.data)) {
             const longTextQuestions = data.data.filter((question: any) => question.questionType === "Long Text");
             const quizQuestions = data.data.filter((question: any) => question.questionType === "Quiz");
-            setLongQuestions(longTextQuestions);
+
+            // Fetch rubrics for long text questions
+            const longTextQuestionsWithRubrics = await Promise.all(
+              longTextQuestions.map(async (question: any) => {
+                const rubricsResponse = await fetch(`${rAssessmentThootoUrl}/api/v1/Rubrics/GetRubrics/${question.id}`, {
+                  headers: {
+                    'Client-Key': clientKey,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                });
+                const rubricsData = await rubricsResponse.json();
+                return {
+                  ...question,
+                  rubrics: Array.isArray(rubricsData.data) ? rubricsData.data : [],
+                };
+              })
+            );
+
+            setLongQuestions(longTextQuestionsWithRubrics);
             setQuizCount(quizQuestions.length);
-            setAnswers(Array(longTextQuestions.length).fill(""));
+            setAnswers(Array(longTextQuestionsWithRubrics.length).fill(""));
           } else {
             console.error("Unexpected data format:", data);
           }
@@ -127,7 +147,7 @@ const AssessmentComponent = () => {
           options: [],
           studentMultipleChoiceAnswer: [],
           studentLongTextAnswer: answers[index],
-          rubrics: [],
+          rubrics: question.rubrics,
           moderatorFeedBack: "",
           score: 0,
         })),
@@ -238,6 +258,7 @@ const AssessmentComponent = () => {
                   className="rbt-btn btn-sm"
                   style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
                   type="button"
+
                   onClick={handleSubmitAssessment}
                   disabled={loading}
                 >
@@ -249,15 +270,20 @@ const AssessmentComponent = () => {
                   ) : (
                     "Submit Assessment"
                   )}
+
                 </button>
               </div>
             </div>
           </div>
+
         </div>
+
       )}
     </div>
   );
+
 };
+
 
 
 export default function TakeAssessmentComponent() {
