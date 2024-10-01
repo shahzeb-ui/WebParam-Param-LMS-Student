@@ -46,6 +46,8 @@ function TakeLesson() {
 
   const allSubTopics = Object.values(expandedTopics).flat();
 
+  // Add a state to track the currently open accordion
+  const [openAccordionId, setOpenAccordionId] = useState<string | null>(null);
 
   async function fetchKnowledgeTopics() {
     
@@ -96,12 +98,12 @@ function TakeLesson() {
     const topicElement = knowledgeTopics.find(topic => topic.id === currentVideo.topicId);
 
     const payload = {
-      UserId: loggedInUser?.data?.id || loggedInUser?.userId,
+      UserId: loggedInUser?.id || loggedInUser?.data?.userId,
       ElementId: currentVideo.id,
       TopicId: currentVideo.topicId,
       TotalVideoTime: totalWatchTime,
       TimeSpent: timeSpent,
-      courseId: process.env.NEXT_PUBLIC_COURSE_ID||cookies.get('courseId'),
+      courseId: process.env.NEXT_PUBLIC_COURSE_ID||localStorage.getItem('courseId'),
       videoTitle: currentVideo?.title,
       topicTitle: topicElement?.name,
       IsCompleted: true
@@ -146,7 +148,7 @@ function TakeLesson() {
   async function getWatchedVideos() {
     try {
       const res = await GetVideosWatched(
-        loggedInUser?.data?.id || loggedInUser?.userId,
+        loggedInUser?.id || loggedInUser?.data?.userId,
         currentVideo?.topicId
       );
       console.log("Videos watched:", res.data);
@@ -160,8 +162,15 @@ function TakeLesson() {
   
 
   const handleExpandClick = (topicId: string) => {
-    if (!expandedTopics[topicId]) {
-      fetchTopics(topicId);
+    if (openAccordionId === topicId) {
+      // If the clicked accordion is already open, close it
+      setOpenAccordionId(null);
+    } else {
+      // Open the clicked accordion and close others
+      setOpenAccordionId(topicId);
+      if (!expandedTopics[topicId]) {
+        fetchTopics(topicId);
+      }
     }
   };
 
@@ -291,11 +300,11 @@ function TakeLesson() {
                   >
                     <button
                       // ref={index === 0 ? firstAccordionButtonRef : null}
-                      className="accordion-button collapsed"
+                      className={`accordion-button ${openAccordionId === topic.id ? '' : 'collapsed'}`}
                       type="button"
                       data-bs-toggle="collapse"
                       data-bs-target={`#collapse${index}`}
-                      aria-expanded="false"
+                      aria-expanded={openAccordionId === topic.id}
                       aria-controls={`collapse${index}`}
                       onClick={() => handleExpandClick(topic.id)}
                       style={{fontSize:'16px'}}
@@ -305,7 +314,7 @@ function TakeLesson() {
                   </h2>
                   <div
                     id={`collapse${index}`}
-                    className="accordion-collapse collapse"
+                    className={`accordion-collapse collapse ${openAccordionId === topic.id ? 'show' : ''}`}
                     aria-labelledby={`heading${index}`}
                     data-bs-parent="#accordionExampleb2"
                   >
@@ -566,22 +575,22 @@ function TakeLesson() {
                                 filteredTopics.map((topic, index) => (
                                   <div className="accordion-item card" key={topic.id}>
                                     <h2 className="accordion-header card-header" id={`heading${index}`}>
-                                      <button
-                                        className="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target={`#collapse${index}`}
-                                        aria-expanded="false"
-                                        aria-controls={`collapse${index}`}
-                                        onClick={() => handleExpandClick(topic.id)}
-                                        style={{ fontSize: '16px' }}
-                                      >
-                                        {topic.name}
-                                      </button>
+                                    <button
+                                      className={`accordion-button ${openAccordionId === topic.id ? '' : 'collapsed'}`}
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target={`#collapse${index}`}
+                                      aria-expanded={openAccordionId === topic.id}
+                                      aria-controls={`collapse${index}`}
+                                      onClick={() => handleExpandClick(topic.id)}
+                                      style={{fontSize:'16px'}}
+                                    >
+                                      {topic.name}
+                                    </button>
                                     </h2>
                                     <div
                                       id={`collapse${index}`}
-                                      className="accordion-collapse collapse"
+                                      className={`accordion-collapse collapse ${openAccordionId === topic.id ? 'show' : ''}`}
                                       aria-labelledby={`heading${index}`}
                                       data-bs-parent="#accordionExampleb2"
                                     >
@@ -590,7 +599,7 @@ function TakeLesson() {
                                           <ul style={{ marginLeft: '0', paddingLeft: '0' }}>
                                             {expandedTopics[topic.id].map((subTopic: TopicElement, subIndex) => {
                                             
-                                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+                                            const isWatched = videosWatched.find(video => video?.elementId == subTopic.id);
 
                                               return (
                                                 <li
@@ -598,9 +607,7 @@ function TakeLesson() {
                                                   className="d-flex justify-content-between align-items mt-2"
                                                   key={topic.id} // Use subTopic.id for uniqueness
                                                   onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                                  style={{ 
-                                                    color: checkedSubTopics[subTopic.id] || isWatched ? 'rgb(47, 87, 239)' : '#000' // Fallback to black or any color of your choice
-                                                  }}
+                                                  style={{ color: `${currentVideo?.id == subTopic.id || isWatched?.elementId == subTopic.id ? 'rgb(47, 87, 239)' : null}`, }}
                                                 >
                                                   <div
                                                     className="course-content-left topic_Element_container"
@@ -634,7 +641,7 @@ function TakeLesson() {
                                                   </div>
                                                   <div className="course-content-right">
                                                     <span className="rbt-check">
-                                                      {isWatched && <i className="feather-check" />}
+                                                      {currentVideo?.id === subTopic?.id || isWatched?.elementId == subTopic.id && <i className="feather-check" />}
                                                     </span>
                                                   </div>
                                                 </li>
