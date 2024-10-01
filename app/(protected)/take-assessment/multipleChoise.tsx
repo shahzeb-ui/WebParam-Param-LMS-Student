@@ -21,6 +21,10 @@ type Question = {
 };
 
 type MultipleChoiceQuestionsProps = {
+  selectedAnswers: Option[],
+  setSelectedAnswers: (list: Option[]) => void,
+  questions: Question[],
+  setQuestions: (list: Question[]) => void,
   assessmentId: string;
   setIsInteracted: (interacted: boolean) => void;
   submitMultipleChoice: boolean;
@@ -29,14 +33,18 @@ type MultipleChoiceQuestionsProps = {
 };
 
 const MultipleChoiceQuestions: React.FC<MultipleChoiceQuestionsProps> = ({
+  selectedAnswers,
+  setSelectedAnswers,
+  questions,
+  setQuestions,
   assessmentId,
   setIsInteracted,
   submitMultipleChoice,
   setSubmitMultipleChoice,
   setMultipleChoiceAnswers,
 }) => {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [selectedAnswers, setSelectedAnswers] = useState<Option[]>([]);
+  // const [questions, setQuestions] = useState<Question[]>([]);
+  // const [selectedAnswers, setSelectedAnswers] = useState<Option[]>([]);
   const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
 
   useEffect(() => {

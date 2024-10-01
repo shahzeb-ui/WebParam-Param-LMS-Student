@@ -4,10 +4,10 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { submitAssessmentAnswers } from "@/actions/assessments/assessments-action";
 import MultipleChoiceQuestions from "../../../take-assessment/multipleChoise";
-import WarningModal from "../(components)/WarningModal"; 
+import WarningModal from "../(components)/WarningModal";
 import styles from "@/styles/assessment/assessment.module.css";
 import loaderStyles from "@/ui/loader-ui/loader.module.css";
-import { rAssessmentThootoUrl} from '../../../../../app/lib/endpoints';
+import { rAssessmentThootoUrl } from "../../../../../app/lib/endpoints";
 import Cookies from "universal-cookie";
 
 type LongAnswerQuestion = {
@@ -19,57 +19,89 @@ type LongAnswerQuestion = {
   rubrics: any[];
 };
 
+type Option = {
+  id: string;
+  label: string;
+  questionId: string;
+  isCorrect: boolean;
+  description: string;
+};
+
+type Question = {
+  id: string;
+  title: string;
+  description: string;
+  questionType: string;
+  options: Option[];
+  score: string;
+};
+
 const AssessmentComponent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   const [longQuestions, setLongQuestions] = useState<LongAnswerQuestion[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isInteracted, setIsInteracted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(3600);
   const [quizCount, setQuizCount] = useState<number>(0);
-  const [submitMultipleChoice, setSubmitMultipleChoice] = useState<boolean>(false);
+  const [submitMultipleChoice, setSubmitMultipleChoice] =
+    useState<boolean>(false);
   const [multipleChoiceAnswers, setMultipleChoiceAnswers] = useState<any[]>([]);
   const [showWarning, setShowWarning] = useState<boolean>(true);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<Option[]>([]);
 
   const cookies = new Cookies();
-  const userId = cookies.get('userID');
+  const userId = cookies.get("userID");
 
-  const assessmentId = searchParams.get('id');
-  const assessmentName = searchParams.get('title') ?? "Default Assessment Name"; 
-  
+  const assessmentId = searchParams.get("id");
+  const assessmentName = searchParams.get("title") ?? "Default Assessment Name";
+
   const clientKey = process.env.NEXT_PUBLIC_CLIENTKEY;
-  
+
   useEffect(() => {
     if (assessmentId && clientKey) {
-      fetch(`${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`, {
-        headers: {
-          'Client-Key': clientKey,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
+      fetch(
+        `${rAssessmentThootoUrl}/api/v1/Questions/GetQuestions/${assessmentId}`,
+        {
+          headers: {
+            "Client-Key": clientKey,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
         .then((response) => response.json())
         .then(async (data) => {
           if (Array.isArray(data.data)) {
-            const longTextQuestions = data.data.filter((question: any) => question.questionType === "Long Text");
-            const quizQuestions = data.data.filter((question: any) => question.questionType === "Quiz");
+            const longTextQuestions = data.data.filter(
+              (question: any) => question.questionType === "Long Text"
+            );
+            const quizQuestions = data.data.filter(
+              (question: any) => question.questionType === "Quiz"
+            );
 
             // Fetch rubrics for long text questions
             const longTextQuestionsWithRubrics = await Promise.all(
               longTextQuestions.map(async (question: any) => {
-                const rubricsResponse = await fetch(`${rAssessmentThootoUrl}/api/v1/Rubrics/GetRubrics/${question.id}`, {
-                  headers: {
-                    'Client-Key': clientKey,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                });
+                const rubricsResponse = await fetch(
+                  `${rAssessmentThootoUrl}/api/v1/Rubrics/GetRubrics/${question.id}`,
+                  {
+                    headers: {
+                      "Client-Key": clientKey,
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
                 const rubricsData = await rubricsResponse.json();
                 return {
                   ...question,
-                  rubrics: Array.isArray(rubricsData.data) ? rubricsData.data : [],
+                  rubrics: Array.isArray(rubricsData.data)
+                    ? rubricsData.data
+                    : [],
                 };
               })
             );
@@ -134,28 +166,34 @@ const AssessmentComponent = () => {
 
     setSubmitMultipleChoice(true);
 
+    const answers = questions.map((question, index) => ({
+      questionId: question.id,
+      description: question.title,
+      questionType: question.questionType,
+      options: question.options,
+      studentMultipleChoiceAnswer: selectedAnswers[index]
+        ? [selectedAnswers[index]]
+        : [],
+      studentLongTextAnswer: "",
+      rubrics: [],
+      moderatorFeedBack: "",
+      score: 0,
+    }));
+
+    setMultipleChoiceAnswers(answers);
+    console.log("Multiple Choice Answers:", answers); // Log the answers
+
     const submission = {
       assessmentId: assessmentId as string,
       assessmentName,
       userId,
-      answers: [
-        ...multipleChoiceAnswers,
-        ...longQuestions.map((question, index) => ({
-          questionId: question.id,
-          description: question.description,
-          questionType: question.questionType,
-          options: [],
-          studentMultipleChoiceAnswer: [],
-          studentLongTextAnswer: answers[index],
-          rubrics: question.rubrics,
-          moderatorFeedBack: "",
-          score: 0,
-        })),
-      ],
+      answers,
       fileUrl: "",
     };
 
-    try {
+    console.log("Submission:", submission); // Log the answers
+    
+  try {
       const response = await submitAssessmentAnswers(submission);
       console.log("Assessment Submitted:", response);
 
@@ -194,7 +232,13 @@ const AssessmentComponent = () => {
 
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
-      {showWarning && <WarningModal show={showWarning} onHide={() => setShowWarning(false)} onConfirm={handleWarningConfirm} />}
+      {showWarning && (
+        <WarningModal
+          show={showWarning}
+          onHide={() => setShowWarning(false)}
+          onConfirm={handleWarningConfirm}
+        />
+      )}
       {!showWarning && (
         <div className="inner" style={{ margin: "0 auto" }}>
           <div className="content">
@@ -220,6 +264,10 @@ const AssessmentComponent = () => {
               </div>
               {assessmentId && (
                 <MultipleChoiceQuestions
+                  selectedAnswers={selectedAnswers}
+                  setSelectedAnswers={setSelectedAnswers}
+                  questions={questions}
+                  setQuestions={setQuestions}
                   assessmentId={assessmentId}
                   setIsInteracted={setIsInteracted}
                   submitMultipleChoice={submitMultipleChoice}
@@ -228,7 +276,11 @@ const AssessmentComponent = () => {
                 />
               )}
               {longQuestions.map((item, index) => (
-                <div key={item.id} id={`question-${index + 1}`} className="question">
+                <div
+                  key={item.id}
+                  id={`question-${index + 1}`}
+                  className="question"
+                >
                   <div className="rbt-single-quiz">
                     <h4 style={{ margin: "0 auto", fontSize: "21px" }}>
                       {quizCount + index + 1}. {item.description}
@@ -256,9 +308,15 @@ const AssessmentComponent = () => {
               <div className={styles.buttonWrapper}>
                 <button
                   className="rbt-btn btn-sm"
-                  style={{height:'40px', border:'none', backgroundColor:`${process.env.NEXT_PUBLIC_PRIMARY_COLOR??'rgb(36, 52, 92)'}`, borderRadius:'8px  '}}
+                  style={{
+                    height: "40px",
+                    border: "none",
+                    backgroundColor: `${
+                      process.env.NEXT_PUBLIC_PRIMARY_COLOR ?? "rgb(36, 52, 92)"
+                    }`,
+                    borderRadius: "8px  ",
+                  }}
                   type="button"
-
                   onClick={handleSubmitAssessment}
                   disabled={loading}
                 >
@@ -270,21 +328,15 @@ const AssessmentComponent = () => {
                   ) : (
                     "Submit Assessment"
                   )}
-
                 </button>
               </div>
             </div>
           </div>
-
         </div>
-
       )}
     </div>
   );
-
 };
-
-
 
 export default function TakeAssessmentComponent() {
   return (
