@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAssessmentContext } from '../(context)/AssessmentContext';
-import { rAssessmentThootoUrl } from '../../../app/lib/endpoints';
+import { rAssessmentThootoUrl ,rKnowledgeModuleUrl} from '../../../app/lib/endpoints';
 import Link from 'next/link';
 
 enum AssessmentType {
@@ -76,7 +76,7 @@ export default function ActiveAssessment() {
       }
 
       try {
-        const url = `https://thooto-dev-be-newcourse-read.azurewebsites.net/api/v1/Courses/GetCourseNew/${courseId}`;
+        const url = `${rKnowledgeModuleUrl}/api/v1/Courses/GetCourseNew/${courseId}`;
         const response = await fetch(url, {
           headers: {
             'Client-Key': clientKey,
