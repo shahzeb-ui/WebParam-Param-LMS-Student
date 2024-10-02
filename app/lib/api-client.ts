@@ -27,7 +27,7 @@ export async function POST_MULTIPART(url: string, formData: any): Promise<any> {
         }
 
         LOG_DIAGNOSTIC(`GET-${trackingId} [SUCCESS:${response.status}] `, _diag);
-
+        return response;
     } catch (error) {
 
         LOG_ERROR(`POST_MULTIPART-${trackingId} [ERROR] `, error);
@@ -76,7 +76,7 @@ export async function POST(payload: any, url: string): Promise<any> {
 export async function PUT(payload: any, url: string): Promise<any> {
     const trackingId = `${email}-${url}`;
     try {
-        debugger;
+        
         const response = await axios.put(url, payload, {
             headers: {
                 'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export async function PUT(payload: any, url: string): Promise<any> {
 export async function PUT_MULTIPART(payload: any, url: string): Promise<any> {
     const trackingId = `${email}-${url}`;
     try {
-        debugger;
+        
         const response = await axios.put(url, payload, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -141,6 +141,7 @@ export async function PUT_MULTIPART(payload: any, url: string): Promise<any> {
 
 
 export async function GET(url: string): Promise<any> {
+    
     const trackingId = `${email}-${url}`;
     try {
         const response = await axios.get(url, {

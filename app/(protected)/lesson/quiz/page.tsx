@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import quizData from "@/data/quiz/quiz-callcenter.json";
+import { accountingQuiz } from "@/data/quiz/accounting";
 import styles from "@/styles/quiz/quiz.module.css";
+import { useRouter } from "next/navigation";
 import './quiz.scss'
 
 type QuizQuestion = {
@@ -15,6 +17,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
+  const [timeRemaining, setTimeRemaining] = useState<number>(600/60); 
   const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
     Array(quizData.length).fill(false)
   );
@@ -22,6 +25,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
     Array(quizData.length).fill(null)
   );
   const [currentQuiz, setCurrentQuiz] = useState<QuizQuestion[]>([]);
+  const router = useRouter(); 
 
   useEffect(() => {
     initializeQuiz();
@@ -32,19 +36,23 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   }, [next, selectedAnswers]);
 
   useEffect(() => {
-    localStorage.setItem(
-      "quizState",
-      JSON.stringify({
-        next,
-        score,
-        answeredQuestions,
-        selectedAnswers,
-      })
-    );
-  }, [next, score, answeredQuestions, selectedAnswers]);
+    let interval: NodeJS.Timeout | null = null;
+
+    if (timeRemaining > 0 && selectedAnswers.some(answer => answer !== null)) {
+      interval = setInterval(() => {
+        setTimeRemaining(prevTime => prevTime - 1);
+      }, 60000); // Count down by one minute
+    } else if (timeRemaining === 0) {
+      handleNext(); // Handle end of quiz
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [timeRemaining, selectedAnswers]);
 
   const initializeQuiz = () => {
-    const shuffledQuestions = quizData.sort(() => 0.5 - Math.random());
+    const shuffledQuestions = accountingQuiz.sort(() => 0.5 - Math.random());
     const selectedQuestions = shuffledQuestions.slice(0, 10);
     setCurrentQuiz(selectedQuestions);
 
@@ -80,7 +88,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
         if (next + 1 < currentQuiz.length) {
           setNext(next + 1);
         } else {
-          window.location.href = "/take-lesson";
+          handleNext()
         }
       }, 3000);
     }
@@ -89,6 +97,8 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   const handleRetake = () => {
     initializeQuiz();
   };
+
+  // console.log("accountingData", accountingData)
 
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
@@ -111,13 +121,13 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                             <div className="quize-top-left">
                                 <span>
                                 <i style={{color:"limegreen"}} className="feather-award" />
-                                <small>    <b>   Points: </b>{score} </small>
+                                <small><b>   Points: </b>{score} </small>
                                 </span>
                             </div>
                             <div className="quize-top-right">
                                 <span>
                                 <i style={{color:"orange"}} className="feather-clock" />
-                                <small>       <b>    Time remaining: </b> No Limit </small>
+                                <small><b>Time remaining: </b>{timeRemaining.toFixed(2)} minutes</small>
                                 </span>
                             </div>
                         </div>

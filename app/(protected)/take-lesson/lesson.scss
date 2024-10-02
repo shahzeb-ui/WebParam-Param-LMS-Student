@@ -24,3 +24,37 @@
         flex-direction: column-reverse !important;
     }
 }
+
+.rbt-lesson-content-wrapper {
+    position: relative;
+    background-color: white !important;
+}
+
+#sidebar-desktop {
+    // position: fixed;
+    background-color: white;
+    left: 0;
+    bottom: 0;
+    top: 10%;
+    width: 35%;
+
+    
+    @media (min-width: 600px) and (max-width: 895px) {
+        display: none;
+    }
+}
+
+
+#lesson-video {
+    padding: 10px;
+    // position: absolute;
+    right: 0;
+    top: 10%;
+    bottom: 0;
+    width: 65%;
+    // overflow-y: scroll;
+
+    @media (max-width: 895px) {
+        width: 100%;
+    }
+}

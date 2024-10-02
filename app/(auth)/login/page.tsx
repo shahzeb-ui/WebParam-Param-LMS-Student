@@ -2,10 +2,10 @@
 import "./login.scss";
 import React, { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
-import { LoginUser } from "@/app/api/auth/auth";
+import { LoginUser, ResendSMS } from "@/app/api/auth/auth";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
-import { isMobile } from "react-device-detect";
+import Modal from "react-responsive-modal";
 
 export default function LoginPage() {
     const imageCover = process.env.NEXT_PUBLIC_LOGIN_IMAGE;
@@ -14,6 +14,9 @@ export default function LoginPage() {
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState<any>({ email: false, password: false });
+    const [modalMessageShow, setModalMessageShow] = useState(false);
+    const [resending, setResending] = useState(false);
+    const [contact, setContact] = useState('');
 
   const cookies = new Cookies();
   const router = useRouter();
@@ -43,11 +46,12 @@ export default function LoginPage() {
       try {
         const res = await LoginUser(payload);
             setIsLoading(false);
-            
-            if (res == undefined) {
-                setErrorMessage('Incorrect User details');
+            debugger;
+            if (res == null) {
+                setErrorMessage('User not found');
                 return;
             }
+            debugger;
             
             if (res) {
                 
@@ -85,6 +89,25 @@ export default function LoginPage() {
       console.log('Form submitted successfully');
       setIsLoading(false);
     }
+
+    async function resend(e:any){
+      e.preventDefault();
+      setResending(true);
+      
+       
+        var payload = {
+          phoneNumber:contact
+        }
+
+        const res = await ResendSMS(payload);
+        if(res.status ==200 ){
+          cookies.set("activate-email", res?.data?.email);
+          router.push('/activate-account');
+        }else{
+          setResending(false)
+        }
+        
+      }
   
     useEffect(() => {
       if (email !== '' || password !== '') {
@@ -94,6 +117,29 @@ export default function LoginPage() {
     }, [email, password]);
 
   return (
+    <>
+    <Modal 
+      open={modalMessageShow} 
+      data-aos="zoom-out-right"
+      onClose={() => setModalMessageShow(false)} 
+      closeOnOverlayClick={false}
+      focusTrapped={true}
+      styles={{modal: {borderRadius: '10px'}}}
+
+      center>
+      <div className="modal-activate-account">
+        <h4>User is not verified</h4>
+        <p>Please enter your number to activate your account</p>
+        <form onSubmit={resend}>
+          {resending ? <div className="spinner-grow text-light" role="status" /> : <input 
+            type="text" 
+            placeholder="Enter your number" 
+            value={contact} 
+            onChange={(e) => setContact(e.target.value)} />}
+          <button type="submit">Activate</button>
+        </form>
+      </div>
+    </Modal>
     <div className="login-container">
       <div
         className="left-container d-md-block d-none"
@@ -160,7 +206,7 @@ export default function LoginPage() {
             </div>
           </div>
           {errorMessage && (
-            <span className="errorMessage">Incorrect User details</span>
+            <span className="errorMessage">{errorMessage}</span>
           )}
           <div className="form-submit-group">
             <button
@@ -190,5 +236,6 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+    </>
   );
 }
