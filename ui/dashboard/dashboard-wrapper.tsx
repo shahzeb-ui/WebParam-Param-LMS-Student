@@ -91,7 +91,7 @@ const InstructorDashboardHeader = () => {
   }, []);
 
   const bg = process.env.NEXT_PUBLIC_BANNER_URL;
-  debugger;
+  
   return (
     <>
       {/* Modal for course selection */}

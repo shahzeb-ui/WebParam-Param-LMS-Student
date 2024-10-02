@@ -16,6 +16,7 @@ import { isMobile } from "react-device-detect";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";  
 import Cookies from "universal-cookie";
+import { useCourseId } from "@/context/courseId-context/courseId-context";
 
 function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -44,6 +45,7 @@ function TakeLesson() {
   const moduleId = searchParams.get("moduleId");
 
   const allSubTopics = Object.values(expandedTopics).flat();
+  const { courseId } = useCourseId();
 
   // Add a state to track the currently open accordion
   const [openAccordionId, setOpenAccordionId] = useState<string | null>(null);
@@ -91,8 +93,8 @@ function TakeLesson() {
 
   async function trackVideoWatched() {
 
-    const totalWatchTime = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
-    const timeSpent = totalWatchTime + Math.floor(Math.random() * 100); // Ensure timeSpent is always higher than totalWatchTime
+    const totalWatchTime = Math.floor(Math.random() * 1000);
+    const timeSpent = totalWatchTime + Math.floor(Math.random() * 100);
 
     const topicElement = knowledgeTopics.find(topic => topic.id === currentVideo.topicId);
 
@@ -102,12 +104,13 @@ function TakeLesson() {
       TopicId: currentVideo.topicId,
       TotalVideoTime: totalWatchTime,
       TimeSpent: timeSpent,
-      courseId: process.env.NEXT_PUBLIC_COURSE_ID||localStorage.getItem('courseId'),
+      courseId: courseId??process.env.NEXT_PUBLIC_COURSE_ID,
       videoTitle: currentVideo?.title,
       topicTitle: topicElement?.name,
       IsCompleted: true
     };
     
+    debugger;
   
     try {
       const res = await PostVideoWatched(payload);
