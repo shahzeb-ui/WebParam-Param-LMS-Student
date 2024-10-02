@@ -47,12 +47,10 @@
 
 #lesson-video {
     padding: 10px;
-    // position: absolute;
     right: 0;
     top: 10%;
     bottom: 0;
     width: 65%;
-    // overflow-y: scroll;
 
     @media (max-width: 895px) {
         width: 100%;
