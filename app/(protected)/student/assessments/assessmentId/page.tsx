@@ -185,14 +185,14 @@ const AssessmentComponent = () => {
       answers: [
         ...questions.map((question, index) => ({
           questionId: question.id,
-          description: question.title,
+          description: question.description,
           questionType: question.questionType,
           options: question.options,
           studentMultipleChoiceAnswer: selectedAnswers[index] ? [selectedAnswers[index]] : [],
           studentLongTextAnswer: "",
           rubrics: [],
           moderatorFeedBack: "",
-          score: 0,
+          score: question.score,
         })),
         ...longQuestions.map((question, index) => ({
           questionId: question.id,
@@ -203,7 +203,7 @@ const AssessmentComponent = () => {
           studentLongTextAnswer: answers[index],
           rubrics: question.rubrics,
           moderatorFeedBack: "",
-          score: 0,
+          score: question.score,
         })),
       ],
       fileUrl: "",
