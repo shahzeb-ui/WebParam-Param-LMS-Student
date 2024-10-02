@@ -28,6 +28,7 @@
 .rbt-lesson-content-wrapper {
     position: relative;
     background-color: white !important;
+    width: 100%;
 }
 
 #sidebar-desktop {
@@ -48,9 +49,10 @@
 #lesson-video {
     padding: 10px;
     right: 0;
-    top: 10%;
+    top: 80px !important;
     bottom: 0;
-    width: 65%;
+    width: 75%;
+    margin: 0 auto;
 
     @media (max-width: 895px) {
         width: 100%;

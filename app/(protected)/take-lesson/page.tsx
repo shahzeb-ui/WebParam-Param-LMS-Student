@@ -37,7 +37,9 @@ function TakeLesson() {
   const [expandedTopicId, setExpandedTopicId] = useState<any>();
   const cookies = new Cookies();
   const loggedInUser = cookies.get('loggedInUser');
+  const userID = cookies.get('userID');
   const router = useRouter();  
+  console.log('loggedInUser', loggedInUser)
 
   const topicRef = useRef<HTMLLIElement>(null);
 
@@ -99,7 +101,7 @@ function TakeLesson() {
     const topicElement = knowledgeTopics.find(topic => topic.id === currentVideo.topicId);
 
     const payload = {
-      UserId: loggedInUser?.id || loggedInUser?.data?.userId,
+      UserId: userID || loggedInUser?.userId,
       ElementId: currentVideo.id,
       TopicId: currentVideo.topicId,
       TotalVideoTime: totalWatchTime,
@@ -149,10 +151,7 @@ function TakeLesson() {
   
   async function getWatchedVideos() {
     try {
-      const res = await GetVideosWatched(
-        loggedInUser?.id || loggedInUser?.data?.userId,
-        currentVideo?.topicId
-      );
+      const res = await GetVideosWatched(userID || loggedInUser?.data?.id, currentVideo?.topicId);
       console.log("Videos watched:", res.data);
       if (res.data) {
         setVideosWatched(res.data);

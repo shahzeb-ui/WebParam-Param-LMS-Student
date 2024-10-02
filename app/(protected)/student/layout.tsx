@@ -35,7 +35,6 @@ export default function StudentLayout({
                   <StudentDashboardSidebar />
                 </div>
                 <div className="col-lg-9">
-                
                   {children}
                 </div>
               </div>
