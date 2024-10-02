@@ -67,8 +67,8 @@ export const rLoogBookUrl = `https://thooto-${env}-be-logbook-read.azurewebsites
 
 
 // New endpoints
-export const rAssessmentThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net`;
-export const wAssessmentThootoUrl = `https://thooto-dev-be-assessment-write.azurewebsites.net`;
-export const rQuestionsThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Questions`;
-export const rOptionsThootoUrl = `https://thooto-dev-be-assessment-read.azurewebsites.net/api/v1/Options`;
-export const wStudentAnswersThootoUrl = `https://thooto-dev-be-assessment-write.azurewebsites.net/api/v1/StudentAnswers`;
+export const rAssessmentThootoUrl = `https://thooto-${env}-be-assessment-read.azurewebsites.net`;
+export const wAssessmentThootoUrl = `https://thooto-${env}-be-assessment-write.azurewebsites.net`;
+export const rQuestionsThootoUrl = `https://thooto-${env}-be-assessment-read.azurewebsites.net/api/v1/Questions`;
+export const rOptionsThootoUrl = `https://thooto-${env}-be-assessment-read.azurewebsites.net/api/v1/Options`;
+export const wStudentAnswersThootoUrl = `https://thooto-${env}-be-assessment-write.azurewebsites.net/api/v1/StudentAnswers`;
