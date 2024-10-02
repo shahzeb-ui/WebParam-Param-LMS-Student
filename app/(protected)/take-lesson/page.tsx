@@ -8,7 +8,7 @@ import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
 import Overview from "@/ui/overview/overview";
 import Transcript from "@/ui/transcript/transcript";
 import Link from "next/link";
-import { useEffect, useState, useCallback, useRef, Suspense } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
@@ -38,7 +38,6 @@ function TakeLesson() {
   const loggedInUser = cookies.get('loggedInUser');
   const router = useRouter();  
 
-  // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
   const searchParams = useSearchParams();
@@ -170,6 +169,12 @@ function TakeLesson() {
       setOpenAccordionId(topicId);
       if (!expandedTopics[topicId]) {
         fetchTopics(topicId);
+      } else {
+        // Ensure the first subtopic is selected when re-opening an accordion
+        const firstSubTopic = expandedTopics[topicId][0];
+        if (firstSubTopic) {
+          handleSubTopicClick(firstSubTopic, 0);
+        }
       }
     }
   };
