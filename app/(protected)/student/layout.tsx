@@ -14,10 +14,8 @@ export default function StudentLayout({
 }) {
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
-  useEffect(() => {
-    // This will show the modal when the component mounts
-    // setShowMaintenanceModal(true);
-  }, []);
+
+  
 
   return (
     <>
