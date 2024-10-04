@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
-import styles from '@/styles/banner/modal.module.css';
-
+import styles from './modal.module.css';
 
 interface MaintenanceModalProps {
   show: boolean;
