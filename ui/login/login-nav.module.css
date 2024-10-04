@@ -1,3 +1,7 @@
+.root {
+  --primary-color: #FE457A;
+}
+
 .navbar {
     background-color: white;
     padding: 20px 0;
@@ -39,15 +43,23 @@
 
 .authLinks {
     font-size: 16px;
+    display: flex;
+    align-items: center;
 }
 
 .authLinks a {
     text-decoration: none;
-    color: #333;
+    color: var(--primary-color);
     margin: 0 5px;
 }
 
 .loginButton {
-    color: #ff69b4;
+    color: var(--primary-color);
     font-weight: bold;
+}
+
+.userIcon {
+    color: var(--primary-color);
+    font-size: 24px;
+    margin-right: 10px;
 }

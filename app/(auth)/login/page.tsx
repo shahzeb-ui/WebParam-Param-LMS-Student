@@ -1,43 +1,42 @@
-"use client";
-
-import React, { useState } from 'react';
-import LoginNavbar from '@/ui/login/login-nav';
-import '@/app/(auth)/login/login.scss';
+import styles from './login.module.scss';
+import LoginNav from '../../../ui/login/login-nav'; // Adjust this import path as necessary
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle login logic here
-    setError('Incorrect email or password. Try again.');
-  };
-
   return (
-    <div className="login-page">
-      <LoginNavbar />
-      <div className="login-container">
-        <div className="login-form-wrapper">
-          <h1>Hello Again</h1>
-          <p>Welcome back! Please fill in your details.</p>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" required />
+    <div className={styles.loginPage}>
+      <LoginNav />
+      <div className={styles.loginContainer}>
+        <div className={styles.loginFormWrapper}>
+          <h1 className={styles.title}>Hello Again</h1>
+          <p className={styles.subtitle}>Welcome back! Please fill in your details.</p>
+          <form>
+            <div className={styles.formGroup}>
+              <input
+                type="email"
+                placeholder="Email Address"
+                className={`${styles.input} ${styles.requiredField}`}
+              />
             </div>
-            <div className="form-group">
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
+            <div className={styles.formGroup}>
+              <input
+                type="password"
+                placeholder="Password"
+                className={`${styles.input} ${styles.requiredField}`}
+              />
             </div>
-            {error && <div className="error-message">{error}</div>}
-            <button type="submit" className="login-button">Login</button>
-            <div className="recover-password">
-              <a href="#">Recover Password</a>
+            {/* Add error message if needed */}
+            <div className={styles.errorMessage}>
+              *Incorrect email or password. Try again
+            </div>
+            <div className={styles.buttonGroup}>
+              <button type="submit" className={styles.signUpButton}>
+                Sign Up
+              </button>
+              <div className={styles.recoverPassword}>
+                <a href="/recover-password">Recover Password</a>
+              </div>
             </div>
           </form>
-          <p className="signup-prompt">
-            Don't have an account? <a href="#">Sign Up</a>
-          </p>
         </div>
       </div>
     </div>
