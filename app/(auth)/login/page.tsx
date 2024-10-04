@@ -6,8 +6,8 @@ const LoginPage = () => {
     <div className={styles.loginPage}>
       <LoginNav />
       <div className={styles.loginContainer}>
-        <div className={styles.loginFormWrapper}>
-          <h1 className={styles.title}>Hello Again</h1>
+      <div className={styles.loginFormWrapper}>
+          <h1 className={styles.title}>Hello <span className={styles.titleUnderline}>Again</span></h1>
           <p className={styles.subtitle}>Welcome back! Please fill in your details.</p>
           <form>
             <div className={styles.formGroup}>

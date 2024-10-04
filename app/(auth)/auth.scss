@@ -5,10 +5,11 @@ $primary-color: #FE457A;
     flex-direction: column;
     min-height: 100vh;
     width: 100%;
-    background-image: url('/images/login/image.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/login/image.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    opacity: 0.9;
 }
 
 .register {
