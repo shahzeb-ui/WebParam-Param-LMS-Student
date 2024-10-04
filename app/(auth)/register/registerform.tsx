@@ -90,7 +90,13 @@ export default function RegisterForm() {
         </div>
       </div>
       <p className={styles.passwordHint}>Password must be at least 8 characters long.</p>
-      <button type="submit" className={styles.submitButton}>Sign Up</button>
+      <button 
+        type="submit" 
+        className={styles.submitButton}
+        style={{ marginTop: '-35px !important' }}
+      >
+        Sign Up
+      </button>
       <p className={styles.requiredFieldsNote}>*Please included required form field</p>
     </form>
   );
