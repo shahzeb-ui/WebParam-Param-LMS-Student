@@ -8,7 +8,7 @@ import QuestionAndAnswers from "@/ui/lesson/question-answers/question-answer";
 import Overview from "@/ui/overview/overview";
 import Transcript from "@/ui/transcript/transcript";
 import Link from "next/link";
-import { useEffect, useState, useCallback, useRef, Suspense } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import LessonQuiz from "../lesson/quiz/page";
@@ -16,6 +16,7 @@ import { isMobile } from "react-device-detect";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";  
 import Cookies from "universal-cookie";
+import { useCourseId } from "@/context/courseId-context/courseId-context";
 
 function TakeLesson() {
   const [currentVideo, setCurrentVideo] = useState<any>();
@@ -36,16 +37,20 @@ function TakeLesson() {
   const [expandedTopicId, setExpandedTopicId] = useState<any>();
   const cookies = new Cookies();
   const loggedInUser = cookies.get('loggedInUser');
+  const userID = cookies.get('userID');
   const router = useRouter();  
+  console.log('loggedInUser', loggedInUser)
 
-  // const firstAccordionButtonRef = useRef<HTMLButtonElement>(null);
   const topicRef = useRef<HTMLLIElement>(null);
 
   const searchParams = useSearchParams();
   const moduleId = searchParams.get("moduleId");
 
   const allSubTopics = Object.values(expandedTopics).flat();
+  const { courseId } = useCourseId();
 
+  // Add a state to track the currently open accordion
+  const [openAccordionId, setOpenAccordionId] = useState<string | null>(null);
 
   async function fetchKnowledgeTopics() {
     
@@ -90,20 +95,33 @@ function TakeLesson() {
 
   async function trackVideoWatched() {
 
-    const totalWatchTime = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
-    const timeSpent = totalWatchTime + Math.floor(Math.random() * 100); // Ensure timeSpent is always higher than totalWatchTime
+    const totalWatchTime = Math.floor(Math.random() * 1000);
+    const timeSpent = totalWatchTime + Math.floor(Math.random() * 100);
+
+    const topicElement = knowledgeTopics.find(topic => topic.id === currentVideo.topicId);
+
     const payload = {
-      UserId: loggedInUser?.data?.id || loggedInUser?.userId,
+      UserId: userID || loggedInUser?.userId,
       ElementId: currentVideo.id,
       TopicId: currentVideo.topicId,
       TotalVideoTime: totalWatchTime,
       TimeSpent: timeSpent,
+      courseId: courseId??process.env.NEXT_PUBLIC_COURSE_ID,
+      videoTitle: currentVideo?.title,
+      topicTitle: topicElement?.name,
+      IsCompleted: true
     };
     
+    debugger;
   
     try {
       const res = await PostVideoWatched(payload);
-      return res.data
+
+      if (res?.data) {
+        setVideosWatched((prev) => [...prev, res.data]);
+        updateVideoWatched(res.data);
+      }
+      return res?.data
     } catch (error) {
       console.error("Error tracking video watched:", error);
     }
@@ -112,6 +130,7 @@ function TakeLesson() {
   useEffect(() => {
     fetchKnowledgeTopics();
     setVideoLoader(true);
+  
   }, []);
   
   useEffect(() => {
@@ -119,13 +138,20 @@ function TakeLesson() {
       getWatchedVideos();
     }
   }, [currentVideo?.topicId]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    console.log("expanded topics:", filteredTopics.some(topic => topic));
+  }, [currentVideo]);
+
+  function updateVideoWatched(payload: any) {
+    videosWatched.push(payload);
+    localStorage.setItem("videosWatched", JSON.stringify(videosWatched));
+  }
   
   async function getWatchedVideos() {
     try {
-      const res = await GetVideosWatched(
-        loggedInUser?.data?.id || loggedInUser?.userId,
-        currentVideo?.topicId
-      );
+      const res = await GetVideosWatched(userID || loggedInUser?.data?.id, currentVideo?.topicId);
       console.log("Videos watched:", res.data);
       if (res.data) {
         setVideosWatched(res.data);
@@ -137,8 +163,21 @@ function TakeLesson() {
   
 
   const handleExpandClick = (topicId: string) => {
-    if (!expandedTopics[topicId]) {
-      fetchTopics(topicId);
+    if (openAccordionId === topicId) {
+      // If the clicked accordion is already open, close it
+      setOpenAccordionId(null);
+    } else {
+      // Open the clicked accordion and close others
+      setOpenAccordionId(topicId);
+      if (!expandedTopics[topicId]) {
+        fetchTopics(topicId);
+      } else {
+        // Ensure the first subtopic is selected when re-opening an accordion
+        const firstSubTopic = expandedTopics[topicId][0];
+        if (firstSubTopic) {
+          handleSubTopicClick(firstSubTopic, 0);
+        }
+      }
     }
   };
 
@@ -165,9 +204,8 @@ function TakeLesson() {
   );
 
   const handlePrevious = () => {
-
-    if (currentIndex > 0) {
-      const previousSubTopic = allSubTopics[currentIndex - 1];
+    if (currentIndex >= 0) {
+      const previousSubTopic = expandedTopics[currentVideo.topicId][currentIndex - 1];
       if (previousSubTopic) {
         setCurrentVideo(previousSubTopic);
         setCheckedSubTopics((prev) => ({
@@ -181,22 +219,26 @@ function TakeLesson() {
   };
 
   const handleNext = () => {
+    console.log("Current index before next:", currentIndex);  // Debugging log
   
     if (!videoEnded) {
       setVideoEnded(true); // Show quiz first
       return;
     }
   
-    if (currentIndex < allSubTopics.length - 1) {
-      const nextSubTopic = allSubTopics[currentIndex + 1];
+    const currentTopicSubTopics = expandedTopics[currentVideo.topicId];
+    if (currentIndex <= currentTopicSubTopics.length - 1) {
+      const nextIndex = currentIndex + 1;
+      console.log("Navigating to next index:", nextIndex);  // Debugging log
+      const nextSubTopic = currentTopicSubTopics[nextIndex];
       if (nextSubTopic) {
         setCurrentVideo(nextSubTopic);
         setCheckedSubTopics((prev) => ({
           ...prev,
           [nextSubTopic.id]: true,
         }));
-        setCurrentIndex(currentIndex + 1);
-        setVideoEnded(false); // Reset videoEnded state for the next video
+        setCurrentIndex(nextIndex);
+        setVideoEnded(false);
       }
     }
   };
@@ -205,10 +247,7 @@ function TakeLesson() {
     setVideoEnded(true);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    console.log("expanded topics:", filteredTopics.some(topic => topic));
-  }, [currentVideo]);
+ 
 
   if (error) return (
     <div className="error-area">
@@ -229,6 +268,8 @@ function TakeLesson() {
       </div>
     </div>
   );
+
+  console.log(`topics:`,expandedTopics)
 
   return (
     <div className="rbt-lesson-area bg-color-white">
@@ -266,11 +307,11 @@ function TakeLesson() {
                   >
                     <button
                       // ref={index === 0 ? firstAccordionButtonRef : null}
-                      className="accordion-button collapsed"
+                      className={`accordion-button ${openAccordionId === topic.id ? '' : 'collapsed'}`}
                       type="button"
                       data-bs-toggle="collapse"
                       data-bs-target={`#collapse${index}`}
-                      aria-expanded="false"
+                      aria-expanded={openAccordionId === topic.id}
                       aria-controls={`collapse${index}`}
                       onClick={() => handleExpandClick(topic.id)}
                       style={{fontSize:'16px'}}
@@ -280,7 +321,7 @@ function TakeLesson() {
                   </h2>
                   <div
                     id={`collapse${index}`}
-                    className="accordion-collapse collapse"
+                    className={`accordion-collapse collapse ${openAccordionId === topic.id ? 'show' : ''}`}
                     aria-labelledby={`heading${index}`}
                     data-bs-parent="#accordionExampleb2"
                   >
@@ -290,15 +331,15 @@ function TakeLesson() {
                           {expandedTopics[topic.id].map(
                             (subTopic: TopicElement, subIndex) => {
 
-                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+                              const isWatched = videosWatched.find(video => video?.elementId == subTopic.id);
 
                               return (
                               <li
                                 ref={subIndex === 0 ? topicRef : null}
                                 className="d-flex justify-content-between align-items mt-2"
-                                key={subIndex}
+                                key={topic.id}
                                 onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                style={{ color: `${currentVideo?.id == subTopic.id || isWatched ? 'rgb(47, 87, 239)' : null}`, }}
+                                style={{ color: `${currentVideo?.id == subTopic.id || isWatched?.elementId == subTopic.id ? 'rgb(47, 87, 239)' : null}`, }}
                               >
                                 <div
                                   className="course-content-left topic_Element_container"
@@ -328,7 +369,7 @@ function TakeLesson() {
                                 </div>
                                 <div className="course-content-right">
                                   <span className="rbt-check ">
-                                    {isWatched && (
+                                    {currentVideo?.id === subTopic?.id || isWatched?.elementId == subTopic.id && (
                                       <i className="feather-check" />
                                     )}
                                   </span>
@@ -387,7 +428,7 @@ function TakeLesson() {
                       <button
                         className="rbt-btn  btn-md"
                         onClick={() => {trackVideoWatched();handleNext()}}
-                        disabled={currentIndex > (filteredTopics.length - 1)}
+                        disabled={currentIndex > expandedTopics[currentVideo?.topicId]?.length - 1}
 
                       >
                         <span className="btn-text">Next</span>
@@ -541,22 +582,22 @@ function TakeLesson() {
                                 filteredTopics.map((topic, index) => (
                                   <div className="accordion-item card" key={topic.id}>
                                     <h2 className="accordion-header card-header" id={`heading${index}`}>
-                                      <button
-                                        className="accordion-button collapsed"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target={`#collapse${index}`}
-                                        aria-expanded="false"
-                                        aria-controls={`collapse${index}`}
-                                        onClick={() => handleExpandClick(topic.id)}
-                                        style={{ fontSize: '16px' }}
-                                      >
-                                        {topic.name}
-                                      </button>
+                                    <button
+                                      className={`accordion-button ${openAccordionId === topic.id ? '' : 'collapsed'}`}
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target={`#collapse${index}`}
+                                      aria-expanded={openAccordionId === topic.id}
+                                      aria-controls={`collapse${index}`}
+                                      onClick={() => handleExpandClick(topic.id)}
+                                      style={{fontSize:'16px'}}
+                                    >
+                                      {topic.name}
+                                    </button>
                                     </h2>
                                     <div
                                       id={`collapse${index}`}
-                                      className="accordion-collapse collapse"
+                                      className={`accordion-collapse collapse ${openAccordionId === topic.id ? 'show' : ''}`}
                                       aria-labelledby={`heading${index}`}
                                       data-bs-parent="#accordionExampleb2"
                                     >
@@ -565,17 +606,15 @@ function TakeLesson() {
                                           <ul style={{ marginLeft: '0', paddingLeft: '0' }}>
                                             {expandedTopics[topic.id].map((subTopic: TopicElement, subIndex) => {
                                             
-                                              const isWatched = videosWatched.some(video => video.topicId === subTopic.topicId);
+                                            const isWatched = videosWatched.find(video => video?.elementId == subTopic.id);
 
                                               return (
                                                 <li
                                                   ref={subIndex === 0 ? topicRef : null}
                                                   className="d-flex justify-content-between align-items mt-2"
-                                                  key={subTopic.id} // Use subTopic.id for uniqueness
+                                                  key={topic.id} // Use subTopic.id for uniqueness
                                                   onClick={() => handleSubTopicClick(subTopic, subIndex)}
-                                                  style={{ 
-                                                    color: checkedSubTopics[subTopic.id] || isWatched ? 'rgb(47, 87, 239)' : '#000' // Fallback to black or any color of your choice
-                                                  }}
+                                                  style={{ color: `${currentVideo?.id == subTopic.id || isWatched?.elementId == subTopic.id ? 'rgb(47, 87, 239)' : null}`, }}
                                                 >
                                                   <div
                                                     className="course-content-left topic_Element_container"
@@ -609,7 +648,7 @@ function TakeLesson() {
                                                   </div>
                                                   <div className="course-content-right">
                                                     <span className="rbt-check">
-                                                      {isWatched && <i className="feather-check" />}
+                                                      {currentVideo?.id === subTopic?.id || isWatched?.elementId == subTopic.id && <i className="feather-check" />}
                                                     </span>
                                                   </div>
                                                 </li>

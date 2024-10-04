@@ -91,7 +91,7 @@ const InstructorDashboardHeader = () => {
   }, []);
 
   const bg = process.env.NEXT_PUBLIC_BANNER_URL;
-  debugger;
+
   return (
     <>
       {/* Modal for course selection */}
@@ -136,7 +136,7 @@ const InstructorDashboardHeader = () => {
       )}
 
       {/* Course title display */}
-      <div className="mb-5" style={{ marginTop: "-7%" }}>
+      <div className="mb-5">
         {process.env.NEXT_PUBLIC_DEMO ? (
           <div style={{ maxWidth: "40rem" }}>
             <span className="select-label d-block">Select a course</span>

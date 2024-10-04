@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 import styles from './Calendar.module.css';
 import DayView from './DayView';
 import { GET } from '../../app/lib/api-client';
+import {rLoogBookUrl,rCourseUrl} from '../../app/lib/endpoints';
 
 interface ClassSession {
   id: string;
@@ -36,7 +37,7 @@ const Calendar: React.FC = () => {
       if (!userID) return;
 
       try {
-        const response = await GET(`https://thooto-dev-be-newcourse-read.azurewebsites.net/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`);
+        const response = await GET(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`);
         if (response) {
           const rawText = response.data;
           setCourseId(rawText.trim());
@@ -54,7 +55,7 @@ const Calendar: React.FC = () => {
       if (!courseId) return;
 
       try {
-        const response = await GET(`https://thooto-dev-be-logbook-read.azurewebsites.net/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`);
+        const response = await GET(`${rLoogBookUrl}/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`);
         if (response) {
           const data = response.data;
           setClassSessions(data.data);
@@ -104,6 +105,7 @@ const Calendar: React.FC = () => {
             {classesOnThisDay.map(session => (
               <div key={session.id} className={styles.classSession}>
                 {session.title}
+                <a href={session.classLink} target="_blank" rel="noopener noreferrer">Join Class</a>
               </div>
             ))}
           </div>
