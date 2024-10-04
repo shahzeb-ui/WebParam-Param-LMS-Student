@@ -6,17 +6,22 @@ import { accountingQuiz } from "@/data/quiz/accounting";
 import styles from "@/styles/quiz/quiz.module.css";
 import { useRouter } from "next/navigation";
 import './quiz.scss'
+import { POST } from "@/app/lib/api-client";
+import Loader from "@/ui/loader/loader";
+import Countdown from 'react-countdown';
 
-type QuizQuestion = {
+interface IQuizQuestion  {
   question: string;
   options: string[];
   answer: string;
 };
 
-const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
+const LessonQuiz = ({setVideoEnded, handleNext, currentVideo}:any) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
+  const [error, setError] = useState<string>("");
+  const [loading, setLoader] = useState<boolean>(false);
   const [timeRemaining, setTimeRemaining] = useState<number>(600/60); 
   const [answeredQuestions, setAnsweredQuestions] = useState<boolean[]>(
     Array(quizData.length).fill(false)
@@ -24,7 +29,7 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>(
     Array(quizData.length).fill(null)
   );
-  const [currentQuiz, setCurrentQuiz] = useState<QuizQuestion[]>([]);
+  const [currentQuiz, setCurrentQuiz] = useState<IQuizQuestion[]>([]);
   const router = useRouter(); 
 
   useEffect(() => {
@@ -51,9 +56,27 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
     };
   }, [timeRemaining, selectedAnswers]);
 
-  const initializeQuiz = () => {
-    const shuffledQuestions = accountingQuiz.sort(() => 0.5 - Math.random());
-    const selectedQuestions = shuffledQuestions.slice(0, 10);
+  // Random component
+const Completionist = () => <span>You are good to go!</span>;
+
+// Renderer callback with condition
+const renderer = ({ hours, minutes, seconds, completed }:any) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return <span>{hours}:{minutes}:{seconds}</span>;
+  }
+};
+
+
+  const initializeQuiz = async () => {
+    setLoader(true);
+   const questions = await getQuizQuestions(currentVideo.id);
+   debugger;
+    const shuffledQuestions = questions.data?.sort(() => 0.5 - Math.random());
+    const selectedQuestions = shuffledQuestions?.slice(0, 10);
     setCurrentQuiz(selectedQuestions);
 
     setNext(0);
@@ -94,17 +117,63 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
     }
   };
 
+  const getQuizQuestions = async (videoId:string) => {
+    const payload = {
+      videoId:videoId
+    }
+    const res = await POST(payload,"https://thooto-qa-be-document-parser.azurewebsites.net/api/v1/topicQuiz/generate");
+    debugger;
+   
+    if(res == null){
+
+      setError("Error generating quiz, please try again.")
+    }
+    setLoader(false);
+    return res.data;
+    
+  }
+
   const handleRetake = () => {
     initializeQuiz();
   };
 
-  // console.log("accountingData", accountingData)
 
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
       <div className="inner">
         <div className="content">
             <div className="quiz-form-wrapper">
+              {loading && <>Generating quiz...<br/><br/><Loader/></>}
+              {error!==""&&   <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#ffffff",
+      }}
+    >
+      <div style={{ textAlign: "center", padding: "20px", maxWidth: "400px" }}>
+        <h1>Oops! {error}.</h1>
+        <p>Please try again.</p>
+        <button
+        onClick={()=>{initializeQuiz()}}
+          style={{
+            backgroundColor: "#ffffff",
+            border: "1px solid #333",
+            color: "#333",
+            padding: "10px 20px",
+            fontSize: "16px",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background-color 0.3s, color 0.3s",
+          }}
+          disabled={loading}
+        >
+          Retry
+        </button>
+      </div>
+    </div>}
                 {currentQuiz.map((item, index) => (
                     <div
                         key={index}
@@ -128,6 +197,10 @@ const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
                                 <span>
                                 <i style={{color:"orange"}} className="feather-clock" />
                                 <small><b>Time remaining: </b>{timeRemaining.toFixed(2)} minutes</small>
+                                {/* <Countdown
+    date={Date.now() + 5000}
+    renderer={renderer}
+  />, */}
                                 </span>
                             </div>
                         </div>
