@@ -20,6 +20,10 @@ $primary-color: #FE457A;
   width: 100%;
   max-width: 400px;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  min-height: 400px; // Adjust this value as needed
+  justify-content: space-between;
 }
 
 .title {
@@ -45,7 +49,6 @@ $primary-color: #FE457A;
     background-repeat: no-repeat;
   }
 }
-
 
 .subtitle {
   margin-bottom: 30px;
@@ -126,5 +129,35 @@ $primary-color: #FE457A;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
+  }
+}
+
+.formGroup {
+  position: relative;
+}
+
+.asterisk {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $primary-color;
+}
+
+.signUpPrompt {
+  text-align: center;
+  font-size: 14px;
+  margin-top: auto; // This will push the prompt to the bottom of the form wrapper
+  padding-top: 20px; // Add some padding at the top
+  margin-bottom: 20px; // Add some margin at the bottom to move it down further
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
