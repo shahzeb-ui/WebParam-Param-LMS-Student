@@ -47,18 +47,17 @@ $secondary-color: #051C48;
 }
 
 .highlight {
+  position: relative;
+  display: inline-block;
   color: $primary-color;
 }
 
 .underline {
-  display: flex;
-  justify-content: center;
-  margin-top: -10px;
-  margin-bottom: 20px;
-
-  img {
-    width: 150px;
-  }
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: auto;
 }
 
 .subtitle {
@@ -133,6 +132,7 @@ $secondary-color: #051C48;
   max-width: 200px;
   margin: 5px auto 20px; // Reduced top margin to move it up
   margin-left: -8px; // Move button to the left
+   margin-top: -35px !important;
   display: block;
 
   &:hover {
@@ -145,4 +145,25 @@ $secondary-color: #051C48;
   color: #FE457A;
   text-align: right;
   margin-top: -75px;
+}
+
+.passwordInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 16px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

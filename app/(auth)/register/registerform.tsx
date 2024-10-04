@@ -10,6 +10,8 @@ export default function RegisterForm() {
     confirmPassword: '',
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -69,14 +71,23 @@ export default function RegisterForm() {
       </div>
       <div className={styles.formRow}>
         <div className={styles.formGroup}>
-          <input
-            type="password"
-            name="password"
-            placeholder="Create Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+          <div className={styles.passwordInputWrapper}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Create Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <button
+              type="button"
+              className={styles.passwordToggle}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <i className={`far ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+            </button>
+          </div>
         </div>
         <div className={styles.formGroup}>
           <input
@@ -93,7 +104,7 @@ export default function RegisterForm() {
       <button 
         type="submit" 
         className={styles.submitButton}
-        style={{ marginTop: '-35px !important' }}
+       
       >
         Sign Up
       </button>

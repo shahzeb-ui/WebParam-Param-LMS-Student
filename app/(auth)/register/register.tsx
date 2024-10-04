@@ -16,11 +16,10 @@ export default function Register() {
           <h1 className={styles.title}>
             Hi There,
             <br />
-            Welcome to <span className={styles.highlight}>Ramalo</span>
+            Welcome to <span className={styles.highlight}>Ramalo
+              <img src="/svg/blue.svg" alt="Underline" className={styles.underline} />
+            </span>
           </h1>
-          <div className={styles.underline}>
-            <img src="/svg/underline-curve.svg" alt="Underline" />
-          </div>
           <p className={styles.subtitle}>Please fill in your details.</p>
           <RegisterForm />
         </div>
