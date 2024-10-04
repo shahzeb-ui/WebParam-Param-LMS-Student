@@ -685,7 +685,7 @@ function TakeLesson() {
           </div>
           :
           <div className="inner">
-            <LessonQuiz setVideoEnded={setVideoEnded} handleNext={handleNext} />
+            <LessonQuiz setVideoEnded={setVideoEnded} handleNext={handleNext} currentVideo={currentVideo} />
           </div>}
         </div>
       </div>

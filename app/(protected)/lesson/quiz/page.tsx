@@ -16,7 +16,7 @@ interface IQuizQuestion  {
   answer: string;
 };
 
-const LessonQuiz = ({setVideoEnded, handleNext}:any) => {
+const LessonQuiz = ({setVideoEnded, handleNext, currentVideo}:any) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -73,10 +73,10 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
 
   const initializeQuiz = async () => {
     setLoader(true);
-   const questions = await getQuizQuestions();
+   const questions = await getQuizQuestions(currentVideo.id);
    debugger;
-    const shuffledQuestions = accountingQuiz.sort(() => 0.5 - Math.random());
-    const selectedQuestions = shuffledQuestions.slice(0, 10);
+    const shuffledQuestions = questions.data?.sort(() => 0.5 - Math.random());
+    const selectedQuestions = shuffledQuestions?.slice(0, 10);
     setCurrentQuiz(selectedQuestions);
 
     setNext(0);
@@ -117,10 +117,9 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
     }
   };
 
-  const getQuizQuestions=async ()=>{
-    const previousVideoId ="668ba8100c7b916b68693684";
+  const getQuizQuestions = async (videoId:string) => {
     const payload = {
-      videoId:previousVideoId
+      videoId:videoId
     }
     const res = await POST(payload,"https://thooto-qa-be-document-parser.azurewebsites.net/api/v1/topicQuiz/generate");
     debugger;
@@ -130,8 +129,7 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
       setError("Error generating quiz, please try again.")
     }
     setLoader(false);
-    const result =  res?.data as IQuizQuestion[];
-    return result;
+    return res.data;
     
   }
 
@@ -139,7 +137,6 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
     initializeQuiz();
   };
 
-  // console.log("accountingData", accountingData)
 
   return (
     <div className="rbt-lesson-rightsidebar overflow-hidden lesson-video">
@@ -157,13 +154,6 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
       }}
     >
       <div style={{ textAlign: "center", padding: "20px", maxWidth: "400px" }}>
-        {/* <img
-          src="/images/offline/nowifi.gif"
-          alt="No WiFi"
-          width={200}
-          height={200}
-          style={{ marginBottom: "20px" }}
-        /> */}
         <h1>Oops! {error}.</h1>
         <p>Please try again.</p>
         <button
@@ -207,10 +197,10 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
                                 <span>
                                 <i style={{color:"orange"}} className="feather-clock" />
                                 <small><b>Time remaining: </b>{timeRemaining.toFixed(2)} minutes</small>
-                                <Countdown
+                                {/* <Countdown
     date={Date.now() + 5000}
     renderer={renderer}
-  />,
+  />, */}
                                 </span>
                             </div>
                         </div>
