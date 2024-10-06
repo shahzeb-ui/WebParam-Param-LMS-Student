@@ -1,5 +1,5 @@
 'use client';
-import './verify.scss';
+import './activate.scss';
 import Image from 'next/image';
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -82,7 +82,7 @@ export default function VerifyPage() {
       async function handleVerify(e:any) {
         e.preventDefault();
         setIsSubmitted(true);
-        const email = cookies.get('userEmail');
+        const email = cookies.get('activate-email');
         const payload = {
             email,
             otp: String(otp)
@@ -107,7 +107,7 @@ export default function VerifyPage() {
     return (
         <div className="login-container">
             <div 
-                className="left-container"
+                  className="left-container"
                 data-aos="zoom-out-right"
                 style={{
                   backgroundImage: !isMobile? `url(${imageCover.src})`:"none",
@@ -117,7 +117,7 @@ export default function VerifyPage() {
                   filter:"none !important",
                 //   backgroundColor:"#24345C;",
                   boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5)',
-                }}
+              }}
                 >
                     {/* <div className='verify-card'>
                         <Image src={imageCover.src} alt="verify" width={200} height={200}/>

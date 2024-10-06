@@ -25,7 +25,7 @@ export async function POST_MULTIPART(url: string, formData: any): Promise<any> {
             request: JSON.stringify(response?.request),
             response: JSON.stringify(response?.data)
         }
-        
+
         LOG_DIAGNOSTIC(`GET-${trackingId} [SUCCESS:${response.status}] `, _diag);
         return response;
     } catch (error) {

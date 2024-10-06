@@ -14,10 +14,8 @@ export default function StudentLayout({
 }) {
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
-  useEffect(() => {
-    // This will show the modal when the component mounts
-    // setShowMaintenanceModal(true);
-  }, []);
+
+  
 
   return (
     <>
@@ -35,7 +33,6 @@ export default function StudentLayout({
                   <StudentDashboardSidebar />
                 </div>
                 <div className="col-lg-9">
-                
                   {children}
                 </div>
               </div>
