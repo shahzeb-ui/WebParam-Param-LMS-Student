@@ -46,34 +46,41 @@ const StudentDashboardSidebar = () => {
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   {SidebarData &&
-                    SidebarData.slice(0, process.env.NEXT_PUBLIC_FREEMIUM?3:2).map((data: any, index: any) => {
-
+                    SidebarData.slice(
+                      0,
+                      process.env.NEXT_PUBLIC_FREEMIUM ? 3 : 2
+                    ).map((data: any, index: any) => {
                       return (
-                      <li className="nav-item" key={index} role="presentation">
-                        <Link
-                          href={data.link}  
-                          className={`${path === data.link ? "active" : ""}`}
+                        <li
+                          className="nav-item"
+                          key={index}
+                          role="presentation"
                         >
-                          <i className={data.icon} />
-                          <span>{data.text}</span>
-                        </Link>
-                      </li>
-                    )
+                          <Link
+                            href={data.link}
+                            className={`${path === data.link ? "active" : ""}`}
+                          >
+                            <i className={data.icon} />
+                            <span>{data.text}</span>
+                          </Link>
+                        </li>
+                      );
                     })}
                 </ul>
               </nav>
 
-                <div className="section-title mt--40 mb--20">
-                  <h6 className="rbt-title-style-2">User</h6>
-                </div>
-              
+              <div className="section-title mt--40 mb--20">
+                <h6 className="rbt-title-style-2">User</h6>
+              </div>
+
               <nav className="mainmenu-nav">
                 <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                   <li>
                     <a
-                  
-                      href={'/student/student-profile'}
-                      className={`${path === '/student/student-profile' ? "active" : ""}`}
+                      href={"/student/student-profile"}
+                      className={`${
+                        path === "/student/student-profile" ? "active" : ""
+                      }`}
                     >
                       <i className="feather-user" />
                       <span>My Profile</span>
@@ -81,9 +88,9 @@ const StudentDashboardSidebar = () => {
                   </li>
                   <li>
                     <a
-                    onClick={handleLogOut}
-                      href={'/'}
-                      className={`${path === '/' ? "active" : ""}`}
+                      onClick={handleLogOut}
+                      href={"/"}
+                      className={`${path === "/" ? "active" : ""}`}
                     >
                       <i className="feather-log-out" />
                       <span>Logout</span>
