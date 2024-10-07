@@ -1,4 +1,4 @@
-.root {
+/* .root {
   --primary-color: #fe457a;
 }
 
@@ -72,4 +72,73 @@
   padding: 0;
   color: var(--primary-color);
   margin-left: 10px;
+} */
+
+/* Add these styles to your login-nav.module.css */
+
+/* Add these styles to your login-nav.module.css */
+
+.navLink {
+  color: #051c48; /* Default link color */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s ease, transform 0.3s ease; /* Add transition */
+}
+
+.navLink:hover {
+  color: #ff7fa3; /* Light version of the activeLink color */
+  transform: scale(1.05); /* Scale up on hover */
+}
+
+.activeLink {
+  color: #fe457a; /* Active link color */
+}
+
+.username {
+  color: #051c48;
+}
+
+/* Keep the existing styles for hamburgerMenu and authLinks */
+/* .hamburgerMenu {
+  margin-left: -25rem;
+}
+
+.authLinks {
+  margin-right: -25rem;
+} */
+
+.centeredLogo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1050;
+}
+
+@media (max-width: 991px) {
+  .centeredLogo {
+    position: absolute;
+    transform: none;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    justify-items: center;
+    margin-left: -3rem;
+  }
+
+  .authLinks {
+    visibility: hidden;
+  }
+}
+/* Adjust hamburger menu position on mobile */
+@media (max-width: 991px) {
+  .hamburgerMenu {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* Ensure container allows for absolute positioning */
+.navContainer {
+  position: relative;
 }

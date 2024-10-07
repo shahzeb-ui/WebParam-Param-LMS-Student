@@ -44,12 +44,6 @@
       "link": "/student/resources",
       "text": "Resources",
       "icon": "feather-file"
-    },
-
-    {
-      "link": "/",
-      "text": "Logout",
-      "icon": "feather-log-out"
     }
   ],
   "FREEMIUM": [

@@ -1,3 +1,28 @@
-.active-link {
-  color: pink !important; /* Force the pink color on the active link */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh; /* Full screen height */
+  background-color: #fff; /* or any preferred background */
+  margin-top: 3%;
+  /* margin-top: 10rem; */
+}
+
+.sidebarLink {
+  text-decoration: none; /* Optional to remove underline if any */
+  transition: color 0.3s ease, transform 0.3s ease; /* Add transition for transform */
+}
+
+.sidebarLink:hover {
+  color: #ff7fa3; /* Light version of the activeLink color (#fe457a) */
+  transform: scale(1.05); /* Scale up by 5% on hover */
+}
+
+.activeLink {
+  color: #fe457a;
+}
+
+.username {
+  color: #051c48;
+  text-transform: capitalize;
 }

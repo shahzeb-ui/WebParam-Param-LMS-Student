@@ -1,16 +1,24 @@
 "use client";
+
 import Cookies from "universal-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { GetSideBarData } from "@/interfaces/SidebarData";
 import Link from "next/link";
+import { GetSideBarData } from "@/interfaces/SidebarData";
+import styles from "./StudentDashboardSidebar.module.css";
+import Image from "next/image";
+import profilePicture from "../../../app/(auth)/login/profilepic.jpeg";
+import ramalo from "../../../ui/login/ramalo.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons"; // Importing logout icon
 
-const StudentDashboardSidebar = () => {
+const StudentDashboardSidebar: React.FC = () => {
   const cookies = new Cookies();
-  const user = cookies.get("loggedInUser");
   const path = usePathname();
+  const router = useRouter();
+  const [username, setUsername] = useState<string | null>(null);
 
-  function handleLogOut() {
+  const handleLogOut = () => {
     cookies.remove("loggedInUser");
     cookies.remove("username");
     cookies.remove("userEmail");
@@ -18,9 +26,7 @@ const StudentDashboardSidebar = () => {
     localStorage.removeItem("courseId");
     localStorage.removeItem("modalOpened");
     router.push("/login");
-  }
-  const [username, setUsername] = useState<string | null>(null);
-  const router = useRouter();
+  };
 
   useEffect(() => {
     const storedUsername = cookies.get("username");
@@ -29,109 +35,85 @@ const StudentDashboardSidebar = () => {
 
   const SidebarData = GetSideBarData();
 
+  const basePath = path.split("?")[0];
+
+  useEffect(() => {
+    console.log(`This is the path: ${path}`);
+  });
+
   return (
-    <>
-      <div
-        className="rbt-default-sidebar sticky-top rbt-shadow-box"
-        style={{ border: "4px solid #f1f2f3", boxShadow: "0 0 10px #f1f2f3" }}
-      >
-        <div className="inner">
-          <div className="content-item-content">
-            <div className="rbt-default-sidebar-wrapper">
-              <div className="section-title mb--20">
-                <h6 className="rbt-title-style-2">
-                  {username ? `Welcome ${username}` : "name surname"}
-                </h6>
-              </div>
-              <nav className="mainmenu-nav">
-                <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                  {SidebarData &&
-                    SidebarData.slice(
-                      0,
-                      process.env.NEXT_PUBLIC_FREEMIUM ? 3 : 2
-                    ).map((data: any, index: any) => {
-                      return (
-                        <li
-                          className="nav-item"
-                          key={index}
-                          role="presentation"
-                        >
-                          <Link
-                            href={data.link}
-                            className={`${path === data.link ? "active" : ""}`}
-                          >
-                            <i className={data.icon} />
-                            <span>{data.text}</span>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                </ul>
-              </nav>
-
-              <div className="section-title mt--40 mb--20">
-                <h6 className="rbt-title-style-2">User</h6>
-              </div>
-
-              <nav className="mainmenu-nav">
-                <ul className="dashboard-mainmenu rbt-default-sidebar-list">
-                  <li>
-                    <a
-                      href={"/student/student-profile"}
-                      className={`${
-                        path === "/student/student-profile" ? "active" : ""
-                      }`}
-                    >
-                      <i className="feather-user" />
-                      <span>My Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      onClick={handleLogOut}
-                      href={"/"}
-                      className={`${path === "/" ? "active" : ""}`}
-                    >
-                      <i className="feather-log-out" />
-                      <span>Logout</span>
-                    </a>
-                  </li>
-                  {/* {SidebarData &&
-                  
-                    SidebarData?.slice(-1).map((data: any, index: any) => {
-                      // if logout, attach the logout function to the link
-                      if (data.text == "Logout") {
-                        return  <li key={index}>
-                        <Link
-                        onClick={handleLogOut}
-                          href={data.link}
-                          className={`${path === data.link ? "active" : ""}`}
-                        >
-                          <i className={data.icon} />
-                          <span>{data.text}</span>
-                        </Link>
-                      </li>;
-                      }
-
-                      return (
-                      <li key={index}>
-                        <Link
-                          href={data.link}
-                          className={`${path === data.link ? "active" : ""}`}
-                        >
-                          <i className={data.icon} />
-                          <span>{data.text}</span>
-                        </Link>
-                      </li>
-                    )
-                    })} */}
-                </ul>
-              </nav>
-            </div>
-          </div>
+    <div
+      className={`sticky-top h-100 w-20 rbt-shadow-box d-flex flex-column justify-content-between ${styles.sidebar}`}
+      style={{ fontFamily: "'Montserrat', sans-serif", minHeight: "100vh" }}
+    >
+      <div>
+        {/* Logo */}
+        <div className="logo-container text-center mb-5">
+          <Image src={ramalo} alt="Logo" width={120} height={60} priority />
         </div>
+
+        {/* Profile Picture */}
+        <div
+          className="profile-picture-container d-flex justify-content-center align-items-center text-center mb-4"
+          style={{
+            width: "120px",
+            height: "120px",
+            margin: "0 auto",
+          }}
+        >
+          <Image
+            src={profilePicture}
+            alt="Profile Picture"
+            className="rounded-circle"
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          />
+        </div>
+
+        {/* Username */}
+        <div className="section-title mb-5 text-center">
+          <h6 className={` text-capitalize ${styles.username} fw-bold fs-1`}>
+            {username ? `${username}`.toUpperCase() : "Nicole".toUpperCase()}
+          </h6>
+          <p className="role-text fs-4">Front-End Designer</p>
+        </div>
+
+        {/* Sidebar Links */}
+        <nav className="flex-grow-1">
+          <ul className="d-flex flex-column justify-content-start h-100">
+            {SidebarData &&
+              SidebarData.map((data, index) => (
+                <li className="mb-4" key={index} role="presentation">
+                  <Link
+                    href={data.link}
+                    className={`d-flex align-items-center fs-3 ${
+                      styles.sidebarLink
+                    } ${
+                      basePath === data.link.split("?")[0]
+                        ? `fw-bold ${styles.activeLink}`
+                        : ""
+                    }`}
+                  >
+                    <i className={data.icon + " pe-4"}></i>
+                    <span className="ms-2">{data.text}</span>
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        </nav>
       </div>
-    </>
+
+      {/* Logout Button */}
+      <div className={` ms-4  `}>
+        <button
+          onClick={handleLogOut}
+          className="nav-link d-flex align-items-center fs-3 ms-3 "
+          style={{ backgroundColor: "transparent", border: "none" }}
+        >
+          <div className=" feather-log-out me-2 " />
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
   );
 };
 
