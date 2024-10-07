@@ -114,7 +114,7 @@ export default function Profile({ student }: any) {
             dateOfBirth,
             country,
             city,
-            email,
+            email: user?.data?.email,
             province,
             phoneNumber,
             bio,
@@ -183,7 +183,6 @@ export default function Profile({ student }: any) {
         ];
     
         const totalFields = fields.length;
-        
         // Filter the fields that are empty (empty strings, null, or undefined)
         const emptyFields = fields.filter(field => field).length;
         
