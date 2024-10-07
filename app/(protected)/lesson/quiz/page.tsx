@@ -9,6 +9,7 @@ import './quiz.scss'
 import { POST } from "@/app/lib/api-client";
 import Loader from "@/ui/loader/loader";
 import Countdown from 'react-countdown';
+import { rDocumentParaphraseUrl } from "@/app/lib/endpoints";
 
 interface IQuizQuestion  {
   question: string;
@@ -121,12 +122,12 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
     const payload = {
       videoId:videoId
     }
-    const res = await POST(payload,"https://thooto-qa-be-document-parser.azurewebsites.net/api/v1/topicQuiz/generate");
+    const res = await POST(payload,`${rDocumentParaphraseUrl}/api/v1/topicQuiz/generate`);
     debugger;
    
     if(res == null){
-
       setError("Error generating quiz, please try again.")
+      setLoader(false);
     }
     setLoader(false);
     return res.data;
