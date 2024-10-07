@@ -17,6 +17,7 @@ export default function LoginPage() {
     const [modalMessageShow, setModalMessageShow] = useState(false);
     const [resending, setResending] = useState(false);
     const [contact, setContact] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
   const cookies = new Cookies();
   const router = useRouter();
@@ -53,7 +54,7 @@ export default function LoginPage() {
             }
             debugger;
             
-            if (res) {
+            if (res.data.data) {
                 
               console.log("Login response:", res);
 
@@ -79,6 +80,11 @@ export default function LoginPage() {
               router.push(redirectPath)
               }
                 
+            } else {
+              setErrorMessage(res.data.message);
+              if (res.data.message == "User is not verified"){
+                setModalMessageShow(true);
+              }
             }
         } catch (error: any) {
             setErrorMessage('Network Error please try again');
@@ -100,6 +106,7 @@ export default function LoginPage() {
         }
 
         const res = await ResendSMS(payload);
+        debugger;
         if(res.status ==200 ){
           cookies.set("activate-email", res?.data?.email);
           router.push('/activate-account');
@@ -116,6 +123,14 @@ export default function LoginPage() {
       }
     }, [email, password]);
 
+    useEffect(() => {
+      if (contact && !contact.startsWith("+27")) {
+        const _formatted = contact.substring(1,contact.length);
+        
+        setContact(`+27${_formatted}`);
+      }
+    }, [contact]);
+
   return (
     <>
     <Modal 
@@ -131,10 +146,13 @@ export default function LoginPage() {
         <h4>User is not verified</h4>
         <p>Please enter your number to activate your account</p>
         <form onSubmit={resend}>
-          {resending ? <div className="spinner-grow text-light" role="status" /> : <input 
+          {resending ? <div className="spinner-grow text-primary" role="status" /> : 
+          <input 
             type="text" 
-            placeholder="Enter your number" 
-            value={contact} 
+            placeholder="+27-XXX-XXXX" 
+            value={contact}
+            className="number-input"
+            maxLength={12}
             onChange={(e) => setContact(e.target.value)} />}
           <button type="submit">Activate</button>
         </form>
@@ -170,9 +188,9 @@ export default function LoginPage() {
             </div>
           </div>
           <div>
-            <div className="rbt-form-group mb-5">
+            <div className="rbt-form-group mb-5 position-relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -180,7 +198,9 @@ export default function LoginPage() {
                 id="password"
                 // required
                 className={hasError.password ? "error" : ""}
+                
               />
+              <i onClick={()=>setShowPassword(!showPassword)} className="feather-eye position-absolute" style={{right:"10px", top:"17px", cursor:"pointer"}}  />
             </div>
           </div>
           <div className="mb--30 remember-me">
