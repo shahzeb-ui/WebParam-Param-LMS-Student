@@ -17,7 +17,7 @@ interface IQuizQuestion  {
   answer: string;
 };
 
-const LessonQuiz = ({setVideoEnded, handleNext, currentVideo}:any) => {
+const LessonQuiz = ({firstQuiz, setVideoEnded, handleNext, currentVideo}:any) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -34,7 +34,13 @@ const LessonQuiz = ({setVideoEnded, handleNext, currentVideo}:any) => {
   const router = useRouter(); 
 
   useEffect(() => {
-    initializeQuiz();
+    if(!firstQuiz?.data){
+      debugger;
+      initializeQuiz();
+    }else{
+      debugger;
+      setCurrentQuiz(firstQuiz.data)
+    }
   }, []);
 
   useEffect(() => {
