@@ -49,7 +49,6 @@ const Calendar: React.FC = () => {
   //       console.error("Error fetching courseId:", error);
   //     }
   //   };
-
   //   fetchCourseId();
   // }, [userID]);
 
