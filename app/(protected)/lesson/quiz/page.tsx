@@ -144,7 +144,7 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
       <div className="inner">
         <div className="content">
             <div className="quiz-form-wrapper">
-              {loading && <>Generating quiz...<br/><br/><Loader/></>}
+              {loading && <><p  style={{textAlign: "center"}}>Generating quiz. <br/> <small> Please do not leave this page.. </small></p><br/><br/><Loader/></>}
               {error!==""&&   <div
       style={{
         display: "flex",
