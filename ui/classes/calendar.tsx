@@ -4,6 +4,7 @@ import styles from './Calendar.module.css';
 import DayView from './DayView';
 import { GET } from '../../app/lib/api-client';
 import {rLoogBookUrl,rCourseUrl} from '../../app/lib/endpoints';
+import { useCourseId } from '@/context/courseId-context/courseId-context';
 
 interface ClassSession {
   id: string;
@@ -27,35 +28,40 @@ const Calendar: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [view, setView] = useState<'month' | 'day'>('month');
   const [classSessions, setClassSessions] = useState<ClassSession[]>([]);
-  const [courseId, setCourseId] = useState<string | null>(null);
+  // const [courseId, setCourseId] = useState<string | null>(null);
 
   const cookies = new Cookies();
-  const userID = cookies.get('userID');
+  // const userID = cookies.get('userID');
+  const { courseId } = useCourseId();
 
-  useEffect(() => {
-    const fetchCourseId = async () => {
-      if (!userID) return;
+  // useEffect(() => {
+  //   const fetchCourseId = async () => {
+  //     if (!userID) return;
 
-      try {
-        const response = await GET(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`);
-        if (response) {
-          const rawText = response.data;
-          setCourseId(rawText.trim());
-        }
-      } catch (error) {
-        console.error("Error fetching courseId:", error);
-      }
-    };
+  //     try {
+  //       const response = await GET(`${rCourseUrl}/api/v1/Enrollments/GetUserEnrolledCourse/${userID}`);
+  //       debugger;
+  //       if (response) {
+  //         const rawText = response.data;
+  //         setCourseId(rawText.trim());
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching courseId:", error);
+  //     }
+  //   };
 
-    fetchCourseId();
-  }, [userID]);
+  //   fetchCourseId();
+  // }, [userID]);
 
   useEffect(() => {
     const fetchClassSessions = async () => {
+      debugger
+      const _courseId = courseId || process.env.NEXT_PUBLIC_COURSE_ID;
       if (!courseId) return;
 
       try {
-        const response = await GET(`${rLoogBookUrl}/api/v1/ClassSessions/GetClassSessions/${courseId}/Course`);
+        const response = await GET(`${rLoogBookUrl}/api/v1/ClassSessions/GetClassSessions/${_courseId}/Course`);
+        debugger
         if (response) {
           const data = response.data;
           setClassSessions(data.data);
@@ -91,13 +97,23 @@ const Calendar: React.FC = () => {
           key={i} 
           className={`${styles.day} ${isSelected ? styles.selected : ''}`}
           onClick={() => handleDateClick(date)}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            width: '100%',
+            padding: '0 10px',
+            boxSizing: 'border-box'
+          }}
         >
           <span style={{ 
             color: isSelected ? 'red' : isToday ? 'white' : 'inherit',
             backgroundColor: isToday ? 'rgb(36, 52, 92)' : 'transparent',
             padding: isToday ? '2px 6px' : '0',
             borderRadius: isToday ? '50%' : '0',
-            display: 'inline-block'
+            display: 'block'
           }}>
             {i}
           </span>

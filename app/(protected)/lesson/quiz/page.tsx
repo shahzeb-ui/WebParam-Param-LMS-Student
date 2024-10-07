@@ -9,6 +9,7 @@ import './quiz.scss'
 import { POST } from "@/app/lib/api-client";
 import Loader from "@/ui/loader/loader";
 import Countdown from 'react-countdown';
+import { rDocumentParaphraseUrl } from "@/app/lib/endpoints";
 
 interface IQuizQuestion  {
   question: string;
@@ -16,7 +17,7 @@ interface IQuizQuestion  {
   answer: string;
 };
 
-const LessonQuiz = ({setVideoEnded, handleNext, currentVideo}:any) => {
+const LessonQuiz = ({firstQuiz, setVideoEnded, handleNext, currentVideo}:any) => {
   const [next, setNext] = useState<number>(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
@@ -33,7 +34,13 @@ const LessonQuiz = ({setVideoEnded, handleNext, currentVideo}:any) => {
   const router = useRouter(); 
 
   useEffect(() => {
-    initializeQuiz();
+    if(!firstQuiz?.data){
+      debugger;
+      initializeQuiz();
+    }else{
+      debugger;
+      setCurrentQuiz(firstQuiz.data)
+    }
   }, []);
 
   useEffect(() => {
@@ -121,12 +128,12 @@ const renderer = ({ hours, minutes, seconds, completed }:any) => {
     const payload = {
       videoId:videoId
     }
-    const res = await POST(payload,"https://thooto-qa-be-document-parser.azurewebsites.net/api/v1/topicQuiz/generate");
+    const res = await POST(payload,`${rDocumentParaphraseUrl}/api/v1/topicQuiz/generate`);
     debugger;
    
     if(res == null){
-
       setError("Error generating quiz, please try again.")
+      setLoader(false);
     }
     setLoader(false);
     return res.data;

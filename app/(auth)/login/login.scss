@@ -189,3 +189,7 @@ input[type="password"].error {
         margin-top: 10px;
     }
 }
+
+.number-input::placeholder {
+    opacity: .7;
+}
