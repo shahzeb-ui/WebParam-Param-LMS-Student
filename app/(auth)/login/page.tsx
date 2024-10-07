@@ -42,7 +42,7 @@ const LoginPage = () => {
             </form>
           </div>
           <div className={styles.signUpPrompt} style={{ position: 'absolute', bottom: '20px', left: '0', right: '0', fontWeight: 'bold', fontSize: '16px', padding: '15px', color:'white' }}>
-            Don't have an account yet? <a href="/register" style={{ color: '#FE457A', textDecoration: 'underline' }}>Sign Up</a>
+           Don&apos;t have an account yet? <a href="/register" style={{ color: '#FE457A', textDecoration: 'underline' }}>Sign Up</a>
           </div>
         </div>
       </div>
