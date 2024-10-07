@@ -101,14 +101,16 @@ const FileUpload: React.FC = () => {
       formData.append('Type', String(['identity', 'qualification', 'cv', 'Leaner Agreement'].indexOf(selectedFile.type)));
 
   try {
-    // const response = await axios.post(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // });
+    const response = await axios.post(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData, {
+      headers: {
+        'ClientKey':process.env.NEXT_PUBLIC_CLIENTKEY,
+        'Content-Type': 'multipart/form-data'
+     
+      },
+    });
 
-    const response = await POST_MULTIPART(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData);
-
+    // const response = await POST_MULTIPART(`${writeUserData}/api/v1/Profile/SubmitDocument`, formData);
+    debugger;
         if (response.status === 200) {
           setIsUploaded(true);
           window.location.reload();
@@ -116,6 +118,7 @@ const FileUpload: React.FC = () => {
           alert('File upload failed');
         }
       } catch (error) {
+        debugger;
         console.error('Error uploading file:', error);
         alert('File upload failed');
       } finally {
