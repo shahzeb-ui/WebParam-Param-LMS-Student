@@ -36,7 +36,7 @@ const Calendar: React.FC = () => {
   useEffect(() => {
     const fetchClassSessions = async () => {
       const _courseId = courseId || process.env.NEXT_PUBLIC_COURSE_ID;
-      if (!courseId) return;
+      if (!_courseId) return;
 
       try {
         const response = await getClasses(_courseId!);
