@@ -98,13 +98,13 @@
 }
 
 /* Keep the existing styles for hamburgerMenu and authLinks */
-/* .hamburgerMenu {
+.hamburgerMenu {
   margin-left: -25rem;
 }
 
 .authLinks {
   margin-right: -25rem;
-} */
+}
 
 .centeredLogo {
   position: absolute;
@@ -127,6 +127,10 @@
   .authLinks {
     visibility: hidden;
   }
+
+  .hamburgerMenu {
+    margin-left: 0;
+  }
 }
 /* Adjust hamburger menu position on mobile */
 @media (max-width: 991px) {
@@ -135,6 +139,7 @@
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
+    margin-right: -25rem;
   }
 }
 
