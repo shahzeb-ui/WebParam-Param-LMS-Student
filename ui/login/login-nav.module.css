@@ -99,11 +99,11 @@
 
 /* Keep the existing styles for hamburgerMenu and authLinks */
 .hamburgerMenu {
-  margin-left: -25vw;
+  margin-left: 0;
 }
 
 .authLinks {
-  margin-right: -25vw;
+  margin-right: 0;
 }
 
 .centeredLogo {
@@ -139,7 +139,7 @@
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    margin-right: -25vw;
+    margin-right: -25;
   }
 }
 

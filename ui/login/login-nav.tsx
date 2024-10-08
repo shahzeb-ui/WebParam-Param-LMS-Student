@@ -15,7 +15,7 @@ const LoginNav = () => {
       <div className={`container position-relative`}>
         {/* Hamburger Menu */}
         <button
-          className={` border-0 ${styles.hamburgerMenu}`}
+          className={` border-0  ${styles.hamburgerMenu}`}
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
