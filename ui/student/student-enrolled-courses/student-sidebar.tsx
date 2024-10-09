@@ -41,6 +41,10 @@ const StudentDashboardSidebar: React.FC = () => {
     console.log(`This is the path: ${path}`);
   });
 
+  const calculateFillOpacity = (progress: number) => {
+    return progress / 100; // Adjust opacity between 0 (0%) to 1 (100%)
+  };
+
   return (
     <div
       className={`sticky-top h-100 w-20 rbt-shadow-box d-flex flex-column justify-content-between ${styles.sidebar}`}
