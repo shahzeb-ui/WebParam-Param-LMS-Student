@@ -17,7 +17,12 @@ export default function ActiveAssignment() {
   return (
     <div>
       {assignments.map((assignment:IAssignment, index) => (
-    
+        <AssignmentCard key={index} assignment={assignment} />
+      ))}
+    </div>
+  );
+}
+
 function AssignmentCard({ assignment }:any) {
 
   return (
