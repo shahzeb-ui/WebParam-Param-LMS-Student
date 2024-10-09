@@ -88,7 +88,7 @@ const initializeQuiz = async () => {
   }, 15000); // Message after 15 seconds
 
   const timeout2 = setTimeout(() => {
-      setLoadingMessage("Taking longer than expected...make your sure network is stable");
+      setLoadingMessage("Taking longer than expected...make sure your network is stable");
   }, 30000); // Message after 30 seconds
 
   const timeout3 = setTimeout(() => {
