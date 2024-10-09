@@ -1,12 +1,12 @@
 "use client";
 
 import { Suspense } from "react";
-import Register from "./register";
+import RegisterPageContent from "./register";
 
 export default function RegisterPage() {
   return (
     <Suspense>
-      <Register />
+      <RegisterPageContent />
     </Suspense>
   );
 }

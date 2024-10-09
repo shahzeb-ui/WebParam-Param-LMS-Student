@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import './userProfile.scss';
 import { StudentProfile, getStudentProfile } from '@/app/api/studentProfile/studentprofile';
-import defaultImage from './defaultPic.jpg';
-import coverImageLocal from './cover.png';
+
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import axios from 'axios';
@@ -215,7 +214,7 @@ export default function Profile({ student }: any) {
                 <div
                     className="tutor-bg-photo height-245"
                     style={{
-                        backgroundImage: coverImage ? `url(${coverImage})` : `url(${coverImageLocal})`,
+                        // backgroundImage: coverImage ? `url(${coverImage})` : `url(${coverImageLocal})`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
@@ -223,16 +222,7 @@ export default function Profile({ student }: any) {
                 <div className="rbt-tutor-information">
                     <div className="rbt-tutor-information-left">
                         <div className="thumbnail rbt-avatars size-lg position-relative">
-                            <Image
-                                alt="Instructor"
-                                loading="lazy"
-                                width={300}
-                                height={300}
-                                decoding="async"
-                                data-nimg={1}
-                                src={`${profilePic}` || defaultImage.src}
-                                style={{ color: 'transparent', height: '120px !important' }}
-                            />
+                            
                             <div className="rbt-edit-photo-inner">
                                 <button
                                     className="rbt-edit-photo"

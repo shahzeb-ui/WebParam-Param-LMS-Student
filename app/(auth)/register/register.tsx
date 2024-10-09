@@ -3,7 +3,7 @@ import styles from './register.module.scss';
 import RegisterForm from './registerform';
 import Image from 'next/image';
 
-export default function Register() {
+export default function RegisterPage() {
   return (
     <div className={styles.registerPage}>
       <div className={styles.registerContainer}>

@@ -9,26 +9,26 @@ const RegisterForm: React.FC = () => {
       <div className={`${styles.formRow} ${styles.leftAligned}`}>
         <div className={styles.formGroup}>
           <label htmlFor="email">Email Address</label>
-          <span className={styles.secondaryLabel}>Email Address</span>
-          <input type="email" id="email" />
+          {/* <span className={styles.secondaryLabel}>Email Address</span> */}
+          <input type="email" id="email"  placeholder='Email Address'/>
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="mobile">Mobile Number</label>
-          <span className={styles.secondaryLabel}>Mobile Number</span>
-          <input type="tel" id="mobile" />
+          {/* <span className={styles.secondaryLabel}>Mobile Number</span> */}
+          <input type="tel" id="mobile"  placeholder='Mobile Number'/>
         </div>
       </div>
 
       <div className={`${styles.formRow} ${styles.leftAligned}`}>
         <div className={styles.formGroup}>
           <label htmlFor="firstName">First Name</label>
-          <span className={styles.secondaryLabel}>First Name</span>
-          <input type="text" id="firstName" />
+          {/* <span className={styles.secondaryLabel}>First Name</span> */}
+          <input type="text" id="firstName"  placeholder='First Name'/>
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="lastName">Last Name</label>
-          <span className={styles.secondaryLabel}>Last Name</span>
-          <input type="text" id="lastName" />
+          {/* <span className={styles.secondaryLabel}>Last Name</span> */}
+          <input type="text" id="lastName"  placeholder='Last Name'/>
         </div>
       </div>
 
@@ -40,7 +40,7 @@ const RegisterForm: React.FC = () => {
               <option value="">Gender</option>
               {/* Add gender options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
         <div className={styles.formGroup}>
@@ -50,7 +50,7 @@ const RegisterForm: React.FC = () => {
               <option value="">Race</option>
               {/* Add race options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@ const RegisterForm: React.FC = () => {
               <option value="">Disability</option>
               {/* Add disability options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
         <div className={styles.formGroup} >
@@ -73,7 +73,7 @@ const RegisterForm: React.FC = () => {
               <option value="">City</option>
               {/* Add city options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ const RegisterForm: React.FC = () => {
               <option value="">Province</option>
               {/* Add province options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ const RegisterForm: React.FC = () => {
               <option value="">Currently Enrolled in Studies</option>
               {/* Add study options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
         <div className={styles.formGroup} >
@@ -113,7 +113,7 @@ const RegisterForm: React.FC = () => {
               <option value="">Highest Qualification</option>
               {/* Add qualification options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ const RegisterForm: React.FC = () => {
               <option value="">dd/mm/yyyy</option>
               {/* Add date options here */}
             </select>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} />
+            {/* <FontAwesomeIcon icon={faChevronDown} className={styles.selectIcon} /> */}
           </div>
         </div>
       </div>

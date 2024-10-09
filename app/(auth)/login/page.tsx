@@ -1,7 +1,18 @@
+"use client";
+
 import styles from "./login.module.scss";
 import LoginNav from "../../../ui/login/login-nav"; // Adjust this import path as necessary
+import { useRouter } from 'next/navigation';
+import Link from 'next/link'; // Added import for Link component
 
 const LoginPage = () => {
+  const router = useRouter();
+
+  const handleRegisterClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.push('/register');
+  };
+
   return (
     <div className={styles.loginPage}>
       <LoginNav />
@@ -36,8 +47,8 @@ const LoginPage = () => {
                 *Incorrect email or password. Try again
               </div>
               <div className={styles.buttonGroup}>
-                <button type="submit" className={styles.signUpButton}>
-                  Sign Up
+                <button type="button" className={styles.signUpButton} onClick={handleRegisterClick}>
+                  Login
                 </button>
                 <div className={styles.recoverPassword}>
                   <a href="/recover-password">Recover Password</a>
@@ -46,7 +57,7 @@ const LoginPage = () => {
             </form>
           </div>
           <div className={styles.signUpPrompt} style={{ position: 'absolute', bottom: '20px', left: '0', right: '0', fontWeight: 'bold', fontSize: '16px', padding: '15px', color:'white' }}>
-           Don&apos;t have an account yet? <a href="/register" style={{ color: '#FE457A', textDecoration: 'underline' }}>Sign Up</a>
+            Don&apos;t have an account yet? <Link href="/~offline/register" style={{ color: '#FE457A', textDecoration: 'underline' }}>Sign Up</Link>
           </div>
         </div>
       </div>

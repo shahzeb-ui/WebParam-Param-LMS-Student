@@ -94,81 +94,14 @@ const InstructorDashboardHeader = () => {
 
   return (
     <>
-      {/* Modal for course selection */}
-      {process.env.NEXT_PUBLIC_DEMO && (
-        <Modal
-          open={open}
-          onClose={() => setOpen(false)}
-          center
-          blockScroll={true}
-          focusTrapped={true}
-          closeOnOverlayClick={false}
-          styles={{
-            overlay: { backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-            modal: { width: '30%', height: '30%', borderRadius: '10px', minWidth: '300px' },
-          }}
-          classNames={{ modal: 'custom-modal' }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <h4 className="mb-4">Select a course</h4>
-            <div className="tom-select-custom">
-              <select
-                style={{ fontSize: "1.5rem" }}
-                className="js-select form-select"
-                value={coursesArray.find(course => course.courseId === courseId)?.courseId ?? ""}
-                onChange={(e) => {
-                  const selectedCourseId = e.target.value;
-                  setCourseId(selectedCourseId);  // Update the context
-                  localStorage.setItem("courseId", selectedCourseId);  // Optionally update localStorage directly if needed
-                  setOpen(false);
-                }}
-              >
-                <option value="">Select a course...</option>
-                {coursesArray.map((course) => (
-                  <option key={course.courseId} value={course.courseId}>
-                    {course.courseName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </Modal>
-      )}
-
-      {/* Course title display */}
-      <div className="mb-5">
-        {process.env.NEXT_PUBLIC_DEMO ? (
-          <div style={{ maxWidth: "40rem" }}>
-            <span className="select-label d-block">Select a course</span>
-            <div className="tom-select-custom">
-              <select
-                style={{ fontSize: "1.5rem" }}
-                className="js-select form-select"
-                value={coursesArray.find(course => course.courseId === courseId)?.courseId ?? ""}
-                onChange={(e) => {
-                  const selectedCourseId = e.target.value;
-                  setCourseId(selectedCourseId);  // Update the context
-                  localStorage.setItem("courseId", selectedCourseId);  // Optionally update localStorage directly if needed
-                }}
-              >
-                <option value="">Select a course...</option>
-                {coursesArray.map((course) => (
-                  <option key={course.courseId} value={course.courseId}>
-                    {course.courseName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        ) : (
-          <h3 className="mb-2">
-            <span style={{ fontWeight: '700' }}>{course?.title}</span>
-          </h3>
-        )}
-      </div>
+      
+              
+      
+      
+  
 
       {/* Responsive course banner */}
-      <div className="rbt-dashboard-content-wrapper banner-wrapper">
+      {/* <div className="rbt-dashboard-content-wrapper banner-wrapper">
         {isMobile ? (
           <div
             className=""
@@ -181,54 +114,9 @@ const InstructorDashboardHeader = () => {
               position: 'relative'
             }}
           >
-            {/* <AnimatePresence>
-              {pathname === "/student/student-profile" && isClicked &&
-                <div className="info-button-container">
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity:1 }}
-                    transition={{ duration: 1 }}
-                    className="rbt-dashboard-content rbt-shadow-box mobile-progress-status"
-                  >
-                    <div 
-                    className={`mobile-progress-status-left ${getBorderClass(overallPercentage)}`}>
-                      <h4>{overallPercentage}%</h4>
-                      <p>Completed</p>
-                    </div>
-                    <div className="mobile-progress-status-right">
-                      <h4>Profile Completion</h4>
-                      <div className="mobile-progress-bar-container">
-                        <div className="mobile-progress-item">
-                          <h6>Biography:</h6><span className={`progress-percentage ${getTextClass(biographyPercentage)}`}>{biographyPercentage}%</span>
-                        </div>
-                        <div className="mobile-progress-item">
-                          <h6>Demographics:</h6><span className={`progress-percentage ${getTextClass(demographicLegalPercentage)}`}>{demographicLegalPercentage}%</span>
-                        </div>
-                        <div className="mobile-progress-item">
-                          <h6>Contacts:</h6><span className={`progress-percentage ${getTextClass(contactInformationPercentage)}`}>{contactInformationPercentage}%</span>
-                        </div>
-                        <div className="mobile-progress-item">
-                          <h6>Employment:</h6><span className={`progress-percentage ${getTextClass(employmentPercentage)}`}>{employmentPercentage}%</span>
-                        </div>
-                        <div className="mobile-progress-item">
-                          <h6>Documents:</h6><span className={`progress-percentage ${getTextClass(documentsPercentage)}`}>{documentsPercentage}%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              }
-              {pathname === "/student/student-profile" && <button type="button"
-                className="btn btn-primary progress-status-button"
-                style={{ overflow: "hidden", color: "#24345c" }}
-                onClick={() => setIsClicked(!isClicked)}>
-                {isClicked ? <i className="bi bi-x-circle-fill text-danger" style={{ fontSize: "1.5rem" }} /> : <i className="bi bi-info-circle-fill" style={{ color: "#24345c" }} />}
-                {isClicked ? "" : "My Progress"}
-              </button>}
-            </AnimatePresence> */}
-          </div>
-        ) : (
+            
+          </div> */}
+        {/* ) : (
           <AnimatePresence>
             <div
               className="height-350 progress-status-wrapper"
@@ -241,44 +129,11 @@ const InstructorDashboardHeader = () => {
                 backgroundPosition: 'center',
               }}
             >
-              {/* {pathname === "/student/student-profile" && isHovered &&
-                <motion.div
-                  className="rbt-dashboard-content progress-status"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                >
-                  <div className={`progress-status-left ${getBorderClass(overallPercentage)}`}>
-                    <h4>{overallPercentage}%</h4>
-                    <p>Completed</p>
-                  </div>
-                  <div className="progress-status-right">
-                    <h4>Profile Completion</h4>
-                    <div className="progress-bar-container">
-                      <div className="progress-item">
-                        <h6>Biography:</h6><span className={`progress-percentage ${getTextClass(biographyPercentage)}`}>{biographyPercentage}%</span>
-                      </div>
-                      <div className="progress-item">
-                        <h6>Demographics:</h6><span className={`progress-percentage ${getTextClass(demographicLegalPercentage)}`}>{demographicLegalPercentage}%</span>
-                      </div>
-                      <div className="progress-item">
-                        <h6>Contacts:</h6><span className={`progress-percentage ${getTextClass(contactInformationPercentage)}`}>{contactInformationPercentage}%</span>
-                      </div>
-                      <div className="progress-item">
-                        <h6>Employment:</h6><span className={`progress-percentage ${getTextClass(employmentPercentage)}`}>{employmentPercentage}%</span>
-                      </div>
-                      <div className="progress-item">
-                        <h6>Documents:</h6><span className={`progress-percentage ${getTextClass(documentsPercentage)}`}>{documentsPercentage}%</span>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              } */}
+             
             </div>
           </AnimatePresence>
-        )}
-      </div>
+        )} */}
+      {/* </div> */}
     </>
   );
 };
