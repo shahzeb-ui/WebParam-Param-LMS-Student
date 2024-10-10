@@ -26,6 +26,20 @@ export const getAssignments = async (id:string) => {
       }
   };
 
+
+  export const downloadStudentAssignment = async (userID:string,assignmentId:string) => {
+    try {
+        const resp = await get(`${rAssessmentUrl}/api/v1/StudentAssignment/DownloadCompletedAssignment/${userID}/${assignmentId}`);
+        const data = resp.data;
+        Diagnostic("SUCCESS ON GET, returning", data);
+        return data;
+      } catch (err) {
+        Diagnostic("ERROR ON GET, returning", err);
+        throw err;
+      }
+  };
+
+
   export const getStudentUnmarkedAssignments = async (studentId:string, moduleId:string) => {
     try {
         const resp = await get(`${rAssessmentUrl}/api/v1/StudentAssignment/GetStudentUnMarkedAssignments/${studentId}/${moduleId}`);

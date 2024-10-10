@@ -175,6 +175,10 @@ function AssignmentCard({ assignment }: assignment) {
             <td>
               <div className="rbt-button-group justify-content-end">
                 <a
+                style={{
+                  cursor : "pointer"
+                }}
+                  onClick={handleAddAssignment}
                   className="rbt-btn btn-xs bg-primary-opacity radius-round"
                   title="Upload"
                 >
@@ -188,11 +192,7 @@ function AssignmentCard({ assignment }: assignment) {
                     />
                   ) : (
                     <>
-                      <i
-                        onClick={handleAddAssignment}
-                        className="bi bi-upload pl--0"
-                      />{" "}
-                      Upload
+                      <i className="bi bi-upload pl--0" /> Upload
                     </>
                   )}
                 </a>
