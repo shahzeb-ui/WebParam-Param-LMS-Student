@@ -49,11 +49,25 @@ const access = process.env.NEXT_PUBLIC_ACCESS??"ALL_ACCESS";
       data-aos="fade-right"
     >
       <div className="content">
-        <div className="section-title">
-          <h4 className="get-4-color rbt-title-style-3">
+        <div className="section-title d-flex justify-content-between align-items-center nav-titles">
+          <h4 className="get-4-color rbt-title-style-3" style={{ height:'100%', margin:'0'}}>
             <i className="bi bi-laptop "></i>
             <span className="style-3-left">My Courses</span>
           </h4>
+          <div>
+            <select className="form-select" style={{width:'150px', borderRadius:'5px', margin:'0'}}>
+              <option value="summative">Summative</option>
+              <option value="formative">Formative</option>
+            </select>
+          </div>
+          {/* <div>
+          <select className="form-select">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          </div> */}
         </div>
         <div className={`advance-tab-button mb--30 ${styles.advanceTabButton}`}>
           <ul className={`nav nav-tabs tab-button-style-2 ${styles.navTabs}`} id="myTab-4" role="tablist">

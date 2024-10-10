@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const cardStyle = {
-  width: '250px', 
+  width: '200px', 
   padding: '20px', 
   borderRadius: '8px', 
   border: '1px solid #ccc',
