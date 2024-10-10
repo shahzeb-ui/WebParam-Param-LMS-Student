@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -44,5 +45,6 @@ public/sw.js
 /.env.development
 /public/sw.js
 /.env
+public/sw.js
 public/sw.js
 public/sw.js

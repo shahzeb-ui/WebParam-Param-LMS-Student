@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import StudentMobileProps from "@/interfaces/side-bar";
 import styles from "@/styles/side-bar/side-bar.module.css";
 import { useEffect, useState } from "react";
@@ -16,6 +16,19 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
     window.location.href = link;
     toggleSidebar();
   };
+
+  const router = useRouter();
+  
+  function handleLogOut() {
+    cookies.remove("loggedInUser");
+    cookies.remove("username");
+    cookies.remove("userEmail");
+    cookies.remove("resetEmail");
+    localStorage.removeItem("courseId");
+    localStorage.removeItem("modalOpened");
+    router.push("/login");
+  }
+  
 
   useEffect(() => {
     const storedUsername = cookies.get("username");
@@ -58,7 +71,33 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
                   <h6 className="rbt-title-style-2">User</h6>
                 </div>
 
-                <nav className="mainmenu-nav">
+    <nav className="mainmenu-nav">
+                <ul className="dashboard-mainmenu rbt-default-sidebar-list">
+                  <li>
+                    <a
+                  
+                      href={'/student/student-profile'}
+                      className={`${path === '/student/student-profile' ? "active" : ""}`}
+                    >
+                      <i className="feather-user" />
+                      <span>My Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                    onClick={handleLogOut}
+                      href={'/'}
+                      className={`${path === '/' ? "active" : ""}`}
+                    >
+                      <i className="feather-log-out" />
+                      <span>Logout</span>
+                    </a>
+                  </li>
+               </ul>
+              </nav>
+
+
+                {/* <nav className="mainmenu-nav">
                   <ul className="dashboard-mainmenu rbt-default-sidebar-list">
                     {SidebarData &&
                      SidebarData.slice(isFreemium?3:8, isFreemium?5:10).map((data, index) => (
@@ -74,7 +113,7 @@ const StudentMobileSideBar = ({isOpen,toggleSidebar,}: StudentMobileProps): JSX.
                         </li>
                       ))}
                   </ul>
-                </nav>
+                </nav> */}
               </div>
             </div>
           </div>

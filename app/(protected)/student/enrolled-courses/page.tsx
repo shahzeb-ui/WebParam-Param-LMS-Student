@@ -4,12 +4,8 @@ import { Suspense, useState, useEffect } from "react";
 import Link from "next/link";
 import Loader from "@/ui/loader/loader";
 import styles from "@/styles/enrolled-courses/enrolled-courses.module.css";
-import { getAlltUnitStandards } from "@/actions/unit-standards/get-unit-standards";
-import { UnitStandardData } from "@/interfaces/enrolled-unit-standards/unit-standards/unit-standards";
-import UnitStandardWidget from "@/ui/student/enrolled/sample-unit";
 // import { isMobile } from "react-device-detect";
-import { getCourseId, getEnrolledCourse } from "@/app/api/my-courses/course";
-import courseImage from './courseImage.jpeg';
+
 import Cookies from "universal-cookie";
 import { isMobile } from "react-device-detect";
 import Active from "./active";
@@ -21,14 +17,10 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const EnrolledCourses = () => {
-  const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [unitStandards, setUnitStandards] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
   
   const cookies = new Cookies();
 const access = process.env.NEXT_PUBLIC_ACCESS??"ALL_ACCESS";
-  const user = cookies.get("loggedInUser");
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -57,11 +49,25 @@ const access = process.env.NEXT_PUBLIC_ACCESS??"ALL_ACCESS";
       data-aos="fade-right"
     >
       <div className="content">
-        <div className="section-title">
-          <h4 className="get-4-color rbt-title-style-3">
+        <div className="section-title d-flex justify-content-between align-items-center nav-titles">
+          <h4 className="get-4-color rbt-title-style-3" style={{ height:'100%', margin:'0'}}>
             <i className="bi bi-laptop "></i>
             <span className="style-3-left">My Courses</span>
           </h4>
+          <div>
+            <select className="form-select" style={{width:'150px', borderRadius:'5px', margin:'0'}}>
+              <option value="summative">Summative</option>
+              <option value="formative">Formative</option>
+            </select>
+          </div>
+          {/* <div>
+          <select className="form-select">
+            <option selected>Open this select menu</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          </div> */}
         </div>
         <div className={`advance-tab-button mb--30 ${styles.advanceTabButton}`}>
           <ul className={`nav nav-tabs tab-button-style-2 ${styles.navTabs}`} id="myTab-4" role="tablist">
@@ -110,7 +116,7 @@ const access = process.env.NEXT_PUBLIC_ACCESS??"ALL_ACCESS";
                 <span className="title">Completed</span>
               </Link>
             </li>
-            <li role="presentation">
+            <li role="presentation"  style={{pointerEvents:access=="COURSE_ONLY"?"none": "auto", opacity: access=="COURSE_ONLY"?"0.2":"1"}}>
               <Link
                 href="#"
                 className={`tab-button ${tab == "softSkills" && "active"} ${styles.tabButton}`}
