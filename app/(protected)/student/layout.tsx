@@ -33,20 +33,7 @@ export default function StudentLayout({
                 <div className="col-lg-9">
                   <div style={{ position: 'relative' }}>
                     <FileUpload acceptedFileTypes="pdf, jpg, docx" maxFileSize={5} />
-                    <button
-                      style={{
-                        position: 'absolute',
-                        right: '10px',
-                        top: '10px',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer',
-                        color: 'red',
-                      }}
-                      onClick={() => console.log('Remove file')}
-                    >
-                      Remove
-                    </button>
+                    
                   </div>
                   {children}
                 </div>
