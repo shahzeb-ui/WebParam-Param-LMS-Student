@@ -6,6 +6,9 @@ import styles from "./UserProfile.module.css"; // Adjust the path as necessary
 const profilePicture =
   require("../../../app/(auth)/login/profilepic.jpeg").default;
 
+import { faEnvelope, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const UserProfile: React.FC = () => {
   return (
     <div className="d-flex" style={{ fontFamily: "'Montserrat', sans-serif" }}>
@@ -27,13 +30,17 @@ const UserProfile: React.FC = () => {
             <p className="mb-1 fs-4">
               Front-End Designer | Tsatsile Consulting
             </p>
-            <p className="mb-1 fs-4">Cape Town, Western Cape</p>
+            <p className="mb-1 fs-4">
+              <FontAwesomeIcon icon={faMapMarkerAlt} className="me-2" />
+              Cape Town, Western Cape
+            </p>
             <p className="mb-1 fs-4">Date Started: July 2022</p>
             <div className="d-flex justify-content-between mt-3 fs-4 fw-bold">
               <a href="/edit-profile" className={`${styles.editButton}`}>
                 Edit Profile
               </a>
               <button className={`${styles.messageButton} ms-3`}>
+                <FontAwesomeIcon icon={faEnvelope} className="me-2" />
                 Send Message
               </button>
             </div>

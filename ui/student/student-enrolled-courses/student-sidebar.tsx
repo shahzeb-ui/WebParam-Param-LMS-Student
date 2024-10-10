@@ -11,6 +11,10 @@ import profilePicture from "../../../app/(auth)/login/profilepic.jpeg";
 import ramalo from "../../../ui/login/ramalo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons"; // Importing logout icon
+import {
+  faArrowRight,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons"; // Importing the arrow icon
 
 const StudentDashboardSidebar: React.FC = () => {
   const cookies = new Cookies();
@@ -103,6 +107,12 @@ const StudentDashboardSidebar: React.FC = () => {
                   >
                     <i className={data.icon + " pe-4"}></i>
                     <span className="ms-2">{data.text}</span>
+                    {basePath === data.link.split("?")[0] && (
+                      <FontAwesomeIcon
+                        icon={faChevronRight}
+                        className="ms-auto"
+                      />
+                    )}
                   </Link>
                 </li>
               ))}
@@ -120,41 +130,6 @@ const StudentDashboardSidebar: React.FC = () => {
           <div className=" feather-log-out me-2 " />
           <span>Logout</span>
         </button>
-      </div>
-
-      <div className="progress-loader mt-5">
-        <svg
-          width="22"
-          height="23"
-          viewBox="0 0 22 23"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Static Background Shape */}
-          <path
-            d="M20.6522 18.5868C19.2386 18.5868 17.8068 17.4148 16.8338 15.4371C16.5768 14.9244 16.3014 14.4482 15.9894 13.9904C18.9816 13.2763 21.2396 10.676 21.4232 7.54459C21.4232 7.39809 21.4232 7.25159 21.4232 7.1051C21.4232 3.18631 18.229 0 14.3005 0H0.0917874V4.33997H14.3372C15.8609 4.33997 17.1092 5.58519 17.1092 7.1051C17.1092 8.625 15.8609 9.87022 14.3372 9.87022H8.3343H7.1227C3.1942 9.87022 0 13.0565 0 16.9753V22.9634H4.35072V16.9753C4.35072 15.4554 5.59903 14.2102 7.1227 14.2102H9.12367C10.5372 14.2102 11.9691 15.3822 12.942 17.3599C14.6676 20.8575 17.5498 22.9451 20.6522 22.9451H21.4783V18.6051H20.6522V18.5868Z"
-            fill="#C4C4C4" // Static background fill
-          />
-
-          {/* Dynamic Fill Path with Mask */}
-          <mask id="progressMask">
-            {/* Mask rectangle that grows based on progress */}
-            <rect
-              x="0"
-              y="0"
-              width={calculateProgressWidth(40)} // Width grows with progress
-              height="100%"
-              fill="white"
-            />
-          </mask>
-
-          {/* The same shape is filled dynamically */}
-          <path
-            d="M20.6522 18.5868C19.2386 18.5868 17.8068 17.4148 16.8338 15.4371C16.5768 14.9244 16.3014 14.4482 15.9894 13.9904C18.9816 13.2763 21.2396 10.676 21.4232 7.54459C21.4232 7.39809 21.4232 7.25159 21.4232 7.1051C21.4232 3.18631 18.229 0 14.3005 0H0.0917874V4.33997H14.3372C15.8609 4.33997 17.1092 5.58519 17.1092 7.1051C17.1092 8.625 15.8609 9.87022 14.3372 9.87022H8.3343H7.1227C3.1942 9.87022 0 13.0565 0 16.9753V22.9634H4.35072V16.9753C4.35072 15.4554 5.59903 14.2102 7.1227 14.2102H9.12367C10.5372 14.2102 11.9691 15.3822 12.942 17.3599C14.6676 20.8575 17.5498 22.9451 20.6522 22.9451H21.4783V18.6051H20.6522V18.5868Z"
-            fill="#FF69B4" // Dynamic fill color
-            mask="url(#progressMask)" // Apply mask to create progress effect
-          />
-        </svg>
       </div>
     </div>
   );
