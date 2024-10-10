@@ -1,4 +1,4 @@
-$primary-color: #FE457A;
+$primary-color: #fe457a;
 
 .loginPage {
   height: 100vh;
@@ -6,6 +6,8 @@ $primary-color: #FE457A;
   flex-direction: column;
   background-size: cover;
   background-position: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/images/login/image.jpg") !important;
 }
 
 .loginContainer {
@@ -38,13 +40,13 @@ $primary-color: #FE457A;
   padding-bottom: 10px;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     height: 20px;
-    background-image: url('../../../public/svg/underline-curve.svg'); // Use your custom SVG
+    background-image: url("../../../public/svg/underline-curve.svg"); // Use your custom SVG
     background-size: contain;
     background-repeat: no-repeat;
   }
@@ -63,10 +65,10 @@ $primary-color: #FE457A;
 .input {
   width: 100%;
   padding: 15px;
-  border: 2px solid #FE457A!important;
+  border: 2px solid #fe457a !important;
   border-radius: 10px;
   font-size: 16px;
-  background-color: white!important;
+  background-color: white !important;
   color: #333;
 
   &::placeholder {
@@ -75,7 +77,7 @@ $primary-color: #FE457A;
 
   &:focus {
     outline: none;
-    border-color: darken(#FE457A, 10%)!important;
+    border-color: darken(#fe457a, 10%) !important;
   }
 }
 
@@ -123,7 +125,7 @@ $primary-color: #FE457A;
   position: relative;
 
   &::after {
-    content: '*';
+    content: "*";
     color: $primary-color;
     position: absolute;
     right: 15px;
