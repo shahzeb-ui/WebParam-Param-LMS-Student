@@ -41,6 +41,8 @@ const StudentDashboardSidebar: React.FC = () => {
 
   const basePath = path.split("?")[0];
 
+  const isProfilePage = basePath === "/user-profile"; // Assuming "/profile" is the profile link
+
   useEffect(() => {
     console.log(`This is the path: ${path}`);
   });
@@ -64,29 +66,48 @@ const StudentDashboardSidebar: React.FC = () => {
           <Image src={ramalo} alt="Logo" width={120} height={60} priority />
         </div>
 
-        {/* Profile Picture */}
+        {/* Profile Picture or Placeholder */}
         <div
           className="profile-picture-container d-flex justify-content-center align-items-center text-center mb-4"
           style={{
             width: "120px",
             height: "120px",
             margin: "0 auto",
+            backgroundColor: isProfilePage ? "transparent" : "inherit", // Optional: Add a background color for the placeholder
           }}
         >
-          <Image
-            src={profilePicture}
-            alt="Profile Picture"
-            className="rounded-circle"
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-          />
+          {!isProfilePage && (
+            <Image
+              src={profilePicture}
+              alt="Profile Picture"
+              className="rounded-circle"
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          )}
         </div>
 
-        {/* Username */}
+        {/* Username and Role Placeholder */}
         <div className="section-title mb-5 text-center">
-          <h6 className={` text-capitalize ${styles.username} fw-bold fs-1`}>
-            {username ? `${username}`.toUpperCase() : "Nicole".toUpperCase()}
-          </h6>
-          <p className="role-text fs-4">Front-End Designer</p>
+          <div style={{ height: "32px" }}>
+            {" "}
+            {/* Placeholder for username */}
+            {!isProfilePage && (
+              <h6
+                className={` text-capitalize ${styles.username} fw-bold fs-1`}
+              >
+                {username
+                  ? `${username}`.toUpperCase()
+                  : "Nicole".toUpperCase()}
+              </h6>
+            )}
+          </div>
+          <div style={{ height: "24px" }}>
+            {" "}
+            {/* Placeholder for role text */}
+            {!isProfilePage && (
+              <p className="role-text fs-4">Front-End Designer</p>
+            )}
+          </div>
         </div>
 
         {/* Sidebar Links */}
