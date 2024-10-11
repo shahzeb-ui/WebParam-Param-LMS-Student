@@ -2,8 +2,8 @@
 const test = "testing";
 const env = process.env.NEXT_PUBLIC_API_ENV == "production" ? "prod" : process.env.NEXT_PUBLIC_API_ENV;
 
+// const env = "dev"
 
-// const env = process.env.NEXT_PUBLIC_API_URL;
 
 export const writeUserData = `https://thooto-${env}-be-user-write.azurewebsites.net`;
 
