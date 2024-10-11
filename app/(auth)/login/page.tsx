@@ -49,7 +49,7 @@ export default function LoginPage() {
             setIsLoading(false);
             debugger;
             if (res == null) {
-                setErrorMessage('User not found');
+                setErrorMessage('Invalid email or password');
                 return;
             }
             debugger;
