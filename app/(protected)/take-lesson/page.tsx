@@ -175,6 +175,14 @@ function TakeLesson() {
       console.log("Videos watched:", res.data);
       if (res.data) {
         setVideosWatched(res.data);
+        // Automatically select the last watched video
+        const lastWatchedVideo = res.data[res.data.length - 1]; // Get the last watched video
+        if (lastWatchedVideo) {
+          const subTopic = expandedTopics[lastWatchedVideo.topicId]?.find((video) => video.id === lastWatchedVideo.elementId);
+          if (subTopic) {
+            handleSubTopicClick(subTopic, 0); // Select the last watched video
+          }
+        }
       }
     } catch (error) {
       console.error("Error fetching watched videos:", error);
@@ -366,7 +374,7 @@ function TakeLesson() {
                             (subTopic: TopicElement, subIndex) => {
 
                               const isWatched = videosWatched.find(video => video?.elementId == subTopic.id);
-
+                              
                               return (
                               <li
                                 ref={subIndex === 0 ? topicRef : null}
