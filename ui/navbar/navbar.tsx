@@ -70,7 +70,7 @@ const Navbar = () => {
         <div className="rbt-header-wrapper">
           <div className="container">
             <div className="mainbar-row rbt-navigation-center align-items-center">
-              <div className="header-left">
+              {/* <div className="header-left">
                 <Link href="/student/enrolled-courses?tab=enrolled" className="logo" 
                 style={{
                   fontFamily:`"League Spartan" sans-serif `,
@@ -79,7 +79,7 @@ const Navbar = () => {
                   fontSize: "50px"}}> 
                   thooto
                 </Link>
-              </div>
+              </div> */}
 
               {showBanner &&
               <>
