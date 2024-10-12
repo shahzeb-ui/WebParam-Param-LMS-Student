@@ -9,6 +9,7 @@ export default function StudentLayout() {
   return (
     <div className="d-flex">
       <StudentDashboardSidebar />
+      <div></div>
     </div>
   );
 }
